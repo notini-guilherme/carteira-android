@@ -13,7 +13,7 @@ android {
         targetSdk = 35
         // o GitHub numera cada compilacao; assim um APK novo sempre instala por cima do anterior
         versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
-        versionName = "2.63"
+        versionName = "2.64"
     }
 
     signingConfigs {
