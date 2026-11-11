@@ -35,13 +35,13 @@ jobs:
       - name: Guardar o APK desta compilacao
         uses: actions/upload-artifact@v4
         with:
-          name: Carteira-apk
+          name: STOX3-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Publicar o APK na pagina de Releases
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk Carteira.apk
+          cp app/build/outputs/apk/debug/app-debug.apk STOX3.apk
           gh release delete ultima --yes --cleanup-tag || true
-          gh release create ultima Carteira.apk --prerelease --title "Carteira (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo Carteira.apk no celular e instale."
+          gh release create ultima STOX3.apk --prerelease --title "STOX3 (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo STOX3.apk no celular e instale por cima da versao anterior (os dados ficam)."

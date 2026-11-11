@@ -2,6 +2,7 @@ package br.app.carteira
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.os.Environment
 import android.provider.MediaStore
 import android.webkit.JavascriptInterface
@@ -71,6 +72,23 @@ class FilesBridge(private val ctx: Context) {
                 ?: return "nao foi possivel criar o arquivo"
             val out = ctx.contentResolver.openOutputStream(uri) ?: return "nao foi possivel gravar"
             out.use { it.write(text.toByteArray(Charsets.UTF_8)) }
+            ""
+        } catch (e: Exception) {
+            e.message ?: "erro"
+        }
+    }
+
+    /** Abre a janela de compartilhar do Android (WhatsApp, e-mail, etc.). Devolve "" se deu certo, ou o motivo do erro. */
+    @JavascriptInterface
+    fun shareText(title: String, text: String): String {
+        return try {
+            val send = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, title)
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
+            val chooser = Intent.createChooser(send, title).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+            ctx.startActivity(chooser)
             ""
         } catch (e: Exception) {
             e.message ?: "erro"
