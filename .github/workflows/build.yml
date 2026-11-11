@@ -39,9 +39,10 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Publicar o APK na pagina de Releases
+        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk STOX3.apk
           gh release delete ultima --yes --cleanup-tag || true
-          gh release create ultima STOX3.apk --prerelease --title "STOX3 versao 2.66 (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo STOX3.apk no celular e instale por cima da versao anterior (os dados ficam)."
+          gh release create ultima STOX3.apk --prerelease --title "STOX3 versao 2.67 (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo STOX3.apk no celular e instale por cima da versao anterior (os dados ficam)."

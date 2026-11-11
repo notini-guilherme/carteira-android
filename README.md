@@ -4,6 +4,7 @@ App Android do STOX3: abre a carteira de ações, FIIs e cripto dentro de um Web
 
 - `app/src/main/assets/index.html`: a carteira (gerada por `build_android.py`, versão limpa, sem dados pessoais).
 - `MainActivity.kt`: janela do app, anexar notas/arquivos, links externos no navegador.
+- `Notify.kt` e `NotifBridge.kt`: avisos de abertura e fechamento do mercado (WorkManager) e a ponte da página para eles.
 - `Bridges.kt`: ponte para buscar cotações (brapi, Binance, Mercado Bitcoin, Banco Central) sem as regras de CORS para salvar o backup em Downloads e para abrir a janela de compartilhar do Android.
 - `.github/workflows/build.yml`: a cada envio para a branch `main`, o GitHub compila e publica o APK em **Releases** (marcador `ultima`).
 
