@@ -322,7 +322,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.83 · 12/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.84 · 12/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -2252,7 +2252,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.83',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.84',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -3995,7 +3995,9 @@ var GDK='carteira-gd-v1',GDBK='carteira-gd-base-v1',GDPK='carteira-gd-prev-v1',G
 var GDDATA=['carteira-acoes-v1','carteira-prov-v1','carteira-carry-v1','carteira-paid-v1','carteira-ir-v1','carteira-ev-v1','carteira-trash-v1','carteira-cr-v1','carteira-wl-v1','carteira-mk-v1','carteira-pvign-v1'];
 var GDSECK=['carteira-brapi-v1','carteira-gemkey-v1','carteira-apikey-v1','carteira-aiprov-v1','carteira-keys-v2'];
 var GDSTRIP={'carteira-cr-v1':['px']};/* partes que sao so cache de preco e nao viajam */
-var GDSCOPE='openid email https://www.googleapis.com/auth/drive.appdata';
+var GDAPP='https://www.googleapis.com/auth/drive.appdata';
+/* O login por codigo do Google aceita poucos escopos e as vezes recusa certas combinacoes (invalid_scope). Tentamos da mais completa (com e-mail) para a minima (so a pasta do app). */
+var GDSCOPES=['openid email '+GDAPP,'email '+GDAPP,GDAPP],GDSCOPE=GDSCOPES[0];
 var GD={busy:false,err:'',msg:'',dev:null,pt:0,choice:null,act:Date.now(),pend:false,boot:true,reload:function(){try{location.reload()}catch(e){}}};
 /* ---- estado guardado ---- */
 function gdSt(){var o=null;try{o=JSON.parse(localStorage.getItem(GDK)||'null')}catch(e){}
@@ -4172,10 +4174,20 @@ async function gdStart(){
   var c=gdCfg();GD.err='';GD.msg='';
   if(!c.id){GD.err='Falta o ID do cliente Google. Cole em "Avançado" abaixo.';gdPaint();return}
   GD.msg='Pedindo o código ao Google…';gdPaint();
-  var r=await gdReq('POST','https://oauth2.googleapis.com/device/code',{'Content-Type':'application/x-www-form-urlencoded'},gdForm({client_id:c.id,scope:GDSCOPE}));
+  var r,i,first=null;
+  for(i=0;i<GDSCOPES.length;i++){
+    r=await gdReq('POST','https://oauth2.googleapis.com/device/code',{'Content-Type':'application/x-www-form-urlencoded'},gdForm({client_id:c.id,scope:GDSCOPES[i]}));
+    if(r.err)break;
+    if(r.j&&r.j.error==='invalid_scope'){if(!first)first=r.j;continue}
+    break}
   GD.msg='';
   if(r.err){GD.err=gdMsgErr(gdFail('net'));gdPaint();return}
-  if(!r.j||!r.j.device_code){GD.err=r.j&&(r.j.error==='invalid_client'||r.j.error==='unauthorized_client')?gdMsgErr(gdFail('conf')):'O Google não deu o código ('+(r.j&&r.j.error?r.j.error:r.status)+').';gdPaint();return}
+  if(!r.j||!r.j.device_code){
+    var er=r.j&&r.j.error?String(r.j.error):String(r.status),ds=first&&first.error_description?String(first.error_description):(r.j&&r.j.error_description?String(r.j.error_description):'');
+    GD.err=r.j&&(r.j.error==='invalid_client'||r.j.error==='unauthorized_client')?gdMsgErr(gdFail('conf')):
+      (er==='invalid_scope'?'O Google recusou a permissão da pasta do app (invalid_scope'+(ds?': '+ds:'')+'). Confira no Google Cloud, em Acesso a dados, se o escopo drive.appdata está adicionado, e em Biblioteca se a Google Drive API está ativada.':
+      'O Google não deu o código ('+er+(ds?': '+ds:'')+').');
+    gdPaint();return}
   GD.dev={code:String(r.j.user_code||''),url:String(r.j.verification_url||r.j.verification_uri||'https://www.google.com/device'),dc:String(r.j.device_code),exp:Date.now()+(+r.j.expires_in||1800)*1000,iv:(+r.j.interval>0?+r.j.interval:5)*1000};
   gdPaint();gdPoll()}
 function gdPoll(){
@@ -4189,6 +4201,7 @@ function gdPoll(){
     var j=r.j||{};
     if(j.access_token&&j.refresh_token){
       ST.rt=j.refresh_token;ST.at=j.access_token;ST.exp=Date.now()+(+j.expires_in||3600)*1000;ST.email=gdMail(j.id_token)||ST.email;ST.file='';ST.rv='';
+      if(!ST.email){try{var ui=await gdReq('GET','https://www.googleapis.com/oauth2/v3/userinfo',{Authorization:'Bearer '+j.access_token});if(ui.j&&ui.j.email)ST.email=String(ui.j.email)}catch(e){}}
       try{localStorage.removeItem(GDBK)}catch(e){}
       gdSave();GD.dev=null;gdPaint();gdSync('login');return}
     if(j.error==='authorization_pending'){gdPoll();return}
