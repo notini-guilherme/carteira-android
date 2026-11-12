@@ -374,7 +374,7 @@ try{if(localStorage.getItem('carteira-imp-v2')===null)localStorage.setItem('cart
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.69 · 11/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.70 · 11/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -1686,11 +1686,11 @@ function rPos(){var C=calc(CR.ops),P=C.pools,all=Object.keys(P),held=all.filter(
   all.forEach(function(c){rz+=P[c].gain});
   held.forEach(function(c){tc+=P[c].cost;var px=+CR.px[c]||0;if(px>0){tv+=P[c].qty*px;tcv+=P[c].cost}});
   var pvv=0;held.forEach(function(c){var px=+CR.px[c]||0;pvv+=px>0?P[c].qty*px:P[c].cost});
-  var h=pcHero('C')+'<h2>Posições em carteira'+(held.length?vzHeadV('Valor atual',pvv,'Moedas sem preço informado entram pelo custo'):'')+'<span class="h2t">'+held.length+'</span></h2>';
+  var hrC=pcHero('C'),h=hrC+'<h2>Posições em carteira'+(held.length?vzHeadV('Valor atual',pvv,'Moedas sem preço informado entram pelo custo'):'')+'<span class="h2t">'+held.length+'</span></h2>';
   if(!held.length){h+='<div class="empty">'+(CR.ops.length?'Nenhuma moeda em carteira no momento.':'Nenhuma operação ainda. Lance uma compra na aba Lançar.')+'</div>'}
   else{h+=zBar()+'<div class="tot"><span>Custo total em carteira</span><span>'+brl(tc)+'</span></div>';
     if(tv>0)h+='<div class="tot" style="margin-top:6px"><span>Valor atual (moedas com preço informado)</span><span>'+brl(tv)+'</span></div><div class="tot" style="margin-top:6px"><span>Resultado não realizado</span><span class="'+cls(tv-tcv)+'">'+brl(tv-tcv)+' ('+pct((tv-tcv)/tcv)+')</span></div>';
-    h+='<div class="tot" style="margin-top:6px"><span>Resultado realizado (todas as vendas)</span><span class="'+cls(rz)+'">'+brl(rz)+'</span></div>';
+    if(!hrC)h+='<div class="tot" style="margin-top:6px"><span>Resultado realizado (todas as vendas)</span><span class="'+cls(rz)+'">'+brl(rz)+'</span></div>';
     if(CPV==='t')h+=zTbl(held,P);else h+=pcBar('C')+held.map(function(c){var p=P[c],ct=crCat(c),col=COLS[ct],px=+CR.px[c]||0,val=px>0?p.qty*px:0,lat=px>0?val-p.cost:0;
       return '<div class="pc cp pcx kb" style="--kc:'+col+'" data-zc="'+esc(c)+'"><div class="cph"><div class="pcl">'+pcAv('C',c)+'<div class="pcn"><div class="cpt"><b class="ptk">'+esc(c)+'</b><span class="tb kc" style="--kc:'+col+'">'+CATN[ct]+' · '+ct+'</span></div>'+(NM[c]?'<div class="pn pcm">'+esc(NM[c])+'</div>':'')+'</div></div><div class="cpv"><b>'+(px>0?brl(val):brl(p.cost))+'</b>'+(px>0?pcDay('C',c,val,px)+pcRes(true,lat,p.cost):pcRes(false,0,0,'custo, sem preço atual'))+'</div></div>'+(px>0?zVia(c):'')+pcSpark('C',c,p.cost/p.qty,p.qty)+'<div class="cpm"><span>Quantidade<b>'+fq(p.qty)+'</b></span><span>Custo médio<b>'+pq(p.cost/p.qty)+'</b></span><span>Custo total<b>'+brl(p.cost)+'</b></span><span>Realizado<b class="'+cls(p.gain)+'">'+brl(p.gain)+'</b></span></div>'+zLocs(c)+'<div class="row" style="margin-top:8px"><div><div class="lw"><label>Preço atual em R$ (por unidade)</label>'+hq('px')+'</div><input data-zpx="'+esc(c)+'" inputmode="decimal" placeholder="Opcional" value="'+(px>0?fin(px):'')+'"></div><div><div class="lw"><label>Tipo no Imposto de Renda</label>'+hq('cat')+'</div><select data-zcat="'+esc(c)+'">'+CATO.map(function(k){return '<option value="'+k+'"'+(k===ct?' selected':'')+'>'+k+' · '+CATN[k]+'</option>'}).join('')+'</select></div></div>'+zGap(p.cost/p.qty,px)+zBtns(c)+'</div>'}).join('')}
   if(zero.length){h+='<h2>Moedas zeradas<span class="h2t">'+zero.length+'</span></h2>'+zero.map(function(c){var p=P[c];return '<div class="pc cp"><div class="cph"><div class="cpt"><b class="ptk">'+esc(c)+'</b><span class="pn">'+esc(NM[c]||'')+'</span></div><div class="cpv"><b class="'+cls(p.gain)+'">'+brl(p.gain)+'</b><span class="mu">resultado realizado</span></div></div></div>'}).join('')}
@@ -2049,12 +2049,15 @@ function qiDayA(sym){
   var has=function(D){return !!(bars[D]&&bars[D][1]>0)||smp.some(function(x){return qiDt(x[0])===D})};
   if(!has(sess)){var all=ks.filter(function(D){return D<sess&&bars[D]&&bars[D][1]>0}).concat(smp.map(function(x){return qiDt(x[0])}).filter(function(D){return D<sess})).sort();if(all.length)sess=all[all.length-1]}
   var bar=bars[sess],o=bar&&bar[0]>0?+bar[0]:0,cl=bar&&bar[1]>0?+bar[1]:0,ref=qiQuoteRef('A',sym,px,sess)||qiLastClose(bars,sess)||0,pts=[],fb=false;
-  var past=sess<today||new Date().getHours()>=18,sm=smp.filter(function(x){return qiDt(x[0])===sess});
+  /* v2.70: o grafico do dia termina no fechamento da bolsa (17:55); precos buscados depois das 18h nao estendem a linha */
+  var past=sess<today||new Date().getHours()>=18,endT=qiAt(sess,18,0),sm0=smp.filter(function(x){return qiDt(x[0])===sess}),sm=sm0.filter(function(x){return x[0]<=endT}),post=sm0.filter(function(x){return x[0]>endT});
   if(o>0)pts.push({t:qiAt(sess,10,0),p:o,l:'10:00'});
   sm.forEach(function(x){if(!pts.length||x[0]>pts[pts.length-1].t)pts.push({t:x[0],p:x[1],l:qiHm(x[0])})});
-  if(past&&cl>0){if(!pts.length||pts[pts.length-1].t<qiAt(sess,17,30))pts.push({t:qiAt(sess,17,55),p:cl,l:'fech.'})}
+  if(past){var cp=cl>0?cl:(post.length?post[post.length-1][1]:0);
+    if(cp>0){if(!pts.length||pts[pts.length-1].t<qiAt(sess,17,30))pts.push({t:qiAt(sess,17,55),p:cp,l:'fech.'})}
+    else if(sess===today&&px>0&&(!pts.length||pts[pts.length-1].p!==px)){var qe=QXT['A:'+sym],tq=qe&&qe.t>0&&qiDt(qe.t)===sess?Math.min(qe.t,qiAt(sess,17,55)):0,lt=pts.length?pts[pts.length-1].t:0,tt=Math.max(tq,lt+1);pts.push({t:tt,p:px,l:tt>=qiAt(sess,17,30)?'fech.':qiHm(tt)})}}
   else if(sess===today&&px>0&&(!pts.length||pts[pts.length-1].p!==px))pts.push({t:Math.max(now,pts.length?pts[pts.length-1].t+1:0),p:px,l:'agora'});
-  if(pts.length<2&&ref>0&&px>0&&sess===today){pts=[{t:qiAt(sess,10,0),p:ref,l:'fech. ant.'},{t:Math.max(now,qiAt(sess,10,1)),p:px,l:'agora'}];fb=true}
+  if(pts.length<2&&ref>0&&px>0&&sess===today){pts=[{t:qiAt(sess,10,0),p:ref,l:'fech. ant.'},past?{t:qiAt(sess,17,55),p:px,l:'fech.'}:{t:Math.max(now,qiAt(sess,10,1)),p:px,l:'agora'}];fb=true}
   if(pts.length<2)return null;
   return {pts:pts,ref:ref,sess:sess,fb:fb}}
 function qiDayC(sym){
@@ -2186,7 +2189,7 @@ function pcHero(k){
 /* v2.67: controles dos graficos (periodo e ocultar) ficam logo acima dos cartoes de posicao, nao no bloco azul */
 function pcBar(k){var r=pcR(),chips=[[1,k==='C'?'24 h':'Hoje'],[5,'5 dias'],[30,'30 dias']].map(function(x){return '<button type="button" class="pcrb'+(x[0]===r?' on':'')+'" data-pcr="'+x[0]+'" aria-pressed="'+(x[0]===r?'true':'false')+'">'+x[1]+'</button>'}).join('');
   return '<div class="pcgr" data-pcgk="'+k+'" role="group" aria-label="Gráfico de cada ativo">'+(VZ.ui.pg?'<span>Gráfico de cada ativo</span>'+chips:'<span>Gráficos ocultos</span>')+'<button type="button" class="pcrb pcgb" data-pcg="1" aria-pressed="'+(VZ.ui.pg?'true':'false')+'">'+(VZ.ui.pg?'Ocultar gráficos':'Mostrar gráficos')+'</button></div>'}
-var _rpI=renderPos;renderPos=vzScope(function(R){_rpI.apply(this,arguments);try{var b=$('#b');if(b&&R&&R.open&&R.open.length){b.insertAdjacentHTML('afterbegin',pcHero('A'));var f1=b.querySelector('.pcx');if(f1)f1.insertAdjacentHTML('beforebegin',pcBar('A'))}}catch(e){}});
+var _rpI=renderPos;renderPos=vzScope(function(R){_rpI.apply(this,arguments);try{var b=$('#b');if(b&&R&&R.open&&R.open.length){var hr0=pcHero('A');b.insertAdjacentHTML('afterbegin',hr0);if(hr0)Array.prototype.slice.call(b.children).forEach(function(e){if(e.classList&&e.classList.contains('tot')&&/^Resultado realizado \(todas as vendas\)/.test((e.textContent||'').trim()))e.remove()});var f1=b.querySelector('.pcx');if(f1)f1.insertAdjacentHTML('beforebegin',pcBar('A'))}}catch(e){}});
 document.addEventListener('click',function(e){var g=e.target.closest&&e.target.closest('[data-pcg]');if(g){VZ.ui.pg=VZ.ui.pg?0:1;vzSave();var cg=document.getElementById('sxpg');if(cg)cg.checked=!!VZ.ui.pg;try{render()}catch(x){}try{if(window.CRX)window.CRX.all()}catch(x){}return}
   var b=e.target.closest&&e.target.closest('[data-pcr]');if(!b)return;var v=+b.dataset.pcr;if([1,5,30].indexOf(v)<0)return;
   VZ.ui.pr=v;vzSave();try{render()}catch(x){}try{if(window.CRX)window.CRX.all()}catch(x){}});
@@ -2231,7 +2234,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.69',APPD='11/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.70',APPD='11/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
