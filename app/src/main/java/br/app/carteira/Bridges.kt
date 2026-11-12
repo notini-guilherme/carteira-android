@@ -110,6 +110,56 @@ class HttpBridge(private val web: WebView) {
             web.post { web.evaluateJavascript(js, null) }
         }
     }
+
+    /** Login e arquivo do Google Drive (sincronizacao entre aparelhos). So estes enderecos, estes metodos e estes cabecalhos passam. */
+    private val googleHosts = setOf(
+        "oauth2.googleapis.com",
+        "www.googleapis.com"
+    )
+
+    private val googleHeaders = setOf(
+        "content-type",
+        "authorization"
+    )
+
+    @JavascriptInterface
+    fun request(id: String, method: String, url: String, headers: String, payload: String) {
+        pool.execute {
+            var status = 0
+            var body = ""
+            try {
+                val u = URL(url)
+                val m = method.uppercase()
+                if (u.protocol == "https" && u.host in googleHosts && (m == "GET" || m == "POST" || m == "DELETE")) {
+                    val c = u.openConnection() as HttpURLConnection
+                    c.requestMethod = m
+                    c.connectTimeout = 15000
+                    c.readTimeout = 60000
+                    c.setRequestProperty("Accept", "application/json")
+                    c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
+                    val hj = JSONObject(headers)
+                    val names = hj.keys()
+                    while (names.hasNext()) {
+                        val n = names.next()
+                        if (n.lowercase() in googleHeaders) c.setRequestProperty(n, hj.getString(n))
+                    }
+                    if (m == "POST") {
+                        c.doOutput = true
+                        c.outputStream.use { it.write(payload.toByteArray(Charsets.UTF_8)) }
+                    }
+                    status = c.responseCode
+                    val stream = if (status in 200..299) c.inputStream else c.errorStream
+                    body = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: ""
+                    c.disconnect()
+                }
+            } catch (e: Exception) {
+                status = 0
+                body = ""
+            }
+            val js = "window.__qxDone(" + JSONObject.quote(id) + "," + status + "," + JSONObject.quote(body) + ")"
+            web.post { web.evaluateJavascript(js, null) }
+        }
+    }
 }
 
 /** Salva o arquivo de backup na pasta Downloads do celular. Devolve "" se deu certo, ou o motivo do erro. */
