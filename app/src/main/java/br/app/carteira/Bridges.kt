@@ -28,7 +28,9 @@ class HttpBridge(private val web: WebView) {
         "olinda.bcb.gov.br",
         "news.google.com",
         "newsdata.io",
-        "eodhd.com"
+        "eodhd.com",
+        "query1.finance.yahoo.com",
+        "query2.finance.yahoo.com"
     )
 
     @JavascriptInterface
@@ -44,7 +46,7 @@ class HttpBridge(private val web: WebView) {
                     c.connectTimeout = 10000
                     c.readTimeout = 15000
                     c.setRequestProperty("Accept", "application/json, application/rss+xml, application/xml;q=0.9, */*;q=0.8")
-                    c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
+                    c.setRequestProperty("User-Agent", if (u.host.endsWith("finance.yahoo.com")) "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36" else "CarteiraApp/1.0")
                     status = c.responseCode
                     val stream = if (status in 200..299) c.inputStream else c.errorStream
                     body = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: ""
