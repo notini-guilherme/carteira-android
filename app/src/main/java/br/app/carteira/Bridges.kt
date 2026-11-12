@@ -58,6 +58,56 @@ class HttpBridge(private val web: WebView) {
             web.post { web.evaluateJavascript(js, null) }
         }
     }
+
+    /** Servicos que leem a nota de corretagem (foto ou PDF) com a chave do proprio usuario. So estes enderecos e estes cabecalhos passam. */
+    private val postHosts = setOf(
+        "generativelanguage.googleapis.com",
+        "api.anthropic.com"
+    )
+
+    private val postHeaders = setOf(
+        "content-type",
+        "x-goog-api-key",
+        "x-api-key",
+        "anthropic-version",
+        "anthropic-dangerous-direct-browser-access"
+    )
+
+    @JavascriptInterface
+    fun post(id: String, url: String, headers: String, payload: String) {
+        pool.execute {
+            var status = 0
+            var body = ""
+            try {
+                val u = URL(url)
+                if (u.protocol == "https" && u.host in postHosts) {
+                    val c = u.openConnection() as HttpURLConnection
+                    c.requestMethod = "POST"
+                    c.connectTimeout = 15000
+                    c.readTimeout = 120000
+                    c.doOutput = true
+                    c.setRequestProperty("Accept", "application/json")
+                    c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
+                    val hj = JSONObject(headers)
+                    val names = hj.keys()
+                    while (names.hasNext()) {
+                        val n = names.next()
+                        if (n.lowercase() in postHeaders) c.setRequestProperty(n, hj.getString(n))
+                    }
+                    c.outputStream.use { it.write(payload.toByteArray(Charsets.UTF_8)) }
+                    status = c.responseCode
+                    val stream = if (status in 200..299) c.inputStream else c.errorStream
+                    body = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: ""
+                    c.disconnect()
+                }
+            } catch (e: Exception) {
+                status = 0
+                body = ""
+            }
+            val js = "window.__qxDone(" + JSONObject.quote(id) + "," + status + "," + JSONObject.quote(body) + ")"
+            web.post { web.evaluateJavascript(js, null) }
+        }
+    }
 }
 
 /** Salva o arquivo de backup na pasta Downloads do celular. Devolve "" se deu certo, ou o motivo do erro. */
