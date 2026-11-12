@@ -195,8 +195,8 @@ object Notify {
             sb.append("Maior queda: ").append(worstT).append(' ').append(pct(worstP)).append(". ")
         }
         if (todayN < arr.length()) sb.append("Contei ").append(todayN).append(" de ").append(arr.length()).append(" ativos. ")
-        sb.append("Cotações com atraso de cerca de 30 min.")
-        return Out.Ok(title, sb.toString())
+        if (kind == "open") sb.append("Cotações com atraso de cerca de 30 min.")
+        return Out.Ok(title, sb.toString().trim())
     }
 
     private fun parseTime(o: JSONObject): Long {
