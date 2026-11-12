@@ -50,6 +50,11 @@ class MainActivity : ComponentActivity() {
         web.post { web.evaluateJavascript("window.__ntPerm&&window.__ntPerm(" + ok + ")", null) }
     }
 
+    /** Roda um trecho de JavaScript na pagina (usado pelas pontes). */
+    fun runJs(js: String) {
+        web.post { web.evaluateJavascript(js, null) }
+    }
+
     /** Pede a permissao de notificacoes (Android 13 ou mais novo). O resultado volta para a pagina em window.__ntPerm. */
     fun askNotifications() {
         if (Build.VERSION.SDK_INT >= 33 &&
@@ -170,6 +175,7 @@ class MainActivity : ComponentActivity() {
         web.addJavascriptInterface(HttpBridge(web), "AndroidHttp")
         web.addJavascriptInterface(FilesBridge(this), "AndroidFiles")
         web.addJavascriptInterface(NotifBridge(this), "AndroidNotif")
+        web.addJavascriptInterface(BioBridge(this), "AndroidBio")
 
         Notify.ensureChannel(this)
         Notify.schedule(this)
