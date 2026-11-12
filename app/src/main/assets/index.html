@@ -322,7 +322,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.84 · 12/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.85 · 12/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -2252,7 +2252,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.84',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.85',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -3982,7 +3982,8 @@ window.PNX={sha:pnSha,hash:pnHash,set:pnSet,get:pnGet,check:pnCheck,lock:pnLock,
 
 /* ===================== v2.81: sincronizar com o Google Drive =====================
    O que e: entrando com a conta Google nos dois aparelhos, os dados que voce salva em um aparecem no outro.
-   Como: o app guarda um arquivo (stox3-sync.json) na pasta escondida do app no SEU Google Drive (appDataFolder: so este app enxerga, nao aparece no Drive).
+   Como: o app guarda um arquivo (STOX3-dados-sincronizados.json) no SEU Google Drive. Permissao drive.file: o app so enxerga os arquivos que ele mesmo criou.
+   (A permissao drive.appdata, da pasta escondida, o Google RECUSA no login por codigo: 'Invalid device flow scope'. Por isso o arquivo fica visivel em Meu Drive.)
    Login por codigo (fluxo de "TVs e dispositivos de entrada limitada"): o app mostra um codigo, voce digita em google.com/device. A senha do Google nunca passa por aqui.
    Juncao: "tres vias". O app lembra como estava depois da ultima sincronizacao (base) e compara com este aparelho e com o Google:
      - o que so um lado mudou, vale;  - o que os dois mudaram, o app junta campo a campo (se for o mesmo campo, vale o deste aparelho);
@@ -3991,12 +3992,12 @@ window.PNX={sha:pnSha,hash:pnHash,set:pnSet,get:pnGet,check:pnCheck,lock:pnLock,
 /* ID e segredo do cliente Google (tipo "TVs e dispositivos de entrada limitada"). O ID nao e segredo. O segredo NAO fica no repositorio publico: o texto @@GD_SECRET@@ e trocado na hora de montar o pacote
    (Windows: pelo meu computador; Android: pelo segredo GD_SECRET do GitHub Actions). Se ainda estiver o texto @@..., vale o que a pessoa cola em Configuracoes > Avancado. */
 var GDC={id:'979373187339-jruqflsq2g298h6sful161tipm4mllrg.apps.googleusercontent.com',secret:'@@GD_SECRET@@'};
-var GDK='carteira-gd-v1',GDBK='carteira-gd-base-v1',GDPK='carteira-gd-prev-v1',GDOK='carteira-gdc-v1',GDFN='stox3-sync.json';
+var GDK='carteira-gd-v1',GDBK='carteira-gd-base-v1',GDPK='carteira-gd-prev-v1',GDOK='carteira-gdc-v1',GDFN='STOX3-dados-sincronizados.json';
 var GDDATA=['carteira-acoes-v1','carteira-prov-v1','carteira-carry-v1','carteira-paid-v1','carteira-ir-v1','carteira-ev-v1','carteira-trash-v1','carteira-cr-v1','carteira-wl-v1','carteira-mk-v1','carteira-pvign-v1'];
 var GDSECK=['carteira-brapi-v1','carteira-gemkey-v1','carteira-apikey-v1','carteira-aiprov-v1','carteira-keys-v2'];
 var GDSTRIP={'carteira-cr-v1':['px']};/* partes que sao so cache de preco e nao viajam */
-var GDAPP='https://www.googleapis.com/auth/drive.appdata';
-/* O login por codigo do Google aceita poucos escopos e as vezes recusa certas combinacoes (invalid_scope). Tentamos da mais completa (com e-mail) para a minima (so a pasta do app). */
+var GDAPP='https://www.googleapis.com/auth/drive.file';
+/* O login por codigo do Google aceita poucos escopos e as vezes recusa certas combinacoes (invalid_scope). Tentamos da mais completa (com e-mail) para a minima (so o arquivo do app). */
 var GDSCOPES=['openid email '+GDAPP,'email '+GDAPP,GDAPP],GDSCOPE=GDSCOPES[0];
 var GD={busy:false,err:'',msg:'',dev:null,pt:0,choice:null,act:Date.now(),pend:false,boot:true,reload:function(){try{location.reload()}catch(e){}}};
 /* ---- estado guardado ---- */
@@ -4100,7 +4101,7 @@ var GDAPI='https://www.googleapis.com/drive/v3/files',GDUP='https://www.googleap
 function gdHttpErr(r){if(r.status===401)return gdFail('login');if(r.status===403||r.status===400)return gdFail('deny',r.status);if(r.status===429)return gdFail('limit');if(r.status>=500)return gdFail('srv');return gdFail('http',r.status)}
 /* Atualizar = criar um arquivo novo e so depois apagar o antigo (nunca fica um arquivo pela metade, e dispensa o metodo PATCH, que o Android nao faz). O mais novo vale. */
 async function gdList(){
-  var r=await gdApi('GET',GDAPI+'?spaces=appDataFolder&orderBy='+encodeURIComponent('createdTime desc')+'&pageSize=20&fields='+encodeURIComponent('files(id)')+'&q='+encodeURIComponent("name='"+GDFN+"' and trashed=false"));
+  var r=await gdApi('GET',GDAPI+'?orderBy='+encodeURIComponent('createdTime desc')+'&pageSize=20&fields='+encodeURIComponent('files(id)')+'&q='+encodeURIComponent("name='"+GDFN+"' and trashed=false"));
   if(!r.ok)throw gdHttpErr(r);
   return (r.j&&Array.isArray(r.j.files)?r.j.files:[]).map(function(f){return String(f.id)}).filter(Boolean)}
 async function gdGet(id){
@@ -4112,7 +4113,7 @@ async function gdGet(id){
 async function gdCreate(doc){
   var bd='stoxb'+Date.now().toString(36),
       r=await gdApi('POST',GDUP+'?uploadType=multipart&fields='+encodeURIComponent('id'),{'Content-Type':'multipart/related; boundary='+bd},
-        '--'+bd+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify({name:GDFN,parents:['appDataFolder']})+'\r\n--'+bd+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify(doc)+'\r\n--'+bd+'--');
+        '--'+bd+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify({name:GDFN,mimeType:'application/json',description:'Dados do app STOX3 sincronizados entre os seus aparelhos. Não apague este arquivo.'})+'\r\n--'+bd+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify(doc)+'\r\n--'+bd+'--');
   if(!r.ok||!r.j||!r.j.id)throw gdHttpErr(r);
   return String(r.j.id)}
 async function gdClean(ids){for(var i=0;i<ids.length;i++){try{await gdApi('DELETE',GDAPI+'/'+encodeURIComponent(ids[i]))}catch(e){}}}
@@ -4122,7 +4123,7 @@ function gdMsgErr(e){var c=e&&e.code;
   if(c==='net')return 'Sem internet agora. Tento de novo daqui a pouco.';
   if(c==='login')return 'A sessão do Google expirou. Toque em "Entrar com o Google" de novo.';
   if(c==='conf')return 'O Google recusou o ID do cliente. Confira o ID e o segredo em Avançado.';
-  if(c==='deny')return 'O Google negou o acesso à pasta do app. Confira se a Google Drive API está ativada no projeto e entre de novo.';
+  if(c==='deny')return 'O Google negou o acesso ao Drive. Confira se a Google Drive API está ativada no projeto e entre de novo.';
   if(c==='limit')return 'O Google pediu para esperar um pouco. Tento de novo daqui a pouco.';
   if(c==='srv')return 'O Google está fora do ar agora. Tento de novo daqui a pouco.';
   if(c==='bad')return 'O arquivo no Google está ilegível. Não alterei nada, nem lá nem aqui.';
@@ -4185,7 +4186,7 @@ async function gdStart(){
   if(!r.j||!r.j.device_code){
     var er=r.j&&r.j.error?String(r.j.error):String(r.status),ds=first&&first.error_description?String(first.error_description):(r.j&&r.j.error_description?String(r.j.error_description):'');
     GD.err=r.j&&(r.j.error==='invalid_client'||r.j.error==='unauthorized_client')?gdMsgErr(gdFail('conf')):
-      (er==='invalid_scope'?'O Google recusou a permissão da pasta do app (invalid_scope'+(ds?': '+ds:'')+'). Confira no Google Cloud, em Acesso a dados, se o escopo drive.appdata está adicionado, e em Biblioteca se a Google Drive API está ativada.':
+      (er==='invalid_scope'?'O Google recusou a permissão do Drive (invalid_scope'+(ds?': '+ds:'')+'). Confira no Google Cloud, em Acesso a dados, se o escopo drive.file está adicionado, e em Biblioteca se a Google Drive API está ativada.':
       'O Google não deu o código ('+er+(ds?': '+ds:'')+').');
     gdPaint();return}
   GD.dev={code:String(r.j.user_code||''),url:String(r.j.verification_url||r.j.verification_uri||'https://www.google.com/device'),dc:String(r.j.device_code),exp:Date.now()+(+r.j.expires_in||1800)*1000,iv:(+r.j.interval>0?+r.j.interval:5)*1000};
@@ -4244,13 +4245,13 @@ function gdPaint(){
   if(!kk||document.getElementById('sxgd'))return;
   sec=document.createElement('div');sec.className='sxsec';sec.id='sxgd';
   sec.innerHTML='<div class="cfh">Sincronizar com o Google</div>'+
-    '<p class="mu kintro">Entre com a sua conta Google neste aparelho e no outro. Seus lançamentos, proventos e favoritos ficam numa pasta escondida do <b>seu</b> Google Drive (só este app enxerga) e aparecem nos dois aparelhos sozinhos.</p>'+
+    '<p class="mu kintro">Entre com a sua conta Google neste aparelho e no outro. Seus lançamentos, proventos e favoritos ficam num arquivo no <b>seu</b> Google Drive (<i>STOX3-dados-sincronizados.json</i>, em Meu Drive) e aparecem nos dois aparelhos sozinhos. <b>Não apague esse arquivo.</b></p>'+
     '<div id="gdst" role="region" aria-live="polite"></div>'+
     '<label class="gdsk" id="gdsec" hidden><input type="checkbox" id="gdsk"> <span>Incluir as chaves de acesso (cotações, leitura de notas e notícias) na sincronização</span></label>'+
     '<details class="gdadv"><summary>Avançado</summary><div class="mu">Só é preciso se o app ainda não veio com o acesso do Google embutido. Cole o ID e o segredo do cliente (tipo "TVs e dispositivos de entrada limitada").</div>'+
     '<div class="krow"><input id="gdcid" type="text" placeholder="ID do cliente" autocomplete="off" spellcheck="false"></div>'+
     '<div class="krow"><input id="gdcsc" type="password" placeholder="Segredo do cliente" autocomplete="new-password" spellcheck="false"><button type="button" class="btn sm" id="gdcsv">Salvar</button></div></details>'+
-    '<div class="kwarn"><b>Privacidade:</b> o app só enxerga o arquivo que ele mesmo cria na pasta escondida. Quem tiver acesso à sua conta Google poderia baixá-lo, e o arquivo não é criptografado. Seu login fica guardado neste aparelho (sem a senha do Google).</div>';
+    '<div class="kwarn"><b>Privacidade:</b> o app só enxerga os arquivos que ele mesmo criou no seu Drive; o resto do seu Drive ele não vê. O arquivo aparece em Meu Drive e quem tiver acesso à sua conta Google poderia abri-lo, e ele não é criptografado. Se você apagar o arquivo, o app cria outro na próxima sincronização, com os dados deste aparelho. Seu login fica guardado neste aparelho (sem a senha do Google).</div>';
   kk.parentNode.insertBefore(sec,kk);
   var i1=document.getElementById('gdcid'),i2=document.getElementById('gdcsc');
   if(c.own){i1.value=c.id;i2.value=c.secret}else{i1.value='(embutido no app)';i1.disabled=true;i2.disabled=true;document.getElementById('gdcsv').disabled=true}
