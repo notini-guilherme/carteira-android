@@ -20,6 +20,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -80,6 +81,21 @@ class MainActivity : ComponentActivity() {
             FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         )
         setContentView(root)
+
+        // botao Voltar: primeiro fecha a pagina da acao, a tela cheia ou o menu Mais; so depois sai
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                web.evaluateJavascript("(window.__stxBack&&window.__stxBack())?'1':'0'") { r ->
+                    if (r != null && r.contains("1")) return@evaluateJavascript
+                    if (web.canGoBack()) {
+                        web.goBack()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        })
 
         val controller = WindowCompat.getInsetsController(window, root)
         controller.isAppearanceLightStatusBars = !night

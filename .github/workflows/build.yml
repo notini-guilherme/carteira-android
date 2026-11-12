@@ -45,4 +45,4 @@ jobs:
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk STOX3.apk
           gh release delete ultima --yes --cleanup-tag || true
-          gh release create ultima STOX3.apk --prerelease --title "STOX3 versao 2.70 (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo STOX3.apk no celular e instale por cima da versao anterior (os dados ficam)."
+          gh release create ultima STOX3.apk --prerelease --title "STOX3 versao 2.71 (compilacao ${{ github.run_number }})" --notes "APK de teste. Baixe o arquivo STOX3.apk no celular e instale por cima da versao anterior (os dados ficam)."
