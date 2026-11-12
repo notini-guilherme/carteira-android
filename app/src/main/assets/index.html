@@ -322,7 +322,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.82 · 12/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.83 · 12/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -2252,7 +2252,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.82',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.83',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -3990,7 +3990,7 @@ window.PNX={sha:pnSha,hash:pnHash,set:pnSet,get:pnGet,check:pnCheck,lock:pnLock,
    A base so avanca quando este aparelho ja esta igual ao resultado; assim, mesmo que a tela antiga grave por cima, a proxima sincronizacao recupera tudo. */
 /* ID e segredo do cliente Google (tipo "TVs e dispositivos de entrada limitada"). O ID nao e segredo. O segredo NAO fica no repositorio publico: o texto @@GD_SECRET@@ e trocado na hora de montar o pacote
    (Windows: pelo meu computador; Android: pelo segredo GD_SECRET do GitHub Actions). Se ainda estiver o texto @@..., vale o que a pessoa cola em Configuracoes > Avancado. */
-var GDC={id:'127347763259-gj8ag01u04fktqnjjh005kmtaes5r0re.apps.googleusercontent.com',secret:'@@GD_SECRET@@'};
+var GDC={id:'979373187339-jruqflsq2g298h6sful161tipm4mllrg.apps.googleusercontent.com',secret:'@@GD_SECRET@@'};
 var GDK='carteira-gd-v1',GDBK='carteira-gd-base-v1',GDPK='carteira-gd-prev-v1',GDOK='carteira-gdc-v1',GDFN='stox3-sync.json';
 var GDDATA=['carteira-acoes-v1','carteira-prov-v1','carteira-carry-v1','carteira-paid-v1','carteira-ir-v1','carteira-ev-v1','carteira-trash-v1','carteira-cr-v1','carteira-wl-v1','carteira-mk-v1','carteira-pvign-v1'];
 var GDSECK=['carteira-brapi-v1','carteira-gemkey-v1','carteira-apikey-v1','carteira-aiprov-v1','carteira-keys-v2'];
