@@ -25,7 +25,10 @@ class HttpBridge(private val web: WebView) {
         "data-api.binance.vision",
         "api.binance.com",
         "api.mercadobitcoin.net",
-        "olinda.bcb.gov.br"
+        "olinda.bcb.gov.br",
+        "news.google.com",
+        "newsdata.io",
+        "eodhd.com"
     )
 
     @JavascriptInterface
@@ -40,7 +43,7 @@ class HttpBridge(private val web: WebView) {
                     c.requestMethod = "GET"
                     c.connectTimeout = 10000
                     c.readTimeout = 15000
-                    c.setRequestProperty("Accept", "application/json")
+                    c.setRequestProperty("Accept", "application/json, application/rss+xml, application/xml;q=0.9, */*;q=0.8")
                     c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
                     status = c.responseCode
                     val stream = if (status in 200..299) c.inputStream else c.errorStream
