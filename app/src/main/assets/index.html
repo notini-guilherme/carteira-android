@@ -322,7 +322,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.81 · 12/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.82 · 12/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -2252,7 +2252,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.81',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.82',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -3520,25 +3520,51 @@ async function yfGet(tk){var r=await qxGet('https://query1.finance.yahoo.com/v8/
 function yfList(){var s={};
   try{calc(ops).open.forEach(function(c){s[c.ticker]=1})}catch(e){}
   try{WL.fav.forEach(function(t){s[t]=1});WL.lists.forEach(function(l){l.tks.forEach(function(t){s[t]=1})})}catch(e){}
-  return Object.keys(s).filter(function(t){return /^[A-Z]{4}\d{1,2}$/.test(t)}).slice(0,40)}
-async function yfRun(force){
+  return Object.keys(s).filter(function(t){return /^[A-Z][A-Z0-9]{3}\d{1,2}$/.test(t)}).slice(0,40)}
+async function yfRun(force,only){
   if(!qhEnv()||YFB||Date.now()<YFBK)return 0;
-  var now=Date.now(),open=false,list=yfList(),due,i=0,got=0,stop=false;
+  var now=Date.now(),open=false,list=only||yfList(),due,i=0,got=0,stop=false;
   try{open=mktOpen()}catch(e){}
   due=list.filter(function(tk){var e=QY[tk];return !e||now-e.t>(force?2*6e4:(open?5*6e4:3*36e5))});
+  if(only)due=due.slice(0,9);/* v2.82: pedidos da tela vao em lotes pequenos */
   if(!due.length)return 0;
   YFB=true;
   try{await Promise.all([0,1,2].map(async function(){
     while(i<due.length&&!stop){var tk=due[i++],r=await yfGet(tk);
-      if(r.d){QY[tk]={t:Date.now(),d:r.d};got++}
+      if(r.d){QY[tk]={t:Date.now(),d:r.d};got++;if(only){try{mgPaint(tk)}catch(e){}}}
       else if(r.err==='limit'||r.err==='auth'||r.err==='plan'){stop=true;YFBK=Date.now()+30*6e4}
       else if(r.err==='net'||r.err==='timeout'||r.err==='srv'){stop=true;YFBK=Date.now()+5*6e4}
       else if(!QY[tk])QY[tk]={t:Date.now(),d:{}};
       await qxWait(120)}}))}catch(e){}
   YFB=false;
-  try{Object.keys(QY).forEach(function(k){if(list.indexOf(k)<0&&!(QY[k]&&Date.now()-QY[k].t<7*864e5))delete QY[k]})}catch(e){}
-  if(got){yfSave();try{render()}catch(e){}}
+  yfTrim();
+  if(got){yfSave();if(!only){try{render()}catch(e){}}}
   return got}
+/* o que e da carteira, favoritos e listas fica sempre; o resto (pedido pela tela) fica ate 1 dia e no maximo 50 ativos, para nao encher a memoria do aparelho */
+function yfTrim(){try{var L=yfList(),ks=Object.keys(QY),now=Date.now();
+  ks.forEach(function(k){if(L.indexOf(k)<0&&!(QY[k]&&now-QY[k].t<864e5))delete QY[k]});
+  Object.keys(QY).filter(function(k){return L.indexOf(k)<0}).sort(function(a,b){return QY[b].t-QY[a].t}).slice(50).forEach(function(k){delete QY[k]})}catch(e){}}
+/* ---- v2.82: curva real sob demanda ----
+   Os cartoes do Mercado que aparecem na tela (com o grafico ligado) e a pagina da acao que voce abre pedem a curva do dia ao Yahoo sozinhos,
+   sem precisar favoritar nem atualizar. Sao poucos por vez (ate 9), cada ativo e guardado por 5 minutos (3 horas com a bolsa fechada) e, se o Yahoo
+   recusar, o app pausa. Cada grafico e redesenhado sozinho quando a curva chega. */
+var YFW={},YFWT=0;
+function yfWQueue(l){if(!qhEnv())return;l.forEach(function(t){if(/^[A-Z][A-Z0-9]{3}\d{1,2}$/.test(t))YFW[t]=1});if(!YFWT)YFWT=setTimeout(yfWRun,YFB?1500:600)}
+async function yfWRun(){
+  YFWT=0;if(!qhEnv())return;
+  if(Date.now()<YFBK){YFW={};return}
+  if(YFB){if(Object.keys(YFW).length)YFWT=setTimeout(yfWRun,1500);return}
+  var now=Date.now(),open=false,all=Object.keys(YFW),due;
+  try{open=mktOpen()}catch(e){}
+  due=all.filter(function(tk){var e=QY[tk];return !e||now-e.t>(open?5*6e4:3*36e5)});
+  var take=due.slice(0,9);YFW={};due.slice(9).forEach(function(t){YFW[t]=1});
+  if(take.length)await yfRun(false,take);
+  if(Object.keys(YFW).length&&!YFWT)YFWT=setTimeout(yfWRun,800)}
+var _mgQ82=mgQueue;mgQueue=function(l){try{if(VZ.ui.pg||MDON)yfWQueue(l)}catch(e){}return _mgQ82.apply(this,arguments)};
+/* cartoes que estao na tela agora (para renovar a cada 5 min enquanto voce olha) */
+function yfVisible(){var o=[];try{var ml=document.getElementById('ml'),h=window.innerHeight||0;if(!ml)return o;var sc=ml.closest('section');if(sc&&!sc.classList.contains('on'))return o;
+  ml.querySelectorAll('.mkc').forEach(function(c){var r=c.getBoundingClientRect();if(r.bottom>-160&&r.top<h+160){var p=c.querySelector('.ptk');if(p)o.push(p.textContent.trim())}})}catch(e){}
+  return o.slice(0,18)}
 function yfPrevD(sym,sess){var e=QY[sym],ks=e&&e.d?Object.keys(e.d).filter(function(D){return D<sess&&e.d[D].length}).sort():[];return ks.length?ks[ks.length-1]:''}
 function yfDayA(sym,r){
   var e=QY[sym];if(!e||!e.d)return null;
@@ -3562,8 +3588,8 @@ function yfDayA(sym,r){
 var _qiDayAyf=qiDayA;qiDayA=function(sym){var r=_qiDayAyf.apply(this,arguments),y=null;try{y=yfDayA(sym,r)}catch(e){y=null}return y||r};
 var _qxRunYf=qxRun;qxRun=async function(k,quiet){var r=await _qxRunYf.apply(this,arguments);if(k!=='C')setTimeout(function(){yfRun(true)},30);return r};
 setTimeout(function(){if(QXC.auto)yfRun(false)},2500);
-setInterval(function(){if(QXC.loop&&(typeof document==='undefined'||document.visibilityState!=='hidden'))yfRun(false)},60000);
-window.YFX={parse:yfParse,run:yfRun,day:yfDayA,list:yfList,get:function(){return QY}};
+setInterval(function(){if(QXC.loop&&(typeof document==='undefined'||document.visibilityState!=='hidden'))yfRun(false);try{if(document.visibilityState!=='hidden'&&(VZ.ui.pg||MDON)){yfWQueue(yfVisible());if(MDON&&MD.tk)yfWQueue([MD.tk])}}catch(e){}},60000);
+window.YFX={parse:yfParse,run:yfRun,day:yfDayA,list:yfList,get:function(){return QY},want:yfWQueue,wrun:yfWRun,pend:function(){return YFW},visible:yfVisible,trim:yfTrim};
 
 /* ===================== v2.79: faixa de LED no topo (so em tela larga, a partir de 900 px) =====================
    Ao lado da marca STOX3: so o VALOR DA POSICAO fica parado; o resto passa como um letreiro de LED:
@@ -3962,7 +3988,9 @@ window.PNX={sha:pnSha,hash:pnHash,set:pnSet,get:pnGet,check:pnCheck,lock:pnLock,
      - o que so um lado mudou, vale;  - o que os dois mudaram, o app junta campo a campo (se for o mesmo campo, vale o deste aparelho);
      - um lancamento apagado em um lado e alterado no outro NAO e apagado (nada some sem voce pedir).
    A base so avanca quando este aparelho ja esta igual ao resultado; assim, mesmo que a tela antiga grave por cima, a proxima sincronizacao recupera tudo. */
-var GDC={id:'',secret:''};/* ID e segredo do cliente Google (tipo "TVs e dispositivos de entrada limitada"). Se ficar vazio, vale o que a pessoa cola em Configuracoes > Avancado. */
+/* ID e segredo do cliente Google (tipo "TVs e dispositivos de entrada limitada"). O ID nao e segredo. O segredo NAO fica no repositorio publico: o texto @@GD_SECRET@@ e trocado na hora de montar o pacote
+   (Windows: pelo meu computador; Android: pelo segredo GD_SECRET do GitHub Actions). Se ainda estiver o texto @@..., vale o que a pessoa cola em Configuracoes > Avancado. */
+var GDC={id:'127347763259-gj8ag01u04fktqnjjh005kmtaes5r0re.apps.googleusercontent.com',secret:'@@GD_SECRET@@'};
 var GDK='carteira-gd-v1',GDBK='carteira-gd-base-v1',GDPK='carteira-gd-prev-v1',GDOK='carteira-gdc-v1',GDFN='stox3-sync.json';
 var GDDATA=['carteira-acoes-v1','carteira-prov-v1','carteira-carry-v1','carteira-paid-v1','carteira-ir-v1','carteira-ev-v1','carteira-trash-v1','carteira-cr-v1','carteira-wl-v1','carteira-mk-v1','carteira-pvign-v1'];
 var GDSECK=['carteira-brapi-v1','carteira-gemkey-v1','carteira-apikey-v1','carteira-aiprov-v1','carteira-keys-v2'];
@@ -3977,7 +4005,7 @@ var ST=gdSt();
 function gdSave(){try{localStorage.setItem(GDK,JSON.stringify(ST))}catch(e){}}
 if(!ST.dev){ST.dev=Math.random().toString(36).slice(2,10);gdSave()}
 function gdCfg(){var o=null;try{o=JSON.parse(localStorage.getItem(GDOK)||'null')}catch(e){}
-  if(GDC.id)return {id:GDC.id,secret:GDC.secret,own:false};
+  if(GDC.id&&GDC.secret&&String(GDC.secret).indexOf('@@')<0)return {id:GDC.id,secret:GDC.secret,own:false};
   return {id:o&&typeof o.id==='string'?o.id.trim():'',secret:o&&typeof o.secret==='string'?o.secret.trim():'',own:true}}
 /* ---- comparacao e juncao em tres vias (funcoes puras) ---- */
 function gdCanon(v){if(v===undefined)return 'u';if(v===null||typeof v!=='object')return JSON.stringify(v);
