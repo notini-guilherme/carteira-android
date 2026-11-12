@@ -375,7 +375,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.72 · 11/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 2.73 · 12/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam guardados só neste aparelho. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto); o segundo conta as atualizações.</p></div>
@@ -924,7 +924,7 @@ var VZK='carteira-ui-v1';
     if(u&&typeof u==='object'){
       ['hide','hideOpen','sv','lg','pg'].forEach(function(k){if(k in u)VZ.ui[k]=u[k]?1:0});
       if(u.theme==='light'||u.theme==='dark'||u.theme==='auto')VZ.ui.theme=u.theme;
-      if([1,5,15,30,90].indexOf(+u.pr)>=0)VZ.ui.pr=+u.pr;
+      if([1,5,15,30,90].indexOf(+u.pr)>=0)VZ.ui.pr=+u.pr;if([-1,-15,-60,-240].indexOf(+u.prc)>=0)VZ.ui.prc=+u.prc;
       if(typeof u.name==='string')VZ.ui.name=u.name.slice(0,30);
       if(typeof u.photo==='string'&&/^data:image\/(jpeg|png|webp);base64,/.test(u.photo)&&u.photo.length<200000)VZ.ui.photo=u.photo}}catch(e){}
   if(VZ.ui.hideOpen)VZ.ui.hide=1;
@@ -2071,8 +2071,8 @@ function qiDayA(sym){
   var past=sess<today||new Date().getHours()>=18,endT=qiAt(sess,18,0),sm0=smp.filter(function(x){return qiDt(x[0])===sess}),sm=sm0.filter(function(x){return x[0]<=endT}),post=sm0.filter(function(x){return x[0]>endT});
   if(o>0)pts.push({t:qiAt(sess,10,0),p:o,l:'10:00'});
   sm.forEach(function(x){if(!pts.length||x[0]>pts[pts.length-1].t)pts.push({t:x[0],p:x[1],l:qiHm(x[0])})});
-  if(past){var cp=cl>0?cl:(post.length?post[post.length-1][1]:0);
-    if(cp>0){if(!pts.length||pts[pts.length-1].t<qiAt(sess,17,30))pts.push({t:qiAt(sess,17,55),p:cp,l:'fech.'})}
+  if(past){var qe0=(typeof QXT==='object'&&QXT)?QXT['A:'+sym]:null,useQ=px>0&&!!qe0&&qe0.t>=qiAt(sess,18,0),cp=useQ?px:(cl>0?cl:(post.length?post[post.length-1][1]:0));
+    if(cp>0){var lt0=pts.length?pts[pts.length-1].t:0;if(!pts.length||lt0<qiAt(sess,17,30))pts.push({t:qiAt(sess,17,55),p:cp,l:'fech.'});else if(useQ&&pts[pts.length-1].p!==cp)pts.push({t:Math.max(lt0+1,qiAt(sess,17,55)),p:cp,l:'fech.'})}
     else if(sess===today&&px>0&&(!pts.length||pts[pts.length-1].p!==px)){var qe=QXT['A:'+sym],tq=qe&&qe.t>0&&qiDt(qe.t)===sess?Math.min(qe.t,qiAt(sess,17,55)):0,lt=pts.length?pts[pts.length-1].t:0,tt=Math.max(tq,lt+1);pts.push({t:tt,p:px,l:tt>=qiAt(sess,17,30)?'fech.':qiHm(tt)})}}
   else if(sess===today&&px>0&&(!pts.length||pts[pts.length-1].p!==px))pts.push({t:Math.max(now,pts.length?pts[pts.length-1].t+1:0),p:px,l:'agora'});
   if(pts.length<2&&ref>0&&px>0&&sess===today){pts=[{t:qiAt(sess,10,0),p:ref,l:'fech. ant.'},past?{t:qiAt(sess,17,55),p:px,l:'fech.'}:{t:Math.max(now,qiAt(sess,10,1)),p:px,l:'agora'}];fb=true}
@@ -2209,8 +2209,8 @@ function pcBar(k){var r=pcR(),chips=[[1,k==='C'?'24 h':'Hoje'],[5,'5 dias'],[30,
   return '<div class="pcgr" data-pcgk="'+k+'" role="group" aria-label="Gráfico de cada ativo">'+(VZ.ui.pg?'<span>Gráfico de cada ativo</span>'+chips:'<span>Gráficos ocultos</span>')+'<button type="button" class="pcrb pcgb" data-pcg="1" aria-pressed="'+(VZ.ui.pg?'true':'false')+'">'+(VZ.ui.pg?'Ocultar gráficos':'Mostrar gráficos')+'</button></div>'}
 var _rpI=renderPos;renderPos=vzScope(function(R){_rpI.apply(this,arguments);try{var b=$('#b');if(b&&R&&R.open&&R.open.length){var hr0=pcHero('A');b.insertAdjacentHTML('afterbegin',hr0);if(hr0)Array.prototype.slice.call(b.children).forEach(function(e){if(e.classList&&e.classList.contains('tot')&&/^Resultado realizado \(todas as vendas\)/.test((e.textContent||'').trim()))e.remove()});var f1=b.querySelector('.pcx');if(f1)f1.insertAdjacentHTML('beforebegin',pcBar('A'))}}catch(e){}});
 document.addEventListener('click',function(e){var g=e.target.closest&&e.target.closest('[data-pcg]');if(g){VZ.ui.pg=VZ.ui.pg?0:1;vzSave();var cg=document.getElementById('sxpg');if(cg)cg.checked=!!VZ.ui.pg;try{render()}catch(x){}try{if(window.CRX)window.CRX.all()}catch(x){}return}
-  var b=e.target.closest&&e.target.closest('[data-pcr]');if(!b)return;var v=+b.dataset.pcr;if([1,5,15,30,90].indexOf(v)<0)return;
-  VZ.ui.pr=v;vzSave();try{render()}catch(x){}try{if(window.CRX)window.CRX.all()}catch(x){}});
+  var b=e.target.closest&&e.target.closest('[data-pcr]');if(!b)return;var v=+b.dataset.pcr;if(ivOk(v))VZ.ui.prc=v;else if([1,5,15,30,90].indexOf(v)>=0){VZ.ui.pr=v;delete VZ.ui.prc}else return;
+  vzSave();try{render()}catch(x){}try{if(window.CRX)window.CRX.all()}catch(x){}});
 window.QIX={bar:pcBar,data:QI,add:qiAdd,snap:qiSnap,save:qiSave,series:qiSeries,dayA:qiDayA,dayC:qiDayC,daily:qiDaily,kl:qiKRun,spark:pcSpark,hero:pcHero,sess:qiSess};
 /* ===== v2.66: estimativa antes de salvar (quadro "antes e depois" da posicao) ===== */
 function esDel(a,b){if(!(a>0)||!(b>0))return '';var d=b/a-1;if(Math.abs(d)<.00005)return '';return (d>0?'▲ +':'▼ −')+pct(Math.abs(d))}
@@ -2252,7 +2252,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='2.72',APPD='11/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='2.73',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -2611,10 +2611,15 @@ window.NTX={st:NT,snap:ntSnap,push:ntPush,sync:ntSync,on:ntOn};
 var CHDN=false,CHHT=0;
 /* funcoes (e nao variaveis): a Cripto desenha antes deste arquivo rodar */
 function chPs(){return [1,5,15,30,90]}
+/* v2.73: intervalos da Binance so na Cripto: Time (1 min, 24 h), 15m, 1h e 4h. Codigos negativos; o periodo comum continua em VZ.ui.pr e o intervalo em VZ.ui.prc */
+function ivOk(v){return v===-1||v===-15||v===-60||v===-240}
+function ivPs(){return [-1,-15,-60,-240]}
+function ivLab(r){return r===-1?'Time · 24 h':r===-15?'15 min · 2 dias':r===-60?'1 h · 7 dias':r===-240?'4 h · 30 dias':''}
 function chRg(){return window.__chr||(window.__chr={})}
-function pcR(){var r=+VZ.ui.pr;return chPs().indexOf(r)>=0?r:1}
-function chLbl(k,r){return r===1?(k==='C'?'24 h':'Hoje'):r+' d'}
+function pcR(k){if(k==='C'){var c=+VZ.ui.prc;if(ivOk(c))return c}var r=+VZ.ui.pr;return chPs().indexOf(r)>=0?r:1}
+function chLbl(k,r){return r===-1?'Time':r===-15?'15m':r===-60?'1h':r===-240?'4h':(r===1?(k==='C'?'24 h':'Hoje'):r+' d')}
 function chData(k,sym,r){if(typeof QI!=='object'||!QI||!QI.A)return null;/* a Cripto desenha antes de o historico do dia carregar */
+  if(r<0)return k==='C'?ivSeries(sym,r):null;
   return r===1?(k==='A'?qiDayA(sym):qiDayC(sym)):qiDaily(k,sym,r)}
 /* grafico de uma acao do Mercado: usa as aberturas/fechamentos guardados pelo Mercado quando o ativo nao esta nas Posicoes */
 function chDataMk(tk,r){var s=null,q=QXT['A:'+tk],real=!!(q&&q.t)||!qhEnv(),has=Object.prototype.hasOwnProperty.call(quotes,tk),sv=quotes[tk];
@@ -2636,7 +2641,7 @@ function chBuild(o){
       xs=[],ys=[];
   for(i=0;i<n;i++){xs.push(+X(i).toFixed(1));ys.push(+Y(prs[i]).toFixed(1))}
   var ln=xs.map(function(x,j){return x+','+ys[j]}),first=prs[0],last=prs[n-1],base=r===1&&s.ref>0?s.ref:first,up=last>=base,dp=base>0?last/base-1:0,
-      lab=r===1?(k==='C'?'Últimas 24 h':(s.sess&&s.sess!==qhD(new Date())?'Pregão de '+qhDm(s.sess):'Hoje')):(r===5?(k==='C'?'5 dias':'5 pregões'):r+' dias'),
+      lab=r<0?ivLab(r):r===1?(k==='C'?'Últimas 24 h':(s.sess&&s.sess!==qhD(new Date())?'Pregão de '+qhDm(s.sess):'Hoje')):(r===5?(k==='C'?'5 dias':'5 pregões'):r+' dias'),
       dv=o.qty>0&&r!==1?(last-first)*o.qty:null,yr=ref>0?Y(ref):0;
   var sv='<svg class="chsv" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Gráfico de '+esc(lab)+'" style="color:var(--'+(up?'gn':'rd')+')"><path d="M'+ln.join(' L')+' L'+xs[n-1]+','+(H-B)+' L'+xs[0]+','+(H-B)+' Z" fill="currentColor" fill-opacity=".14"/>';
   if(ref>0)sv+='<line class="chref" x1="'+L+'" x2="'+(W-R)+'" y1="'+yr.toFixed(1)+'" y2="'+yr.toFixed(1)+'" stroke="var(--mu)" stroke-width="1.4" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>';
@@ -2701,14 +2706,19 @@ function chAtX(box,cx){var x=box.closest('.chx'),d=x&&chRg()[x.dataset.chid],sv=
 /* ---- cartoes das Posicoes (Acoes e Cripto) ---- */
 function pcSpark(k,sym,avg,qty){
   if(!VZ.ui.pg)return '';
-  var r=pcR(),s=chData(k,sym,r);if(!s||s.pts.length<2)return '';
+  var r=pcR(k),s=chData(k,sym,r);
+  if((!s||s.pts.length<2)&&r<0)return '<div class="pcsp" data-pcs="'+k+':'+esc(sym)+'"><div class="mgn mu">'+(ivErr(sym,r)?'sem gráfico agora (a Binance não respondeu)':'carregando gráfico…')+'</div></div>';
+  if(!s||s.pts.length<2)return '';
   return '<div class="pcsp" data-pcs="'+k+':'+esc(sym)+'">'+chBuild({id:'p'+k+':'+sym,s:s,k:k,r:r,avg:avg,qty:qty,sz:'card',opn:k+':'+sym})+'</div>'}
 /* barra de controle: periodos e ocultar, tudo em uma linha so */
 function chEye(){return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>'}
-function pcBar(k){var r=pcR(),on=!!VZ.ui.pg,chips=chPs().map(function(v){return '<button type="button" class="pcrb'+(v===r?' on':'')+'" data-pcr="'+v+'" aria-pressed="'+(v===r?'true':'false')+'">'+chLbl(k,v)+'</button>'}).join('');
-  return '<div class="pcgr one" data-pcgk="'+k+'" role="group" aria-label="Gráfico de cada ativo">'+(on?chips:'<span>Gráficos ocultos</span>')+
+/* linha de intervalos (so Cripto): Time, 15m, 1h, 4h */
+function ivRow(k,cls){if(k!=='C')return '';var r=pcR('C');
+  return '<div class="pcgr one pciv'+(cls?' '+cls:'')+'" role="group" aria-label="Intervalo do gráfico (Binance)">'+ivPs().map(function(v){return '<button type="button" class="pcrb iv'+(v===r?' on':'')+'" data-pcr="'+v+'" aria-pressed="'+(v===r?'true':'false')+'" title="'+(v===-1?'Linha de 1 em 1 minuto, últimas 24 horas':v===-15?'Um ponto a cada 15 minutos (Binance)':v===-60?'Um ponto a cada 1 hora (Binance)':'Um ponto a cada 4 horas (Binance)')+'">'+chLbl('C',v)+'</button>'}).join('')+'</div>'}
+function pcBar(k){var r=pcR(k),on=!!VZ.ui.pg,chips=chPs().map(function(v){return '<button type="button" class="pcrb'+(v===r?' on':'')+'" data-pcr="'+v+'" aria-pressed="'+(v===r?'true':'false')+'">'+chLbl(k,v)+'</button>'}).join('');
+  return (on?ivRow(k):'')+'<div class="pcgr one" data-pcgk="'+k+'" role="group" aria-label="Gráfico de cada ativo">'+(on?chips:'<span>Gráficos ocultos</span>')+
     '<button type="button" class="pcrb pcgb" data-pcg="1" aria-pressed="'+(on?'true':'false')+'" aria-label="'+(on?'Ocultar gráficos':'Mostrar gráficos')+'" title="'+(on?'Ocultar gráficos':'Mostrar gráficos')+'">'+chEye()+'<em>'+(on?'Ocultar':'Mostrar')+'</em></button></div>'}
-window.CHX={build:chBuild,at:chAt,near:chNear,reg:chRg(),data:chData,dataMk:chDataMk,periods:chPs()};
+window.CHX={build:chBuild,at:chAt,near:chNear,reg:chRg(),data:chData,dataMk:chDataMk,periods:chPs(),intervals:ivPs()};
 /* ---- chave de acesso: aceita o link inteiro, salva ao sair do campo e testa a conexao ---- */
 (function(){
   var st=function(t){var e=document.getElementById('cfbst');if(e)e.textContent=t};
@@ -2845,7 +2855,7 @@ async function mdLoad(tk){var now=Date.now(),key=qxKey(),tq=key?'token='+encodeU
         if(r&&r.j)list=mdParseYahoo(r.j)}}catch(z){}
     QXLK=false;MD.dv[tk]={t:Date.now(),list:list,err:list.length?'':(e||'empty')};mdPaint()}}
 /* ---- desenho ---- */
-function mdChips(k){var r=pcR();return '<div class="pcgr one mdch" role="group" aria-label="Período do gráfico">'+chPs().map(function(v){return '<button type="button" class="pcrb'+(v===r?' on':'')+'" data-pcr="'+v+'" aria-pressed="'+(v===r?'true':'false')+'">'+chLbl(k||'A',v)+'</button>'}).join('')+'</div>'}
+function mdChips(k){var r=pcR(k||'A');return ivRow(k||'A','mdch')+'<div class="pcgr one mdch" role="group" aria-label="Período do gráfico">'+chPs().map(function(v){return '<button type="button" class="pcrb'+(v===r?' on':'')+'" data-pcr="'+v+'" aria-pressed="'+(v===r?'true':'false')+'">'+chLbl(k||'A',v)+'</button>'}).join('')+'</div>'}
 function mdChart(tk,sz,id){var r=pcR(),s=null,h=mdHeld(tk),avg=h&&h.qty>0?h.cost/h.qty:0;
   try{s=chDataMk(tk,r)}catch(e){}
   if(s&&s.pts&&s.pts.length>=2)return chBuild({id:id,s:s,k:'A',r:r,sz:sz,exp:sz==='big'?tk:'',avg:avg,qty:h?h.qty:0});
@@ -2902,7 +2912,7 @@ function mdOpen(tk){if(!/^[A-Z0-9]{4,8}$/.test(tk))return;MD.tk=tk;MD.on=true;MD
   if(qhEnv()){mgQueue([tk]);if(!(+quotes[tk]>0)&&qxMkOk(tk)&&!QXMK.busy)qxMkFetch([tk]);mdLoad(tk)}}
 function mdClose(){if(MD.fs)mdFsClose();MD.on=false;MDON=false;document.body.classList.remove('mdo');var el=document.getElementById('mdv');if(el)el.innerHTML=''}
 /* tela cheia do grafico */
-function mdFsPaint(){var el=document.getElementById('mdf');if(!el||!MD.fs)return;var k=MD.fk,tk=MD.ft||MD.tk,r=pcR(),s=null,p=+quotes[tk],h,av;
+function mdFsPaint(){var el=document.getElementById('mdf');if(!el||!MD.fs)return;var k=MD.fk,tk=MD.ft||MD.tk,r=pcR(k),s=null,p=+quotes[tk],h,av;
   if(k==='C'){try{s=chData('C',tk,r)}catch(e){}if(s&&s.pts&&s.pts.length)p=s.pts[s.pts.length-1].p;
     h=s&&s.pts&&s.pts.length>=2?chBuild({id:'f:C:'+tk,s:s,k:'C',r:r,sz:'full'}):'<div class="mgn mu mdnone">Sem gráfico para esta moeda agora.</div>'}
   else h=mdChart(tk,'full','f:'+tk);
@@ -2983,6 +2993,90 @@ function smSoon(){clearTimeout(SMT);SMT=setTimeout(smSync,300)}
   document.addEventListener('click',smSoon)})();
 var _rmk72=renderMk;renderMk=function(){_rmk72.apply(this,arguments);try{if(SMK)smPaint()}catch(e){}};
 window.BKX={sug:bkSug,show:bkShow,mine:bkMine,sim:smSync,simPaint:smPaint,common:BKCOM};
+
+/* ===================== v2.73: graficos de cripto estilo Binance =====================
+   Time (linha de 1 em 1 minuto, 24 h), 15m (2 dias), 1h (7 dias) e 4h (30 dias), alem dos periodos que ja existiam.
+   Os pontos vem dos candles publicos da Binance (sem chave): o par em reais quando existe, senao o par em USDT vezes o USDT/BRL.
+   Ficam so na memoria (nao sao gravados): cada intervalo tem um prazo (Time 30 s, 15m 1 min, 1h 3 min, 4h 10 min) e as atualizacoes
+   buscam so os candles novos. Enquanto o grafico esta na tela e o app aberto, ele se atualiza sozinho a cada 30 segundos. */
+var IVR={},IVD={},IVX={},IVQ={},IVB=false,IVT=0,IVMS={'1m':6e4,'15m':9e5,'1h':36e5,'4h':144e5};
+function ivCfg(r){return r===-1?{iv:'1m',n:1440,ttl:3e4}:r===-15?{iv:'15m',n:192,ttl:6e4}:r===-60?{iv:'1h',n:168,ttl:18e4}:r===-240?{iv:'4h',n:180,ttl:6e5}:null}
+function ivErr(sym,r){var t=IVX&&IVX['c:'+sym+'|'+r];return !!(t&&Date.now()-t<12e4)}
+/* mesma busca de antes, agora com data final (para pegar mais de 1000 candles em duas consultas) */
+async function qiKGet(sym,iv,lim,end){var H=['https://data-api.binance.vision','https://api.binance.com'],i,r;
+  for(i=0;i<H.length;i++){r=await qxGet(H[i]+'/api/v3/klines?symbol='+sym+'&interval='+iv+'&limit='+lim+(end?'&endTime='+end:''),20000);
+    if(r.ok&&Array.isArray(r.j)&&r.j.length)return r.j;if(r.status===400)return null}
+  return null}
+async function ivK(sym,iv,n){var r1=await qiKGet(sym,iv,Math.min(n,1000));if(!r1)return null;var rows=qiKRows(r1),r2;
+  if(n>1000&&rows.length){r2=await qiKGet(sym,iv,n-1000,rows[0][0]-1);if(r2)rows=qiKRows(r2).concat(rows)}
+  return rows}
+/* candles de um par: a primeira vez baixa tudo; depois so os que faltam */
+async function ivRaw(sym,iv,n,ttl){var key=sym+'|'+iv,e=IVR[key],now=Date.now(),st=IVMS[iv],rows=null,last,r1,m,nr;
+  if(e&&e.rows.length&&now-e.t<ttl)return e.rows;
+  if(IVX[key]&&now-IVX[key]<12e4)return e?e.rows:null;
+  last=e&&e.rows.length?e.rows[e.rows.length-1][0]:0;
+  if(e&&e.rows.length>=n*.5&&now-last<st*n*.4){
+    r1=await qiKGet(sym,iv,Math.max(3,Math.min(1000,Math.ceil((now-last)/st)+2)));
+    if(r1){nr=qiKRows(r1);m={};e.rows.forEach(function(x){m[x[0]]=x});nr.forEach(function(x){m[x[0]]=x});
+      rows=Object.keys(m).map(Number).sort(function(a,b){return a-b}).map(function(k){return m[k]});if(rows.length>n)rows=rows.slice(-n)}}
+  if(!rows)rows=await ivK(sym,iv,n);
+  if(!rows||rows.length<8){IVX[key]=now;return e?e.rows:null}
+  delete IVX[key];IVR[key]={t:now,rows:rows};return rows}
+/* serie de uma moeda em reais: par BRL ou USDT x USDT/BRL */
+async function ivCoin(c,r){var f=ivCfg(r),now=Date.now(),st=IVMS[f.iv],rows,r2,u,out=[],j=-1;
+  rows=await ivRaw(c==='USDT'?'USDTBRL':c+'BRL',f.iv,f.n,f.ttl);
+  if(c==='USDT')return rows;
+  if(rows&&rows.length>=8&&now-rows[rows.length-1][0]<Math.max(3*36e5,3*st))return rows;
+  r2=await ivRaw(c+'USDT',f.iv,f.n,f.ttl);u=await ivRaw('USDTBRL',f.iv,f.n,f.ttl);
+  if(!r2||!u)return rows&&rows.length>=8?rows:null;
+  r2.forEach(function(x){while(j+1<u.length&&u[j+1][0]<=x[0])j++;if(j>=0)out.push([x[0],x[1]*u[j][1],x[2]*u[j][2]])});
+  return out.length>=8?out:(rows&&rows.length>=8?rows:null)}
+function ivLb(t){var D=qiDt(t);return D===qhD(new Date())?qiHm(t):qhDm(D)+' '+qiHm(t)}
+function ivThin(a,max){if(a.length<=max)return a;var st=Math.ceil(a.length/(max-1)),o=a.filter(function(x,i){return i%st===0});if(o[o.length-1]!==a[a.length-1])o.push(a[a.length-1]);return o}
+/* serie pronta para o grafico; pede a busca quando falta ou venceu */
+function ivSeries(sym,r){var f=ivCfg(r),e,now=Date.now(),px,qe,pts;
+  if(!f||!IVD)return null;
+  e=IVD[sym+'|'+r];
+  if(!e||!e.rows||e.rows.length<8){ivWant(sym,r);return null}
+  if(now-e.t>f.ttl)ivWant(sym,r);
+  pts=e.rows.map(function(x){return {t:x[0],p:qiRd(x[1]),l:ivLb(x[0])}});
+  px=qiPxNow('C',sym);qe=(typeof QXT==='object'&&QXT)?QXT['C:'+sym]:null;
+  /* o preco do card e o do grafico tem de ser o mesmo: se o app buscou o preco depois dos candles, o ultimo ponto usa esse preco */
+  if(px>0&&qe&&qe.t>e.t)pts[pts.length-1].p=px;
+  return {pts:ivThin(pts,480),ref:0}}
+function ivWant(sym,r){if(!IVD||!ivCfg(r)||!qhEnv())return;var k=sym+'|'+r,e=IVD[k],f=ivCfg(r);
+  if(e&&Date.now()-e.t<f.ttl)return;if(ivErr(sym,r)&&!e)return;
+  IVQ[k]=[sym,r];if(!IVT&&!IVB)IVT=setTimeout(ivRun,80)}
+async function ivRun(){IVT=0;if(IVB)return;var ks=Object.keys(IVQ),done={},i,any=false;if(!ks.length)return;
+  IVB=true;
+  try{for(i=0;i<ks.length;i++){var q=IVQ[ks[i]];delete IVQ[ks[i]];
+      var rows=await ivCoin(q[0],q[1]);
+      if(rows&&rows.length>=8){IVD[q[0]+'|'+q[1]]={t:Date.now(),rows:rows};delete IVX['c:'+q[0]+'|'+q[1]];done[q[0]]=1;any=true}
+      else IVX['c:'+q[0]+'|'+q[1]]=Date.now();
+      if(i<ks.length-1)await qxWait(80)}}catch(x){}
+  IVB=false;
+  ivRepaint(Object.keys(done),!any&&ks.length>0);
+  if(Object.keys(IVQ).length&&!IVT)IVT=setTimeout(ivRun,200)}
+/* redesenha so os graficos da cripto (sem refazer a pagina); espera se alguem esta com o dedo/mouse no grafico */
+function ivRepaint(coins,failed){
+  if(typeof CHDN!=='undefined'&&CHDN)return;
+  var tip=document.querySelector('.chs .cht');if(tip&&tip.style.display!=='none'&&!failed){clearTimeout(IVRP);IVRP=setTimeout(function(){ivRepaint(coins,false)},4000);return}
+  var P=null;try{P=window.CRX.calc(window.CRX.get().ops).pools}catch(e){}
+  (coins||[]).forEach(function(c){var nodes=document.querySelectorAll('.pcsp[data-pcs="C:'+c+'"]'),p=P&&P[c],qty=p?p.qty:0,avg=p&&p.qty>0?p.cost/p.qty:0;
+    nodes.forEach(function(n){var h=pcSpark('C',c,avg,qty);if(h)n.outerHTML=h})});
+  if(failed){document.querySelectorAll('.pcsp[data-pcs^="C:"]').forEach(function(n){if(/carregando/.test(n.textContent)){var c=n.getAttribute('data-pcs').slice(2),h=pcSpark('C',c,0,0);if(h)n.outerHTML=h}})}
+  try{if(MD.fs&&MD.fk==='C'&&(!coins||!coins.length||coins.indexOf(MD.ft)>=0||failed)&&ivOk(pcR('C')))mdFsPaint()}catch(e){}}
+var IVRP=0;
+/* a cada 30 s, com o app aberto e a Cripto na tela, atualiza o intervalo escolhido */
+function ivTick(){if(typeof document==='undefined'||document.visibilityState==='hidden')return;
+  var r=+VZ.ui.prc,fs=false;if(!ivOk(r)||!VZ.ui.pg||!window.CRX)return;
+  try{fs=!!(MD.fs&&MD.fk==='C')}catch(e){}
+  if(document.body.getAttribute('data-mod')!=='cr'&&!fs)return;
+  try{qiHeldC().forEach(function(c){ivWant(c,r)});if(fs)ivWant(MD.ft,r)}catch(e){}}
+setInterval(ivTick,30000);
+var _hmr73=hmRender;hmRender=function(k){var r=_hmr73.apply(this,arguments);if(k==='C')setTimeout(ivTick,60);return r};
+setTimeout(ivTick,1200);
+window.IVC={series:ivSeries,run:ivRun,want:ivWant,data:IVD,raw:IVR,cfg:ivCfg,tick:ivTick};
 
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
