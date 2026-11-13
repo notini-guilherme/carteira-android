@@ -236,6 +236,7 @@ object Notify {
                 val com = ArrayList<String>()
                 val ex = ArrayList<String>()
                 val pay = ArrayList<String>()
+                val res = ArrayList<String>()
                 for (i in 0 until ev.length()) {
                     val row = ev.optJSONArray(i) ?: continue
                     if (row.optString(1, "") != iso) continue
@@ -244,6 +245,7 @@ object Notify {
                         "com" -> com.add(tk)
                         "ex" -> ex.add(tk)
                         "pag" -> pay.add(tk)
+                        "res" -> res.add(tk)
                     }
                 }
                 if (com.isNotEmpty() || ex.isNotEmpty() || pay.isNotEmpty()) {
@@ -252,6 +254,10 @@ object Notify {
                     if (com.isNotEmpty()) parts.add("Data com hoje (último dia para ter direito): " + com.joinToString(", "))
                     if (ex.isNotEmpty()) parts.add("Data ex hoje: " + ex.joinToString(", "))
                     post(ctx, 8, "Proventos de hoje", parts.joinToString(". ") + ". Confira no extrato da corretora.")
+                    sp.edit().putString("done_ev", day).apply()
+                }
+                if (res.isNotEmpty()) {
+                    post(ctx, 12, "Resultados de hoje", "Divulgação de resultados prevista para hoje: " + res.joinToString(", ") + ". A data pode mudar: confira no site da empresa.")
                     sp.edit().putString("done_ev", day).apply()
                 }
             }

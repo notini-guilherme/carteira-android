@@ -26,6 +26,7 @@ class HttpBridge(private val web: WebView) {
         "api.binance.com",
         "api.mercadobitcoin.net",
         "olinda.bcb.gov.br",
+        "api.bcb.gov.br",
         "news.google.com",
         "newsdata.io",
         "eodhd.com",
