@@ -282,6 +282,15 @@ body.s3mo{overflow:hidden}
 .s3tlc{flex:none;width:18px;height:18px;fill:none;stroke:var(--mu);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .s3bk{margin-top:18px}
 .s3bk textarea{width:100%;box-sizing:border-box;margin-top:8px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);padding:8px}
+
+/* v3.2.1: cartao aberto dentro da lista "Simples" ocupa a linha toda */
+.sckg>.pc,.sckg>.pcx,.sckg>div.pc{grid-column:1/-1}
+/* numeros dos quadros: uma linha so (o app reduz a letra quando nao cabe) */
+.cpm span>b,.cpv>b,.mdk>b{white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:100%}
+.cpm span{min-width:0}
+.zqh{margin-top:6px;font-size:13px}
+.zqh .lk{margin-left:4px}
+.pcpd b{font-weight:800}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -561,7 +570,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2 · 12/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.1 · 13/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam neste aparelho e, com o login do Google ligado, também no seu Google Drive. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto, 3 = conta Google, sincronização entre aparelhos e PIN); o segundo conta as atualizações.</p></div>
@@ -1803,7 +1812,8 @@ function calc(ops){
     else if(o.type==='RECEB'){p=pool(o.coin);var c=o.mode==='REND'?t:0;p.qty+=q;p.cost+=c;r.cost=c;if(o.mode==='REND')rec.push({id:o.id,k:o.date.slice(0,7),date:o.date,coin:o.coin,val:t})}
     else if(o.type==='VENDA'||o.type==='PERMUTA'){
       p=pool(o.coin);
-      if(q>p.qty+1e-9){r.err='Saldo insuficiente de '+o.coin+': você tem '+fq(p.qty)+' e esta operação usa '+fq(q)+'.';return}
+      var tol=Math.max(6e-9,p.qty*1e-6);if(q>p.qty+tol){r.err='Saldo insuficiente de '+o.coin+' até '+dfm(o.date)+': você tem '+fq(p.qty)+' e esta operação usa '+fq(q)+'. Confira a data e a quantidade (compras do mesmo dia precisam estar lançadas antes).';return}
+      if(q>p.qty)q=p.qty;
       var avg=p.qty>0?p.cost/p.qty:0,c2=avg*q,net=t-f;
       p.qty-=q;p.cost-=c2;if(p.qty<1e-9){p.qty=0;p.cost=0}
       var g=net-c2;p.gain+=g;r.avg=avg;r.cost=c2;r.net=net;r.gain=g;
@@ -1876,7 +1886,11 @@ function estC(d,P,r){
     return esWrap(d.type==='COMPRA'?'Estimativa com esta compra':'Estimativa com este recebimento',[esBlock({t:c,sub:q0>0?'posição de '+fq(q0)+' hoje':'posição nova',rows:rows,line:ln})],
       (cs>0?'Custo desta '+(d.type==='COMPRA'?'compra':'entrada')+': <b>'+brl(cs)+'</b> · ':'')+'custo do ativo todo depois: <b>'+brl(p1.cost)+'</b> ('+fq(q1)+' '+esc(c)+')')
   }catch(e){return ''}}
-function zPrev(){zTot();var pv=$('#zpv');if(!pv)return;var d=zDraft();if(!d.coin||!(d.qty>0)){pv.hidden=true;return}
+function zHave(){var q=$('#zq');if(!q)return;var h=document.getElementById('zqh'),t=zType(),c=cn($('#zc').value),p=c&&(t==='VENDA'||t==='PERMUTA')?calc(CR.ops.filter(function(o){return o.id!==CXE})).pools[c]:null;
+  if(!p||!(p.qty>0)){if(h)h.remove();return}
+  if(!h){h=document.createElement('div');h.id='zqh';h.className='mu zqh';var w=q.closest('div')||q.parentNode;w.appendChild(h)}
+  h.innerHTML='Você tem <b>'+fq(p.qty)+' '+esc(c)+'</b> <button type="button" class="lk" data-zall="1">Usar tudo</button>'}
+function zPrev(){zTot();try{zHave()}catch(e){}var pv=$('#zpv');if(!pv)return;var d=zDraft();if(!d.coin||!(d.qty>0)){pv.hidden=true;return}
   if(d.cur==='USD'&&(!(d.fx>0)||!(d.tu>0))){pv.hidden=false;pv.className='pv warn';pv.textContent='Informe o valor em dólares e a cotação do dólar do dia da operação para ver o cálculo em reais.';return}
   var dd=d.date?d:Object.assign({},d,{date:new Date().toISOString().slice(0,10)}),C=calc(CR.ops.filter(function(o){return o.id!==CXE}).concat([dd])),r=C.rows[dd.id],h='',cl='pv',P=C.pools,ym=dd.date.slice(0,4),mi=+dd.date.slice(5,7)-1,ex=rg(dd)==='EX',cv='';
   var avgOf=function(c){var p=P[c];return p&&p.qty>0?p.cost/p.qty:0};
@@ -2027,7 +2041,9 @@ async function zPtax(){
   m.innerHTML=t}
 function zLocs(c){var n=locNames(c,'9999-12-31').sort();if(!n.length)return '';return '<div class="cpl"><span class="mu">Operada em</span>'+n.map(function(w){var e=exFind(w);return bchip(w)+(e&&e.t==='EX'?'<span class="tb">exterior</span>':'')}).join('')+'</div>'}
 function zGap(avg,q){if(!(q>0)||!(avg>0))return '';var d=avg-q;if(Math.abs(d)<0.005)return '<div class="cpg eq"><span>Preço atual igual ao custo médio</span></div>';return d>0?'<div class="cpg dn"><span><b>'+pq(d)+'</b> abaixo do custo médio</span><span>precisa subir <b>+'+pct(avg/q-1)+'</b></span></div>':'<div class="cpg up"><span><b>'+pq(-d)+'</b> acima do custo médio</span><span><b>+'+pct(q/avg-1)+'</b> sobre o custo médio</span></div>'}
-function zBtns(c){var a=' type="button" data-zcc="'+ea(c)+'"';return '<div class="pcb"><button class="sb2 b" data-zact="COMPRA"'+a+'>Comprar</button><button class="sb2 v" data-zact="VENDA"'+a+'>Vender</button><button class="sb2" data-zact="PERMUTA"'+a+'>Trocar</button></div>'}
+function zBtns(c){var a=' type="button" data-zcc="'+ea(c)+'"';return '<div class="pcb"><button class="sb2 b" data-zact="COMPRA"'+a+'>Comprar</button><button class="sb2 v" data-zact="VENDA"'+a+'>Vender</button><button class="sb2" data-zact="PERMUTA"'+a+'>Trocar</button><button class="sb2" data-zact="RECEB"'+a+'>Recebido</button><button class="sb2 x" data-zxc="'+ea(c)+'" type="button">Excluir</button></div>'}
+function zFillAll(force){var t=zType(),c=cn($('#zc').value),q=$('#zq');if(!q||!c||(t!=='VENDA'&&t!=='PERMUTA'))return;if(q.value.trim()&&!force)return;
+  var p=calc(CR.ops.filter(function(o){return o.id!==CXE})).pools[c];if(!p||!(p.qty>0))return;var qv=Math.round(p.qty*1e8)/1e8;if(qv>p.qty+1e-12)qv=Math.floor(p.qty*1e8)/1e8;q.value=fin(qv);q.dispatchEvent(new Event('input',{bubbles:true}))}
 function zGoLaunch(t,c){var p=calc(CR.ops).pools[c],r=document.querySelector('input[name=zt][value='+t+']');if(!r)return;zStop();zClear();r.checked=true;$('#zc').value=c;
   if((t==='VENDA'||t==='PERMUTA')&&p&&p.qty>0){var qv=Math.round(p.qty*1e8)/1e8;if(qv>p.qty+1e-9)qv=Math.floor(p.qty*1e8)/1e8;$('#zq').value=fin(qv)}
   zUI();zEx(true,false);var nb=document.querySelector('#navcr button[data-t=crn]');if(nb)nb.click();window.scrollTo(0,0)}
@@ -2049,7 +2065,12 @@ function rHist(){var C=calc(CR.ops),Y={},ord=[];C.order.slice().reverse().forEac
 function zDelDone(o){var id=Date.now()+'-'+Math.floor(Math.random()*1e5),lab=o.type==='PERMUTA'?o.coin+' → '+o.coin2:o.coin;CR.tr.unshift({id:id,at:new Date().toISOString(),lab:lab+' · '+TYN[o.type].toLowerCase()+' · '+dfm(o.date),sub:fq(o.qty)+' '+o.coin+(o.total>0?' · '+brl(o.total):''),o:o});if(CR.tr.length>30)CR.tr.length=30;
   CR.ops=CR.ops.filter(function(x){return x.id!==o.id});if(CXE===o.id)zStop();crSave();crAll();
   trShow('<div class="trm"><b>Operação de '+esc(lab)+' excluída.</b><span>Mudou de ideia? Toque em Desfazer ou abra o <b>Histórico</b>.</span></div><div class="trx"><button type="button" class="y" data-zundo="'+esc(id)+'">Desfazer</button><button type="button" data-trcl="1" aria-label="Fechar aviso">×</button></div>',12000)}
-function zRestore(id){var k=-1;CR.tr.forEach(function(t,i){if(t.id===id)k=i});if(k<0)return false;var t=CR.tr[k];if(!CR.ops.some(function(o){return o.id===t.o.id}))CR.ops.push(t.o);CR.tr.splice(k,1);crSave();crAll();return true}
+function zDelCoin(c){var L=CR.ops.filter(function(o){return o.coin===c||(o.type==='PERMUTA'&&o.coin2===c)});if(!L.length)return;
+  var gid=Date.now()+'-'+Math.floor(Math.random()*1e5),ids=[];
+  L.forEach(function(o,i){var id=gid+'-'+i,lab=o.type==='PERMUTA'?o.coin+' → '+o.coin2:o.coin;ids.push(id);CR.tr.unshift({id:id,at:new Date().toISOString(),lab:lab+' · '+TYN[o.type].toLowerCase()+' · '+dfm(o.date),sub:fq(o.qty)+' '+o.coin+(o.total>0?' · '+brl(o.total):''),o:o})});
+  if(CR.tr.length>60)CR.tr.length=60;var rm={};L.forEach(function(o){rm[o.id]=1});CR.ops=CR.ops.filter(function(o){return !rm[o.id]});if(CXE&&rm[CXE])zStop();crSave();crAll();
+  trShow('<div class="trm"><b>'+esc(c)+' excluída.</b><span>'+L.length+(L.length>1?' lançamentos apagados':' lançamento apagado')+'. Mudou de ideia? Toque em Desfazer ou abra o <b>Histórico</b>.</span></div><div class="trx"><button type="button" class="y" data-zundo="'+esc(ids.join(','))+'">Desfazer</button><button type="button" data-trcl="1" aria-label="Fechar aviso">×</button></div>',15000)}
+function zRestore(id){if(String(id).indexOf(',')>=0){var ok=false;String(id).split(',').forEach(function(x){var k=-1;CR.tr.forEach(function(t,i){if(t.id===x)k=i});if(k<0)return;var t=CR.tr[k];if(!CR.ops.some(function(o){return o.id===t.o.id}))CR.ops.push(t.o);CR.tr.splice(k,1);ok=true});if(ok){crSave();crAll()}return ok}var k=-1;CR.tr.forEach(function(t,i){if(t.id===id)k=i});if(k<0)return false;var t=CR.tr[k];if(!CR.ops.some(function(o){return o.id===t.o.id}))CR.ops.push(t.o);CR.tr.splice(k,1);crSave();crAll();return true}
 
 /* ---------- balanco ---------- */
 function zDarfList(){var C=calc(CR.ops),L=[];yearsOf().forEach(function(y){mon(C,y).forEach(function(x){if(x.tax>0&&!(CR.paid[x.k]||{}).p)L.push({k:x.k,m:x.m,y:+y,v:x.tax,due:darfDue(x.k)})})});L.sort(function(a,b){return a.due-b.due||(a.k<b.k?-1:1)});return L}
@@ -2226,7 +2247,9 @@ function wire(){
   $('#mods').addEventListener('click',function(e){var b=e.target.closest('button[data-mod]');if(b&&b.dataset.mod!==CMOD)setMod(b.dataset.mod)});
   $('#navrv').addEventListener('click',function(e){var b=e.target.closest('button');if(b&&b.dataset.t&&b.dataset.t!=='r')LAST.rv=b.dataset.t});
   $$('#navcr button').forEach(function(b){b.addEventListener('click',function(){LAST.cr=b.dataset.t;$$('#navcr button').forEach(function(x){x.classList.toggle('on',x===b)});$$('section').forEach(function(s){s.classList.toggle('on',s.id===b.dataset.t)});window.scrollTo(0,0)})});
-  $$('input[name=zt]').forEach(function(r){r.addEventListener('change',zUI)});
+  $$('input[name=zt]').forEach(function(r){r.addEventListener('change',zUI);r.addEventListener('change',function(){if(!CXE)zFillAll(false)})});
+  $('#zc').addEventListener('change',function(){if(!CXE)zFillAll(false)});
+  window.__zFillAll=zFillAll;
   ['#zd','#zw','#zr','#zc','#zq','#zc2','#zq2','#zm','#zv','#zf','#zcu','#zfx'].forEach(function(s){$(s).addEventListener('input',function(){zvAuto();zPrev()});$(s).addEventListener('change',zUI)});
   $('#zs').addEventListener('click',zSaveOp);$('#zx').addEventListener('click',function(){zStop();zClear();zPrev()});
   $('#zby').addEventListener('change',function(){CBY=this.value;rBal()});
@@ -2253,6 +2276,11 @@ function wire(){
     if((b=t.closest('.sck[data-zsc]'))&&!t.closest('a,button,input,select')){ZEX[b.dataset.zsc]=true;rPos();var cc=document.querySelector('#zpos [data-zc="'+b.dataset.zsc+'"]');if(cc&&cc.scrollIntoView)try{cc.scrollIntoView({block:'nearest'})}catch(x){}return}
     if(b=t.closest('[data-zvw]')){CPV=b.dataset.zvw==='t'?'t':b.dataset.zvw==='s'?'s':'c';try{localStorage.setItem('carteira-cr-pv',CPV)}catch(x){}rPos();return}
     if(b=t.closest('[data-zact]')){zGoLaunch(b.dataset.zact,b.dataset.zcc);return}
+    if(b=t.closest('[data-zall]')){zFillAll(true);return}
+    if(b=t.closest('[data-zxc]')){var xc=b.dataset.zxc,xl=CR.ops.filter(function(o){return o.coin===xc||(o.type==='PERMUTA'&&o.coin2===xc)}),xp=xl.filter(function(o){return o.type==='PERMUTA'&&o.coin2===xc}).length;
+      if(typeof askDlg==='function')askDlg('Excluir '+esc(xc)+'?','<p style="margin:0 0 8px">Serão apagados <b>'+xl.length+(xl.length>1?' lançamentos':' lançamento')+'</b> de '+esc(xc)+' (compras, vendas, trocas e recebimentos). O custo médio, o Histórico e o Balanço são recalculados na hora.</p>'+(xp?'<p style="margin:0 0 8px"><b>Atenção:</b> '+xp+(xp>1?' trocas':' troca')+' em que você recebeu '+esc(xc)+' também '+(xp>1?'serão apagadas':'será apagada')+', e isso muda a moeda que você entregou nelas.</p>':'')+'<p style="margin:0">Dá para desfazer logo depois ou no Histórico, em Excluídos recentemente.</p>','Excluir '+esc(xc),function(){zDelCoin(xc)});
+      else if(b.dataset.ok)zDelCoin(xc);else{b.dataset.ok='1';b.textContent='Confirmar'}
+      return}
     if(b=t.closest('[data-mkstar]')){var mc=b.dataset.mkstar,mi=MKF.fav.indexOf(mc);if(mi>=0)MKF.fav.splice(mi,1);else MKF.fav.push(mc);mkSave();mkRender();return}
     if(b=t.closest('[data-mkpr]')){if(MKPK[b.dataset.mkpr]){MKF.pr=b.dataset.mkpr;mkSave();mkRender()}return}
     if(b=t.closest('[data-mkmb]')){mkMB(b.dataset.mkmb);return}
@@ -2427,7 +2455,7 @@ function pcAv(k,sym){var s=String(sym),h=0,j;for(j=0;j<s.length;j++)h+=s.charCod
 /* variacao do dia em R$ e em %, bem visivel (val = valor atual da posicao) */
 function pcDay(k,sym,val,px){var c=qxDay(k,sym);if(c===null||!(val>0))return qxDayPh(k,sym);
   var dp=val-val/(1+c/100),d=px>0?px-px/(1+c/100):dp,e=QXT[k+':'+sym],dt=new Date(e.t),L=qxDayLb(k,sym),st=L.old,fd=dt.toDateString()===new Date().toDateString()?'hoje':qhP2(dt.getDate())+'/'+qhP2(dt.getMonth()+1),lb=L.lb,ic=c>0?'▲ ':c<0?'▼ ':'';
-  return '<span class="dayv pcd '+(c>0?'gn':c<0?'rd':'mu')+(st?' st':'')+'" title="Quanto '+(k==='C'?'1 unidade':'1 cota')+' subiu ou caiu '+(k==='C'?'em 24 horas':(st?'no pregão de '+L.s.slice(8,10)+'/'+L.s.slice(5,7):'no dia'))+', na última cotação ('+fd+' às '+qhP2(dt.getHours())+':'+qhP2(dt.getMinutes())+')">'+ic+pcSg(d)+brl(Math.abs(d))+' · '+pcSg(c)+pct(Math.abs(c)/100)+' '+lb+(L.dm?' <small>('+L.dm+')</small>':'')+'</span>'+(px>0?'<span class="pcpd '+(c>0?'gn':c<0?'rd':'mu')+'">Sua posição '+lb+': '+pcSg(dp)+brl(Math.abs(dp))+'</span>':'')}
+  return '<span class="dayv pcd '+(c>0?'gn':c<0?'rd':'mu')+(st?' st':'')+'" title="Quanto '+(k==='C'?'1 unidade':'1 cota')+' subiu ou caiu '+(k==='C'?'em 24 horas':(st?'no pregão de '+L.s.slice(8,10)+'/'+L.s.slice(5,7):'no dia'))+', na última cotação ('+fd+' às '+qhP2(dt.getHours())+':'+qhP2(dt.getMinutes())+')">'+ic+pcSg(d)+brl(Math.abs(d))+' · '+pcSg(c)+pct(Math.abs(c)/100)+' '+lb+(L.dm?' <small>('+L.dm+')</small>':'')+'</span>'+(px>0?'<span class="pcpd">Sua posição '+lb+': <b class="'+(c>0?'gn':c<0?'rd':'mu')+'">'+pcSg(dp)+brl(Math.abs(dp))+'</b></span>':'')}
 /* resultado aberto (valor atual - custo), com rotulo */
 function pcRes(has,sd,aq,lb){if(!has)return '<span class="pcr mu">'+(lb||'sem preço atual')+'</span>';
   return '<span class="pcr '+cls(sd)+'"><i>Resultado</i> '+pcSg(sd)+brl(Math.abs(sd))+' · '+pcSg(sd)+pct(Math.abs(aq>0?sd/aq:0))+'</span>'}
@@ -2511,7 +2539,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.2',APPD='12/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='3.2.1',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -4665,8 +4693,10 @@ function nxWin(k,pts){
   if(!pts||pts.length<3)return pts||[];
   var last=pts[pts.length-1][0],D=qhD(new Date(last)),from,to,cm;
   if(k==='ibov'){cm=mhClose(D);from=qiAt(D,9,50);to=qiAt(D,Math.floor(cm/60),cm%60)+6*6e4}
-  else{from=qiAt(D,9,0);to=qiAt(D,23,59)}
+  else{from=qiAt(D,9,0);to=qiAt(D,18,0)+6e4} /* v3.2.1: dolar comercial: o grafico do dia para no fim do horario de negociacao (18h), sem a linha reta da noite */
   var o=pts.filter(function(a){return a[0]>=from&&a[0]<=to});
+  /* v3.2.1: depois da meia-noite (ou no fim de semana) o ultimo ponto e de fora do horario: mostra o ultimo pregao do dolar */
+  if(o.length<2&&k!=='ibov'){var i,Dd,f2,t2,o2;for(i=1;i<=4;i++){Dd=qhD(new Date(last-i*864e5));f2=qiAt(Dd,9,0);t2=qiAt(Dd,18,0)+6e4;o2=pts.filter(function(a){return a[0]>=f2&&a[0]<=t2});if(o2.length>=2)return o2}}
   return o.length>=2?o:pts}
 function nxOpen(){var o=false;try{o=mktOpen()}catch(e){}return o}
 /* v3.0: o dolar negocia o dia todo (seg-sex): atualiza a cada 2 min; o IBOV segue o horario da bolsa */
@@ -4846,15 +4876,23 @@ function nxuPaint(){
   if(!p||!rc)return;
   if(!el){el=document.createElement('div');el.id='nxu';el.className='nxu';rc.insertAdjacentElement('afterend',el)}
   L=nxPend();
-  if(!L.length&&!L.nd&&!(L.wt&&L.wt.length)){el.innerHTML='';return}
+  NXWT=L.wt||[];try{nxwPaint()}catch(e){}
+  if(!L.length&&!L.nd){el.innerHTML='';return}
   sh=L.slice(0,40);more=L.length-sh.length;
   h='<div class="rcs"><h3>Proventos não lançados <span class="tb rcest">CONFIRA</span></h3>';
   h+=L.length?'<p class="mu pvn">A bolsa pagou estes proventos para cotas que você tinha, e eles ainda não estão lançados. Toque em <b>Lançar</b> para abrir a tela já preenchida (você pode editar), ou em <b>Dispensar</b> se não vale lançar (o item some daqui).</p>':'<p class="mu pvn">Nada pendente: todos os proventos pagos que encontrei já estão lançados ou foram dispensados.</p>';
   h+=sh.map(nxuCard).join('');
   if(more>0)h+='<p class="mu pvn">Mostrando os 40 mais recentes; faltam '+more+'. Lance ou dispense estes para ver os outros.</p>';
   if(L.nd)h+='<p class="mu pvn nxur">'+L.nd+(L.nd>1?' itens dispensados.':' item dispensado.')+' <button type="button" class="lk" data-nxr="1">Mostrar de novo</button></p>';
-  if(L.wt&&L.wt.length)h+='<div class="nxwh"><b>Aguardando o pagamento</b> <span class="h2t">'+L.wt.length+'</span></div><p class="mu pvn">A fonte só informou a data ex-direito destes proventos (o dia em que a ação passou a ser negociada sem o provento). O pagamento costuma cair de 2 a 4 semanas depois, por isso ainda não dá para lançar. Quando o dinheiro cair, toque em <b>Já recebi</b>.</p>'+L.wt.map(nxwCard).join('');
   el.innerHTML=h+'</div>'}
+/* v3.2.1: os proventos que so tem a data ex (pagamento ainda nao informado) ficam em "A receber", nao em "nao lancados" */
+var NXWT=[];
+function nxwPaint(){var rc=document.getElementById('rcv');if(!rc)return;var o=document.getElementById('nxwt');if(o)o.remove();if(!NXWT.length)return;
+  var g=NXWT.reduce(function(s,x){return s+x.q*x.a.v},0);
+  if(!rc.querySelector('.rcs'))rc.innerHTML='<div class="rcs"><h3>A receber <span class="tb rcest">ESTIMATIVA</span></h3></div>';
+  rc.hidden=false;
+  rc.insertAdjacentHTML('beforeend','<div class="rcs" id="nxwt"><h4 class="pvg">Pagamento ainda sem data <span class="h2t">'+NXWT.length+'</span></h4><p class="mu pvn">Você tem direito a estes proventos (a data ex-direito já passou), mas a fonte ainda não informou o dia do pagamento. Costuma cair de 2 a 4 semanas depois. Estimativa: <b>'+brl(g)+'</b> bruto. Quando o dinheiro cair na conta, toque em <b>Já recebi</b>.</p>'+NXWT.map(nxwCard).join('')+'</div>')}
+(function(){if(typeof rcPaint!=='function'||rcPaint.__nxw)return;var f=rcPaint;rcPaint=function(){var r=f.apply(this,arguments);try{nxwPaint()}catch(e){}return r};rcPaint.__nxw=1})();
 /* abre Lancar > Provento ja preenchido (como o botao "Lancar" de cada provento) */
 function nxLaunch(x){
   var a=x.a,tk=x.tk,n;
@@ -4978,7 +5016,7 @@ pcDay=function(k,sym,val,px){
   var r=nyCrPos(sym,val/px,px,c),e=QXT[k+':'+sym],dt=new Date(e.t),L=qxDayLb(k,sym),st=L.old,cl=r.d>0?'gn':r.d<0?'rd':'mu',cc=c>0?'gn':c<0?'rd':'mu',
       fd=dt.toDateString()===new Date().toDateString()?'hoje':qhP2(dt.getDate())+'/'+qhP2(dt.getMonth()+1),ic=r.d>0?'▲ ':r.d<0?'▼ ':'';
   return '<span class="dayv pcd '+cl+(st?' st':'')+'" title="Quanto a sua posição em '+esc(sym)+' subiu ou caiu em 24 horas, na última cotação ('+fd+' às '+qhP2(dt.getHours())+':'+qhP2(dt.getMinutes())+')">'+ic+pcSg(r.d)+brl(Math.abs(r.d))+(r.p===null?'':' · '+pcSg(r.d)+pct(Math.abs(r.p)))+' em 24 h</span>'+
-    '<span class="pcpd '+cc+'">Preço da moeda '+esc(sym)+': '+pcSg(c)+pct(Math.abs(c)/100)+' em 24 h</span>'+
+    '<span class="pcpd">Preço da moeda '+esc(sym)+': <b class="'+cc+'">'+pcSg(c)+pct(Math.abs(c)/100)+'</b> em 24 h</span>'+
     (r.recent?'<span class="pcpd mu">Compra recente: conta desde o preço que você pagou.</span>':'')};
 /* aviso no Inicio da Cripto quando entra compra recente */
 var _nyHr=hmRender;
@@ -5164,7 +5202,7 @@ if(typeof H2MAIN!=='undefined'&&H2MAIN.source.indexOf('A receber')<0)H2MAIN=new 
 function nyProvHeads(){
   var rc=document.getElementById('rcv'),nu=document.getElementById('nxu'),ch=false;if(!rc)return;
   var mk=function(id,txt,tag,box){
-    var h=document.getElementById(id),has=!!(box&&box.querySelector('.rcs')),n=has?box.querySelectorAll('.pvc:not(.nxwc)').length:0,html=txt+' <span class="tb rcest">'+tag+'</span><span class="h2t">'+n+'</span>';
+    var h=document.getElementById(id),has=!!(box&&box.querySelector('.rcs')),n=has?box.querySelectorAll(id==='nyh-rc'?'.pvc':'.pvc:not(.nxwc)').length:0,html=txt+' <span class="tb rcest">'+tag+'</span><span class="h2t">'+n+'</span>';
     if(!has){if(h){h.remove();ch=true}return}
     if(!h){h=document.createElement('h2');h.id=id;h.className='nyh2';h.innerHTML=html;box.insertAdjacentElement('beforebegin',h);ch=true;return}
     if(h.nextElementSibling!==box){box.insertAdjacentElement('beforebegin',h);ch=true}
@@ -6454,6 +6492,20 @@ document.addEventListener('change',function(e){var t=e.target;if(!t||(t.id!=='s3
   var m=S.cur();if((m==='dz'&&!st.dz)||(m==='rf'&&!st.rf))S.set('rv');else S.refresh(true)});
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',modPaint);else modPaint();
 S.api={info:apiInfo,html:apiHtml,get:apiGet,count:apiCount,flush:apiFlush,host:apiHost};
+})();
+
+/* ===================== v3.2.1: numeros que nao cabem no quadro diminuem sozinhos ===================== */
+(function(){
+var SEL='.cpm span>b,.cpv>b,.nzpi input.qp,.cpq input.qp,.hmk>b,.s3kv,.s3pg b,.mdk>b,.s3rtc b',Q=false,MIN=9;
+function fit(el){if(!el||!el.isConnected)return;el.style.removeProperty('font-size');var cw=el.clientWidth;if(!(cw>0))return;
+  if(el.scrollWidth<=cw+1)return;var f=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
+  while(f>MIN&&el.scrollWidth>el.clientWidth+1&&n<40){f-=0.5;n++;el.style.setProperty('font-size',f+'px','important')}}
+function all(){Q=false;var L=document.querySelectorAll(SEL),i;for(i=0;i<L.length;i++){try{fit(L[i])}catch(e){}}}
+function soon(){if(Q)return;Q=true;setTimeout(all,30)}
+function start(){var m=document.querySelector('main')||document.body;try{new MutationObserver(soon).observe(m,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','open']})}catch(e){}
+  window.addEventListener('resize',soon);document.addEventListener('click',function(){setTimeout(soon,60)},true);document.addEventListener('input',function(e){var t=e.target;if(t&&t.matches&&t.matches(SEL))fit(t)});soon()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+window.S32FIT={fit:fit,all:all,sel:SEL};
 })();
 
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);$("#dt").value=new Date().toISOString().slice(0,10);
