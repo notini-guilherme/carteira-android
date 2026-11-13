@@ -318,6 +318,190 @@ body.s3mo{overflow:hidden}
 .zqh{margin-top:6px;font-size:13px}
 .zqh .lk{margin-left:4px}
 .pcpd b{font-weight:800}
+/* v3.3: leitura da nota */
+.nprog{display:flex;align-items:center;gap:12px;margin:10px 0 4px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--ac);background:color-mix(in srgb,var(--ac) 12%,var(--sf));color:var(--tx)}
+.nprog[hidden]{display:none}
+.nspin{flex:none;width:26px;height:26px;border-radius:50%;border:3px solid color-mix(in srgb,var(--ac) 25%,transparent);border-top-color:var(--ac);animation:nspin .8s linear infinite}
+@keyframes nspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.nspin{animation-duration:2.4s}}
+.nptx{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+.nptx b{font-size:15px}
+.nptx small{font-size:12.5px}
+.nprog .btn{margin:0;flex:none}
+.nres{display:block;margin-top:8px;padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.4}
+.nres.ok{background:color-mix(in srgb,var(--gn) 13%,var(--sf));border:1px solid color-mix(in srgb,var(--gn) 45%,var(--bd))}
+.nres.bad{background:color-mix(in srgb,var(--rd) 11%,var(--sf));border:1px solid color-mix(in srgb,var(--rd) 45%,var(--bd))}
+.ntot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin:-2px 0 10px;border-radius:12px;background:var(--bg);border:1px solid var(--bd)}
+.ntot>div{display:flex;flex-direction:column;min-width:0}
+.ntot span{font-weight:800;font-size:15px}
+.ntot small{font-size:12.5px}
+.ntot>b{font-size:22px;font-weight:800;white-space:nowrap;color:var(--gn)}
+.ntdl{line-height:1.6}
+/* v3.3: nos cartoes, dinheiro a direita e quantidade no centro */
+.cpm span>b{text-align:right!important;align-self:stretch}
+.cpm span:first-child>b{text-align:center!important}
+.cpv>b{display:block!important;text-align:right!important;align-self:stretch}
+.nzpi{display:flex!important;align-items:baseline;width:100%}
+.nzpi input.qp,input[data-zpx]{text-align:right!important}
+.nzpi input.qp{flex:1 1 auto;min-width:0;width:100%!important}
+.s3pg b{text-align:right}
+.s3pg>div{align-items:stretch}
+.s3pg span{text-align:left}
+/* v3.3: barra de periodos numa linha so */
+.pcbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 8px;grid-column:1/-1}
+.pcbar>.pcgr{margin:0!important}
+.pcbar>.pcgr:not(.pciv){flex:1 1 auto}
+/* v3.3: no computador, um cartao sozinho fica no centro */
+@media(min-width:721px){.cg:not(:has(>.pc ~ .pc))>.pc{grid-column:1/-1;justify-self:center;width:min(100%,560px)}}
+html.dsk .cg:not(:has(>.pc ~ .pc))>.pc{grid-column:1/-1;justify-self:center;width:min(100%,560px)}
+/* v3.3: Cripto: o resumo no fim das Posicoes repetia o topo */
+#crp .tot{display:none}
+/* v3.3: Lancar cripto */
+#crn[data-op=VENDA] .zft b{color:var(--tx)}
+#crn .zft b.gn{color:var(--gn)!important}
+#crn .zft b.rd{color:var(--rd)!important}
+.zfres{margin-top:6px;padding:0 12px;font-size:14px}
+.zp2w{margin-top:10px}
+.zp2w .mu{font-size:12.5px;margin-top:4px}
+.zfu{display:flex;gap:8px;align-items:center}
+.zfu input{flex:1 1 auto;min-width:0}
+.zfu select{flex:0 0 auto;width:auto;min-width:92px}
+/* tabela da Cripto: acoes de cada moeda */
+.ztac{white-space:nowrap}
+.ztact{position:relative}
+.ztact>summary{list-style:none;cursor:pointer;padding:6px 10px;border:1px solid var(--bd);border-radius:10px;font-weight:700;font-size:13px;display:inline-block}
+.ztact>summary::-webkit-details-marker{display:none}
+.ztact[open]>summary{background:var(--ac);color:var(--ax);border-color:var(--ac)}
+.ztact .pcb{display:flex;flex-wrap:nowrap;gap:6px;margin-top:6px}
+.ztact .pcb .sb2{margin:0;padding:6px 10px;font-size:13px;white-space:nowrap}
+/* v3.3: Mercado da Cripto */
+#zml .mcg{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(min-width:721px){#zml .mcg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!important}}
+html.dsk #zml .mcg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!important}
+#zml .mcr.mkhold{border:1.5px solid var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 18%,transparent)}
+#zml .mkh{display:flex;align-items:center;gap:8px}
+#zml .mkh .mkt{flex:1 1 auto;min-width:0}
+#zml .mkh .sb2{margin:0;flex:none;width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.mkyou{font-size:12.5px;padding:5px 8px;border-radius:8px;background:color-mix(in srgb,var(--ac) 13%,var(--sf));line-height:1.35}
+#zml .mkpp{display:block;width:100%;padding:0;margin:0;border:0;background:transparent;cursor:zoom-in;color:inherit}
+.mkhl{display:flex;justify-content:space-between;gap:6px;font-size:11.5px;color:var(--mu)}
+.mkhl b{color:var(--tx);font-weight:700}
+#zml .mkb2{display:flex;flex-wrap:wrap;gap:6px}
+#zml .mkb2 .sb2{flex:1 1 auto;margin:0;padding:6px 8px;font-size:12.5px;min-width:0}
+.mklp{padding:8px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);font-size:13px}
+.mklc{display:flex;align-items:center;gap:8px;margin:4px 0;font-weight:600}
+.mklc input{width:auto;margin:0}
+.mknw{display:flex;gap:6px;margin-top:8px;align-items:center}
+.mknw input{flex:1 1 auto;min-width:0;margin:0}
+.mknw .sb2{margin:0;flex:none}
+.mktabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.mktabs .pcrb i{font-style:normal;opacity:.7;font-size:12px;margin-left:2px}
+.mkbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
+.mkbar .mkpr{margin:0}
+.mkxa{display:flex;gap:6px}
+details.mkgp{margin-top:10px}
+details.mkgp>summary{display:flex;align-items:center;gap:8px;cursor:pointer;padding:9px 12px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);list-style:none;font-size:15px}
+details.mkgp>summary::-webkit-details-marker{display:none}
+details.mkgp>summary::after{content:'';margin-left:auto;width:9px;height:9px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg);transition:transform .15s}
+details.mkgp[open]>summary::after{transform:rotate(-135deg)}
+details.mkgp>summary .h2t{margin-left:0}
+.mkbg[hidden]{display:none}
+.mkbg{position:fixed;inset:0;z-index:75;display:flex;align-items:center;justify-content:center;padding:12px}
+.mkbb{position:absolute;inset:0;background:rgba(8,12,20,.6)}
+.mkbp{position:relative;width:min(720px,100%);max-height:calc(100dvh - 24px);overflow:auto;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:18px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.mkbh{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.mkbh .sb2{margin:0}
+.mkbsvg{width:100%;height:auto;display:block;margin-top:10px}
+.mkbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:10px}
+.mkbs>div{display:flex;flex-direction:column;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
+.mkbs span{font-size:12px}
+.mkbs b{font-size:15px;text-align:right}
+/* simuladores */
+.smsvg{width:100%;height:auto;display:block;margin-top:8px}
+.smleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;font-size:12.5px;color:var(--mu)}
+.smleg span{display:inline-flex;align-items:center;gap:6px}
+.smleg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.smleg i.ln{width:16px;height:0;border-radius:0;border-top:2px dashed}
+#cso .simf .s3seg{margin-bottom:10px}
+/* Mercado das Acoes: 4 por linha no computador */
+@media(min-width:1100px){#mk .cg{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+html.dsk #mk .cg{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important}
+#mk .mkc .mkb{display:flex;flex-wrap:wrap;gap:6px}
+#mk .mkc .mkb .sb2{flex:1 1 auto;min-width:0;margin:0}
+.mknw[hidden]{display:none!important}
+#zml .mkb2 .sb2{flex:1 1 calc(33% - 6px)!important}
+#cso .ch{width:100%;box-sizing:border-box}
+.mkxa.ygb{border:0;padding:0;background:transparent}
+#zml .mkb2{flex-wrap:wrap!important;width:100%!important;box-sizing:border-box}
+#zml .mkb2 .sb2{white-space:nowrap}
+.mktabs .pcrb:not(.on),.mkxa .pcrb{border-color:var(--bd);background:var(--sf);color:var(--tx)}
+#cso .ch.s3c{max-width:none!important;width:100%!important;box-sizing:border-box}
+.smleg i.ln{border:0;padding:0;background:none;width:18px;height:0}
+.ch.s3c .smsvg{max-height:300px}
+.dcob{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:8px 0}
+.dcob .dcc{margin:0;padding:12px 14px}
+.dcob .dcc b{display:block;margin-bottom:4px}
+.dcob .dcc.warn{border-color:#f59e0b;background:rgba(245,158,11,.08)}
+.dcst{font-size:11px;font-weight:700;color:var(--mu)}
+.dcst.warn{color:#b45309}.dcst.bad{color:var(--rd)}.dcst.ok{color:var(--gn)}
+/* v3.3 Total */
+.s3sub{margin:-4px 0 8px;font-size:13px}
+.s3k0.s3k3{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.s3k0.s3k3 .s3k{height:100%;min-height:118px}
+@media(max-width:560px){.s3k0.s3k3{grid-template-columns:1fr}}
+.s3g2{display:grid;grid-template-columns:1fr;gap:0 18px}
+@media(min-width:1000px){.s3g2{grid-template-columns:1fr 1fr}}
+.s3gi{display:flex;flex-direction:column;min-width:0}
+.s3gi>.ch{flex:1}
+.s3evo{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:10px}
+.s3ev2{display:flex;flex-direction:column;gap:1px}
+.s3ev2 b{font-size:16px}.s3ev2 b em{font-style:normal;font-size:12.5px;opacity:.85}
+.s3als{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:12px 0}
+.s3al{display:flex;flex-direction:column;gap:3px;padding:11px 14px;border:1px solid var(--bd);border-left:4px solid #7c3aed;border-radius:12px;background:var(--sf)}
+.s3al.warn{border-left-color:#f59e0b;background:rgba(245,158,11,.08)}
+.s3al .sb2{align-self:flex-start;margin-top:4px;flex:none;height:32px;padding:0 12px}
+.s3hl small{margin-left:auto;margin-right:6px;font-weight:600}
+.s3now table td small{display:block;font-size:11px}
+.s3now td.num{text-align:right;white-space:nowrap}
+.s3now tr[data-s3go]{cursor:pointer}
+.s3now tr[data-s3go]:hover td{background:rgba(124,58,237,.06)}
+#ttr .ch.s3c{max-width:none!important;width:100%;box-sizing:border-box}
+.s3h .s3evo b,.s3h .s3evo b.gn,.s3h .s3evo b.rd{color:#fff!important}
+.s3h .s3evo small{color:rgba(255,255,255,.82)!important}
+.s3h .s3evo b em{color:#fff!important}
+.s3now .s3rg{display:none}
+@media(max-width:600px){.s3now th:nth-child(4),.s3now td:nth-child(4){display:none}.s3now .s3rg{display:block}}
+/* v3.3 Renda fixa: tudo centralizado */
+#rfc,#rfd{max-width:980px;margin-left:auto;margin-right:auto}
+#rfc .ch,#rfd .ch{max-width:none}
+#rfc .s3f{max-width:640px;margin-left:auto;margin-right:auto}
+#rfc .ch.s3c:first-of-type{max-width:640px;margin-left:auto;margin-right:auto}
+#rfc .hmh{text-align:center}#rfc .hmh .hmv{justify-content:center}
+.s3rg3{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){.s3rg3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}}
+.s3rg3>.ch{margin:0}
+.s3h3{margin:0 0 8px;font-size:15px;font-weight:800}
+.s3pz tr.s3cur td{background:rgba(8,145,178,.16)!important;font-weight:700;border-top:2px solid #0891b2;border-bottom:2px solid #0891b2}
+.s3pz tr.s3cur td:first-child{border-left:4px solid #0891b2}
+.s3you{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:#0891b2;color:#fff;font-size:11px;font-weight:800;vertical-align:middle}
+.s3pz td:nth-child(n+2){text-align:right;white-space:nowrap}
+/* v3.3 Dolar: centralizado, cores de comprar/vender, painel do dia */
+#dzh,#dzn,#dzp,#dzr,#dzd{max-width:980px;margin-left:auto;margin-right:auto}
+#dzh .ch,#dzn .ch,#dzp .ch,#dzr .ch,#dzd .ch{max-width:none}
+#dzn .s3f,#dzn .s3bs,#dzp .s3f{max-width:640px;margin-left:auto;margin-right:auto}
+.s3bs button[data-dzt=COMPRA].on{background:#16a34a!important;color:#fff!important}
+.s3bs button[data-dzt=VENDA].on{background:#ea580c!important;color:#fff!important}
+.s3bs button[data-dzt=COMPRA]:not(.on){color:#15803d}
+.s3bs button[data-dzt=VENDA]:not(.on){color:#c2410c}
+.s3dzg{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin-bottom:10px}
+.s3dzs{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
+.s3dzs span{font-size:12px}.s3dzs b{font-size:15px;white-space:nowrap}
+.s3dzp{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.s3dzp .pcrb:not(.on){border-color:var(--bd);background:var(--sf);color:var(--tx)}
+.s3dzp .pcrb.on{background:#0f9d58;border-color:#0f9d58;color:#fff}
+#dzh .ch{max-width:720px;margin-left:auto;margin-right:auto}
+#dzh #dzmk .ch{max-width:none}
+@media(max-width:560px){#zml .mkb2 .sb2{flex:1 1 calc(50% - 6px)!important;padding:6px 4px!important}}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -348,7 +532,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <h1 id='ttl'>Carteira de ações</h1>
 <div id="impb" class="pv" hidden><b>Seus dados da planilha estão prontos para importar</b><div class="mu" style="margin:4px 0 8px">96 lançamentos em 49 notas, 100 proventos, as cotações da planilha de 03/11/2026 e os prejuízos declarados no IR (2022 a 2026). Importar <b>apaga os dados atuais</b>.</div><button class="btn" id="imgo" type="button">Importar meus dados da planilha</button><button class="btn sm" id="imno" type="button" style="margin-top:8px">Agora não</button></div>
 <div id="impc" class="pv" hidden><b>Atualizar os prejuízos declarados no IR</b><div class="mu" style="margin:4px 0 8px">Troca o saldo de R$ 6.000,00 pelos valores que você informou: 2022: R$ 1.984,47 · 2023: R$ 3.316,22 · 2024: R$ 3.316,22 · 2025: R$ 4.297,17 · 2026: R$ 6.683,66. Os outros dados não mudam.</div><button class="btn" id="impcg" type="button">Atualizar prejuízos declarados</button><button class="btn sm" id="impcn" type="button" style="margin-top:8px">Agora não</button></div>
-<div id='mods' class='mods' role='group' aria-label='Escolha o tipo de carteira'><button type='button' data-mod='rv' class='on' aria-pressed='true'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 17l6-6 4 4 8-8'/><path d='M15 7h6v6'/></svg><span>Ações e FIIs</span></button><button type='button' data-mod='cr' aria-pressed='false'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M9.5 7.5h4a2 2 0 0 1 0 4h-4m0 0h4.5a2 2 0 0 1 0 4H9.5M9.5 6v12M12 5v2M12 17v2'/></svg><span>Cripto</span></button></div><nav id='navrv' role="tablist" aria-label="Seções"><button data-t='hm' class="on"><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='nv'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='b'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='p'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg><span>Proventos</span></button><button data-t='bl'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M5 20v-9M12 20V4M19 20v-6"/></svg><span>Balanço</span></button><button data-t='r'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg><span>Resumo proventos</span></button><button data-t='ir'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span>Declarar IR</span></button><button data-t='mk'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Mercado</span></button><button data-t='sm'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>Simulador</span></button><button data-t='c'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button></nav><nav id='navcr' role='tablist' aria-label='Seções de cripto' hidden><button data-t='chm' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='crn'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='crp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='crm'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Mercado</span></button><button data-t='crb'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M5 20v-9M12 20V4M19 20v-6"/></svg><span>Balanço</span></button><button data-t='cri'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span>Declarar IR</span></button><button data-t='crh'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button><button data-t='crd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav><nav id='navtt' role='tablist' aria-label='Seções do Total' data-s32='1' hidden><button data-t='ttr' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Resumo</span></button><button data-t='tte'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Evolução</span></button><button data-t='ttp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg><span>Proventos</span></button><button data-t='tta'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-t='ttm'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg><span>Alocação</span></button></nav><nav id='navdz' role='tablist' aria-label='Seções do Dólar' data-s32='1' hidden><button data-t='dzh' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='dzn'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='dzp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='dzr'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button><button data-t='dzd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav><nav id='navrf' role='tablist' aria-label='Seções da Renda fixa' data-s32='1' hidden><button data-t='rfc' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>Calculadora</span></button><button data-t='rfd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav>
+<div id='mods' class='mods' role='group' aria-label='Escolha o tipo de carteira'><button type='button' data-mod='rv' class='on' aria-pressed='true'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 17l6-6 4 4 8-8'/><path d='M15 7h6v6'/></svg><span>Ações e FIIs</span></button><button type='button' data-mod='cr' aria-pressed='false'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M9.5 7.5h4a2 2 0 0 1 0 4h-4m0 0h4.5a2 2 0 0 1 0 4H9.5M9.5 6v12M12 5v2M12 17v2'/></svg><span>Cripto</span></button></div><nav id='navrv' role="tablist" aria-label="Seções"><button data-t='hm' class="on"><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='nv'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='b'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='p'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg><span>Proventos</span></button><button data-t='bl'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M5 20v-9M12 20V4M19 20v-6"/></svg><span>Balanço</span></button><button data-t='r'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg><span>Resumo proventos</span></button><button data-t='ir'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span>Declarar IR</span></button><button data-t='mk'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Mercado</span></button><button data-t='sm'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>Simulador</span></button><button data-t='c'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button></nav><nav id='navcr' role='tablist' aria-label='Seções de cripto' hidden><button data-t='chm' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='crn'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='crp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='crm'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Mercado</span></button><button data-t='cso'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='5' y='3' width='14' height='18' rx='2'/><path d='M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01'/></svg><span>Simular</span></button><button data-t='crb'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M5 20v-9M12 20V4M19 20v-6"/></svg><span>Balanço</span></button><button data-t='cri'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span>Declarar IR</span></button><button data-t='crh'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button><button data-t='crd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav><nav id='navtt' role='tablist' aria-label='Seções do Total' data-s32='1' hidden><button data-t='ttr' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Resumo</span></button><button data-t='tte'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Evolução</span></button><button data-t='ttp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg><span>Proventos</span></button><button data-t='tta'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-t='ttm'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg><span>Alocação</span></button></nav><nav id='navdz' role='tablist' aria-label='Seções do Dólar' data-s32='1' hidden><button data-t='dzh' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Início</span></button><button data-t='dzn'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Lançar</span></button><button data-t='dzp'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><span>Posições</span></button><button data-t='dzr'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button><button data-t='dzd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav><nav id='navrf' role='tablist' aria-label='Seções da Renda fixa' data-s32='1' hidden><button data-t='rfc' class='on'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg><span>Calculadora</span></button><button data-t='rfd'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.2 1.1 2.2h5c0-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Dicas</span></button></nav>
 
 <section id="a" hidden>
 <div class="seg" id="tp">
@@ -379,7 +563,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <section id="ir"></section><section id="c"></section><section id='mk'><h2 style='margin-top:6px'>Mercado</h2><input id='mq' type='search' placeholder='Buscar ativo (ex.: PETR4 ou Petrobras)' autocomplete='off' autocapitalize='characters' spellcheck='false' enterkeyhint='search'><div id='mch' style='display:flex;gap:8px;flex-wrap:wrap;margin:10px 0'></div><div id='ml'></div><div class='mu' style='margin-top:10px'>Esta lista mostra só alguns ativos conhecidos. O preço de cada um aparece no cartão, com o horário da última atualização: o botão Atualizar das Posições atualiza os ativos que você tem, e aqui você busca os da lista ou digita um código. A busca também procura em uma base interna da B3 (ações e FIIs, que pode ter ativos antigos e não tem os mais novos), e qualquer código que você digitar pode ser usado em Comprar e Simular. A lista completa e atualizada, o ranking de mais negociados e as logos das empresas ficam para uma próxima versão.</div></section><section id='sm'><h2>Simular uma operação</h2><div class='mu simi'>Veja o preço médio, o resultado e o imposto estimado antes de fazer a operação. Nada é salvo.</div><label>Toque no ativo que você tem para preencher</label><div id='smpk' class='tkcs'></div><div class='pc simf'><div class='seg stp' style='grid-template-columns:1fr 1fr'><label><input type='radio' name='stp' value='VENDA' checked><span>Venda</span></label><label><input type='radio' name='stp' value='COMPRA'><span>Compra</span></label></div><div class='row'><div><label for='sd'>Data</label><input id='sd' type='date'></div><div><label for='sc'>Corretora</label><input id='sc' list='crs' autocomplete='off'></div></div><div class='row'><div><label for='st'>Ativo</label><input id='st' list='tks' placeholder='BBAS3' autocapitalize='characters' autocomplete='off'></div><div><label for='sk'>Tipo do ativo</label><select id='sk'><option value='ACAO'>Ação</option><option value='FII'>FII</option></select></div></div><div class='row'><div><label for='sq'>Quantidade</label><input id='sq' inputmode='decimal'></div><div><label for='sp'>Preço por cota (R$)</label><input id='sp' inputmode='decimal'></div></div><label for='sf'>Taxas estimadas (R$, opcional)</label><input id='sf' inputmode='decimal' placeholder='0,00'></div><div id='sr' style='margin-top:4px'></div></section><section id='chm'><div class='zchk' role='note'><b>Confira as informações.</b> Preços podem ter atraso e as regras de IR de cripto mudam com frequência. Antes de declarar ou pagar, confirme na Receita Federal ou com um contador.<span class='mu'>Regras do app: versão <span data-stxv>atual</span>.</span></div><div id='chmc'></div></section>
 <section id='crn' data-op='COMPRA'><h2 style='margin-top:6px'>Lançar operação de cripto</h2><div class='mu' style='margin:6px 0 2px'>Primeira vez com cripto? Veja o passo a passo e o glossário na aba Dicas. <button type='button' class='sb2' data-zgo='crd' style='margin-left:4px;vertical-align:middle'>Abrir Dicas</button></div><div class='zf' id='zfc'><div class='zfh' id='zfh'>Nova compra</div><div class='lw' style='margin-top:10px'><span class='lbt'>O que você fez?</span><button type='button' class='hq' data-h='zt' aria-expanded='false' aria-label='Ajuda: O que você fez?'>?</button></div><div class='seg' id='zt' role='radiogroup' aria-label='Tipo da operação'><label><input type='radio' name='zt' value='COMPRA' checked><span>Compra</span></label><label><input type='radio' name='zt' value='VENDA'><span>Venda</span></label><label><input type='radio' name='zt' value='PERMUTA'><span>Troca</span></label><label><input type='radio' name='zt' value='RECEB'><span>Recebido</span></label></div><div class='mu' id='zh' style='margin:8px 0 2px'></div><div class='row'><div><div class='lw'><label for='zd'>Data</label><button type='button' class='hq' data-h='zd' aria-expanded='false' aria-label='Ajuda: Data'>?</button></div><input id='zd' type='date'></div><div><div class='lw'><label for='zw'>Corretora ou carteira</label><button type='button' class='hq' data-h='zw' aria-expanded='false' aria-label='Ajuda: Corretora ou carteira'>?</button></div><input id='zw' list='zws' placeholder='Mercado Bitcoin, Binance, Ledger' autocomplete='off'></div></div><div id='zwi' class='exi' hidden></div><div id='zwx' class='exp' hidden><div class='row'><div><div class='lw'><label for='zwt'>Esta corretora é</label><button type='button' class='hq' data-h='zwt' aria-expanded='false' aria-label='Ajuda: Esta corretora é'>?</button></div><select id='zwt'><option value=''>Escolha</option><option value='BR'>Nacional (Brasil)</option><option value='EX'>Estrangeira</option><option value='SC'>Carteira própria</option></select></div><div id='zwpw'><div class='lw'><label for='zwp' id='zwpl'>País da empresa</label><button type='button' class='hq' data-h='zwp' aria-expanded='false' aria-label='Ajuda: país ou CNPJ'>?</button></div><input id='zwp' autocomplete='off' placeholder='Ex.: Estados Unidos'></div></div></div><div id='zrg' hidden><div class='lw'><label for='zr'>Onde foi feita a venda?</label><button type='button' class='hq' data-h='zr' aria-expanded='false' aria-label='Ajuda: Onde foi feita a venda?'>?</button></div><select id='zr'><option value='BR'>Brasil: corretora nacional ou carteira própria</option><option value='EX'>Exterior: corretora estrangeira</option></select></div><div class='row'><div><div class='lw'><label id='zl1' for='zc'>Moeda</label><button type='button' class='hq' data-h='zc' aria-expanded='false' aria-label='Ajuda: Moeda'>?</button></div><input id='zc' list='zcs' placeholder='BTC' autocapitalize='characters' autocomplete='off'></div><div><div class='lw'><label id='zl2' for='zq'>Quantidade</label><button type='button' class='hq' data-h='zq' aria-expanded='false' aria-label='Ajuda: Quantidade'>?</button></div><input id='zq' inputmode='decimal' placeholder='0,00000000'></div></div><div class='row' id='zp2' hidden><div><div class='lw'><label for='zc2'>Moeda recebida</label><button type='button' class='hq' data-h='zc2' aria-expanded='false' aria-label='Ajuda: Moeda recebida'>?</button></div><input id='zc2' list='zcs' placeholder='ETH' autocapitalize='characters' autocomplete='off'></div><div><div class='lw'><label for='zq2'>Quantidade recebida</label><button type='button' class='hq' data-h='zq2' aria-expanded='false' aria-label='Ajuda: Quantidade recebida'>?</button></div><input id='zq2' inputmode='decimal' placeholder='0,00000000'></div></div><div id='zrm' hidden><div class='lw'><label for='zm'>Como tratar este recebimento?</label><button type='button' class='hq' data-h='zm' aria-expanded='false' aria-label='Ajuda: Como tratar este recebimento?'>?</button></div><select id='zm'><option value='ZERO'>Custo zero (airdrop, hard fork, bônus)</option><option value='REND'>Rendimento a declarar (staking, mineração, pagamento): o valor em R$ vira o custo</option></select></div><div class='row' id='zcw'><div><div class='lw'><label for='zcu'>Valor informado em</label><button type='button' class='hq' data-h='zcu' aria-expanded='false' aria-label='Ajuda: Valor informado em'>?</button></div><select id='zcu'><option value='BRL'>Reais (R$)</option><option value='USD'>Dólares (US$)</option></select></div><div id='zxw' hidden><div class='lw'><label for='zfx'>Dólar do dia (R$ por US$)</label><button type='button' class='hq' data-h='zfx' aria-expanded='false' aria-label='Ajuda: Dólar do dia (R$ por US$)'>?</button></div><input id='zfx' inputmode='decimal' placeholder='5,4321'><button type='button' class='btn sm' id='zptx' style='margin:6px 0 0'>Buscar PTAX do dia</button><div class='mu' id='zptm' style='margin-top:6px'></div></div></div><div class='mu' id='zxl' hidden style='margin:6px 0 0'>Use a cotação <b>PTAX de venda</b> do Banco Central do <b>dia da operação</b> (fim de semana ou feriado: a do último dia útil anterior). O app converte tudo para reais com esta cotação. <a href='https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes' target='_blank' rel='noopener noreferrer'>Consultar a PTAX no site do Banco Central</a>. No programa para Windows e no app Android, o botão <b>Buscar PTAX do dia</b> faz essa consulta para você.</div><div class='row'><div id='zvw'><div class='lw'><label id='zl3' for='zv'>Valor</label><button type='button' class='hq' data-h='zv' aria-expanded='false' aria-label='Ajuda: Valor'>?</button></div><input id='zv' inputmode='decimal' placeholder='0,00'></div><div id='zfw'><div class='lw'><label id='zl4' for='zf'>Taxas (R$)</label><button type='button' class='hq' data-h='zf' aria-expanded='false' aria-label='Ajuda: Taxas (R$)'>?</button></div><input id='zf' inputmode='decimal' placeholder='0,00'></div></div><div id='zvs' class='pv' hidden></div><div class='lw'><label for='zn'>Observação (opcional)</label><button type='button' class='hq' data-h='zn' aria-expanded='false' aria-label='Ajuda: Observação (opcional)'>?</button></div><input id='zn' autocomplete='off' placeholder='Ex.: hash da transação'><div class='zft'><span id='zftl'>Custo total (com taxas)</span><b id='zftv'>R$ 0,00</b></div></div><div id='zpv' class='pv' hidden></div><button class='btn' id='zs' type='button'>Salvar operação</button><button class='btn sm' id='zx' type='button' hidden style='margin-top:8px'>Cancelar edição</button><datalist id='zcs'></datalist><datalist id='zws'></datalist></section>
 <section id='crp'><div id='zpos'></div></section>
-<section id='crm'><h2 style='margin-top:6px'>Mercado</h2><div class='mu'>Procure uma moeda pelo nome ou pelo código e veja o preço agora, em reais e em dólar. É só consulta: nada aqui muda a sua carteira. Toque na estrela (☆) para deixar a moeda na lista, ou em <b>Comprar</b> para registrar uma compra dela. O gráfico de cada moeda muda de período (24 h, 5 d, 15 d, 30 d, 90 d ou 1 ano) nos botões acima dos cartões.</div><div class='mkq'><label for='zmq'>Procurar moeda</label><input id='zmq' type='search' placeholder='Ex.: bitcoin, SOL, dogecoin' autocomplete='off' autocapitalize='off' spellcheck='false' enterkeyhint='search'></div><div class='qxb'><button class='btn sm' id='zmr' type='button'>Atualizar preços</button><span class='mu' id='zmt' aria-live='polite'></span></div><div id='zml'></div></section>
+<section id='crm'><h2 style='margin-top:6px'>Mercado</h2><div class='mu mkhelp'>Preço das moedas agora, em reais e em dólar. Só consulta: nada aqui muda a sua carteira. <button type='button' class='lk' data-mkhelp='1' aria-expanded='false'>Como usar?</button><span class='mkhelpx' hidden> Procure pelo nome ou pelo código. Toque na estrela (☆) para favoritar e no ☰ para pôr a moeda nas suas listas. Toque no gráfico para abrir maior, com máxima e mínima do período. Os botões de cada moeda levam ao Lançar (Comprar, Vender, Trocar) ou ao Simular.</span></div><div class='mkq'><label for='zmq'>Procurar moeda</label><input id='zmq' type='search' placeholder='Ex.: bitcoin, SOL, dogecoin' autocomplete='off' autocapitalize='off' spellcheck='false' enterkeyhint='search'></div><div class='qxb'><button class='btn sm' id='zmr' type='button'>Atualizar preços</button><span class='mu' id='zmt' aria-live='polite'></span></div><div id='zml'></div></section>
 <section id='crb'><h2 style='margin-top:6px'>Apuração mensal do imposto (Brasil)</h2><div class='zchk' role='note'><b>Confira antes de declarar ou pagar.</b> As regras de IR sobre cripto mudam com frequência e o app pode estar desatualizado: ele segue as regras que conhecia na versão <span data-stxv>atual</span>. Confirme na Receita Federal ou com um contador antes de pagar um DARF ou entregar a declaração.</div><div class='dac'><a class='dab y' id='zpay' href='https://sicalc.receita.fazenda.gov.br/sicalc/principal' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z'/><path d='M8.5 8h7M8.5 12h7M8.5 16h4'/></svg><span>Emitir e pagar o DARF<small>Código 4600 · abre o Sicalc, da Receita Federal</small></span></a></div><div id='zdf'></div><div class='row'><div><div class='lw'><label for='zby'>Ano</label><button type='button' class='hq' data-h='zby' aria-expanded='false' aria-label='Ajuda: Ano'>?</button></div><select id='zby'></select></div><div><div class='lw'><label for='zbc'>Corretora</label><button type='button' class='hq' data-h='zbc' aria-expanded='false' aria-label='Ajuda: Corretora'>?</button></div><select id='zbc'></select></div></div><div id='zbm'></div><h2>Cripto no exterior (Lei 14.754/2023)</h2><div id='zbx'></div><h2>Rendimentos em cripto (carnê-leão)</h2><div id='zbr'></div><div class='pv'>Dúvidas sobre as regras (isenção de R$ 35 mil, prejuízo, dólar, exterior, DeCripto)? A aba Dicas explica cada ponto e diz o que está confirmado na lei e o que é interpretação. <button type='button' class='sb2' data-zgo='crd' style='margin-left:4px;vertical-align:middle'>Abrir Dicas</button></div></section>
 <section id='cri'><div class='zchk' role='note'><b>Confira antes de declarar ou pagar.</b> As regras de IR sobre cripto mudam com frequência e o app pode estar desatualizado: ele segue as regras que conhecia na versão <span data-stxv>atual</span>. Confirme na Receita Federal ou com um contador antes de pagar um DARF ou entregar a declaração.</div><div id='zir'></div></section>
 <section id='crh'><div id='zhist'></div></section>
@@ -556,7 +740,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 
 
 
-<section id='ttr'></section><section id='tte'></section><section id='ttp'></section><section id='tta'></section><section id='ttm'></section><section id='dzh'></section><section id='dzn'></section><section id='dzp'></section><section id='dzr'></section><section id='dzd'></section><section id='rfc'></section><section id='rfd'></section></main>
+<section id='ttr'></section><section id='tte'></section><section id='ttp'></section><section id='tta'></section><section id='ttm'></section><section id='dzh'></section><section id='dzn'></section><section id='dzp'></section><section id='dzr'></section><section id='dzd'></section><section id='rfc'></section><section id='rfd'></section><section id='cso'></section></main>
 <div id='sxs' class='sxs' hidden><div class='sxbk' data-sxclose='1'></div><div class='sxp' role='dialog' aria-modal='true' aria-labelledby='sxt' tabindex='-1'>
 <div class='sxh'><div class='sxht'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><b id='sxt'>Configurações</b></div><button type='button' id='sxx' class='sxcl' aria-label='Fechar configurações' data-sxclose='1'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M6 6l12 12M18 6L6 18'/></svg></button></div>
 <div class='sxc'>
@@ -597,7 +781,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.3 · 13/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.3 · 13/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam neste aparelho e, com o login do Google ligado, também no seu Google Drive. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto, 3 = conta Google, sincronização entre aparelhos e PIN); o segundo conta as atualizações.</p></div>
@@ -1886,7 +2070,12 @@ function zUI(){var t=zType(),usd=$('#zcu').value==='USD';
 function zHd(){var t=zType(),h=$('#zfh'),n={COMPRA:['Nova compra','Editando compra'],VENDA:['Nova venda','Editando venda'],PERMUTA:['Nova troca','Editando troca'],RECEB:['Novo recebimento','Editando recebimento']}[t];$('#crn').dataset.op=t;if(h)h.textContent=n[CXE?1:0]}
 function zTot(){var l=$('#zftl'),v=$('#zftv');if(!l||!v)return;var d=zDraft(),t=d.type,x=d.total,lab;
   if(t==='COMPRA'){lab='Custo total (com taxas)';x=d.total+d.fee}else if(t==='VENDA'){lab='Valor líquido recebido (menos as taxas)';x=d.total-d.fee}else if(t==='PERMUTA')lab='Valor justo da troca';else lab=d.mode==='REND'?'Rendimento a declarar':'Custo da entrada (airdrop, bônus)';
-  l.textContent=lab;v.textContent=d.cur==='USD'&&!(d.fx>0)?'informe o dólar do dia':brl(x)}
+  l.textContent=lab;v.textContent=d.cur==='USD'&&!(d.fx>0)?'informe o dólar do dia':brl(x);v.className='';
+  /* v3.3: na venda, o valor fica na cor normal; verde ou vermelho so pelo resultado sobre o custo medio */
+  var rr=document.getElementById('zfres');if(rr)rr.remove();
+  if(t==='VENDA'&&d.coin&&d.qty>0&&d.total>0&&!(d.cur==='USD'&&!(d.fx>0))){var p=calc(CR.ops.filter(function(o){return o.id!==CXE})).pools[d.coin];
+    if(p&&p.qty>1e-12){var q=Math.min(d.qty,p.qty),cs=p.cost/p.qty*q,res=x-cs;v.className=res>=0?'gn':'rd';
+      var w=v.closest('.zft');if(w)w.insertAdjacentHTML('afterend','<div id="zfres" class="zfres">Resultado desta venda: <b class="'+(res>=0?'gn':'rd')+'">'+(res>=0?'+':'−')+brl(Math.abs(res))+(cs>0?' ('+(res>=0?'+':'−')+(Math.abs(res)/cs*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'%)':'')+'</b> <span class="mu">· custo médio '+brl(p.cost/p.qty)+' por unidade</span></div>')}}}
 function zDraft(){var t=zType(),d={id:CXE||9e15,type:t,date:$('#zd').value,where:canonB($('#zw').value),reg:(t==='VENDA'||t==='PERMUTA')&&$('#zr').value==='EX'?'EX':'BR',coin:cn($('#zc').value),qty:num($('#zq').value),total:num($('#zv').value),fee:num($('#zf').value),note:$('#zn').value.trim()};
   if(t==='PERMUTA'){d.coin2=cn($('#zc2').value);d.qty2=num($('#zq2').value)}
   if(t==='RECEB'){d.mode=$('#zm').value==='REND'?'REND':'ZERO';if(d.mode==='ZERO'){d.total=0;d.fee=0}else d.fee=0}
@@ -1968,8 +2157,8 @@ function zLists(){var cs={};Object.keys(NM).forEach(function(c){cs[c]=1});CR.ops
 var CPV='c',CBC='',ZEX={};try{var _pv=localStorage.getItem('carteira-cr-pv');CPV=_pv==='t'?'t':_pv==='s'?'s':'c'}catch(e){}
 function zTbl(held,P){var tc=0,tv=0,tl=0,tg=0;
   var b=held.map(function(c){var p=P[c],ct=crCat(c),px=+CR.px[c]||0,val=px>0?p.qty*px:0,lat=px>0?val-p.cost:0,ln=locNames(c,'9999-12-31').sort();tc+=p.cost;tg+=p.gain;if(px>0){tv+=val;tl+=lat}
-    return '<tr><td><b>'+esc(c)+'</b><div class="mu" style="font-size:11px">'+esc(NM[c]||'')+'</div></td><td>'+fq(p.qty)+'</td><td>'+pq(p.cost/p.qty)+'</td><td>'+brl(p.cost)+'</td><td><input class="qp" data-zpx="'+esc(c)+'" inputmode="decimal" placeholder="Opcional" aria-label="Preço atual de '+esc(c)+'" value="'+(px>0?nyP2(px):'')+'"></td><td>'+(px>0?brl(val):'—')+'</td><td>'+(px>0&&qxDay('C',c)!==null?qxDayTag('C',c,' '):'—')+'</td><td class="'+(px>0?cls(lat):'')+'">'+(px>0?brl(lat)+'<div class="mu" style="font-size:11px">'+(lat>=0?'+':'')+pct(lat/p.cost)+'</div>':'—')+'</td><td class="'+cls(p.gain)+'">'+brl(p.gain)+'</td><td><select data-zcat="'+esc(c)+'" aria-label="Tipo no IR de '+esc(c)+'">'+CATO.map(function(k){return '<option value="'+k+'"'+(k===ct?' selected':'')+'>'+k+' · '+CATN[k]+'</option>'}).join('')+'</select></td><td>'+(ln.length?ln.map(function(w){var e=exFind(w);return bchip(w)+(e&&e.t==='EX'?'<span class="tb">exterior</span>':'')}).join(' '):'—')+'</td></tr>'}).join('');
-  return '<div class="tw"><table><thead><tr><th>Moeda</th><th>Quantidade</th><th>Custo médio</th><th>Custo total</th><th>Preço atual<div class="mu" style="font-size:10px;font-weight:400">R$ por unidade</div></th><th>Valor atual</th><th>24 h</th><th>Não realizado</th><th>Realizado</th><th>Tipo no IR</th><th>Operada em</th></tr></thead><tbody>'+b+'</tbody><tfoot><tr><td>Total</td><td></td><td></td><td>'+brl(tc)+'</td><td></td><td>'+(tv>0?brl(tv):'—')+'</td><td></td><td class="'+(tv>0?cls(tl):'')+'">'+(tv>0?brl(tl):'—')+'</td><td class="'+cls(tg)+'">'+brl(tg)+'</td><td></td><td></td></tr></tfoot></table></div>'}
+    return '<tr><td><b>'+esc(c)+'</b><div class="mu" style="font-size:11px">'+esc(NM[c]||'')+'</div></td><td>'+fq(p.qty)+'</td><td>'+pq(p.cost/p.qty)+'</td><td>'+brl(p.cost)+'</td><td><input class="qp" data-zpx="'+esc(c)+'" inputmode="decimal" placeholder="Opcional" aria-label="Preço atual de '+esc(c)+'" value="'+(px>0?nyP2(px):'')+'"></td><td>'+(px>0?brl(val):'—')+'</td><td>'+(px>0&&qxDay('C',c)!==null?qxDayTag('C',c,' '):'—')+'</td><td class="'+(px>0?cls(lat):'')+'">'+(px>0?brl(lat)+'<div class="mu" style="font-size:11px">'+(lat>=0?'+':'')+pct(lat/p.cost)+'</div>':'—')+'</td><td class="'+cls(p.gain)+'">'+brl(p.gain)+'</td><td><select data-zcat="'+esc(c)+'" aria-label="Tipo no IR de '+esc(c)+'">'+CATO.map(function(k){return '<option value="'+k+'"'+(k===ct?' selected':'')+'>'+k+' · '+CATN[k]+'</option>'}).join('')+'</select></td><td>'+(ln.length?ln.map(function(w){var e=exFind(w);return bchip(w)+(e&&e.t==='EX'?'<span class="tb">exterior</span>':'')}).join(' '):'—')+'</td><td class="ztac"><details class="ztact"><summary>Ações</summary>'+zBtns(c)+'</details></td></tr>'}).join('');
+  return '<div class="tw"><table><thead><tr><th>Moeda</th><th>Quantidade</th><th>Custo médio</th><th>Custo total</th><th>Preço atual<div class="mu" style="font-size:10px;font-weight:400">R$ por unidade</div></th><th>Valor atual</th><th>24 h</th><th>Não realizado</th><th>Realizado</th><th>Tipo no IR</th><th>Operada em</th><th>Ações</th></tr></thead><tbody>'+b+'</tbody><tfoot><tr><td>Total</td><td></td><td></td><td>'+brl(tc)+'</td><td></td><td>'+(tv>0?brl(tv):'—')+'</td><td></td><td class="'+(tv>0?cls(tl):'')+'">'+(tv>0?brl(tl):'—')+'</td><td class="'+cls(tg)+'">'+brl(tg)+'</td><td></td><td></td><td></td></tr></tfoot></table></div>'}
 function zBar(){return qxBar('C')+'<div class="pvbar"><div class="pvseg pv3" role="group" aria-label="Modo de exibição"><button class="pvb'+(CPV==='c'?' on':'')+'" type="button" data-zvw="c" aria-pressed="'+(CPV==='c')+'">Completo</button><button class="pvb'+(CPV==='s'?' on':'')+'" type="button" data-zvw="s" aria-pressed="'+(CPV==='s')+'">Simples</button><button class="pvb'+(CPV==='t'?' on':'')+'" type="button" data-zvw="t" aria-pressed="'+(CPV==='t')+'">Tabela</button></div></div>'}
 /* v3.1: cartao completo e cartao simples de cada moeda (mesmo desenho das acoes) */
 function zCatSel(c,ct){return '<div class="nzcat"><div class="lw"><label>Tipo no Imposto de Renda</label>'+hq('cat')+'</div><select data-zcat="'+esc(c)+'" aria-label="Tipo no IR de '+esc(c)+'">'+CATO.map(function(k){return '<option value="'+k+'"'+(k===ct?' selected':'')+'>'+k+' · '+CATN[k]+'</option>'}).join('')+'</select></div>'}
@@ -2166,8 +2355,10 @@ var KMK='carteira-mk-v1',MK={t:0,map:null,uni:null,err:'',busy:false,chg:{},ext:
 var MKN={XRP:'XRP (Ripple)',BNB:'BNB (Binance Coin)',MATIC:'Polygon (Matic)',POL:'Polygon (ex-Matic)',BCH:'Bitcoin Cash',ETC:'Ethereum Classic',XMR:'Monero',FIL:'Filecoin',ICP:'Internet Computer',APT:'Aptos',VET:'VeChain',ALGO:'Algorand',EGLD:'MultiversX (Elrond)',FTM:'Fantom',SAND:'The Sandbox',MANA:'Decentraland',AXS:'Axie Infinity',GRT:'The Graph',INJ:'Injective',RUNE:'THORChain',THETA:'Theta',EOS:'EOS',XTZ:'Tezos',FLOW:'Flow',CHZ:'Chiliz',CRV:'Curve',MKR:'Maker',SNX:'Synthetix',COMP:'Compound',LDO:'Lido DAO',STX:'Stacks',IMX:'Immutable',RNDR:'Render',RENDER:'Render',FET:'Fetch.ai',TAO:'Bittensor',WLD:'Worldcoin',SEI:'Sei',TIA:'Celestia',JUP:'Jupiter',PYTH:'Pyth Network',ENA:'Ethena',ONDO:'Ondo',WIF:'dogwifhat',BONK:'Bonk',FLOKI:'Floki',ORDI:'Ordinals',GALA:'Gala',ENJ:'Enjin',BAT:'Basic Attention Token',ZEC:'Zcash',DASH:'Dash',NEO:'Neo',IOTA:'IOTA',KAVA:'Kava',QTUM:'Qtum',ZIL:'Zilliqa',ONE:'Harmony',CAKE:'PancakeSwap',SUSHI:'SushiSwap','1INCH':'1inch',YFI:'Yearn Finance',LRC:'Loopring',ANKR:'Ankr',CELO:'Celo',KSM:'Kusama',XEC:'eCash',HOT:'Holo',RVN:'Ravencoin',TUSD:'TrueUSD',FDUSD:'First Digital USD',PAXG:'PAX Gold',WBTC:'Wrapped Bitcoin',STETH:'Lido Staked Ether',TRUMP:'Official Trump',PENGU:'Pudgy Penguins',S:'Sonic',KAS:'Kaspa',NOT:'Notcoin',PNUT:'Peanut the Squirrel',BRL:'Real brasileiro'};
 function mkLoad(){var o=null;try{o=JSON.parse(localStorage.getItem(KMK))}catch(e){}
   if(!o||!Array.isArray(o.fav))o={fav:['BTC','ETH','SOL','BNB','XRP','USDT']};
-  o.fav=o.fav.filter(function(c,i,a){return typeof c==='string'&&/^[A-Z0-9]{1,12}$/.test(c)&&a.indexOf(c)===i}).slice(0,60);o.pr=/^(1d|5d|15d|30d|90d|1a)$/.test(o.pr)?o.pr:'1d';return o}
-function mkSave(){try{localStorage.setItem(KMK,JSON.stringify({fav:MKF.fav,pr:MKF.pr}))}catch(e){}}
+  o.fav=o.fav.filter(function(c,i,a){return typeof c==='string'&&/^[A-Z0-9]{1,12}$/.test(c)&&a.indexOf(c)===i}).slice(0,60);o.pr=/^(1d|5d|15d|30d|90d|1a)$/.test(o.pr)?o.pr:'1d';
+  o.lst=typeof o.lst==='string'?o.lst:'mine';var cl={};if(o.cl&&typeof o.cl==='object'&&!Array.isArray(o.cl))Object.keys(o.cl).slice(0,20).forEach(function(k){var a=o.cl[k];if(Array.isArray(a)&&k.length<=30)cl[k]=a.filter(function(c){return typeof c==='string'&&/^[A-Z0-9]{1,12}$/.test(c)}).slice(0,60)});o.cl=cl;
+  o.gc=o.gc&&typeof o.gc==='object'?o.gc:{};if(!/^(mine|top|held|fav)$/.test(o.lst)&&!o.cl[o.lst])o.lst='mine';return o}
+function mkSave(){try{localStorage.setItem(KMK,JSON.stringify({fav:MKF.fav,pr:MKF.pr,lst:MKF.lst,cl:MKF.cl,gc:MKF.gc}))}catch(e){}}
 function mkName(c){return MKN[c]||NM[c]||''}
 function mkClock(t){var d=new Date(t),n=new Date(),p=function(x){return (x<10?'0':'')+x},h=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
   return d.toDateString()===n.toDateString()?'hoje às '+h:p(d.getDate())+'/'+p(d.getMonth()+1)+' às '+h}
@@ -2200,21 +2391,29 @@ function mkSpark(s,sg){var e=s?MKS[s+'|'+MKF.pr]:null;
   if(!e.pts||e.pts.length<2)return {h:'<div class="mkpn mu">sem gráfico</div>',p:null};
   var P=e.pts,n=P.length,W=160,H=44,mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),sp=(mx-mn)||mx*.02||1,X=function(i){return 2+(W-4)*i/(n-1)},Y=function(v){return 3+(H-6)*(1-(v-mn)/sp)},ln=P.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1)}),up=(typeof sg==='number'&&isFinite(sg))?sg>=0:P[n-1]>=P[0];
   return {p:P[0]>0?P[n-1]/P[0]-1:0,h:'<svg class="mkpsvg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Gráfico de '+mkPrL()+'" style="color:var(--'+(up?'gn':'rd')+')"><path d="M'+ln.join(' L')+' L'+X(n-1).toFixed(1)+','+H+' L'+X(0).toFixed(1)+','+H+' Z" fill="currentColor" fill-opacity=".14"/><polyline points="'+ln.join(' ')+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>'}}
-function mkRow(c,held){var o=mkPrice(c),f=MKF.fav.indexOf(c)>=0,nm=mkName(c),s=mkSym(c),h='';
-  h+='<div class="mcr mcc" data-mk="'+ea(c)+'"><div class="mkh">'+zAv(c)+'<div class="mkt"><div class="mkt1"><b class="ptk">'+esc(c)+'</b>'+(held[c]?'<span class="tb">na carteira</span>':'')+'</div>'+(nm?'<div class="pn">'+esc(nm)+'</div>':'')+'</div></div>';
+var MKTOP=['BTC','ETH','USDT','SOL','BNB','XRP','USDC','DOGE','ADA','TRX','AVAX','LINK','DOT','LTC','POL','SHIB'];
+function mkHi(s){var e=s?MKS[s+'|'+MKF.pr]:null;if(!e||!e.pts||e.pts.length<2)return '';var mx=Math.max.apply(null,e.pts),mn=Math.min.apply(null,e.pts),rt=/USDT$/.test(s)?mkFx():1;if(!(rt>0))return '';
+  return '<div class="mkhl"><span>máx <b>'+pq(mx*rt)+'</b></span><span>mín <b>'+pq(mn*rt)+'</b></span></div>'}
+function mkFx(){var m=MK.map;return m&&m.USDTBRL>0?m.USDTBRL:0}
+function mkRow(c,held){var o=mkPrice(c),f=MKF.fav.indexOf(c)>=0,nm=mkName(c),s=mkSym(c),h='',P=held[c]?calc(CR.ops).pools[c]:null,hv=P&&o.p>0?P.qty*o.p:0;
+  h+='<div class="mcr mcc'+(P?' mkhold':'')+'" data-mk="'+ea(c)+'"><div class="mkh">'+zAv(c)+'<div class="mkt"><div class="mkt1"><b class="ptk">'+esc(c)+'</b></div>'+(nm?'<div class="pn">'+esc(nm)+'</div>':'')+'</div>'+
+    '<button class="sb2 mkst'+(f?' on':'')+'" type="button" data-mkstar="'+ea(c)+'" aria-pressed="'+(f?'true':'false')+'" aria-label="'+(f?'Parar de acompanhar ':'Acompanhar ')+esc(c)+'" title="'+(f?'Favorita':'Favoritar')+'">'+(f?'★':'☆')+'</button><button class="sb2 mkls" type="button" data-mkls="'+ea(c)+'" aria-label="Listas de '+esc(c)+'" title="Listas">☰</button></div>';
+  if(P)h+='<div class="mkyou">Você tem <b>'+fq(P.qty)+' '+esc(c)+'</b>'+(hv>0?' · <b>'+brl(hv)+'</b> <span class="'+cls(hv-P.cost)+'">'+(hv-P.cost>=0?'+':'−')+pct(Math.abs(hv-P.cost)/(P.cost||1))+'</span>':'')+'</div>';
   if(o.p>0){var v24=s?mkPct(s):null,sp=mkSpark(s,MKF.pr==='1d'&&v24!==null?v24:null),pv=MKF.pr==='1d'&&v24!==null?v24/100:sp.p;
-    h+='<div class="mkv"><b>'+pq(o.p)+'</b><span class="mu">'+(o.u>0?mkUsd(o.u):'sem cotação em dólar')+'</span></div><div class="mkpp" data-mkpp="'+ea(s)+'">'+sp.h+'</div>'+
-      '<div class="mkpc"><b data-mkc="'+ea(s)+'" class="'+(pv===null?'mu':cls(pv))+'">'+(pv===null?(s?'…':'—'):(pv>=0?'+':'')+pct(pv))+'</b><span class="mu">'+mkPrL()+'</span></div>'+(/^Binance/.test(o.s)&&!/×/.test(o.s)?'':'<div class="mu mkso">Fonte: '+esc(o.s)+'</div>')}
+    h+='<div class="mkv"><b>'+pq(o.p)+'</b><span class="mu">'+(o.u>0?mkUsd(o.u):'sem cotação em dólar')+'</span></div><button type="button" class="mkpp" data-mkbig="'+ea(c)+'" data-mkpp="'+ea(s)+'" aria-label="Abrir o gráfico de '+esc(c)+'" title="Abrir o gráfico">'+sp.h+'</button>'+
+      '<div class="mkpc"><b data-mkc="'+ea(s)+'" class="'+(pv===null?'mu':cls(pv))+'">'+(pv===null?(s?'…':'—'):(pv>=0?'+':'')+pct(pv))+'</b><span class="mu">'+mkPrL()+'</span></div><div data-mkhl="'+ea(s)+'">'+mkHi(s)+'</div>'+(/^Binance/.test(o.s)&&!/×/.test(o.s)?'':'<div class="mu mkso">Fonte: '+esc(o.s)+'</div>')}
   else h+='<div class="mkv"><b class="mu">sem preço</b></div><div class="mu mkm">Esta moeda não apareceu na Binance. Você pode procurar no Mercado Bitcoin.</div><div class="mkb"><button class="sb2" type="button" data-mkmb="'+ea(c)+'">Buscar no Mercado Bitcoin</button></div>';
-  h+='<div class="mkb"><button class="sb2 mkst'+(f?' on':'')+'" type="button" data-mkstar="'+ea(c)+'" aria-pressed="'+(f?'true':'false')+'" aria-label="'+(f?'Parar de acompanhar ':'Acompanhar ')+esc(c)+'" title="'+(f?'Acompanhando':'Acompanhar')+'">'+(f?'★':'☆')+'</button><button class="sb2 b" type="button" data-zact="COMPRA" data-zcc="'+ea(c)+'">Comprar</button></div></div>';
+  var a=' type="button" data-zcc="'+ea(c)+'"';
+  h+='<div class="mkb mkb2"><button class="sb2 b" data-zact="COMPRA"'+a+'>Comprar</button>'+(P?'<button class="sb2 v" data-zact="VENDA"'+a+'>Vender</button><button class="sb2" data-zact="PERMUTA"'+a+'>Trocar</button>':'')+'<button class="sb2" type="button" data-crsim="'+ea(c)+'">Simular</button>'+(P?'<button class="sb2 x" type="button" data-zxc="'+ea(c)+'">Excluir</button>':'')+'</div>'+
+    '<div class="mklp" data-mklp="'+ea(c)+'" hidden></div></div>';
   return h}
-function mkSerPaint(s){$$('.mcc [data-mkpp="'+s+'"]').forEach(function(x){var sp=mkSpark(s,MKF.pr==='1d'?mkPct(s):null);x.innerHTML=sp.h;var c=x.parentNode.querySelector('[data-mkc]');if(c&&!(MKF.pr==='1d'&&mkPct(s)!==null)){if(sp.p!==null){c.textContent=(sp.p>=0?'+':'')+pct(sp.p);c.className=cls(sp.p)}else{c.textContent='—';c.className='mu'}}})}
-async function mkSer(syms){var pr=MKF.pr,cf=MKPK[pr],now=Date.now(),q=0,need=syms.filter(function(s,i,a){var e=MKS[s+'|'+pr];return s&&a.indexOf(s)===i&&!(e&&now-e.t<cf[2])&&!MKSB[s+'|'+pr]}).slice(0,24);
+function mkSerPaint(s){$$('[data-mkhl="'+s+'"]').forEach(function(x){x.innerHTML=mkHi(s)});if(MKBIG&&mkSym(MKBIG)===s)mkBigPaint();$$('.mcc [data-mkpp="'+s+'"]').forEach(function(x){var sp=mkSpark(s,MKF.pr==='1d'?mkPct(s):null);x.innerHTML=sp.h;var c=x.parentNode.querySelector('[data-mkc]');if(c&&!(MKF.pr==='1d'&&mkPct(s)!==null)){if(sp.p!==null){c.textContent=(sp.p>=0?'+':'')+pct(sp.p);c.className=cls(sp.p)}else{c.textContent='—';c.className='mu'}}})}
+async function mkSer(syms,prX){var pr=prX&&MKPK[prX]?prX:MKF.pr,cf=MKPK[pr],now=Date.now(),q=0,need=syms.filter(function(s,i,a){var e=MKS[s+'|'+pr];return s&&a.indexOf(s)===i&&!(e&&now-e.t<cf[2])&&!MKSB[s+'|'+pr]}).slice(0,24);
   if(!need.length)return;need.forEach(function(s){MKSB[s+'|'+pr]=1});
-  async function w(){while(q<need.length){if(pr!==MKF.pr){q=need.length;break}var s=need[q++],k=s+'|'+pr,u='symbol='+encodeURIComponent(s)+'&interval='+cf[0]+'&limit='+cf[1],r,pts=[];
+  async function w(){while(q<need.length){if(!prX&&pr!==MKF.pr){q=need.length;break}var s=need[q++],k=s+'|'+pr,u='symbol='+encodeURIComponent(s)+'&interval='+cf[0]+'&limit='+cf[1],r,pts=[];
     try{r=await qxGet('https://data-api.binance.vision/api/v3/klines?'+u,15000);if(!(r&&r.ok&&Array.isArray(r.j)))r=await qxGet('https://api.binance.com/api/v3/klines?'+u,15000);
       if(r&&r.ok&&Array.isArray(r.j))pts=r.j.map(function(x){return parseFloat(x&&x[4])}).filter(function(v){return v>0})}catch(x){}
-    MKS[k]={t:Date.now(),pts:pts};delete MKSB[k];if(pr===MKF.pr)mkSerPaint(s)}}
+    MKS[k]={t:Date.now(),pts:pts};delete MKSB[k];if(pr===MKF.pr)mkSerPaint(s);if(window.S33S&&S33S.out&&prX)try{S33S.out()}catch(z){}}}
   await Promise.all([w(),w(),w()]);need.forEach(function(s){delete MKSB[s+'|'+pr]})}
 function mkStatus(){var t='';
   if(MK.busy)t='Buscando preços…';
@@ -2226,17 +2425,49 @@ function mkStatus(){var t='';
 function mkAuto(){return !!(window.__DESKTOP__||window.AndroidHttp)}
 function mkWhy(e,full){if((e==='net'||e==='timeout')&&!mkAuto())return full?'Dentro da página do Claude a internet é bloqueada. Esta função funciona no programa de Windows e no app Android.':'internet bloqueada nesta página';
   var w=(typeof QXW!=='undefined'&&QXW[e])||'erro inesperado';return full?'Não consegui buscar os preços: '+w+'.':w}
-function mkRender(){var el=$('#zml');if(!el)return;var q=$('#zmq').value.trim(),held=mkHeld(),L,h='',syms=[];
+var MKBIG='';
+function mkListOf(k,held){var L=[];if(k==='mine'){Object.keys(held).sort().forEach(function(c){L.push(c)});MKF.fav.forEach(function(c){if(L.indexOf(c)<0)L.push(c)})}
+  else if(k==='held')L=Object.keys(held).sort();else if(k==='fav')L=MKF.fav.slice();else if(k==='top')L=MKTOP.slice();else L=(MKF.cl[k]||[]).slice();return L}
+function mkTabs(held){var n=function(k){return mkListOf(k,held).length},b=function(k,t){var on=MKF.lst===k;return '<button type="button" class="pcrb'+(on?' on':'')+'" data-mklst="'+ea(k)+'" aria-pressed="'+on+'">'+t+' <i>'+n(k)+'</i></button>'};
+  return '<div class="mktabs" role="group" aria-label="Listas de moedas">'+b('mine','Suas e favoritas')+b('top','Principais')+b('held','Minhas moedas')+b('fav','★ Favoritas')+Object.keys(MKF.cl).map(function(k){return b(k,esc(k))}).join('')+'<button type="button" class="pcrb" data-mknew="1">+ Lista</button></div><div class="mknw" id="mknw" hidden><input id="mknwi" maxlength="30" placeholder="Nome da lista (ex.: Altcoins)" aria-label="Nome da nova lista"><button type="button" class="sb2" data-mknwok="1">Criar lista</button></div>'}
+var MKGRP=[['01','Bitcoin'],['02','Outras criptomoedas'],['03','Stablecoins (atreladas ao dólar)'],['10','NFTs'],['99','Outros criptoativos']];
+function mkRender(){var el=$('#zml');if(!el)return;var q=$('#zmq').value.trim(),held=mkHeld(),L,h='',syms=[],grp=false;
   $('#zmt').textContent=mkStatus();$('#zmr').disabled=MK.busy;
   if(q){L=mkSearch(q);h='<h2>Resultados<span class="h2t">'+L.length+'</span></h2>';
     if(!L.length){h+='<div class="empty">'+(MK.map?'Nenhuma moeda encontrada para “'+esc(q)+'”.':'Os preços ainda não foram carregados, então só consigo procurar pelos nomes conhecidos. Toque em Atualizar.')+'</div>';
       if(/^[A-Za-z0-9]{2,12}$/.test(q))h+='<div class="pcb"><button class="sb2" type="button" data-mkmb="'+ea(q.toUpperCase())+'">Procurar '+esc(q.toUpperCase())+' no Mercado Bitcoin</button></div>'}}
-  else{L=[];Object.keys(held).sort().forEach(function(c){L.push(c)});MKF.fav.forEach(function(c){if(L.indexOf(c)<0)L.push(c)});
-    h='<h2>Suas moedas e favoritas<span class="h2t">'+L.length+'</span></h2>';if(!L.length)h+='<div class="empty">Procure uma moeda acima e toque em Acompanhar para ela ficar aqui.</div>'}
-  var cards='';L.forEach(function(c){cards+=mkRow(c,held);var s=mkSym(c);if(s)syms.push(s)});
-  if(L.length)h+='<div class="mkpr" role="group" aria-label="Período do gráfico">'+MKPR.map(function(x){return '<button type="button" class="pcrb'+(x[0]===MKF.pr?' on':'')+'" data-mkpr="'+x[0]+'" aria-pressed="'+(x[0]===MKF.pr?'true':'false')+'">'+x[1]+'</button>'}).join('')+'</div><div class="mcg">'+cards+'</div>';
+  else{L=mkListOf(MKF.lst,held);grp=true;h=mkTabs(held);
+    if(!L.length)h+='<div class="empty">'+(MKF.lst==='held'?'Você ainda não tem moedas na carteira.':MKF.lst==='fav'?'Toque na estrela (☆) de uma moeda para ela ficar aqui.':'Esta lista está vazia. Procure uma moeda acima e toque em ☰ para colocar nela.')+(MKF.cl[MKF.lst]?' <button type="button" class="lk" data-mkdel="'+ea(MKF.lst)+'">Apagar esta lista</button>':'')+'</div>'}
+  if(L.length){
+    h+='<div class="mkbar"><div class="mkpr" role="group" aria-label="Período do gráfico">'+MKPR.map(function(x){return '<button type="button" class="pcrb'+(x[0]===MKF.pr?' on':'')+'" data-mkpr="'+x[0]+'" aria-pressed="'+(x[0]===MKF.pr?'true':'false')+'">'+x[1]+'</button>'}).join('')+'</div>'+
+      (grp?'<div class="mkxa ygb"><button type="button" class="pcrb" data-mkga="1">Expandir tudo</button><button type="button" class="pcrb" data-mkga="0">Recolher tudo</button></div>':'')+'</div>';
+    if(grp){var G={};L.forEach(function(c){var k=crCat(c);(G[k]=G[k]||[]).push(c)});
+      MKGRP.forEach(function(g){var A=G[g[0]];if(!A||!A.length)return;var shut=!!MKF.gc[g[0]];
+        h+='<details class="mkgp" data-mkg="'+g[0]+'"'+(shut?'':' open')+'><summary><b>'+g[1]+'</b><span class="h2t">'+A.length+'</span></summary><div class="mcg">'+A.map(function(c){var s=mkSym(c);if(s)syms.push(s);return mkRow(c,held)}).join('')+'</div></details>'})}
+    else{h+='<div class="mcg">'+L.map(function(c){var s=mkSym(c);if(s)syms.push(s);return mkRow(c,held)}).join('')+'</div>'}
+    if(MKF.cl[MKF.lst]&&!q)h+='<div class="mu" style="margin-top:8px"><button type="button" class="lk" data-mkdel="'+ea(MKF.lst)+'">Apagar a lista “'+esc(MKF.lst)+'”</button></div>'}
   var sy=syms.slice();if(syms.some(function(s){return /USDT$/.test(s)}))syms.push('USDTBRL');
   el.innerHTML=h;mkChg(syms);mkSer(sy)}
+/* listas de cada moeda (botao ☰) */
+function mkLp(c){var p=document.querySelector('[data-mklp="'+c+'"]');if(!p)return;if(!p.hidden){p.hidden=true;return}
+  var ks=Object.keys(MKF.cl);p.innerHTML='<div class="mu" style="margin-bottom:6px">Colocar '+esc(c)+' nas listas:</div>'+(ks.length?ks.map(function(k){var on=MKF.cl[k].indexOf(c)>=0;return '<label class="mklc"><input type="checkbox" data-mklt="'+ea(k)+'" data-mklc="'+ea(c)+'"'+(on?' checked':'')+'> '+esc(k)+'</label>'}).join(''):'<div class="mu">Você ainda não tem listas.</div>')+
+    '<div class="mknw"><input data-mknwc="'+ea(c)+'" maxlength="30" placeholder="Nova lista" aria-label="Nome da nova lista"><button type="button" class="sb2" data-mknwok="'+ea(c)+'">Criar e colocar</button></div>';p.hidden=false}
+function mkNewList(name,c){name=String(name||'').trim().slice(0,30);if(!name||/^(mine|top|held|fav)$/.test(name))return false;if(!MKF.cl[name]){if(Object.keys(MKF.cl).length>=20)return false;MKF.cl[name]=[]}if(c&&MKF.cl[name].indexOf(c)<0)MKF.cl[name].push(c);mkSave();return true}
+/* grafico grande da moeda */
+function mkBig(c){MKBIG=c;var d=document.getElementById('mkbg');if(!d){d=document.createElement('div');d.id='mkbg';d.className='mkbg';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');document.body.appendChild(d)}d.hidden=false;document.body.classList.add('s3mo');mkBigPaint();var s=mkSym(c);if(s)mkSer([s])}
+function mkBigClose(){MKBIG='';var d=document.getElementById('mkbg');if(d)d.hidden=true;document.body.classList.remove('s3mo')}
+function mkBigPaint(){var d=document.getElementById('mkbg');if(!d||!MKBIG)return;var c=MKBIG,s=mkSym(c),o=mkPrice(c),e=s?MKS[s+'|'+MKF.pr]:null,rt=s&&/USDT$/.test(s)?mkFx():1,h='',P=e&&e.pts&&e.pts.length>1?e.pts.map(function(v){return v*rt}):null;
+  h+='<div class="mkbp"><div class="mkbh"><div><b style="font-size:20px">'+esc(c)+'</b> <span class="mu">'+esc(mkName(c))+'</span><div style="font-size:24px;font-weight:800;margin-top:2px">'+(o.p>0?pq(o.p):'sem preço')+'</div></div><button type="button" class="sb2" data-mkbx="1" aria-label="Fechar">✕</button></div>'+
+    '<div class="mkpr" role="group" aria-label="Período">'+MKPR.map(function(x){return '<button type="button" class="pcrb'+(x[0]===MKF.pr?' on':'')+'" data-mkpr="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>';
+  if(!P)h+='<div class="mkpn mu" style="height:220px;display:flex;align-items:center;justify-content:center">'+(e?'sem gráfico para este período':'carregando…')+'</div>';
+  else{var n=P.length,W=640,H=240,L=8,R=8,T=18,B=18,mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),sp=(mx-mn)||mx*.02||1,X=function(i){return L+(W-L-R)*i/(n-1)},Y=function(v){return T+(H-T-B)*(1-(v-mn)/sp)},im=P.indexOf(mx),il=P.indexOf(mn),up=P[n-1]>=P[0],pts=P.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1)});
+    h+='<svg class="mkbsvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Gráfico de '+esc(c)+' em '+mkPrL()+'" style="color:var(--'+(up?'gn':'rd')+')"><path d="M'+pts.join(' L')+' L'+X(n-1).toFixed(1)+','+(H-B)+' L'+X(0).toFixed(1)+','+(H-B)+' Z" fill="currentColor" fill-opacity=".13"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>'+
+      '<circle cx="'+X(im).toFixed(1)+'" cy="'+Y(mx).toFixed(1)+'" r="4" fill="var(--gn)"/><circle cx="'+X(il).toFixed(1)+'" cy="'+Y(mn).toFixed(1)+'" r="4" fill="var(--rd)"/></svg>'+
+      '<div class="mkbs"><div><span class="mu">Variação em '+mkPrL()+'</span><b class="'+cls(P[n-1]/P[0]-1)+'">'+(P[n-1]>=P[0]?'+':'')+pct(P[n-1]/P[0]-1)+'</b></div><div><span class="mu">Máxima</span><b class="gn">'+pq(mx)+'</b></div><div><span class="mu">Mínima</span><b class="rd">'+pq(mn)+'</b></div><div><span class="mu">Início do período</span><b>'+pq(P[0])+'</b></div></div>'}
+  var Ph=mkHeld()[c]?calc(CR.ops).pools[c]:null;
+  if(Ph)h+='<div class="mkyou" style="margin-top:10px">Você tem <b>'+fq(Ph.qty)+' '+esc(c)+'</b> · custo médio <b>'+pq(Ph.cost/Ph.qty)+'</b></div>';
+  var a=' type="button" data-zcc="'+ea(c)+'"';h+='<div class="mkb mkb2" style="margin-top:12px"><button class="sb2 b" data-zact="COMPRA"'+a+'>Comprar</button>'+(Ph?'<button class="sb2 v" data-zact="VENDA"'+a+'>Vender</button><button class="sb2" data-zact="PERMUTA"'+a+'>Trocar</button>':'')+'<button class="sb2" type="button" data-crsim="'+ea(c)+'">Simular</button></div></div>';
+  d.innerHTML='<div class="mkbb" data-mkbx="1"></div>'+h}
 function mkChgPaint(){if(MKF.pr!=='1d')return;$$('[data-mkc]').forEach(function(x){var s=x.getAttribute('data-mkc'),v=mkPct(s);if(v!==null){x.textContent=(v>=0?'+':'')+pct(v/100);x.className=cls(v)}else if(s&&x.textContent==='…'){x.textContent='não informada';x.className='mu'}})}
 async function mkChg(list){var now=Date.now(),need=list.filter(function(s,i,a){return s&&a.indexOf(s)===i&&!(MK.chg[s]&&now-MK.chg[s].t<60000)}).slice(0,30),i,r,q,U;
   if(!need.length){mkChgPaint();return}
@@ -2255,6 +2486,9 @@ async function mkMB(c){var b=$('[data-mkmb="'+c+'"]');if(b){b.disabled=true;b.te
 function mkOpen(){mkRender();if(!MK.t||Date.now()-MK.t>60000)mkRefresh()}
 function mkInit(){var q=$('#zmq');if(!q)return;var tm=0;
   q.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(mkRender,120)});
+  document.addEventListener('change',function(e){var x=e.target;if(x&&x.dataset&&x.dataset.mklt){var L=MKF.cl[x.dataset.mklt];if(!L)return;var c=x.dataset.mklc,i=L.indexOf(c);if(x.checked&&i<0)L.push(c);else if(!x.checked&&i>=0)L.splice(i,1);mkSave()}});
+  document.addEventListener('toggle',function(e){var x=e.target;if(x&&x.classList&&x.classList.contains('mkgp')){if(x.open)delete MKF.gc[x.dataset.mkg];else MKF.gc[x.dataset.mkg]=1;mkSave()}},true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&MKBIG)mkBigClose()});
   q.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(tm);mkRender();q.blur()}});
   $('#zmr').addEventListener('click',function(){mkRefresh()});
   var b=$('#navcr button[data-t=crm]');if(b)b.addEventListener('click',mkOpen);
@@ -2309,7 +2543,16 @@ function wire(){
       else if(b.dataset.ok)zDelCoin(xc);else{b.dataset.ok='1';b.textContent='Confirmar'}
       return}
     if(b=t.closest('[data-mkstar]')){var mc=b.dataset.mkstar,mi=MKF.fav.indexOf(mc);if(mi>=0)MKF.fav.splice(mi,1);else MKF.fav.push(mc);mkSave();mkRender();return}
-    if(b=t.closest('[data-mkpr]')){if(MKPK[b.dataset.mkpr]){MKF.pr=b.dataset.mkpr;mkSave();mkRender()}return}
+    if(b=t.closest('[data-mkpr]')){if(MKPK[b.dataset.mkpr]){MKF.pr=b.dataset.mkpr;mkSave();mkRender();if(MKBIG){mkBigPaint();var bs=mkSym(MKBIG);if(bs)mkSer([bs])}}return}
+    if(b=t.closest('[data-mkbx]')){mkBigClose();return}
+    if(b=t.closest('[data-mkhelp]')){var hx=b.parentNode.querySelector('.mkhelpx');if(hx){hx.hidden=!hx.hidden;b.setAttribute('aria-expanded',!hx.hidden)}return}
+    if(b=t.closest('[data-mkbig]')){mkBig(b.dataset.mkbig);return}
+    if(b=t.closest('[data-mklst]')){MKF.lst=b.dataset.mklst;mkSave();mkRender();return}
+    if(b=t.closest('[data-mknew]')){var nw=$('#mknw');if(nw){nw.hidden=!nw.hidden;if(!nw.hidden)$('#mknwi').focus()}return}
+    if(b=t.closest('[data-mknwok]')){var c0=b.dataset.mknwok,inp=c0==='1'?$('#mknwi'):b.parentNode.querySelector('input');if(inp&&mkNewList(inp.value,c0==='1'?'':c0)){if(c0==='1')MKF.lst=String(inp.value).trim().slice(0,30);mkSave();mkRender()}return}
+    if(b=t.closest('[data-mkdel]')){var dl=b.dataset.mkdel;if(!b.dataset.ok){b.dataset.ok='1';b.textContent='Toque de novo para apagar “'+dl+'”';return}delete MKF.cl[dl];if(MKF.lst===dl)MKF.lst='mine';mkSave();mkRender();return}
+    if(b=t.closest('[data-mkls]')){mkLp(b.dataset.mkls);return}
+    if(b=t.closest('[data-mkga]')){var on=b.dataset.mkga==='1';$$('#zml details.mkgp').forEach(function(x){x.open=on;if(on)delete MKF.gc[x.dataset.mkg];else MKF.gc[x.dataset.mkg]=1});mkSave();return}
     if(b=t.closest('[data-mkmb]')){mkMB(b.dataset.mkmb);return}
     if(b=t.closest('[data-zpaid]')){var k0=b.dataset.zpaid,p0=CR.paid[k0]||(CR.paid[k0]={});p0.p=true;if(!(+p0.v>0)){var M0=mon(calc(CR.ops),k0.slice(0,4)).filter(function(x){return x.k===k0})[0];if(M0)p0.v=M0.tax}crSave();crAll();return}
     if(b=t.closest('[data-zgo]')){var nb=document.querySelector('#navcr button[data-t='+b.dataset.zgo+']');if(nb)nb.click();return}
@@ -2327,7 +2570,7 @@ function wire(){
   var _rr=render;render=function(){_rr.apply(this,arguments);crBk()};
 }
 function init(){crLoad();wire();mkInit();$('#zd').value=new Date().toISOString().slice(0,10);if(CR.pf){$('#zw').value=CR.pf.w||'';$('#zr').value=CR.pf.reg==='EX'?'EX':'BR';$('#zcu').value=CR.pf.cu==='USD'?'USD':'BRL'}zUI();zEx(false,true);try{crAll()}catch(e){try{(window.__bootE=window.__bootE||[]).push('cripto: '+(e&&e.message||e))}catch(x){}setTimeout(function(){try{crAll()}catch(z){}},0)}var m='rv';try{m=localStorage.getItem(KMOD)||'rv'}catch(e){}if(m==='cr')setMod('cr')}
-window.CRX={quotes:zQuotes,exd:EXD,canon:crCanon,exFind:exFind,exTxt:exTxt,rg:rg,calc:calc,mon:mon,exY:exY,crTax:crTax,get:function(){return CR},mkTick:function(){return MKF.fav.map(function(c){var o=mkPrice(c),y=mkSym(c),v=y?mkPct(y):null;return {c:c,p:o.p>0?o.p:0,ch:typeof v==='number'&&isFinite(v)?v:null}})},mkOne:function(c){var y=mkSym(c),v=y?mkPct(y):null;return typeof v==='number'&&isFinite(v)?v:null},mkWarm:async function(){var l,h=[];if(!MK.busy&&(!MK.map||Date.now()-MK.t>3*6e4))await mkRefresh();try{h=Object.keys(mkHeld())}catch(e){}l=MKF.fav.concat(h).map(mkSym).filter(function(x,i,a){return x&&a.indexOf(x)===i});if(l.length)await mkChg(l)},set:function(o){CR=norm(o);crSave();crAll()},setMod:setMod,all:crAll,poolsAt:poolsAt,LIM:LIM};
+window.CRX={quotes:zQuotes,exd:EXD,canon:crCanon,exFind:exFind,exTxt:exTxt,rg:rg,calc:calc,mon:mon,exY:exY,crTax:crTax,get:function(){return CR},mkTick:function(){return MKF.fav.map(function(c){var o=mkPrice(c),y=mkSym(c),v=y?mkPct(y):null;return {c:c,p:o.p>0?o.p:0,ch:typeof v==='number'&&isFinite(v)?v:null}})},mkOne:function(c){var y=mkSym(c),v=y?mkPct(y):null;return typeof v==='number'&&isFinite(v)?v:null},mkWarm:async function(){var l,h=[];if(!MK.busy&&(!MK.map||Date.now()-MK.t>3*6e4))await mkRefresh();try{h=Object.keys(mkHeld())}catch(e){}l=MKF.fav.concat(h).map(mkSym).filter(function(x,i,a){return x&&a.indexOf(x)===i});if(l.length)await mkChg(l)},set:function(o){CR=norm(o);crSave();crAll()},price:function(c){var o=mkPrice(c);return o.p>0?o.p:(+CR.px[c]||0)},series:function(c,pr){var s=mkSym(c),e=s?MKS[s+'|'+(pr||MKF.pr)]:null,rt=s&&/USDT$/.test(s)?mkFx():1;return e&&e.pts&&e.pts.length>1&&rt>0?e.pts.map(function(v){return v*rt}):null},serLoad:function(c,pr){var s=mkSym(c);if(!s)return Promise.resolve();return mkSer([s],pr||MKF.pr)},mkReady:function(){return !!MK.map},mkRefresh:function(){return mkRefresh()},cat:function(c){return crCat(c)},MKPR:MKPR,setMod:setMod,all:crAll,poolsAt:poolsAt,LIM:LIM};
 init();
 })();
 /* v2.65: variacao do dia e de 5 dias. A brapi gratis so entrega precos diarios (intradiario e plano pago), entao:
@@ -2566,7 +2809,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.2.3',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='3.3',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -2928,10 +3171,10 @@ function chPs(){return [1,5,15,30,90]}
 /* v2.73: intervalos da Binance so na Cripto: Time (1 min, 24 h), 15m, 1h e 4h. Codigos negativos; o periodo comum continua em VZ.ui.pr e o intervalo em VZ.ui.prc */
 function ivOk(v){return v===-1||v===-15||v===-60||v===-240}
 function ivPs(){return [-1,-15,-60,-240]}
-function ivLab(r){return r===-1?'Time · 24 h':r===-15?'15 min · 2 dias':r===-60?'1 h · 7 dias':r===-240?'4 h · 30 dias':''}
+function ivLab(r){return r===-1?'Agora (1 min) · 24 h':r===-15?'15 min · 2 dias':r===-60?'1 h · 7 dias':r===-240?'4 h · 30 dias':''}
 function chRg(){return window.__chr||(window.__chr={})}
 function pcR(k){if(k==='C'){var c=+VZ.ui.prc;if(ivOk(c))return c}var r=+VZ.ui.pr;return chPs().indexOf(r)>=0?r:1}
-function chLbl(k,r){return r===-1?'Time':r===-15?'15m':r===-60?'1h':r===-240?'4h':(r===1?(k==='C'?'24 h':qxBtnLb()):r+' d')}
+function chLbl(k,r){return r===-1?'Agora':r===-15?'15m':r===-60?'1h':r===-240?'4h':(r===1?(k==='C'?'24 h':qxBtnLb()):r+' d')}
 function chData(k,sym,r){if(typeof QI!=='object'||!QI||!QI.A)return null;/* a Cripto desenha antes de o historico do dia carregar */
   if(r<0)return k==='C'?ivSeries(sym,r):null;
   return r===1?(k==='A'?qiDayA(sym):qiDayC(sym)):qiDaily(k,sym,r)}
@@ -5647,7 +5890,7 @@ function donut(rows,top,sub){var R=15.9155,o=0,s='<svg class="s3dn" viewBox="0 0
   return s+'<text x="21" y="20.5" text-anchor="middle" font-size="'+(String(top).length>5?5.4:String(top).length>3?6.6:8.5)+'" font-weight="800" fill="currentColor">'+esc(top)+'</text><text x="21" y="26.5" text-anchor="middle" font-size="4.2" fill="var(--mu)">'+esc(sub)+'</text></svg>'}
 /* legenda do rosquinha: nome, barra e porcentagem */
 function legend(rows,showV){var h='<div class="s3lg">';
-  rows.forEach(function(r){h+='<div class="s3lr" style="--wc:'+r.c+'"><span class="s3ln"><i class="s3lc"></i>'+esc(r.n)+'</span><span class="s3lb"><i style="width:'+Math.max(2,Math.round(r.p*100))+'%"></i></span><span class="s3lp">'+pc1(r.p)+'</span>'+(showV?'<span class="s3lv mu">'+brl(r.v)+'</span>':'')+'</div>'});
+  rows.forEach(function(r){h+='<div class="s3lr" style="--wc:'+r.c+'"><span class="s3ln"><i class="s3lc"></i>'+esc(r.n)+'</span><span class="s3lb"><i style="width:'+Math.max(2,Math.round(r.p*100))+'%"></i></span><span class="s3lp">'+(masked()?'**%':pc1(r.p))+'</span>'+(showV?'<span class="s3lv mu">'+brl(r.v)+'</span>':'')+'</div>'});
   return h+'</div>'}
 /* barras horizontais: [{n,sub,v,max,c,txt}] */
 function hbars(rows){var mx=0;rows.forEach(function(r){if(Math.abs(r.v)>mx)mx=Math.abs(r.v)});if(!(mx>0))mx=1;
@@ -5810,8 +6053,8 @@ function data(){
   cl.forEach(function(c){T.V+=c.V;T.cost+=c.cost;T.res+=c.res;T.real+=c.real;if(c.dayPct!==null){T.dd+=c.dd;T.base+=c.base}});
   T.resPct=T.cost>0?T.res/T.cost:null;T.dayPct=T.base>0?T.dd/T.base:null;
   cl.forEach(function(c){c.p=T.V>0?c.V/T.V:0});
-  if(A)A.items.forEach(function(a){var t=typeOf(a.n);types[t]=(types[t]||0)+a.val;top.push({n:a.n,v:a.val,c:'rv',day:(a.dchg!=null)?a.day:null});if(a.day!==null&&a.day!==undefined&&a.dchg!=null)ups.push({n:a.n,d:a.day,m:'rv'})});
-  if(C){types.CRIPTO=C.V;C.items.forEach(function(a){top.push({n:a.n,v:a.val,c:'cr',day:a.day});if(a.day!==null&&a.day!==undefined&&a.dchg!=null)ups.push({n:a.n,d:a.day,m:'cr'})})}
+  if(A)A.items.forEach(function(a){var t=typeOf(a.n);types[t]=(types[t]||0)+a.val;top.push({n:a.n,v:a.val,c:'rv',day:(a.dchg!=null)?a.day:null});if(a.day!==null&&a.day!==undefined&&a.dchg!=null)ups.push({n:a.n,d:a.day,m:'rv',px:a.px})});
+  if(C){types.CRIPTO=C.V;C.items.forEach(function(a){top.push({n:a.n,v:a.val,c:'cr',day:a.day});if(a.day!==null&&a.day!==undefined&&a.dchg!=null)ups.push({n:a.n,d:a.day,m:'cr',px:a.px})})}
   if(Z&&Z.V>0){types.DOLAR=Z.V;top.push({n:'US$ '+Math.round(Z.usd).toLocaleString('pt-BR'),v:Z.V,c:'dz',day:Z.dayPct!=null?Z.dayPct*100:null})}
   top.sort(function(a,b){return b.v-a.v});
   return {A:A,C:C,Z:Z,cl:cl,T:T,types:types,top:top,ups:ups}}
@@ -5836,41 +6079,86 @@ function prov12(){cmap();var m12=mback(12),o={m12:m12,by:{},tk:{},tot:0,n:0};
   return o}
 /* ---------- RESUMO ---------- */
 function kpi(cls,lb,val,sub){return '<div class="hmk '+cls+'"><span class="mu">'+lb+'</span><b>'+val+'</b><small class="mu">'+(sub||'')+'</small></div>'}
+/* v3.3: Resumo do Total redesenhado. Percentuais da carteira somem com o olho (a variacao do mercado continua). */
+function pm(v){return U.masked()?'**%':U.pc1(v)}
+function mk(v){try{return typeof _vzBrl==='function'?_vzBrl(v):brl(v)}catch(e){return brl(v)}}
+function pxF(v){if(!(v>0))return '—';if(v>=1)return mk(v);return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:8})}
+function H2(t,sub){return '<h2>'+t+'</h2>'+(sub?'<p class="s3sub mu">'+sub+'</p>':'')}
+function blk(t,sub,body,cls){return '<div class="s3gi'+(cls?' '+cls:'')+'">'+H2(t,sub)+body+'</div>'}
+/* evolucao do patrimonio no mes e no ano, pelas fotografias diarias */
+function evo(T){var sn=snapRead(),ks=Object.keys(sn).sort(),td=U.today(),o={};if(!ks.length||!(T.V>0))return o;
+  function base(lim){var b=null,i;for(i=ks.length-1;i>=0;i--)if(ks[i]<lim){b=ks[i];break}if(!b){for(i=0;i<ks.length;i++)if(ks[i]>=lim&&ks[i]<td){b=ks[i];break}}return b}
+  [['m',td.slice(0,7)+'-01'],['a',td.slice(0,4)+'-01-01']].forEach(function(x){var b=base(x[1]);if(!b)return;var v0=+sn[b][0]||0,c0=+sn[b][1]||0;if(!(v0>0))return;
+    var dv=T.V-v0,ap=T.cost-c0;o[x[0]]={k:b,dv:dv,p:dv/v0,ap:ap,g:dv-ap,gp:(dv-ap)/v0,since:b<x[1]?'':U.dmShort(b)}});
+  return o}
+/* o proximo compromisso da Agenda */
+function nextEv(){var td=U.today(),L=[],held=heldMap();
+  try{(S.earn&&S.earn.list?S.earn.list():[]).forEach(function(x){if(x.date>=td&&x.tks.some(function(t){return held[t]}))L.push({d:x.date,t:'Resultado de '+x.tks.join(', '),g:'tt:tta'})})}catch(e){}
+  try{Object.keys(held).forEach(function(tk){var dv=MD.dv[tk];if(!dv||!dv.list)return;dv.list.forEach(function(a){if(a.pay&&a.pay>=td)L.push({d:a.pay,t:'Provento de '+tk+' ('+brl((+a.v||0)*held[tk])+')',g:'tt:tta'});if(a.com&&a.com>=td)L.push({d:a.com,t:'Data com de '+tk,g:'tt:tta'})})})}catch(e){}
+  try{darfList().forEach(function(x){L.push({d:iso1(x.due),t:'DARF da Bolsa ('+brl(x.v)+')',g:'rv:bl'})})}catch(e){}
+  try{if(window.S33I)S33I.pend().forEach(function(x){L.push({d:x[1],t:'DeCripto de '+x[2],g:'cr:cri'})})}catch(e){}
+  L.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});return L}
 function clsCard(c,T){
   var has=c.V>0||c.cost>0,rs=c.res;
-  return '<button type="button" class="s3k" data-s3go="'+c.id+'" style="--mc:'+c.c+'" aria-label="'+esc(c.n)+': abrir"><span class="s3kh"><i></i>'+esc(c.n)+'<em>'+(T.V>0&&c.V>0?U.pc1(c.p):'')+'</em></span>'+
+  return '<button type="button" class="s3k" data-s3go="'+c.id+'" style="--mc:'+c.c+'" aria-label="Abrir '+esc(c.n)+'"><span class="s3kh"><i></i>'+esc(c.n)+'<em>'+(T.V>0&&c.V>0?pm(c.p)+' do total':'')+'</em></span>'+
     '<b class="s3kv">'+brl(c.V)+'</b>'+
-    (has?'<small class="'+U.tn(rs)+'">'+U.arrow(rs)+U.sg(rs)+brl(Math.abs(rs))+(c.resPct!==null?' · '+U.sg(rs)+U.pc1(Math.abs(c.resPct)):'')+'</small>':'<small class="mu">sem lançamentos</small>')+
+    (has?'<small class="'+U.tn(rs)+'">'+U.arrow(rs)+U.sg(rs)+brl(Math.abs(rs))+(c.resPct!==null?' · '+U.sg(rs)+pm(Math.abs(c.resPct)):'')+' <span class="mu">resultado</span></small>':'<small class="mu">sem lançamentos</small>')+
     '<small class="'+(c.dayPct!==null?U.tn(c.dd):'mu')+'">'+(c.dayPct!==null?U.arrow(c.dd)+U.pc1(Math.abs(c.dayPct))+' '+(c.id==='cr'?'em 24 h':c.id==='dz'?'no dia':(c.lb||'hoje')):(has?'sem variação do dia':''))+'</small></button>'}
+/* seus ativos agora: preco de mercado (nao o valor da carteira) */
+function nowRows(D){var R=[];
+  if(D.A)D.A.items.forEach(function(a){var x=null;try{x=MD.q[a.n]&&MD.q[a.n].x}catch(e){}R.push({n:a.n,k:'rv',ty:TNAME[typeOf(a.n)]||'Ação',px:a.px,d:a.dchg!=null?a.day:null,lo:x&&x.low>0?x.low:0,hi:x&&x.high>0?x.high:0,v:a.val})});
+  if(D.C)D.C.items.forEach(function(a){R.push({n:a.n,k:'cr',ty:'Cripto',px:a.px,d:a.day!=null?a.day:null,lo:0,hi:0,v:a.val})});
+  if(D.Z&&D.Z.V>0)R.push({n:'Dólar',k:'dz',ty:'Dólar',px:D.Z.px,d:D.Z.dayPct!=null?D.Z.dayPct*100:null,lo:0,hi:0,v:D.Z.V});
+  R.sort(function(a,b){return b.v-a.v});return R}
+function nowTable(R){var lbl={rv:'b',cr:'crp',dz:'dzp'};
+  return '<div class="tw s3now"><table><thead><tr><th>Ativo</th><th>Preço agora</th><th>Variação</th><th>Mín. – máx. do dia</th></tr></thead><tbody>'+R.map(function(r){
+    return '<tr data-s3go="'+r.k+':'+lbl[r.k]+'"><td><b>'+esc(r.n)+'</b><small class="mu">'+esc(r.ty)+'</small></td><td class="num">'+pxF(r.px)+(r.lo>0&&r.hi>0?'<small class="mu s3rg">'+pxF(r.lo)+' – '+pxF(r.hi)+'</small>':'')+'</td><td class="num '+(r.d>0?'gn':r.d<0?'rd':'mu')+'">'+(r.d!==null&&isFinite(r.d)?U.arrow(r.d)+U.pc1(Math.abs(r.d)/100)+'<small class="mu"> '+(r.k==='cr'?'24 h':'dia')+'</small>':'—')+'</td><td class="num mu">'+(r.lo>0&&r.hi>0?pxF(r.lo)+' – '+pxF(r.hi):'—')+'</td></tr>'}).join('')+'</tbody></table></div>'}
 R.ttr=function(){
-  var D=data(),T=D.T,h='';
+  var D=data(),T=D.T,h='',E=evo(T);
   var hello='';try{hello=hmHello()}catch(e){}
+  var ev=function(x,lb){if(!x)return '';return '<span class="s3ev2"><small class="mu">'+lb+(x.since?' (desde '+x.since+')':'')+'</small><b class="'+U.tn(x.g)+'">'+U.arrow(x.g)+U.sg(x.g)+brl(Math.abs(x.g))+' <em>'+U.sg(x.g)+pm(Math.abs(x.gp))+'</em></b>'+(Math.abs(x.ap)>=0.01?'<small class="mu">'+(x.ap>0?'+ ':'− ')+brl(Math.abs(x.ap))+' de aportes</small>':'')+'</span>'};
   h+='<div class="hmh s3h">'+hello+'<div class="hml">Seu patrimônio total</div><div class="hmv"><b>'+brl(T.V)+'</b>'+(T.dayPct!==null?'<span class="hmp '+U.tn(T.dd)+'">'+U.arrow(T.dd)+U.pc1(Math.abs(T.dayPct))+' hoje</span>':'')+'</div>'+
-    '<div class="mu hmd'+(T.dayPct!==null?(T.dd>0?' hmdg':T.dd<0?' hmdr':''):'')+'">'+(T.dayPct!==null?U.sg(T.dd)+brl(Math.abs(T.dd))+' no dia somado (ações no pregão, cripto em 24 h e dólar do dia).':(T.V>0?'Sem a variação do dia ainda. Toque no botão ↻, no topo.':'Ainda não há lançamentos. Comece pelo módulo da Bolsa, do Cripto ou do Dólar.'))+'</div></div>';
+    '<div class="mu hmd'+(T.dayPct!==null?(T.dd>0?' hmdg':T.dd<0?' hmdr':''):'')+'">'+(T.dayPct!==null?U.sg(T.dd)+brl(Math.abs(T.dd))+' no dia somado (ações no pregão, cripto em 24 h e dólar do dia).':(T.V>0?'Sem a variação do dia ainda. Toque no botão ↻, no topo.':'Ainda não há lançamentos. Comece pelo módulo da Bolsa, do Cripto ou do Dólar.'))+'</div>'+
+    (E.m||E.a?'<div class="s3evo">'+ev(E.m,'Ganho no mês')+ev(E.a,'Ganho no ano')+'</div>':'')+'</div>';
   if(!(T.V>0)){
     h+='<div class="s3k0">'+D.cl.map(function(c){return clsCard(c,T)}).join('')+'</div>';
     return h+U.card('<div class="s3em"><b>Seu Total aparece aqui.</b><div class="mu">Assim que você lançar a primeira compra em um módulo, este painel mostra o patrimônio, a divisão por classe e os gráficos.</div></div>')}
   var p12=prov12();
   h+='<div class="hmg">'+kpi('k1','Valor investido',brl(T.cost),'custo das posições abertas')+
-    kpi(T.res>0?'kg':T.res<0?'kr':'k1','Resultado aberto','<span class="'+U.tn(T.res)+'">'+U.sg(T.res)+brl(Math.abs(T.res))+'</span>','<span class="'+U.tn(T.res)+'">'+(T.resPct!==null?U.arrow(T.res)+U.pc1(Math.abs(T.resPct)):'')+'</span>')+
+    kpi(T.res>0?'kg':T.res<0?'kr':'k1','Resultado aberto','<span class="'+U.tn(T.res)+'">'+U.sg(T.res)+brl(Math.abs(T.res))+'</span>','<span class="'+U.tn(T.res)+'">'+(T.resPct!==null?U.arrow(T.res)+pm(Math.abs(T.resPct))+' sobre o investido':'')+'</span>')+
     kpi(T.real>0?'kg':T.real<0?'kr':'k2','Resultado realizado','<span class="'+U.tn(T.real)+'">'+U.sg(T.real)+brl(Math.abs(T.real))+'</span>','vendas já feitas')+
-    kpi('k4','Proventos em 12 meses',brl(p12.tot),p12.n?p12.n+(p12.n===1?' pagamento':' pagamentos')+', líquido':'nenhum lançado ainda')+'</div>';
-  h+='<h2>Por classe <span class="s3ht">toque para abrir</span></h2><div class="s3k0">'+D.cl.map(function(c){return clsCard(c,T)}).join('')+'</div>';
-  /* rosquinha por tipo */
+    kpi('k4','Proventos em 12 meses',brl(p12.tot),p12.n?p12.n+(p12.n===1?' pagamento':' pagamentos')+(T.cost>0?' · rende '+pm(p12.tot/T.cost)+' do investido':''):'nenhum lançado ainda')+'</div>';
+  /* avisos: concentracao e proximo compromisso */
+  var av='',tp0=D.top[0];
+  if(tp0&&T.V>0&&tp0.v/T.V>0.5&&D.top.length>1)av+='<div class="s3al warn"><b>Carteira concentrada</b><span>'+esc(tp0.n)+' é '+(U.masked()?'mais da metade':pm(tp0.v/T.V))+' do seu patrimônio. Se esse ativo cair muito, o total cai junto. Vale pensar em diversificar.</span></div>';
+  else if(tp0&&T.V>0&&D.top.length===1)av+='<div class="s3al warn"><b>Tudo em um só ativo</b><span>Todo o patrimônio está em '+esc(tp0.n)+'. Diversificar reduz o risco.</span></div>';
+  var nx=nextEv();
+  if(nx.length){var n0=nx[0],dd=dayDiff(n0.d);av+='<div class="s3al"><b>Próximo na agenda: '+inTxt(dd)+'</b><span>'+esc(n0.t)+' · '+U.dmShort(n0.d)+(nx.length>1?' · e mais '+(nx.length-1):'')+'</span><button type="button" class="sb2" data-s3go="tt:tta">Abrir a Agenda</button></div>'}
+  if(av)h+='<div class="s3als">'+av+'</div>';
+  h+=H2('Seus investimentos por classe','Toque em uma classe para abrir o módulo. A porcentagem é a parte de cada uma no total.')+'<div class="s3k0 s3k3">'+D.cl.map(function(c){return clsCard(c,T)}).join('')+'</div>';
+  /* graficos, dois por linha no computador */
+  var G=[];
   var rows=TORD.filter(function(k){return D.types[k]>0}).map(function(k){return {n:TNAME[k],v:D.types[k],p:D.types[k]/T.V,c:TCOL[k]}});
-  h+='<h2>Distribuição do patrimônio</h2>'+U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(rows,String(rows.length),rows.length===1?'tipo':'tipos')+'</div>'+U.legend(rows,true)+'</div>');
-  /* resultado por classe */
-  var rr=D.cl.filter(function(c){return c.V>0||c.cost>0}).map(function(c){return {n:c.n,v:c.res,c:c.c,txt:U.sg(c.res)+brl(Math.abs(c.res))+(c.resPct!==null?'<small> '+U.sg(c.res)+U.pc1(Math.abs(c.resPct))+'</small>':'')}});
-  if(rr.length)h+='<h2>Resultado por classe <span class="s3ht">aberto</span></h2>'+U.card(U.dvbars(rr));
-  /* maiores posicoes */
+  G.push(blk('Distribuição do patrimônio','Quanto do total está em cada tipo de ativo.',U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(rows,String(rows.length),rows.length===1?'tipo':'tipos')+'</div>'+U.legend(rows,true)+'</div>')));
+  var rr=D.cl.filter(function(c){return c.V>0||c.cost>0}).map(function(c){return {n:c.n,v:c.res,c:c.c,txt:U.sg(c.res)+brl(Math.abs(c.res))+(c.resPct!==null?'<small> '+U.sg(c.res)+pm(Math.abs(c.resPct))+'</small>':'')}});
+  if(rr.length)G.push(blk('Resultado por classe','Lucro ou prejuízo das posições abertas, antes de vender.',U.card(U.dvbars(rr))));
   var tp=D.top.slice(0,8);
-  if(tp.length)h+='<h2>Maiores posições</h2>'+U.card(U.hbars(tp.map(function(x){return {n:x.n,sub:x.c==='cr'?'cripto':x.c==='dz'?'dólar':'',v:x.v,c:x.c==='cr'?'#ea580c':x.c==='dz'?'#10b981':'#2563eb',txt:brl(x.v)+'<small> '+U.pc1(x.v/T.V)+'</small>'}})));
-  /* destaques do dia */
+  if(tp.length)G.push(blk('Maiores posições','Os ativos que mais pesam no seu patrimônio.',U.card(U.hbars(tp.map(function(x){return {n:x.n,sub:x.c==='cr'?'cripto':x.c==='dz'?'dólar':'',v:x.v,c:x.c==='cr'?'#ea580c':x.c==='dz'?'#10b981':'#2563eb',txt:brl(x.v)+'<small> '+pm(x.v/T.V)+'</small>'}})))));
+  /* proventos por tipo de investimento (12 meses) */
+  var pt={};Object.keys(p12.by).forEach(function(k){Object.keys(p12.by[k]).forEach(function(t){pt[t]=(pt[t]||0)+p12.by[k][t]})});
+  var pr=Object.keys(TT).filter(function(t){return pt[t]>0}).map(function(t){return {n:TT[t],v:pt[t],p:p12.tot>0?pt[t]/p12.tot:0,c:TCOL[t]}});
+  G.push(blk('Proventos por tipo de investimento','Dividendos, JCP e rendimentos líquidos dos últimos 12 meses.',pr.length?U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(pr,U.fmtK?U.fmtK(p12.tot):brl(p12.tot),'12 meses')+'</div>'+U.legend(pr,true)+'</div><button type="button" class="lk" data-s3go="tt:ttp">Ver os proventos mês a mês</button>'):U.card(U.empty('Nenhum provento lançado nos últimos 12 meses.'))));
+  /* destaques do dia, com o preco */
   var ups=D.ups.slice().sort(function(a,b){return b.d-a.d});
   if(ups.length>=2){var hi=ups.filter(function(x){return x.d>0}).slice(0,3),lo=ups.filter(function(x){return x.d<0}).slice(-3).reverse(),
-      li=function(a){return a.map(function(x){return '<button type="button" class="s3hl '+(x.d>0?'gn':'rd')+'" data-s3go="'+x.m+':'+(x.m==='cr'?'crp':'b')+'"><b>'+esc(x.n)+'</b><span>'+U.arrow(x.d)+U.pc1(Math.abs(x.d)/100)+'</span></button>'}).join('')};
-    h+='<h2>Destaques do dia</h2>'+U.card('<div class="s3dst"><div><div class="s3dh gn">Maiores altas</div>'+(hi.length?li(hi):'<div class="mu">nenhuma</div>')+'</div><div><div class="s3dh rd">Maiores quedas</div>'+(lo.length?li(lo):'<div class="mu">nenhuma</div>')+'</div></div>')}
+      li=function(a){return a.map(function(x){return '<button type="button" class="s3hl '+(x.d>0?'gn':'rd')+'" data-s3go="'+x.m+':'+(x.m==='cr'?'crp':'b')+'"><b>'+esc(x.n)+'</b><small class="mu">'+pxF(x.px)+'</small><span>'+U.arrow(x.d)+U.pc1(Math.abs(x.d)/100)+'</span></button>'}).join('')};
+    G.push(blk('Destaques do dia','Seus ativos que mais subiram e mais caíram, com o preço de agora.',U.card('<div class="s3dst"><div><div class="s3dh gn">Maiores altas</div>'+(hi.length?li(hi):'<div class="mu">nenhuma</div>')+'</div><div><div class="s3dh rd">Maiores quedas</div>'+(lo.length?li(lo):'<div class="mu">nenhuma</div>')+'</div></div>')))}
+  h+='<div class="s3g2">'+G.join('')+'</div>';
+  /* seus ativos agora */
+  var NR=nowRows(D);
+  if(NR.length)h+=H2('Seus ativos agora','Preço de mercado de cada ativo (não o valor da sua posição), variação e faixa do dia. Toque para abrir.')+U.card(nowTable(NR));
   return h};
+
 /* ---------- EVOLUCAO ---------- */
 function mback(n){var d=new Date(),a=[],i,x;for(i=n-1;i>=0;i--){x=new Date(d.getFullYear(),d.getMonth()-i,1);a.push(x.getFullYear()+'-'+(x.getMonth()<9?'0':'')+(x.getMonth()+1))}return a}
 function flows(){ /* aporte liquido por mes e por classe: compras menos vendas, em reais */
@@ -5897,7 +6185,7 @@ R.tte=function(){
   /* 2) aportes por mes */
   var cl=m12.map(function(k){return {l:ymLabel(k),y:yrLabel(k,0,m12),stack:['rv','cr','dz'].map(function(c){return {v:Math.round((F[c][k]||0)*100)/100,c:CC[c],n:NN[c]+' '+k.slice(5)+'/'+k.slice(0,4)}})}}),
       tot=m12.reduce(function(a,k){return a+(F.rv[k]||0)+(F.cr[k]||0)+(F.dz[k]||0)},0),any=cl.some(function(c){return c.stack.some(function(x){return x.v!==0})});
-  h+='<h2>Aportes por mês <span class="s3ht">compras menos vendas</span></h2>';
+  h+='<h2>Aportes por mês</h2><p class="s3sub mu">Compras menos vendas, mês a mês, nos últimos 12 meses.</p>';
   if(any)h+=U.card(U.cols({label:'Aportes por mês',cols:cl,h:160})+U.chips(['rv','cr','dz'].filter(function(c){return S.on(c==='rv'?'rv':c)}).map(function(c){return {n:NN[c],c:CC[c]}}))+'<div class="mu s3nt">Últimos 12 meses: <b class="'+U.tn(tot)+'">'+U.sg(tot)+brl(Math.abs(tot))+'</b> de aporte líquido. Barras para baixo são meses em que você vendeu mais do que comprou.</div>');
   else h+=U.card(U.empty('Nenhuma compra ou venda nos últimos 12 meses.'));
   /* 3) quanto ja foi colocado, acumulado (todo o historico, ate 36 meses) */
@@ -5906,7 +6194,7 @@ R.tte=function(){
     all.forEach(function(k){if(k<ms[0])pre+=(F.rv[k]||0)+(F.cr[k]||0)+(F.dz[k]||0)});acc=pre;
     var ap=ms.map(function(k,i){acc+=(F.rv[k]||0)+(F.cr[k]||0)+(F.dz[k]||0);return [i,Math.round(acc*100)/100]});
     var xl2=[{x:0,t:ymLabel(ms[0])},{x:Math.floor((ms.length-1)/2),t:ymLabel(ms[Math.floor((ms.length-1)/2)])},{x:ms.length-1,t:ymLabel(ms[ms.length-1])}];
-    h+='<h2>Quanto você já colocou <span class="s3ht">acumulado</span></h2>'+U.card(U.line({label:'Aporte acumulado',series:[{pts:ap,c:'#0891b2',area:1,w:2.4}],xl:xl2,h:140})+'<div class="mu s3nt">Soma das compras menos as vendas, mês a mês, em todos os módulos. Hoje o patrimônio vale <b>'+brl(D.T.V)+'</b> para <b>'+brl(acc)+'</b> colocados.</div>')}
+    h+='<h2>Quanto você já colocou</h2><p class="s3sub mu">Soma acumulada dos aportes, em todos os módulos.</p>'+U.card(U.line({label:'Aporte acumulado',series:[{pts:ap,c:'#0891b2',area:1,w:2.4}],xl:xl2,h:140})+'<div class="mu s3nt">Soma das compras menos as vendas, mês a mês, em todos os módulos. Hoje o patrimônio vale <b>'+brl(D.T.V)+'</b> para <b>'+brl(acc)+'</b> colocados.</div>')}
   return h};
 /* ---------- PROVENTOS ---------- */
 R.ttp=function(){
@@ -5917,10 +6205,10 @@ R.ttp=function(){
   try{cost=hmData('A').cost}catch(e){}
   var rec=m12.slice().sort(function(a,b){var x=Object.keys(by[a]||{}).reduce(function(s,t){return s+by[a][t]},0),y=Object.keys(by[b]||{}).reduce(function(s,t){return s+by[b][t]},0);return y-x})[0];
   var recV=Object.keys(by[rec]||{}).reduce(function(s,t){return s+by[rec][t]},0);
-  h+='<div class="hmg">'+kpi('kg','Recebido em 12 meses',brl(tot),'líquido, já sem o IR retido')+kpi('k1','Média por mês',brl(tot/12),'dividida por 12')+kpi('k2','Retorno sobre o custo',cost>0?U.pc1(tot/cost):'—','12 meses ÷ valor investido na Bolsa')+kpi('k4','Pagamentos recebidos',String(P.n),'nos últimos 12 meses')+'</div>';
+  h+='<div class="hmg">'+kpi('kg','Recebido em 12 meses',brl(tot),'líquido, já sem o IR retido')+kpi('k1','Média por mês',brl(tot/12),'dividida por 12')+kpi('k2','Retorno sobre o custo',cost>0?pm(tot/cost):'—','12 meses ÷ valor investido na Bolsa')+kpi('k4','Pagamentos recebidos',String(P.n),'nos últimos 12 meses')+'</div>';
   h+='<h2 class="h2s">Mês a mês</h2>'+U.card(U.cols({label:'Proventos por mês',cols:cl,h:160})+U.chips(Object.keys(TT).map(function(t){return {n:TT[t],c:TCOL[t]}}))+(recV>0?'<div class="mu s3nt">Melhor mês: <b>'+ymLabel(rec)+'</b>, com '+brl(recV)+'.</div>':''));
   var top=Object.keys(tk).map(function(t){return {n:t,v:tk[t]}}).sort(function(a,b){return b.v-a.v}).slice(0,8);
-  if(top.length)h+='<h2>Quem mais pagou <span class="s3ht">12 meses</span></h2>'+U.card(U.hbars(top.map(function(x){return {n:x.n,sub:TT[typeOf(x.n)]||'',v:x.v,c:TCOL[typeOf(x.n)]||'#2563eb',txt:brl(x.v)+'<small> '+U.pc1(x.v/tot)+'</small>'}})));
+  if(top.length)h+='<h2>Quem mais pagou</h2><p class="s3sub mu">Proventos líquidos dos últimos 12 meses, por ativo.</p>'+U.card(U.hbars(top.map(function(x){return {n:x.n,sub:TT[typeOf(x.n)]||'',v:x.v,c:TCOL[typeOf(x.n)]||'#2563eb',txt:brl(x.v)+'<small> '+pm(x.v/tot)+'</small>'}})));
   var ty=Object.keys(TT).map(function(t){var v=0;Object.keys(by).forEach(function(k){v+=(by[k][t]||0)});return {n:TT[t],v:v,p:tot>0?v/tot:0,c:TCOL[t]}}).filter(function(x){return x.v>0});
   if(ty.length>1)h+='<h2>Por tipo de ativo</h2>'+U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(ty,brl(tot).replace('R$ ','').replace('R$ ',''),'12 meses')+'</div>'+U.legend(ty,true)+'</div>');
   return h};
@@ -5970,7 +6258,7 @@ R.ttm=function(){
   h+='<div class="ch s3c s3al">'+avail.map(function(k){var v=D.types[k]||0,p=T.V>0?v/T.V:0,m=meta[k],df=m>0?p*100-m:null;
     return '<div class="s3alr" style="--wc:'+TCOL[k]+'"><div class="s3alh"><span class="s3ln"><i class="s3lc"></i>'+TNAME[k]+'</span><label class="s3mt">meta <input type="text" inputmode="decimal" data-s3meta="'+k+'" value="'+(m>0?String(m).replace('.',','):'')+'" placeholder="0" aria-label="Meta de '+TNAME[k]+' em porcentagem"><i>%</i></label></div>'+
       '<div class="s3alb"><i class="s3alf" style="width:'+Math.min(100,p*100).toFixed(1)+'%"></i>'+(m>0?'<i class="s3alm" style="left:'+Math.min(100,m).toFixed(1)+'%"></i>':'')+'</div>'+
-      '<div class="s3alt"><span>Hoje <b>'+U.pc1(p)+'</b> <span class="mu">'+brl(v)+'</span></span>'+(m>0?'<span class="'+(Math.abs(df)<1?'gn':df>0?'am':'rd')+'">'+(Math.abs(df)<1?'na meta':df>0?'acima '+df.toFixed(1).replace('.',',')+' pontos':'abaixo '+(-df).toFixed(1).replace('.',',')+' pontos')+'</span>':'<span class="mu">sem meta</span>')+'</div></div>'}).join('')+
+      '<div class="s3alt"><span>Hoje <b>'+pm(p)+'</b> <span class="mu">'+brl(v)+'</span></span>'+(m>0?'<span class="'+(Math.abs(df)<1?'gn':df>0?'am':'rd')+'">'+(Math.abs(df)<1?'na meta':df>0?'acima '+df.toFixed(1).replace('.',',')+' pontos':'abaixo '+(-df).toFixed(1).replace('.',',')+' pontos')+'</span>':'<span class="mu">sem meta</span>')+'</div></div>'}).join('')+
     '<div class="mu s3nt">Soma das metas: <b class="'+(Math.abs(sum-100)<.01?'gn':sum>0?'am':'mu')+'">'+sum.toLocaleString('pt-BR',{maximumFractionDigits:2})+'%</b>'+(sum>0&&Math.abs(sum-100)>=.01?' (o app ajusta proporcionalmente para dar 100%)':'')+'</div></div>';
   /* simulador de aporte */
   var N=+(S.lsGet('stox3-s3-aporte',0))||0;
@@ -5998,11 +6286,11 @@ var S=window.S32,U=S.u,R=S.render,K='stox3-dz-v1';
 var $i=function(id){return document.getElementById(id)};
 var PLACES=['Nomad','Wise','Inter','Nubank','Itaú','Bradesco','Banco do Brasil','Santander','C6 Bank','XP','Avenue','Casa de câmbio','Cartão pré-pago','Dinheiro em espécie','Outro'];
 var WAYS=[
- {k:'cartao',n:'Cartão pré-pago ou conta global (Wise, Nomad, Inter...)',iof:3.5},
+ {k:'cartao',n:'Converti reais em dólar na minha conta global (Wise, Nomad, Inter, C6...)',iof:3.5},
  {k:'credito',n:'Cartão de crédito ou débito internacional',iof:3.5},
- {k:'especie',n:'Dinheiro em espécie (casa de câmbio)',iof:3.5},
- {k:'conta',n:'Transferência para a minha conta no exterior',iof:3.5},
- {k:'invest',n:'Remessa para investir no exterior (ex.: Avenue)',iof:1.1},
+ {k:'especie',n:'Dinheiro em espécie em casa de câmbio',iof:3.5},
+ {k:'conta',n:'Transferência para a minha conta no exterior',iof:3.5,old:1},
+ {k:'invest',n:'Remessa para investir no exterior (Avenue ou outra corretora)',iof:1.1},
  {k:'outro',n:'Outro (informe o IOF)',iof:0}];
 function wayOf(k){for(var i=0;i<WAYS.length;i++)if(WAYS[i].k===k)return WAYS[i];return WAYS[0]}
 /* ---------- dados ---------- */
@@ -6037,6 +6325,8 @@ function sum(){var s=load(),C=calc(s.ops),q=fx(),usd=0,cost=0;
   if(q&&q.c!==null&&q.c!==undefined&&o.px>0){o.dayPct=q.c/100;o.dd=o.V-o.V/(1+q.c/100)}
   return o}
 /* ---------- formatos ---------- */
+/* v3.3: campos em dinheiro aceitam "R$ 2.500,00" e "US$ 1.000,00" */
+function nm(v){return num(String(v===undefined||v===null?'':v).replace(/US\$|R\$/gi,'').trim())}
 function f2(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function f4(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})}
 function usdF(v){return U.masked()?'US$ *****':'US$ '+f2(v)}
@@ -6096,8 +6386,8 @@ function readForm(){var D=draft(),g=function(id){var e=$i(id);return e?e.value:'
   if(!$i('dz-u'))return D;
   D.date=g('dz-d');D.where=g('dz-w').trim();D.way=g('dz-y')||D.way;D.usd=g('dz-u');D.rate=g('dz-x');D.iofp=g('dz-i');D.fee=g('dz-f');D.brl=g('dz-b');D.note=g('dz-o');
   D.bm=!!($i('dz-b')&&$i('dz-b').dataset.m==='1');D.im=!!($i('dz-i')&&$i('dz-i').dataset.m==='1');return D}
-function compute(D){var buy=D.type!=='VENDA',usd=num(D.usd),rate=num(D.rate),fee=num(D.fee),iofp=D.iofp===''||D.iofp===undefined||D.iofp===null?(buy?wayOf(D.way).iof:0):num(D.iofp);
-  var base=usd>0&&rate>0?usd*rate:0,iof=base*iofp/100,auto=base>0?(buy?base+iof+fee:base-iof-fee):0,brlM=num(D.brl),brl=D.bm?brlM:auto;
+function compute(D){var buy=D.type!=='VENDA',usd=nm(D.usd),rate=nm(D.rate),fee=nm(D.fee),iofp=D.iofp===''||D.iofp===undefined||D.iofp===null?(buy?wayOf(D.way).iof:0):nm(D.iofp);
+  var base=usd>0&&rate>0?usd*rate:0,iof=base*iofp/100,auto=base>0?(buy?base+iof+fee:base-iof-fee):0,brlM=nm(D.brl),brl=D.bm?brlM:auto;
   return {buy:buy,usd:usd,rate:rate,fee:fee,iofp:iofp,base:base,iof:iof,auto:auto,brl:brl,eff:(usd>0&&brl>0)?brl/usd:0}}
 function refOf(date){if(PTX[date])return {p:PTX[date],n:'PTAX do dia'};var q=fx();if(q&&date===U.today())return {p:q.p,n:'cotação de agora'};return null}
 function previewHtml(D){var c=compute(D);if(!(c.usd>0)&&!(c.brl>0))return '';
@@ -6108,20 +6398,20 @@ function previewHtml(D){var c=compute(D);if(!(c.usd>0)&&!(c.brl>0))return '';
     if(ref){var pct=(c.eff/ref.p-1)*100;h+=' <span class="'+(c.buy?(pct>0.05?'am':'gn'):(pct<-0.05?'am':'gn'))+'">('+(pct>=0?'+':'−')+Math.abs(pct).toFixed(2).replace('.',',')+'% '+(c.buy?'sobre':'sobre')+' a '+ref.n+' '+rateF(ref.p)+')</span>'}}
   if(D.bm&&c.auto>0&&Math.abs(c.auto-c.brl)>0.05)h+='<br><span class="mu">O total digitado difere do calculado ('+brl(c.auto)+') em '+brl(Math.abs(c.auto-c.brl))+'. Pode ser diferença de cotação ou outra tarifa.</span>';
   return h}
-function wayOpts(sel){return WAYS.map(function(w){return '<option value="'+w.k+'"'+(w.k===sel?' selected':'')+'>'+esc(w.n)+'</option>'}).join('')}
+function wayOpts(sel){return WAYS.filter(function(w){return !w.old||w.k===sel}).map(function(w){return '<option value="'+w.k+'"'+(w.k===sel?' selected':'')+'>'+esc(w.n)+'</option>'}).join('')}
 R.dzn=function(){
   var D=draft(),buy=D.type!=='VENDA',h='<h2>'+(EDIT?'Editar lançamento':'Lançar dólar')+'</h2>';
   h+='<div class="mu" style="margin:6px 0 10px">Registre uma compra ou venda de dólar feita em qualquer lugar: corretora, Wise, Nomad, cartão pré-pago, casa de câmbio. O app soma o IOF e as taxas ao seu custo.</div>';
-  h+='<div class="s3seg" role="group" aria-label="Tipo de lançamento"><button type="button" data-dzt="COMPRA" class="'+(buy?'on':'')+'" aria-pressed="'+(buy?'true':'false')+'">Comprei dólar</button><button type="button" data-dzt="VENDA" class="'+(buy?'':'on')+'" aria-pressed="'+(buy?'false':'true')+'">Vendi dólar</button></div>';
+  h+='<div class="s3seg s3bs" role="group" aria-label="Tipo de lançamento"><button type="button" data-dzt="COMPRA" class="'+(buy?'on':'')+'" aria-pressed="'+(buy?'true':'false')+'">Comprei dólar</button><button type="button" data-dzt="VENDA" class="'+(buy?'':'on')+'" aria-pressed="'+(buy?'false':'true')+'">Vendi dólar</button></div>';
   h+='<div class="ch s3c s3f">'+
    '<label for="dz-d">Data</label><input id="dz-d" type="date" value="'+esc(D.date)+'">'+
    '<label for="dz-w">Onde foi (banco, corretora ou cartão)</label><input id="dz-w" list="dz-ws" autocomplete="off" placeholder="Ex.: Wise, Nomad, Inter" maxlength="40" value="'+esc(D.where)+'"><datalist id="dz-ws">'+PLACES.map(function(p){return '<option value="'+esc(p)+'">'}).join('')+'</datalist>'+
    (buy?'<label for="dz-y">Como foi</label><select id="dz-y">'+wayOpts(D.way)+'</select>':'')+
-   '<div class="s3r2"><div><label for="dz-u">'+(buy?'Dólares comprados (US$)':'Dólares vendidos (US$)')+'</label><input id="dz-u" inputmode="decimal" placeholder="500,00" value="'+esc(D.usd)+'"></div>'+
+   '<div class="s3r2"><div><label for="dz-u">'+(buy?'Dólares comprados (US$)':'Dólares vendidos (US$)')+'</label><input id="dz-u" inputmode="decimal" placeholder="US$ 500,00" value="'+esc(D.usd)+'"></div>'+
    '<div><label for="dz-x">'+(buy?'Cotação usada (R$ por US$)':'Cotação recebida (R$ por US$)')+'</label><input id="dz-x" inputmode="decimal" placeholder="5,4321" value="'+esc(D.rate)+'"></div></div>'+
-   '<div class="s3rn"><button type="button" class="sb2" data-dznow="1">Usar a cotação de agora</button><button type="button" class="sb2" data-dzptax="1">Ver a PTAX do dia</button></div>'+
+   '<div class="s3rn"><button type="button" class="sb2" data-dznow="1">Usar a cotação de agora</button><button type="button" class="sb2" data-dzptax="1">Usar a PTAX do dia</button></div>'+
    '<div class="s3r2"><div><label for="dz-i">IOF (%)</label><input id="dz-i" inputmode="decimal" placeholder="'+inFmt(buy?wayOf(D.way).iof:0,1)+'" value="'+esc(D.iofp)+'"'+(D.im?' data-m="1"':'')+'></div>'+
-   '<div><label for="dz-f">Taxa ou tarifa (R$)</label><input id="dz-f" inputmode="decimal" placeholder="0,00" value="'+esc(D.fee)+'"></div></div>'+
+   '<div><label for="dz-f">Taxa ou tarifa (R$)</label><input id="dz-f" inputmode="decimal" placeholder="R$ 0,00" value="'+esc(D.fee)+'"></div></div>'+
    '<label for="dz-b">'+(buy?'Total pago em reais (como saiu da sua conta)':'Total recebido em reais (líquido)')+'</label><input id="dz-b" inputmode="decimal" placeholder="calculado sozinho" value="'+esc(D.brl)+'"'+(D.bm?' data-m="1"':'')+'>'+
    '<div class="mu s3nt" style="margin:4px 0 0">Preencha o que souber. Se você só sabe quanto pagou e quantos dólares recebeu, preencha esses dois campos e deixe o resto em branco.</div>'+
    '<label for="dz-o">Observação (opcional)</label><input id="dz-o" maxlength="80" value="'+esc(D.note)+'">'+
@@ -6135,7 +6425,7 @@ function recalc(src){var D=readForm(),c=compute(D);
   if(src==='dz-b'){var b=$i('dz-b');b.dataset.m=b.value.trim()===''?'':'1';D.bm=b.value.trim()!==''}
   if(src==='dz-i'){var i=$i('dz-i');i.dataset.m=i.value.trim()===''?'':'1'}
   D=readForm();c=compute(D);
-  if(!D.bm){var bb=$i('dz-b');if(bb)bb.value=c.auto>0?inFmt(c.auto,2):'';D.brl=bb?bb.value:''}
+  if(!D.bm){var bb=$i('dz-b');if(bb)bb.value=c.auto>0?'R$ '+f2(c.auto):'';D.brl=bb?bb.value:''}
   pv()}
 document.addEventListener('input',function(e){var t=e.target;if(!t||!t.id||t.id.indexOf('dz-')!==0)return;if(t.id==='dz-px'||t.id==='dz-sm'||t.id==='dz-bk')return;recalc(t.id)});
 document.addEventListener('change',function(e){var t=e.target;if(t&&t.id==='dz-y'){var D=readForm();if(!D.im){var i=$i('dz-i');if(i)i.value=''}recalc('dz-y')}});
@@ -6165,10 +6455,11 @@ R.dzp=function(){
     return '<div class="s3pk"><div class="s3ph"><b>'+esc(p.n)+'</b><span class="mu">'+usdF(p.q)+'</span></div><div class="s3pg"><div><span class="mu">Preço médio</span><b>'+rateM(p.cost/p.q)+'</b></div><div><span class="mu">Valor gasto</span><b>'+brl(p.cost)+'</b></div><div><span class="mu">Vale hoje</span><b>'+brl(v)+'</b></div><div><span class="mu">Resultado</span><b class="'+U.tn(rs)+'">'+U.sg(rs)+brl(Math.abs(rs))+(rp!==null?'<small> '+U.sg(rs)+U.pc1(Math.abs(rp))+'</small>':'')+'</b></div></div></div>'}).join('')+'</div>';
   h+='<h2>E se eu vender hoje?</h2><div class="ch s3c s3f"><label for="dz-sm">Dólares a vender (US$)</label><input id="dz-sm" inputmode="decimal" placeholder="'+inFmt(Z.usd,2)+'"><div id="dz-sr">'+simHtml('')+'</div></div>';
   return h};
-function simHtml(v){var Z=sum(),q=num(v);if(!(Z.usd>0))return '';if(!(q>0))q=Z.usd;if(q>Z.usd+1e-6)return '<div class="pv bad">Você tem '+usdF(Z.usd)+' em posição.</div>';
+function simHtml(v){var Z=sum(),q=nm(v);if(!(Z.usd>0))return '';if(!(q>0))q=Z.usd;if(q>Z.usd+1e-6)return '<div class="pv bad">Você tem '+usdF(Z.usd)+' em posição.</div>';
   if(!(Z.px>0))return '<div class="mu s3nt">Atualize a cotação do dólar na aba Início para simular.</div>';
   var got=q*Z.px,c=q*Z.avg,rs=got-c;
   return '<div class="s3sg" style="margin-top:8px"><div class="s3sr" style="--wc:#10b981"><span>Pela cotação de hoje</span><b>'+brl(got)+'</b></div><div class="s3sr" style="--wc:#94a3b8"><span>Custo dessa parte</span><b>'+brl(c)+'</b></div><div class="s3sr" style="--wc:'+(rs>=0?'#16a34a':'#dc2626')+'"><span>Resultado</span><b class="'+U.tn(rs)+'">'+U.sg(rs)+brl(Math.abs(rs))+'</b></div></div><div class="mu s3nt">Simulação pela cotação comercial. Na venda, o banco ou a corretora aplica a sua própria diferença e pode cobrar tarifa e IOF. Não inclui imposto.</div>'}
+document.addEventListener('blur',function(e){var t=e.target;if(!t||!t.id)return;var P={'dz-b':'R$ ','dz-f':'R$ ','dz-u':'US$ ','dz-sm':'US$ '}[t.id];if(!P)return;var raw=t.value.trim();if(!raw){return}var v=nm(raw);if(!(v>0)&&v!==0)return;t.value=P+f2(v);if(t.id==='dz-sm'){var r=$i('dz-sr');if(r)r.innerHTML=(typeof vzScope==='function'?vzScope(simHtml):simHtml)(t.value)}else if(t.id==='dz-b')pv();else recalc(t.id)},true);
 document.addEventListener('input',function(e){var t=e.target;if(t&&t.id==='dz-sm'){var r=$i('dz-sr');if(r)r.innerHTML=(typeof vzScope==='function'?vzScope(simHtml):simHtml)(t.value)}});
 /* ---------- HISTORICO ---------- */
 R.dzr=function(){
@@ -6204,9 +6495,9 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
   if(b.dataset.dzpx){var v=num(($i('dz-px')||{}).value);if(!(v>0&&v<100)){b.textContent='Valor inválido';return}var s2=load();s2.px=v;s2.pxT=Date.now();save(s2);S.refresh(true);return}
   if(b.dataset.dznow){var q=fx();if(!q){pv('Ainda não há cotação. Vá em Início e toque em Atualizar cotação.',1);return}var x=$i('dz-x');if(x){x.value=inFmt(q.p,4);recalc('dz-x')}return}
   if(b.dataset.dzptax){var D=readForm();if(!D.date){pv('Escolha a data primeiro.',1);return}b.disabled=true;b.textContent='Buscando…';
-    var done=function(){b.disabled=false;b.textContent='Ver a PTAX do dia'};
+    var done=function(){b.disabled=false;b.textContent='Usar a PTAX do dia'};
     if(typeof qxPtax!=='function'){done();pv('A PTAX não está disponível aqui.',1);return}
-    qxPtax(D.date).then(function(r){done();if(r&&r.venda>0){PTX[D.date]=r.venda;pv();var e=$i('dz-pv');if(e){e.hidden=false;e.innerHTML='PTAX de venda ('+U.dmy(r.day)+'): <b>'+rateF(r.venda)+'</b>. É a média do Banco Central. Instituições costumam cobrar acima dela.<br>'+(previewHtml(readForm())||'')}}else pv('Não consegui buscar a PTAX agora. Tente de novo mais tarde.',1)},function(){done();pv('Não consegui buscar a PTAX agora.',1)});return}});
+    qxPtax(D.date).then(function(r){done();if(r&&r.venda>0){PTX[D.date]=r.venda;var xx=$i('dz-x');if(xx){xx.value=inFmt(r.venda,4);recalc('dz-x')}pv();var e=$i('dz-pv');if(e){e.hidden=false;e.innerHTML='PTAX de venda ('+U.dmy(r.day)+'): <b>'+rateF(r.venda)+'</b>, já colocada na cotação. É a média do Banco Central; troque pela cotação que o banco cobrou, se souber.<br>'+(previewHtml(readForm())||'')}}else pv('Não consegui buscar a PTAX agora. Tente de novo mais tarde.',1)},function(){done();pv('Não consegui buscar a PTAX agora.',1)});return}});
 function refreshQuote(){
   if(typeof nxFetch!=='function'||typeof qhEnv==='function'&&!qhEnv())return Promise.resolve(0);
   return nxFetch(true).catch(function(){return 0})}
@@ -6265,10 +6556,11 @@ var STEPS=[[30,'1 mês'],[90,'3 meses'],[180,'6 meses'],[365,'1 ano'],[545,'1 an
 function pct(v,d){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:d===undefined?2:d,maximumFractionDigits:d===undefined?2:d})+'%'}
 function money(v){return (+v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
 function termTxt(D){if(D<60)return D+' dias';var m=D/(365/12);if(m<24)return (Math.round(m*10)/10).toLocaleString('pt-BR')+' meses';return (Math.round(D/365*10)/10).toLocaleString('pt-BR')+' anos'}
-function ratesBar(){var rt=rates(),src=rt.def?'Valores de referência de '+DEF.ref+'. Toque em Atualizar para buscar no Banco Central.':rt.man?'Informadas por você.':'Banco Central'+(rt.ds?' · Selic de '+rt.ds:'')+'.';
+function ratesBar(){var rt=rates(),src=rt.def?'Valores de referência de '+DEF.ref+'. Toque em Atualizar para buscar no Banco Central.':rt.man?'Informadas por você.':'Selic em vigor (Banco Central)'+(rt.t?' · atualizada '+whenTxt(rt.t):'')+'.';
   return '<div class="s3rt"><div class="s3rtc"><span class="mu">Selic (meta)</span><b>'+pct(rt.selic)+'</b><small class="mu">ao ano</small></div><div class="s3rtc"><span class="mu">CDI</span><b>'+pct(rt.cdi)+'</b><small class="mu">ao ano</small></div></div>'+
    '<div class="mu s3nt" id="rf-src">'+src+'</div><div class="s3rn"><button type="button" class="sb2" data-rfup="1">Atualizar taxas</button></div>'+
    '<details class="s3dt2"><summary>Informar as taxas à mão</summary><div class="s3r2" style="margin-top:6px"><div><label for="rf-ms">Selic (% ao ano)</label><input id="rf-ms" inputmode="decimal" value="'+String(rt.selic).replace('.',',')+'"></div><div><label for="rf-mc">CDI (% ao ano)</label><input id="rf-mc" inputmode="decimal" value="'+String(rt.cdi).replace('.',',')+'"></div></div><div class="s3rn"><button type="button" class="sb2" data-rfman="1">Salvar taxas</button></div></details>'}
+function whenTxt(t){var d=new Date(t),n=new Date(),hm=d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});return (d.toDateString()===n.toDateString()?'hoje':'em '+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}))+' às '+hm}
 function seg(name,cur,opts,cls){return '<div class="s3seg '+(cls||'')+'" role="group">'+opts.map(function(o){return '<button type="button" data-'+name+'="'+o[0]+'" class="'+(String(cur)===String(o[0])?'on':'')+'" aria-pressed="'+(String(cur)===String(o[0])?'true':'false')+'">'+o[1]+'</button>'}).join('')+'</div>'}
 R.rfc=function(){
   var st=load(),h='<h2>Calculadora de renda fixa</h2>';
@@ -6286,7 +6578,7 @@ function outHtml(st){
   var o=calc(st),rt=rates(),h='';
   if(!o)return '<div class="ch s3c"><div class="s3em"><b>Preencha o valor, a taxa e o prazo.</b><div class="mu">O resultado aparece aqui na hora.</div></div></div>';
   var lbl=st.base==='pre'?pct(num(st.pre))+' ao ano (fixa)':pct(num(st.pct),0).replace(',00','')+' '+(st.base==='cdi'?'do CDI':'da Selic')+' = '+pct(o.r*100)+' ao ano';
-  h+='<div class="hmh s3h" style="margin-top:14px"><div class="hml">Você recebe, já sem imposto</div><div class="hmv"><b>'+money(o.net)+'</b></div><div class="mu hmd">em '+termTxt(o.D)+' · '+esc(lbl)+'</div></div>';
+  h+='<div class="hmh s3h" style="margin-top:14px"><div class="hml">Saldo previsto líquido</div><div class="hmv"><b>'+money(o.net)+'</b></div><div class="mu hmd">em '+termTxt(o.D)+' · '+esc(lbl)+(st.tax?' · já sem o imposto de renda':'')+'</div></div>';
   h+='<div class="hmg">'+
     '<div class="hmk k1"><span class="mu">Você colocou</span><b>'+money(o.inv)+'</b><small class="mu">'+(o.ap>0?'valor inicial + aportes':'valor aplicado')+'</small></div>'+
     '<div class="hmk kg"><span class="mu">Ganho líquido</span><b class="gn">+'+money(o.netGain)+'</b><small class="gn">'+pct(o.netPct*100)+' no período</small></div>'+
@@ -6298,19 +6590,21 @@ function outHtml(st){
   var n=Math.max(2,Math.min(120,Math.ceil(o.months))),stp=o.D/n,gp=[],np=[],ip=[],i,x;
   for(i=0;i<=n;i++){var d=Math.round(stp*i);if(d<=0){gp.push([0,o.v]);np.push([0,o.v]);ip.push([0,o.v]);continue}x=sim(o.v,o.ap,o.r,d,st.tax);gp.push([d,x.gross]);np.push([d,x.net]);ip.push([d,x.inv])}
   var ser=[{pts:ip,c:'var(--mu)',dash:1,w:1.5},{pts:np,c:'#0891b2',area:1,w:2.4}];if(st.tax)ser.splice(1,0,{pts:gp,c:'#f59e0b',w:1.6});
-  h+='<h2>Como o dinheiro cresce</h2><div class="ch s3c">'+U.line({label:'Evolução do investimento',series:ser,xl:[{x:0,t:'hoje'},{x:o.D/2,t:termTxt(Math.round(o.D/2))},{x:o.D,t:termTxt(o.D)}],h:160,zero:false,yf:function(v){return Math.round(v).toLocaleString('pt-BR')}})+
+  h+='<h2>Gráficos da simulação</h2><p class="s3sub mu">Como o valor evolui, quanto vai de imposto e a comparação com a poupança.</p><div class="s3rg3"><div class="ch s3c"><h3 class="s3h3">Como o dinheiro cresce</h3>'+U.line({label:'Evolução do investimento',series:ser,xl:[{x:0,t:'hoje'},{x:o.D/2,t:termTxt(Math.round(o.D/2))},{x:o.D,t:termTxt(o.D)}],h:160,zero:false,yf:function(v){return Math.round(v).toLocaleString('pt-BR')}})+
     U.chips([{n:'Líquido, se resgatar no dia',c:'#0891b2'}].concat(st.tax?[{n:'Bruto',c:'#f59e0b'}]:[]).concat([{n:'Você colocou',c:'#94a3b8'}]))+
     (st.tax?'<div class="mu s3nt">Os degraus na linha do líquido são os dias em que o imposto cai: depois de 180, 360 e 720 dias.</div>':'')+'</div>';
-  /* se ficar parado */
-  var v0=o.v>0?o.v:1000;
-  h+='<h2>Se ficar parado <span class="s3ht">'+money(v0)+', sem aportes</span></h2><div class="tw"><table class="s3tb"><thead><tr><th>Prazo</th><th>IR</th><th>Líquido</th><th>Por mês</th></tr></thead><tbody>'+
-    STEPS.map(function(s){var l=lump(v0,o.r,s[0],st.tax),m=s[0]/(365/12);return '<tr'+(Math.abs(s[0]-o.D)<16?' class="s3cur"':'')+'><td>'+s[1]+'</td><td>'+(st.tax?pct(l.al,1):'isento')+'</td><td><b>'+money(l.net)+'</b></td><td class="gn">+'+money(l.netGain/m)+'</td></tr>'}).join('')+'</tbody></table></div>'+
-    '<div class="mu s3nt">Quanto mais tempo parado, menor o imposto sobre o ganho: 22,5% até 180 dias, 20% até 360, 17,5% até 720 e 15% depois disso.'+(st.tax?'':' (Na sua simulação o título é isento.)')+'</div>';
   /* quanto do ganho fica com o imposto, por prazo */
-  if(st.tax){h+='<h2>O imposto diminui com o tempo</h2><div class="ch s3c">'+U.cols({label:'Alíquota do imposto de renda por prazo',cols:[['até 6 m',22.5],['6 a 12 m',20],['1 a 2 anos',17.5],['+ de 2 anos',15]].map(function(a){return {l:a[0],stack:[{v:a[1],c:irRate(o.D)===a[1]?'#dc2626':'#fca5a5',n:a[0]}]}}),h:130,yf:function(v){return pct(v,1)}})+'<div class="mu s3nt">A barra mais escura é a faixa do prazo que você escolheu ('+pct(o.al,1)+' sobre o ganho).</div></div>'}
+  if(st.tax){h+='<div class="ch s3c"><h3 class="s3h3">O imposto diminui com o tempo</h3>'+U.cols({label:'Alíquota do imposto de renda por prazo',cols:[['até 6 m',22.5],['6 a 12 m',20],['1 a 2 anos',17.5],['+ de 2 anos',15]].map(function(a){return {l:a[0],stack:[{v:a[1],c:irRate(o.D)===a[1]?'#dc2626':'#fca5a5',n:a[0]}]}}),h:130,yf:function(v){return pct(v,1)}})+'<div class="mu s3nt">A barra mais escura é a faixa do prazo que você escolheu ('+pct(o.al,1)+' sobre o ganho).</div></div>'}
   /* comparacao com a poupanca */
   if(o.months>=1){var pg=o.poup-o.poupInv,ng=o.netGain;
-    h+='<h2>Comparando com a poupança</h2><div class="ch s3c">'+U.hbars([{n:'Esta aplicação',v:Math.max(0,ng),c:'#0891b2',txt:'+'+money(ng)},{n:'Poupança',sub:'aprox., sem a TR',v:Math.max(0,pg),c:'#94a3b8',txt:'+'+money(pg)}])+'<div class="mu s3nt">Ganho líquido no mesmo prazo. A poupança rende 0,5% ao mês + TR quando a Selic está acima de 8,5% ao ano, só nos aniversários mensais, e não paga IR.</div></div>'}
+    h+='<div class="ch s3c"><h3 class="s3h3">Comparando com a poupança</h3>'+U.hbars([{n:'Esta aplicação',v:Math.max(0,ng),c:'#0891b2',txt:'+'+money(ng)},{n:'Poupança',sub:'aprox., sem a TR',v:Math.max(0,pg),c:'#94a3b8',txt:'+'+money(pg)}])+'<div class="mu s3nt">Ganho líquido no mesmo prazo. A poupança rende 0,5% ao mês + TR quando a Selic está acima de 8,5% ao ano, só nos aniversários mensais, e não paga IR.</div></div>'}
+  h+='</div>';
+  /* prazo a prazo (com os aportes, se houver) */
+  var v0=o.v>0?o.v:(o.ap>0?0:1000),ap0=o.ap>0?o.ap:0,L=STEPS.map(function(x){return [x[0],x[1]]}),hit=L.some(function(x){return Math.abs(x[0]-o.D)<16});
+  if(!hit){L.push([o.D,termTxt(o.D)]);L.sort(function(a,b){return a[0]-b[0]})}
+  h+='<h2>Prazo a prazo</h2><p class="s3sub mu">'+(ap0>0?(v0>0?money(v0)+' iniciais + ':'')+money(ap0)+' por mês':money(v0)+', sem aportes')+'. Quanto você teria, já sem o imposto, se resgatasse em cada prazo.</p><div class="tw"><table class="s3tb s3pz"><thead><tr><th>Prazo</th><th>Você colocou</th><th>IR</th><th>Saldo líquido</th><th>Ganho por mês</th></tr></thead><tbody>'+
+    L.map(function(x){var d=x[0],l=sim(v0,ap0,o.r,d,st.tax),m=d/(365/12),cur=Math.abs(d-o.D)<16;return '<tr'+(cur?' class="s3cur"':'')+'><td>'+x[1]+(cur?' <span class="s3you">seu prazo</span>':'')+'</td><td>'+money(l.inv)+'</td><td>'+(st.tax?money(l.ir)+'<small class="mu"> '+pct(irRate(d),1)+'</small>':'isento')+'</td><td><b>'+money(l.net)+'</b></td><td class="gn">+'+money(l.netGain/m)+'</td></tr>'}).join('')+'</tbody></table></div>'+
+    '<div class="mu s3nt">Quanto mais tempo parado, menor o imposto sobre o ganho: 22,5% até 180 dias, 20% até 360, 17,5% até 720 e 15% depois disso.'+(st.tax?'':' (Na sua simulação o título é isento.)')+'</div>';
   h+='<div class="mu s3nt" style="margin-top:12px">É uma simulação: a Selic e o CDI mudam ao longo do tempo, e a conta usa a taxa de hoje para o prazo todo. Não é recomendação de investimento.</div>';
   return h}
 function readSt(){var st=load(),g=function(id,k){var e=$i(id);if(e)st[k]=e.value};
@@ -6533,15 +6827,384 @@ var SEL='.cpm span>b,.cpv>b,.nzpi input.qp,.cpq input.qp,.hmk>b,.s3kv,.s3pg b,.m
 function fit(el){if(!el||!el.isConnected)return;el.style.removeProperty('font-size');var cw=el.clientWidth;if(!(cw>0))return;
   if(el.scrollWidth<=cw+1)return;var f=parseFloat(getComputedStyle(el).fontSize)||16,n=0;
   while(f>MIN&&el.scrollWidth>el.clientWidth+1&&n<40){f-=0.5;n++;el.style.setProperty('font-size',f+'px','important')}}
-function all(){Q=false;var L=document.querySelectorAll(SEL),i;for(i=0;i<L.length;i++){try{fit(L[i])}catch(e){}}}
+/* v3.3: preco atual com ponto de milhar (R$ 394.700,00); ao editar, o numero continua sendo lido do mesmo jeito */
+var PXS='.nzpi input.qp,input[data-zpx],.tw input.qp';
+function pxFmt(el){if(!el||el===document.activeElement)return;var t=String(el.value||'').trim();if(!t)return;var v=num(t);if(!(v>0)||!isFinite(v))return;
+  var o=v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:v<1?8:2});if(o!==t)el.value=o}
+function all(){Q=false;var L=document.querySelectorAll(SEL),i;for(i=0;i<L.length;i++){try{fit(L[i])}catch(e){}}
+  /* v3.3: intervalo (Agora, 15m, 1h, 4h), periodo e "Ocultar" numa linha so */
+  L=document.querySelectorAll('.pcgr.pciv');for(i=0;i<L.length;i++){var g=L[i],nx=g.nextElementSibling;if(g.parentElement.classList.contains('pcbar')||!nx||!nx.classList.contains('pcgr'))continue;var w=document.createElement('div');w.className='pcbar';g.parentNode.insertBefore(w,g);w.appendChild(g);w.appendChild(nx)}
+  L=document.querySelectorAll(PXS);for(i=0;i<L.length;i++){try{pxFmt(L[i]);fit(L[i])}catch(e){}}}
 function soon(){if(Q)return;Q=true;setTimeout(all,30)}
 function start(){var m=document.querySelector('main')||document.body;try{new MutationObserver(soon).observe(m,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','open']})}catch(e){}
-  window.addEventListener('resize',soon);document.addEventListener('click',function(){setTimeout(soon,60)},true);document.addEventListener('input',function(e){var t=e.target;if(t&&t.matches&&t.matches(SEL))fit(t)});soon()}
+  window.addEventListener('resize',soon);document.addEventListener('blur',function(e){var t=e.target;if(t&&t.matches&&t.matches(PXS))setTimeout(function(){pxFmt(t);fit(t)},0)},true);document.addEventListener('click',function(){setTimeout(soon,60)},true);document.addEventListener('input',function(e){var t=e.target;if(t&&t.matches&&t.matches(SEL))fit(t)});soon()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
-window.S32FIT={fit:fit,all:all,sel:SEL};
+window.S32FIT={fit:fit,all:all,sel:SEL,px:pxFmt};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32u.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: leitura da nota (rapida, com etapas, tempo limite e cancelar) e total da nota em destaque ===================== */
+(function(){
+var RUN=0,T0=0,TK=null,WK=null,Q=[],QN=0,QI=0,WSRC='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+var $i=function(id){return document.getElementById(id)};
+function to(p,ms,code){return new Promise(function(ok,no){var t=setTimeout(function(){no({code:code||'timeout'})},ms);p.then(function(v){clearTimeout(t);ok(v)},function(e){clearTimeout(t);no(e)})})}
+function box(){var b=$i('nprog');if(b)return b;var st=$i('nst');if(!st)return null;b=document.createElement('div');b.id='nprog';b.className='nprog';b.setAttribute('role','status');b.setAttribute('aria-live','polite');b.hidden=true;
+  b.innerHTML='<span class="nspin" aria-hidden="true"></span><div class="nptx"><b id="npst">Lendo a nota…</b><small id="npt" class="mu"></small></div><button type="button" class="btn sm" id="npx">Cancelar</button>';st.parentNode.insertBefore(b,st);return b}
+function stage(t){var b=box();if(!b)return;b.hidden=false;$i('npst').textContent=(QN>1?'Nota '+QI+' de '+QN+': ':'')+t}
+function tick(){var e=$i('npt');if(e)e.textContent=Math.round((Date.now()-T0)/1000)+' s'}
+function end(msg,kind){clearInterval(TK);TK=null;var b=$i('nprog');if(b)b.hidden=true;var st=$i('nst');if(st&&msg!==undefined){st.textContent=msg;st.className='nres '+(kind||'')}}
+/* leitor de PDF: o "worker" vem da internet, mas roda como arquivo local (assim funciona no Windows aberto por arquivo e no Android) */
+async function pdfReady(){if(!window.pdfjsLib)throw {code:'nopdf'};if(WK)return;
+  try{var r=await to(fetch(WSRC),20000,'pdfnet');if(!r.ok)throw 0;var t=await r.text();WK=URL.createObjectURL(new Blob([t],{type:'application/javascript'}))}catch(e){WK=WSRC}
+  pdfjsLib.GlobalWorkerOptions.workerSrc=WK}
+async function pdfRead(f,my){
+  stage('Abrindo o PDF…');await pdfReady();if(my!==RUN)return null;
+  var d=await to(pdfjsLib.getDocument({data:await f.arrayBuffer(),isEvalSupported:false}).promise,25000,'pdfopen'),n=Math.min(d.numPages,3),i,txt='',p,c,v;
+  for(i=1;i<=n;i++){if(my!==RUN)return null;stage('Lendo a página '+i+' de '+n+'…');p=await to(d.getPage(i),15000,'pdfpage');
+    try{c=await to(p.getTextContent(),15000,'pdftext');var y=null,line=[];c.items.forEach(function(it){var yy=it.transform?Math.round(it.transform[5]):0;if(y!==null&&Math.abs(yy-y)>2){txt+=line.join(' ')+'\n';line=[]}y=yy;if(it.str)line.push(it.str)});txt+=line.join(' ')+'\n\n'}catch(e){}}
+  /* PDF com texto (como o da Nubank): envia so o texto, que e bem mais rapido. Sem texto (nota escaneada): envia a imagem das paginas */
+  if(txt.replace(/\s+/g,'').length>=150&&/\d/.test(txt))return {text:txt.slice(0,20000),images:[]};
+  var out=[];for(i=1;i<=n;i++){if(my!==RUN)return null;stage('Preparando a imagem da página '+i+' de '+n+'…');p=await d.getPage(i);v=p.getViewport({scale:1.6});c=document.createElement('canvas');c.width=v.width;c.height=v.height;
+    await to(p.render({canvasContext:c.getContext('2d'),viewport:v}).promise,20000,'pdfrender');out.push(await new Promise(function(r){c.toBlob(r,'image/jpeg',0.85)}))}
+  return {text:'',images:out}}
+function who(){try{var p=typeof aiProv==='function'?aiProv():'';return p==='g'?'Gemini':p==='a'?'Anthropic':'Claude'}catch(e){return 'serviço de leitura'}}
+function errMsg(e){var c=e&&e.code;
+  if(e&&e.msg)return e.msg;
+  if(c==='nopdf'||c==='pdfnet')return 'Não consegui carregar o leitor de PDF (precisa de internet na primeira vez). Envie uma foto ou print da nota, ou tente de novo.';
+  if(c==='pdfopen'||c==='pdfpage'||c==='pdftext'||c==='pdfrender')return 'Não consegui abrir este PDF. Ele pode estar protegido por senha ou danificado. Envie um print da nota.';
+  if(c==='ai')return 'O '+who()+' não respondeu em 75 segundos. Tente de novo em instantes ou lance à mão.';
+  if(c==='empty')return 'Não encontrei operações nesta nota. Confira se é uma nota de negociação (não o extrato) ou lance à mão.';
+  if(c==='not_granted')return 'Você não permitiu o uso do Claude para ler a nota.';
+  return 'Não consegui ler esta nota. Tente uma foto mais nítida ou preencha à mão.'}
+async function read(f){
+  var my=++RUN,st=$i('nst');T0=Date.now();clearInterval(TK);TK=setInterval(tick,500);tick();if(st){st.textContent='';st.className='mu'}
+  try{
+    if(!SMP)throw {msg:'A leitura de notas não está ligada. Cadastre uma chave em Configurações, em Chaves de acesso.'};
+    var pay=f.type==='application/pdf'||/\.pdf$/i.test(f.name||'')?await pdfRead(f,my):{text:'',images:[f]};if(!pay||my!==RUN)return;
+    var br=Array.from(new Set(ops.map(function(o){return o.broker}))).join(', '),pr=NP.replace('LISTA',br||'(nenhuma)');
+    if(pay.text)pr+='\n\nTexto extraído do PDF da nota (use só ele):\n"""\n'+pay.text+'\n"""';
+    stage(pay.text?'Reconhecendo os negócios (texto da nota, '+who()+')…':'Reconhecendo os negócios pela imagem ('+who()+')…');
+    var d=await to(SMP.json(pr,{images:pay.images,modelTier:'default'}),75000,'ai');if(my!==RUN)return;
+    stage('Preenchendo a tela…');fillNota(d);var n=(d&&d.itens||[]).length;
+    end(undefined);var st2=$i('nst');if(st2){st2.className='nres ok';st2.textContent=(QN>1?'Nota '+QI+' de '+QN+' pronta':'Pronto')+' em '+Math.max(1,Math.round((Date.now()-T0)/1000))+' s: '+(n===1?'1 operação encontrada':n+' operações encontradas')+'. '+st2.textContent+(Q.length?' Depois de salvar, a próxima nota é lida sozinha.':'')}
+  }catch(e){if(my!==RUN)return;end(errMsg(e),'bad')}}
+/* troca o leitor antigo: o evento e tratado aqui antes de chegar no campo */
+document.addEventListener('change',function(e){var t=e.target;if(!t||t.id!=='nfile')return;e.stopImmediatePropagation();e.stopPropagation();
+  var L=t.files?Array.prototype.slice.call(t.files,0,10):[];if(!L.length)return;Q=L.slice(1);QN=L.length;QI=1;read(L[0]);t.value=''},true);
+/* varias notas: depois de salvar uma, le a proxima */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#nsv');if(!b||!Q.length)return;var n0=ops.length;
+  setTimeout(function(){if(ops.length>n0&&Q.length){QI++;read(Q.shift())}},500)});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#npx');if(!b)return;RUN++;Q=[];QN=0;end('Leitura cancelada. Você pode enviar de novo ou lançar à mão.','bad')});
+/* ---------- total da nota (com taxas) em destaque ---------- */
+function nbox(){var v=$i('npv');if(!v||v.hidden||/\bbad\b/.test(v.className))return;var c;try{c=nOps()}catch(e){return}if(!c||!c.length)return;
+  var rows;try{rows=calc(ops.filter(notEdit).concat(c)).rows.filter(function(r){return r.id>=1e15})}catch(e){return}
+  var G=0,F=0,nt=0,buy=0,sell=0;rows.forEach(function(r){var g=r.qty*r.price;F+=r.fee||0;if(r.type==='VENDA'){sell+=g;nt-=g-(r.fee||0)}else{buy+=g;nt+=g+(r.fee||0)}G+=g});
+  var h=v.innerHTML,i=h.indexOf('<br>');if(i>=0&&/^Total da nota/.test(v.textContent))h=h.slice(i+4);
+  var lab=nt<0?'Líquido a receber da nota':'Total da nota com taxas',sub=(buy?brl(buy)+' em compras':'')+(buy&&sell?' − ':'')+(sell?brl(sell)+' em vendas':'')+(F>0?(nt<0?' − ':' + ')+brl(F)+' de taxas':' · sem taxas');
+  v.innerHTML='<div class="ntot"><div><span>'+lab+'</span><small class="mu">'+sub+'</small></div><b class="'+(nt<0?'gn':'')+'">'+brl(Math.abs(nt))+'</b></div><div class="ntdl">'+h+'</div>'}
+if(typeof nprev==='function'){var _np=nprev;nprev=function(){var r=_np.apply(this,arguments);try{nbox()}catch(e){}return r}}
+/* taxas da nota: formata 0,1 como 0,10 ao sair do campo */
+document.addEventListener('blur',function(e){var t=e.target;if(!t||t.id!=='nf')return;var v=num(t.value);if(t.value.trim()!==''&&isFinite(v)){t.value=v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});try{nprev()}catch(x){}}},true);
+window.S33N={read:read,cancel:function(){RUN++},box:nbox};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33n.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: Lancar cripto (venda com preco de agora, troca com preco da moeda recebida e taxa na propria moeda) ===================== */
+(function(){
+var $i=function(id){return document.getElementById(id)},A2=false;
+function typ(){var r=document.querySelector('input[name=zt]:checked');return r?r.value:'COMPRA'}
+function cn2(v){return String(v||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'')}
+function n(v){var x=num(v);return isFinite(x)?x:0}
+function fq(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
+function fp(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:v<1?8:2})}
+function pxOf(c){try{return typeof nzMkPx==='function'?(+nzMkPx(c)||0):0}catch(e){return 0}}
+function put(id,v){var e=$i(id);if(!e)return;e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))}
+/* campos novos da troca */
+function build(){if($i('zxpw'))return;var q2=$i('zq2');if(!q2)return;var row=q2.closest('.row')||q2.parentNode;
+  var d=document.createElement('div');d.id='zxpw';d.className='zxpw';
+  d.innerHTML='<div class="row"><div><div class="lw"><label for="zxp2" id="zxpl">Preço da moeda recebida (R$ por unidade)</label></div><input id="zxp2" inputmode="decimal" placeholder="0,00" autocomplete="off"></div>'+
+    '<div><div class="lw"><label for="zfq" id="zfql">Taxa cobrada na moeda recebida</label></div><input id="zfq" inputmode="decimal" placeholder="0" autocomplete="off"></div></div><div class="mu" id="zxph"></div>';
+  row.insertAdjacentElement('afterend',d)}
+function vis(){build();var t=typ(),w=$i('zxpw');if(w)w.hidden=t!=='PERMUTA';
+  var c2=cn2(($i('zc2')||{}).value),l=$i('zfql');if(l)l.textContent='Taxa cobrada em '+(c2||'moeda recebida')+' (opcional)';
+  var zl=document.querySelector('label[for=zr]');if(zl)zl.textContent=t==='PERMUTA'?'Onde foi feita a troca?':'Onde foi feita a venda?';
+  try{if(typeof nzCrVis==='function')nzCrVis()}catch(e){}}
+function hint(){var h=$i('zxph');if(!h)return;var V=n(($i('zv')||{}).value),P=n(($i('zxp2')||{}).value),F=n(($i('zfq')||{}).value),Q=n(($i('zq2')||{}).value),c2=cn2(($i('zc2')||{}).value)||'moeda',px=pxOf(c2);
+  var t='';if(Q>0&&V>0)t='Entram <b>'+fq(Q)+' '+esc(c2)+'</b> na carteira'+(F>0?' (bruto '+fq(Q+F)+' − taxa '+fq(F)+')':'')+'. Custo do '+esc(c2)+': <b>'+brl(V)+'</b> ('+brl(V/Q)+' por unidade).';
+  else t='Com o valor justo e o preço da moeda recebida, a quantidade é calculada sozinha. Ou digite a quantidade que apareceu no extrato.';
+  if(px>0)t+=' <button type="button" class="lk" data-zp2now="'+px+'">Usar o preço de agora: R$ '+fp(px)+'</button>';h.innerHTML=t}
+function calcQ(src){var V=n(($i('zv')||{}).value),P=n(($i('zxp2')||{}).value),F=n(($i('zfq')||{}).value),Q=n(($i('zq2')||{}).value);
+  if(src==='zq2'){A2=false;if(Q>0&&V>0){var e=$i('zxp2');if(e)e.value=fp(V/(Q+F))}}
+  else if(P>0&&V>0&&(A2||!(Q>0)||src==='zxp2'||src==='zfq')){var g=V/P,net=Math.max(0,g-F);A2=true;var q=$i('zq2');if(q){q.value=fq(Math.round(net*1e8)/1e8);q.dispatchEvent(new Event('input',{bubbles:true}))}A2=true}
+  hint()}
+document.addEventListener('input',function(e){var t=e.target;if(!t||!t.id)return;
+  if(t.id==='zxp2'||t.id==='zfq'){calcQ(t.id);return}
+  if(t.id==='zq2'&&e.isTrusted){calcQ('zq2');return}
+  if(t.id==='zv'&&typ()==='PERMUTA'){calcQ('zv');return}
+  if(t.id==='zc2')setTimeout(function(){vis();hint()},0)});
+/* venda: ao escolher a moeda, o preco de agora ja vem (e o valor recebido sai sozinho) */
+function sellPx(){if(typ()!=='VENDA')return;var c=cn2(($i('zc')||{}).value),p=$i('nzpx');if(!c||!p||p.value.trim())return;var px=pxOf(c);if(px>0){p.classList.remove('nzau');put('nzpx',fp(px))}}
+function trocaPx(){if(typ()!=='PERMUTA')return;var c2=cn2(($i('zc2')||{}).value),p=$i('zxp2');if(!c2||!p||p.value.trim())return;var px=pxOf(c2);if(px>0){p.value=fp(px);calcQ('zxp2')}}
+function sync(){vis();setTimeout(function(){sellPx();trocaPx();hint()},60)}
+document.addEventListener('change',function(e){var t=e.target;if(t&&(t.name==='zt'||t.id==='zc'||t.id==='zc2'))setTimeout(sync,90)});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-zact],[data-zp2now],#zs,#zx,[data-zed]');if(!b)return;
+  if(b.dataset.zp2now){var p=$i('zxp2');if(p){p.value=fp(+b.dataset.zp2now);calcQ('zxp2')}return}
+  if(b.id==='zs'||b.id==='zx'){setTimeout(function(){var p=$i('zxp2'),f=$i('zfq');if($i('zq2')&&!$i('zq2').value){if(p)p.value='';if(f)f.value='';A2=false;hint()}},200);return}
+  setTimeout(sync,150)});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(sync,50)});else setTimeout(sync,50);
+/* Posicoes da Cripto: Expandir tudo / Recolher tudo, como nas Acoes */
+var EXSV='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+function crBar(){var bar=document.querySelector('#crp .pvbar');if(!bar||bar.querySelector('[data-s3ex]'))return;var a=bar.querySelector('.pvact');if(!a){a=document.createElement('div');a.className='pvact';bar.appendChild(a)}
+  a.insertAdjacentHTML('beforeend','<button type="button" class="pvq nxe" data-s3ex="1" title="Expandir tudo" aria-label="Expandir tudo">'+EXSV+'<path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg><span class="nxt">Expandir tudo</span></button><button type="button" class="pvq nxe" data-s3ex="0" title="Recolher tudo" aria-label="Recolher tudo">'+EXSV+'<path d="M7 20l5-5 5 5M7 4l5 5 5-5"/></svg><span class="nxt">Recolher tudo</span></button>');bar.classList.add('nxok')}
+function crAllOpen(on){var i,h,n=0;
+  Array.prototype.forEach.call(document.querySelectorAll('#crp h2.h2k'),function(x){var ex=x.getAttribute('aria-expanded')!=='false';if(ex!==on)x.click()});
+  if(on){while(n++<60&&(h=document.querySelector('#crp .sck[data-zsc]')))h.click()}
+  else{while(n++<60&&(h=document.querySelector('#crp [data-zfold]')))h.click()}
+  setTimeout(crBar,30)}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-s3ex]');if(!b)return;crAllOpen(b.dataset.s3ex==='1')});
+(function(){var sec=document.getElementById('crp');if(!sec)return;var T=null;try{new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=null;crBar()},40)}).observe(sec,{childList:true,subtree:true})}catch(e){}setTimeout(crBar,100)})();
+window.S33C={sync:sync,calcQ:calcQ,vis:vis};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33c.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: Simular da Cripto e grafico nos dois simuladores ===================== */
+(function(){
+var TRY={};
+var $i=function(id){return document.getElementById(id)},S=window.S32,U=S?S.u:null,PR='1d';
+function n(v){var x=num(v);return isFinite(x)?x:0}
+function fq(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
+function fp(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:v<1?8:2})}
+function pq2(v){return 'R$ '+fp(v)}
+function cnx(v){return String(v||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'')}
+function CRo(){return window.CRX&&CRX.get?CRX.get():{ops:[],px:{}}}
+function pools(){try{return CRX.calc(CRo().ops).pools}catch(e){return {}}}
+function held(){var P=pools();return Object.keys(P).filter(function(c){return P[c].qty>1e-9}).sort(function(a,b){return P[b].cost-P[a].cost})}
+function price(c){try{return CRX.price(c)||0}catch(e){return 0}}
+/* ---------- grafico simples com maxima, minima e linhas de referencia ---------- */
+function chart(P,lines,lab){if(!P||P.length<2)return '';var n=P.length,W=640,H=210,L=8,R=8,T=16,B=16,all=P.concat(lines.map(function(x){return x.v}).filter(function(v){return v>0})),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),sp=(mx-mn)||mx*.02||1;
+  mn-=sp*.06;mx+=sp*.06;sp=mx-mn;var X=function(i){return L+(W-L-R)*i/(n-1)},Y=function(v){return T+(H-T-B)*(1-(v-mn)/sp)},pts=P.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1)}),up=P[n-1]>=P[0],
+    pm=Math.max.apply(null,P),pl=Math.min.apply(null,P),im=P.indexOf(pm),il=P.indexOf(pl);
+  var h='<svg class="smsvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(lab)+'" style="color:var(--'+(up?'gn':'rd')+')"><path d="M'+pts.join(' L')+' L'+X(n-1).toFixed(1)+','+(H-B)+' L'+X(0).toFixed(1)+','+(H-B)+' Z" fill="currentColor" fill-opacity=".12"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>';
+  lines.forEach(function(x){if(!(x.v>0))return;var y=Y(x.v).toFixed(1);h+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+x.c+'" stroke-width="1.6" stroke-dasharray="'+(x.d||'6 4')+'"/>'});
+  h+='<circle cx="'+X(im).toFixed(1)+'" cy="'+Y(pm).toFixed(1)+'" r="4" fill="var(--gn)"/><circle cx="'+X(il).toFixed(1)+'" cy="'+Y(pl).toFixed(1)+'" r="4" fill="var(--rd)"/></svg>';
+  h+='<div class="smleg"><span><i style="background:var(--gn)"></i>máx '+pq2(pm)+'</span><span><i style="background:var(--rd)"></i>mín '+pq2(pl)+'</span>'+lines.filter(function(x){return x.v>0}).map(function(x){return '<span><i class="ln" style="border-top:2px dashed '+x.c+'"></i>'+esc(x.n)+' '+pq2(x.v)+'</span>'}).join('')+'</div>';
+  return h}
+/* ---------- Simular da Cripto ---------- */
+function form(){var o='',H=held(),P=pools();
+  o+='<h2>Simular uma operação de cripto</h2><div class="mu simi">Veja o resultado, o novo custo médio e o imposto estimado antes de comprar ou vender. Nada é salvo.</div>';
+  if(H.length)o+='<label>Toque na moeda que você tem para preencher</label><div class="tkcs" id="cspk">'+H.map(function(c){return '<button type="button" class="tkc" data-csc="'+ea(c)+'">'+esc(c)+'</button>'}).join('')+'</div>';
+  o+='<div class="pc simf"><div class="s3seg" role="group" aria-label="Tipo"><button type="button" data-cst="VENDA" class="on" aria-pressed="true">Venda</button><button type="button" data-cst="COMPRA" aria-pressed="false">Compra</button></div>'+
+   '<div class="row"><div><label for="csc">Moeda</label><input id="csc" placeholder="BTC" autocapitalize="characters" autocomplete="off"></div><div><label for="csr">Onde</label><select id="csr"><option value="BR">Brasil: corretora nacional ou carteira própria</option><option value="EX">Exterior: corretora estrangeira</option></select></div></div>'+
+   '<div class="row"><div><label for="csq">Quantidade</label><input id="csq" inputmode="decimal" placeholder="0,00000000"></div><div><label for="csp">Preço por unidade (R$)</label><input id="csp" inputmode="decimal" placeholder="0,00"></div></div>'+
+   '<label for="csf">Taxas estimadas (R$, opcional)</label><input id="csf" inputmode="decimal" placeholder="0,00"><div class="mu" id="csh" style="margin-top:6px"></div></div><div id="csout"></div>';
+  return o}
+var T='VENDA';
+function readF(){return {t:T,c:cnx(($i('csc')||{}).value),r:($i('csr')||{}).value==='EX'?'EX':'BR',q:n(($i('csq')||{}).value),p:n(($i('csp')||{}).value),f:n(($i('csf')||{}).value)}}
+function monthSalesBR(){var k=new Date().toISOString().slice(0,7),s=0;CRo().ops.forEach(function(o){if((o.type==='VENDA'||o.type==='PERMUTA')&&String(o.date).slice(0,7)===k&&o.reg!=='EX')s+=+o.total||0});return s}
+function out(){var el=$i('csout');if(!el)return;var d=readF(),P=pools(),p=P[d.c],now=price(d.c),h='',hh=$i('csh');
+  if(hh)hh.innerHTML=d.c?(p&&p.qty>1e-9?'Você tem <b>'+fq(p.qty)+' '+esc(d.c)+'</b> · custo médio <b>'+pq2(p.cost/p.qty)+'</b>':'Você não tem '+esc(d.c)+' na carteira.')+(now>0?' · preço agora <b>'+pq2(now)+'</b>':''):'';
+  if(!d.c||!(d.q>0)||!(d.p>0)){el.innerHTML='<div class="empty">Escolha a moeda, a quantidade e o preço para simular.</div>'+chartBox(d,p,now);return}
+  var g=d.q*d.p;
+  if(d.t==='VENDA'){
+    if(!p||p.qty<d.q-Math.max(6e-9,p.qty*1e-6)){el.innerHTML='<div class="pv bad">Você tem '+(p?fq(p.qty):'0')+' '+esc(d.c)+'. Não dá para vender '+fq(d.q)+'.</div>'+chartBox(d,p,now);return}
+    var q=Math.min(d.q,p.qty),cs=p.cost/p.qty*q,rec=g-d.f,res=rec-cs,ms=monthSalesBR(),tot=ms+g,tax=0,txt='';
+    if(d.r==='BR'){if(tot<=35000){txt='<b class="gn">Isento</b>: as vendas de cripto no Brasil neste mês somariam '+brl(tot)+', até o limite de R$ 35.000,00.'}
+      else{tax=res>0?res*0.15:0;txt='As vendas do mês passariam de R$ 35.000,00 ('+brl(tot)+'). '+(res>0?'Imposto estimado: <b class="rd">'+brl(tax)+'</b> (15% sobre o lucro desta venda; o Balanço junta todas as vendas do mês). DARF até o último dia útil do mês seguinte.':'Como esta venda dá prejuízo, não há imposto sobre ela.')}}
+    else{tax=res>0?res*0.15:0;txt='Exterior: o lucro entra na apuração anual de 15% na declaração (Lei 14.754/2023). '+(res>0?'Estimativa para esta venda: <b>'+brl(tax)+'</b>.':'Prejuízo pode compensar lucros no mesmo ano.')}
+    h+='<div class="s3sg"><div class="s3sr" style="--wc:#10b981"><span>Você receberia</span><b>'+brl(rec)+'</b></div><div class="s3sr" style="--wc:#94a3b8"><span>Custo dessa parte</span><b>'+brl(cs)+'</b></div><div class="s3sr" style="--wc:'+(res>=0?'#16a34a':'#dc2626')+'"><span>Resultado</span><b class="'+(res>=0?'gn':'rd')+'">'+(res>=0?'+':'−')+brl(Math.abs(res))+(cs>0?' <small>('+(res>=0?'+':'−')+(Math.abs(res)/cs*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'%)</small>':'')+'</b></div>'+
+      '<div class="s3sr" style="--wc:#f59e0b"><span>Sobra na carteira</span><b>'+fq(Math.max(0,p.qty-q))+' '+esc(d.c)+'</b></div></div><div class="pv" style="margin-top:10px">'+txt+'</div>'}
+  else{var q0=p?p.qty:0,c0=p?p.cost:0,q1=q0+d.q,c1=c0+g+d.f;
+    h+='<div class="s3sg"><div class="s3sr" style="--wc:#2563eb"><span>Você pagaria</span><b>'+brl(g+d.f)+'</b></div><div class="s3sr" style="--wc:#94a3b8"><span>Custo médio hoje</span><b>'+(q0>0?pq2(c0/q0):'—')+'</b></div><div class="s3sr" style="--wc:#10b981"><span>Novo custo médio</span><b>'+pq2(c1/q1)+'</b></div><div class="s3sr" style="--wc:#f59e0b"><span>Ficaria com</span><b>'+fq(q1)+' '+esc(d.c)+'</b></div></div>'+
+      (now>0?'<div class="mu s3nt">Pelo preço de agora ('+pq2(now)+'), a posição valeria '+brl(q1*now)+' para um custo de '+brl(c1)+'.</div>':'')}
+  h+='<div class="mu s3nt">Estimativa. Confira as regras na aba Dicas e, antes de pagar imposto, no Balanço.</div>';
+  el.innerHTML=h+chartBox(d,p,now)}
+function chartBox(d,p,now){if(!d.c)return '';var P=null;try{P=CRX.series(d.c,PR)}catch(e){}
+  var lines=[{n:'agora',v:now,c:'#2563eb'},{n:'custo médio',v:p&&p.qty>1e-9?p.cost/p.qty:0,c:'#f59e0b'},{n:'simulado',v:d.p,c:'#a855f7',d:'2 3'}];
+  var pr='';try{pr=(CRX.MKPR||[]).map(function(x){return '<button type="button" class="pcrb'+(x[0]===PR?' on':'')+'" data-cspr="'+x[0]+'">'+x[1]+'</button>'}).join('')}catch(e){}
+  return '<h2 class="h2s" style="margin-top:14px">Gráfico de '+esc(d.c)+'</h2><div class="ch s3c"><div class="mkpr" role="group" aria-label="Período">'+pr+'</div>'+(P?chart(P,lines,'Gráfico de '+d.c):'<div class="mu" style="padding:24px 0;text-align:center">'+(TRY[d.c+'|'+PR]?'Gráfico indisponível agora. Confira a internet e toque num período para tentar de novo.':window.CRX&&CRX.mkReady&&CRX.mkReady()?'carregando o gráfico…':'Toque em Atualizar no Mercado para buscar o gráfico.')+'</div>')+'</div>'}
+function want(){var d=readF();if(!d.c)return;try{if(!CRX.series(d.c,PR)&&CRX.serLoad){var k=d.c+'|'+PR;if(TRY[k]!==undefined)return;TRY[k]=0;CRX.serLoad(d.c,PR).then(function(){TRY[k]=1;out()},function(){TRY[k]=1;out()})}}catch(e){}}
+function paint(){var s=$i('cso');if(!s)return;if(!s.dataset.ok){s.innerHTML=form();s.dataset.ok='1'}out()}
+function fillCoin(c){var e=$i('csc');if(!e)return;e.value=c;var px=price(c),p=pools()[c];if(px>0)$i('csp').value=fp(px);if(T==='VENDA'&&p&&p.qty>0)$i('csq').value=fq(p.qty);out();want()}
+document.addEventListener('input',function(e){var t=e.target;if(t&&/^cs[cqpf]$/.test(t.id)){if(t.id==='csc'){var c=cnx(t.value),px=price(c);if(px>0&&!$i('csp').value)$i('csp').value=fp(px);want()}out()}});
+document.addEventListener('change',function(e){var t=e.target;if(t&&t.id==='csr')out()});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-csc],[data-cst],[data-crsim],[data-cspr],#navcr button[data-t=cso]');if(!b)return;
+  if(b.dataset.csc){fillCoin(b.dataset.csc);return}
+  if(b.dataset.cst){T=b.dataset.cst;Array.prototype.forEach.call(document.querySelectorAll('[data-cst]'),function(x){var on=x.dataset.cst===T;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)});out();return}
+  if(b.dataset.cspr){PR=b.dataset.cspr;delete TRY[cnx(($i('csc')||{}).value)+'|'+PR];var c=cnx(($i('csc')||{}).value);out();try{TRY[c+'|'+PR]=0;CRX.serLoad(c,PR).then(function(){TRY[c+'|'+PR]=1;out()},function(){TRY[c+'|'+PR]=1;out()})}catch(x){}return}
+  if(b.dataset.crsim){var c2=b.dataset.crsim;try{var mb=document.getElementById('mkbg');if(mb&&!mb.hidden){mb.hidden=true;document.body.classList.remove('s3mo')}}catch(x){}
+    if(S)S.set('cr');var nb=document.querySelector('#navcr button[data-t=cso]');if(nb)nb.click();setTimeout(function(){paint();fillCoin(c2)},60);return}
+  setTimeout(paint,30)});
+/* ---------- grafico no Simulador das Acoes ---------- */
+function smChart(){var r=$i('sr');if(!r)return;var tk=String(($i('st')||{}).value||'').toUpperCase().replace(/[^A-Z0-9]/g,''),old=$i('smch');
+  if(!tk){if(old)old.remove();return}
+  var rr=1,s=null;try{rr=pcR('A');s=chData('A',tk,rr)||chDataMk(tk,rr)}catch(e){}
+  var box=old||document.createElement('div');box.id='smch';box.className='smch';
+  if(!s||!s.pts||s.pts.length<2){box.innerHTML='<h2 class="h2s" style="margin-top:14px">Gráfico de '+esc(tk)+'</h2><div class="mu" style="padding:6px 2px">Sem gráfico ainda: busque o preço no Mercado ou nas Posições.</div>';if(!old)r.insertAdjacentElement('afterend',box);return}
+  var pm=0;try{var o=calc(ops).open.filter(function(x){return x.ticker===tk});var q=0,c=0;o.forEach(function(x){q+=x.qty;c+=x.qty*x.avg});pm=q>0?c/q:0}catch(e){}
+  var sp=n(($i('sp')||{}).value),P=s.pts.map(function(p){return p.p}),now=P[P.length-1];
+  box.innerHTML='<h2 class="h2s" style="margin-top:14px">Gráfico de '+esc(tk)+' <span class="s3ht">'+(rr===1?'hoje':rr+' dias')+'</span></h2><div class="ch s3c">'+chart(P,[{n:'agora',v:now,c:'#2563eb'},{n:'preço médio',v:pm,c:'#f59e0b'},{n:'simulado',v:sp,c:'#a855f7',d:'2 3'}],'Gráfico de '+tk)+'<div class="mu s3nt">O período segue o escolhido nos gráficos das Posições.</div></div>';
+  if(!old)r.insertAdjacentElement('afterend',box)}
+(function(){var r=$i('sr');if(!r)return;try{new MutationObserver(function(){setTimeout(smChart,0)}).observe(r,{childList:true})}catch(e){}
+  document.addEventListener('input',function(e){var t=e.target;if(t&&(t.id==='st'||t.id==='sp'))setTimeout(smChart,50)})})();
+window.S33S={paint:paint,out:out,fill:fillCoin,chart:chart,sm:smChart};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33s.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: Mercado das Acoes: Vender e Excluir nos ativos que voce tem ===================== */
+(function(){
+function add(){var sec=document.getElementById('mk');if(!sec)return;var L=sec.querySelectorAll('.mkc.held'),R=null,i;
+  for(i=0;i<L.length;i++){var c=L[i],b=c.querySelector('.mkb');if(!b||b.querySelector('[data-act=sell]'))continue;
+    if(!R){try{R=calc(ops).open}catch(e){return}}
+    var tk=c.getAttribute('data-mdo')||((c.querySelector('.ptk')||{}).textContent||'').trim(),P=R.filter(function(x){return x.ticker===tk});if(!P.length)continue;
+    var p=P[0],a=" data-tk='"+ea(p.ticker)+"' data-br='"+ea(p.broker)+"'";
+    b.insertAdjacentHTML('beforeend',"<button class='sb2 v' data-act='sell'"+a+">Vender</button>"+(typeof xb==='function'&&P.length===1?xb(p):''))}}
+var T=null;function soon(){if(T)return;T=setTimeout(function(){T=null;try{add()}catch(e){}},40)}
+function start(){var s=document.getElementById('mk');if(!s)return;try{new MutationObserver(soon).observe(s,{childList:true,subtree:true})}catch(e){}soon()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33m.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: DeCripto (IN RFB 2.291/2025): aviso no Balanco, "Obrigacoes da cripto" no Declarar IR e lembrete no celular ===================== */
+(function(){
+var LIM=35000,START='2026-07',$i=function(id){return document.getElementById(id)};
+function C(){try{return window.CRX&&CRX.get()}catch(e){return null}}
+function kindOf(o){var e=null;try{e=CRX.exFind(o.where||'')}catch(x){}
+  if(e&&e.t==='EX')return 'EX';if(e&&e.t==='SC')return 'SC';if(e&&e.t==='BR')return '';return o.reg==='EX'?'EX':''}
+function mlab(k){return new Date(+k.slice(0,4),+k.slice(5,7)-1,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}
+function due(k){try{return darfDue(k)}catch(e){var y=+k.slice(0,4),m=+k.slice(5,7);return new Date(y,m+1,0)}}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dfm(d){return d.toLocaleDateString('pt-BR')}
+/* soma, por mes, as operacoes que nao passam por corretora brasileira (corretora estrangeira, carteira propria) */
+function months(){var cr=C(),M={};if(!cr||!cr.ops)return [];
+  cr.ops.forEach(function(o){if(!o||!o.date||o.date.slice(0,7)<START)return;var k=kindOf(o);if(!k)return;var v=+o.total||0;if(!(v>0))return;
+    var x=M[o.date.slice(0,7)]||(M[o.date.slice(0,7)]={k:o.date.slice(0,7),v:0,n:0,ex:0,sc:0,w:{}});x.v+=v;x.n++;if(k==='EX')x.ex+=v;else x.sc+=v;if(o.where)x.w[o.where]=1});
+  return Object.keys(M).sort().map(function(k){var x=M[k];x.need=x.v>LIM;x.due=due(k);x.done=!!(C().ir||{})['dc|'+k];return x})}
+function today(){var d=new Date();d.setHours(0,0,0,0);return d}
+function stOf(x){var t=today(),d=Math.round((x.due-t)/864e5),cur=iso(t).slice(0,7);
+  if(x.k>=cur)return {c:'',t:'mês em andamento'};
+  if(x.done)return {c:'ok',t:'entregue'};
+  if(d<0)return {c:'bad',t:'atrasada ('+(-d)+(d===-1?' dia':' dias')+')'};
+  if(d===0)return {c:'warn',t:'vence hoje'};
+  return {c:d<=7?'warn':'',t:'vence em '+d+(d===1?' dia':' dias')}}
+function tbl(L,chk){return '<div class="tw"><table class="dctb"><thead><tr><th>Mês</th><th>Operações fora de corretora brasileira<div class="mu" style="font-size:10px;font-weight:400">estrangeira ou carteira própria · limite R$ 35 mil</div></th><th>DeCripto</th><th>Prazo</th>'+(chk?'<th>Entregue?</th>':'')+'</tr></thead><tbody>'+
+  L.map(function(x){var s=x.need?stOf(x):null;return '<tr><td>'+esc(mlab(x.k))+'</td><td>'+brl(x.v)+'<div class="mu" style="font-size:11px">'+x.n+(x.n>1?' operações':' operação')+' · '+Object.keys(x.w).map(esc).join(', ')+'</div></td><td>'+(x.need?'<span class="hl">OBRIGATÓRIA</span>':'não precisa<div class="mu" style="font-size:11px">usou '+pct(x.v/LIM)+' do limite</div>')+'</td><td>'+(x.need?dfm(x.due)+'<div class="dcst '+s.c+'">'+s.t+'</div>':'—')+'</td>'+(chk?'<td>'+(x.need?'<input type="checkbox" data-zim="dc|'+x.k+'"'+(x.done?' checked':'')+' aria-label="DeCripto de '+ea(mlab(x.k))+' entregue">':'—')+'</td>':'')+'</tr>'}).join('')+'</tbody></table></div>'}
+var RULE='<b>Quem entrega:</b> desde 1º/07/2026 (IN RFB 2.291/2025, que substituiu a IN 1.888), a pessoa física informa à Receita, pelo e-CAC, as operações feitas <b>em corretora estrangeira ou sem corretora</b> (P2P, carteira própria, DeFi) quando o total do mês passar de <b>R$ 35 mil</b>. Operações em corretora brasileira são informadas pela própria corretora. <b>Prazo:</b> último dia útil do mês seguinte. <b>Multa:</b> a partir de R$ 100 por mês de atraso, e 1,5% do valor se a informação estiver errada ou faltar. A DeCripto é só informação: não é imposto.';
+function bal(){var sec=$i('crb');if(!sec)return;var b=$i('s3dcb');if(!b){b=document.createElement('div');b.id='s3dcb';var ref=sec.querySelector('#zbr');if(ref)ref.insertAdjacentElement('afterend',b);else sec.appendChild(b)}
+  var L=months(),need=L.filter(function(x){return x.need}),open=need.filter(function(x){return !x.done&&x.k<iso(today()).slice(0,7)}),h='<h2 class="h2s">DeCripto: declaração mensal à Receita</h2>';
+  if(open.length)h+='<div class="pv warn"><b>'+(open.length>1?open.length+' DeCriptos pendentes':'DeCripto pendente')+':</b> '+open.map(function(x){return esc(mlab(x.k))+' (até '+dfm(x.due)+')'}).join(', ')+'. Entregue no e-CAC e marque como entregue em Declarar IR.</div>';
+  h+=L.length?tbl(L,false):'<div class="empty">Nenhuma operação em corretora estrangeira ou carteira própria desde julho de 2026. Com corretora brasileira, quem informa é ela: você não precisa fazer nada.</div>';
+  h+='<div class="mu" style="margin-top:8px">'+RULE+'</div>';
+  if(b.__h!==h){b.__h=h;b.innerHTML=h}}
+function ir(){var el=$i('zir');if(!el)return;var b=$i('s3dci');if(!b||!el.contains(b)){b=document.createElement('div');b.id='s3dci';var h2=Array.prototype.find.call(el.querySelectorAll('h2'),function(x){return /Bens e Direitos/.test(x.textContent)});if(h2)el.insertBefore(b,h2);else el.appendChild(b)}
+  var L=months(),need=L.filter(function(x){return x.need});
+  var h='<h2 class="h2s">Obrigações da cripto</h2><div class="dcob">'+
+    '<div class="pc dcc"><b>Declaração anual (Bens e Direitos, grupo 08)</b><div class="mu">Informe cada criptoativo cujo custo de aquisição chegue a <b>R$ 5.000</b> em 31/12 (abaixo disso é opcional). Use o custo pago, não o valor de mercado. Os textos prontos estão logo abaixo.</div></div>'+
+    '<div class="pc dcc"><b>DARF mensal (código 4600)</b><div class="mu">Vendas e trocas no Brasil acima de R$ 35 mil no mês com lucro: imposto até o último dia útil do mês seguinte. Veja o Balanço.</div></div>'+
+    '<div class="pc dcc'+(need.some(function(x){return !x.done})?' warn':'')+'"><b>DeCripto mensal'+(need.length?' · '+need.length+(need.length>1?' meses obrigatórios':' mês obrigatório'):'')+'</b><div class="mu">'+(need.length?'Operações fora de corretora brasileira passaram de R$ 35 mil. Marque abaixo quando entregar no e-CAC.':'Nenhum mês acima de R$ 35 mil em corretora estrangeira ou carteira própria. Nada a entregar.')+'</div></div></div>';
+  if(need.length)h+=tbl(need,true);
+  h+='<div class="mu" style="margin-top:8px">'+RULE+'</div>';
+  if(b.__h!==h){b.__h=h;b.innerHTML=h}}
+function all(){try{bal()}catch(e){}try{ir()}catch(e){}}
+/* o app redesenha o Balanco e o Declarar IR: o bloco volta sozinho */
+['crb','cri'].forEach(function(id){var s=$i(id);if(!s)return;var T=null;try{new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=null;all()},60)}).observe(s,{childList:true,subtree:true})}catch(e){}});
+document.addEventListener('change',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.zim&&/^dc\|/.test(t.dataset.zim))setTimeout(function(){all();try{ntSoon()}catch(x){}},50)});
+/* lembrete no celular: meses obrigatorios ainda nao marcados como entregues */
+function pend(){return months().filter(function(x){return x.need&&!x.done&&x.k<iso(today()).slice(0,7)}).map(function(x){return [x.k,iso(x.due),mlab(x.k)]})}
+if(typeof ntSnap==='function'&&!ntSnap.__dc){var _ns=ntSnap;ntSnap=function(){var s=_ns.apply(this,arguments);try{var j=JSON.parse(s);j.dc=pend();return JSON.stringify(j)}catch(e){return s}};ntSnap.__dc=1}
+setTimeout(all,80);
+window.S33I={months:months,pend:pend,paint:all};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33i.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: Dolar > Inicio com grafico (hoje, 5 dias, 1 mes, 1 ano), minima e maxima do dia, variacao da semana/mes/ano e noticias ===================== */
+(function(){
+var S=window.S32,U=S.u,R=S.render,PR=1,Y=null,YB=0,NWK='stox3-dzn-v1',NWB=0,$i=function(id){return document.getElementById(id)};
+try{var p0=+localStorage.getItem('stox3-dzpr');if(p0===1||p0===5||p0===30||p0===365)PR=p0}catch(e){}
+function ok(){return typeof NX!=='undefined'&&NX&&NX.ix&&typeof nxSeries==='function'}
+function f4(v){return 'R$ '+(+v).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})}
+function pc(v){return (v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
+/* 1 ano: busca a parte (o Mercado so guarda ate 3 meses) */
+async function yLoad(){if(Y&&Date.now()-Y.t<6*36e5)return;if(YB&&Date.now()-YB<3e5)return;YB=Date.now();
+  try{var q=await nxYahoo('BRL=X','1y','1d');if(q&&q.pts&&q.pts.length>=2)Y={t:Date.now(),pts:q.pts}}catch(e){}}
+function ySeries(){if(!Y)return null;return {pts:Y.pts.map(function(a){var d=new Date(a[0]),l=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+String(d.getFullYear()).slice(2);return {p:a[1],l:l,ax:U.MES[d.getMonth()]}}),ref:0}}
+function series(r){try{if(r===365)return ySeries();return nxSeries('usd',r)}catch(e){return null}}
+function now(){var x=ok()?NX.ix.usd:null;return x&&x.p>0?x:null}
+/* minima e maxima do dia, pelos pontos de hoje */
+function dayHL(){var x=now();if(!x||!x.pts)return null;var P=[];try{P=nxWin('usd',x.pts).map(function(a){return a[1]})}catch(e){P=x.pts.map(function(a){return a[1]})}
+  if(P.length<2)return null;return {lo:Math.min.apply(null,P),hi:Math.max.apply(null,P)}}
+/* variacao na semana, no mes e no ano: compara o preco de agora com o primeiro ponto de cada periodo */
+function chg(){var x=now(),o={};if(!x)return o;var p=x.p;
+  try{var e5=NX.s['usd|5'];if(e5&&e5.pts&&e5.pts.length)o.w=(p/e5.pts[0][1]-1)*100}catch(e){}
+  try{var ed=NX.s['usd|d'];if(ed&&ed.pts&&ed.pts.length){var lim=Date.now()-30*864e5,a=ed.pts.filter(function(z){return z[0]>=lim})[0];if(a)o.m=(p/a[1]-1)*100}}catch(e){}
+  try{if(Y&&Y.pts.length)o.y=(p/Y.pts[0][1]-1)*100}catch(e){}
+  return o}
+function newsGet(){try{var o=JSON.parse(localStorage.getItem(NWK)||'null');return o&&Array.isArray(o.items)?o:null}catch(e){return null}}
+async function newsLoad(force){var c=newsGet();if(!force&&c&&Date.now()-c.t<30*6e4)return;if(NWB&&Date.now()-NWB<6e4)return;NWB=Date.now();
+  if(typeof qxGet!=='function'||typeof nwParseRss!=='function')return;
+  try{var r=await qxGet('https://news.google.com/rss/search?q='+encodeURIComponent('dólar câmbio real when:3d')+'&hl=pt-BR&gl=BR&ceid=BR:pt-419',15000);
+    if(r&&r.ok&&typeof r.tx==='string'){var it=nwParseRss(r.tx);if(typeof nwClean==='function')it=nwClean(it,8);else it=it.slice(0,8);if(it.length)localStorage.setItem(NWK,JSON.stringify({t:Date.now(),items:it}))}}catch(e){}}
+function chartHtml(){var s=series(PR),Z=null;try{Z=S.dz.sum()}catch(e){}
+  if(s&&s.pts&&s.pts.length>=2&&typeof chBuild==='function')return chBuild({id:'dz:usd',s:s,k:'A',r:PR,sz:'big',fmt:f4,avg:Z&&Z.avg>0?Z.avg:0,qty:Z?Z.usd:0});
+  var env=typeof qhEnv==='function'?qhEnv():true;
+  return '<div class="mu s3em" style="padding:28px 0;text-align:center">'+(!env?'O gráfico do dólar aparece no aplicativo (Windows ou Android).':'carregando o gráfico…')+'</div>'}
+function block(){var x=now(),hl=dayHL(),c=chg(),N=newsGet();
+  var st=function(lb,v,cls){return '<div class="s3dzs"><span class="mu">'+lb+'</span><b class="'+(cls||'')+'">'+v+'</b></div>'},tn=function(v){return v>0?'gn':v<0?'rd':''};
+  var h='<div id="dzmk"><h2>Dólar hoje</h2><p class="s3sub mu">Dólar comercial (real por dólar), com cerca de 15 minutos de atraso.'+(x&&x.qt?' Última cotação às '+new Date(x.qt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.':'')+'</p>';
+  h+='<div class="ch s3c"><div class="s3dzg">'+st('Agora',x?f4(x.p):'—')+st('No dia',x&&x.c!=null?pc(x.c):'—',x?tn(x.c):'')+st('Mínima do dia',hl?f4(hl.lo):'—')+st('Máxima do dia',hl?f4(hl.hi):'—')+
+    st('Na semana',c.w!=null?pc(c.w):'—',tn(c.w))+st('No mês',c.m!=null?pc(c.m):'—',tn(c.m))+st('No ano',c.y!=null?pc(c.y):'—',tn(c.y))+'</div>';
+  h+='<div class="mkpr s3dzp" role="group" aria-label="Período do gráfico">'+[[1,'Hoje'],[5,'5 dias'],[30,'1 mês'],[365,'1 ano']].map(function(a){return '<button type="button" class="pcrb'+(PR===a[0]?' on':'')+'" data-dzpr="'+a[0]+'" aria-pressed="'+(PR===a[0])+'">'+a[1]+'</button>'}).join('')+'</div>';
+  h+='<div class="s3dzc">'+chartHtml()+'</div></div>';
+  h+='<h2>Notícias do dólar</h2><p class="s3sub mu">Câmbio e economia nos últimos dias (Google Notícias). Toque para abrir.</p>';
+  h+=N&&N.items.length?U.card(typeof nwList==='function'?nwList(N.items,6,false):''):U.card('<div class="mu" style="padding:8px 0">'+((typeof qhEnv==='function'&&!qhEnv())?'As notícias aparecem no aplicativo (Windows ou Android).':'Buscando notícias…')+'</div>');
+  return h+'</div>'}
+function repaint(){var b=$i('dzmk');if(!b)return;var t=document.createElement('div');t.innerHTML=block();b.replaceWith(t.firstChild)}
+function load(){if(typeof qhEnv==='function'&&!qhEnv())return;var L=[];
+  try{if(typeof nxFetch==='function')L.push(nxFetch(false))}catch(e){}
+  try{L.push(nxLoadS('usd',5))}catch(e){}try{L.push(nxLoadS('usd',30))}catch(e){}
+  L.push(yLoad());L.push(newsLoad(false));
+  L.forEach(function(p){Promise.resolve(p).then(function(){repaint()},function(){})})}
+var _h=R.dzh;
+R.dzh=function(){var h=_h.apply(this,arguments),b=block(),i=h.indexOf('<h2>Cotação</h2>');
+  if(i>=0)return h.slice(0,i)+b+h.slice(i);
+  var j=h.indexOf('<div class="s3qb">');return j>=0?h.slice(0,j)+b+h.slice(j):h+b};
+var _a=R['dzh#after'];
+R['dzh#after']=function(el){try{if(_a)_a(el)}catch(e){}load()};
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-dzpr]');if(!b)return;PR=+b.dataset.dzpr;try{localStorage.setItem('stox3-dzpr',String(PR))}catch(x){}repaint();
+  var p=PR===365?yLoad():PR===1?(typeof nxFetch==='function'?nxFetch(false):null):nxLoadS('usd',PR);Promise.resolve(p).then(repaint,function(){})});
+window.S33D={block:block,repaint:repaint,load:load,chg:chg,dayHL:dayHL};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33d.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.3: foto e nome do perfil vao junto na sincronizacao com o Google (vale o mais recente) ===================== */
+(function(){
+var K='stox3-prof-v1',KA='stox3-prof-at',BUSY=false;
+if(typeof GDDATA!=='undefined'&&GDDATA.indexOf(K)<0)GDDATA.push(K);
+/* guardado como {"t<hora>":{n,p}}: a sincronizacao junta as chaves dos dois aparelhos e fica valendo a mais nova */
+function rd(){try{var o=JSON.parse(localStorage.getItem(K)||'null');return o&&typeof o==='object'&&!Array.isArray(o)?o:null}catch(e){return null}}
+function pick(o){var best=null;if(!o)return null;Object.keys(o).forEach(function(k){var t=+k.slice(1),v=o[k];if(!/^t\d+$/.test(k)||!v||typeof v!=='object')return;if(!best||t>best.at)best={at:t,n:typeof v.n==='string'?v.n.slice(0,30):'',p:typeof v.p==='string'&&/^data:image\/(jpeg|png|webp);base64,/.test(v.p)&&v.p.length<200000?v.p:''}});return best}
+function lat(){try{return +localStorage.getItem(KA)||0}catch(e){return 0}}
+function put(n,p,at){var o={};o['t'+at]={n:n||'',p:p||''};try{localStorage.setItem(K,JSON.stringify(o));localStorage.setItem(KA,String(at))}catch(e){}}
+function ui(){return (typeof VZ!=='undefined'&&VZ&&VZ.ui)?VZ.ui:null}
+var _save=typeof vzSave==='function'?vzSave:null;
+function repaint(){try{if(typeof avSync==='function')avSync()}catch(e){}try{if(typeof hmRender==='function'){hmRender('A');hmRender('C')}}catch(e){}}
+/* depois de sincronizar: se veio um perfil mais novo de outro aparelho, usa aqui */
+function apply(){var u=ui();if(!u||!_save)return;var o=rd(),c=pick(o);if(!c)return;
+  var newer=c.at>lat();if(Object.keys(o).length>1)put(c.n,c.p,c.at);
+  if(newer||((u.name||'')===c.n&&(u.photo||'')===c.p)){try{localStorage.setItem(KA,String(c.at))}catch(e){}
+    if((u.name||'')!==c.n||(u.photo||'')!==c.p){BUSY=true;u.name=c.n;u.photo=c.p;try{_save()}catch(e){}BUSY=false;repaint()}}}
+/* mudou a foto ou o nome aqui: grava com a hora de agora */
+function mine(){var u=ui();if(!u||BUSY)return;var c=pick(rd()),n=u.name||'',p=u.photo||'';
+  if(c&&c.n===n&&c.p===p)return;
+  if(!c&&!n&&!p)return;
+  put(n,p,Date.now())}
+if(_save){vzSave=function(){var r=_save.apply(this,arguments);try{mine()}catch(e){}return r}}
+if(typeof gdWrite==='function'){var _gw=gdWrite;gdWrite=function(){var r=_gw.apply(this,arguments);try{if(r&&r.indexOf&&r.indexOf(K)>=0)setTimeout(apply,30)}catch(e){}return r}}
+/* primeira vez nesta versao: o perfil que ja existe entra com hora antiga, para nao passar por cima do de outro aparelho */
+(function(){var u=ui();if(!u)return;var c=pick(rd());if(c){apply();return}if(u.name||u.photo)put(u.name||'',u.photo||'',1)})();
+window.S33P={apply:apply,pick:function(){return pick(rd())}};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33p.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>

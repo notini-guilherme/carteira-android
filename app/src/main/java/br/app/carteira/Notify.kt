@@ -157,7 +157,7 @@ object Notify {
     // ---------------------------------------------------------------------------------------------
     // Avisos de movimento (carteira, ativos, favoritos, cripto) e de proventos, com limite de frequencia.
     // As regras vem da pagina dentro do resumo: {"r":{"pd":2,"pdir":"b","ad":3,"adir":"b","fv":3,"cr":5,"ev":1,"fq":"d","cap":5}}
-    // (0 = desligado). Nenhum valor em reais aparece nas notificacoes.
+    // (0 = desligado). Nenhum valor investido aparece: so o preco do ativo agora (v3.3).
     // ---------------------------------------------------------------------------------------------
     private const val AL_FROM = 10 * 60 + 25
     private const val AL_TO = 18 * 60 + 5
@@ -166,7 +166,7 @@ object Notify {
         val snap = try { JSONObject(snapJson) } catch (e: Exception) { return false }
         val r = snap.optJSONObject("r") ?: return false
         return r.optDouble("pd", 0.0) > 0 || r.optDouble("ad", 0.0) > 0 || r.optDouble("fv", 0.0) > 0 ||
-            r.optDouble("cr", 0.0) > 0 || r.optInt("ev", 0) > 0
+            r.optDouble("cr", 0.0) > 0 || r.optInt("ev", 0) > 0 || ((snap.optJSONArray("dc")?.length() ?: 0) > 0)
     }
 
     private fun dirOk(d: Double, dir: String): Boolean = when (dir) {
@@ -199,7 +199,51 @@ object Notify {
         sp.edit().putString("cnt", day + ":" + (lastBand(sp, "cnt", day) + 1)).apply()
     }
 
-    private class Hit(val name: String, val pct: Double, val key: String, val band: Int)
+    private class Hit(val name: String, val pct: Double, val key: String, val band: Int, val px: Double = 0.0, val cur: String = "R$")
+    private class CQ(val pct: Double, val px: Double, val cur: String)
+
+    private fun decripto(ctx: Context, sp: SharedPreferences, root: JSONObject, now: Calendar, mins: Int, day: String) {
+        val dc = root.optJSONArray("dc") ?: return
+        if (dc.length() == 0 || mins < 9 * 60 || mins > 20 * 60 || sp.getString("done_dc", "") == day) return
+        val t0 = Calendar.getInstance(SP)
+        t0.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 12, 0, 0)
+        for (i in 0 until dc.length()) {
+            val row = dc.optJSONArray(i) ?: continue
+            val due = row.optString(1, "")
+            val lab = row.optString(2, row.optString(0, ""))
+            if (due.length != 10) continue
+            val c = Calendar.getInstance(SP)
+            c.set(due.substring(0, 4).toInt(), due.substring(5, 7).toInt() - 1, due.substring(8, 10).toInt(), 12, 0, 0)
+            val days = Math.round((c.timeInMillis - t0.timeInMillis) / 86400000.0).toInt()
+            val dd = due.substring(8, 10) + "/" + due.substring(5, 7) + "/" + due.substring(0, 4)
+            if (days > 5 || days < -7) continue
+            val title = when {
+                days > 1 -> "DeCripto de $lab vence em $days dias"
+                days == 1 -> "DeCripto de $lab vence amanhã"
+                days == 0 -> "DeCripto de $lab vence hoje"
+                else -> "DeCripto de $lab está atrasada"
+            }
+            post(ctx, 13, title, "Suas operações em corretora estrangeira ou carteira própria passaram de R$ 35 mil no mês. Entregue no e-CAC até $dd" + (if (days < 0) " (já passou)" else "") + ". A multa por atraso começa em R$ 100. Depois, marque como entregue no STOX3, em Cripto, Declarar IR.")
+            sp.edit().putString("done_dc", day).apply()
+            return
+        }
+    }
+
+    /** Preco do ativo agora (nao o valor investido): "R$ 36,80", "US$ 0,123456" */
+    private fun money(v: Double, cur: String): String {
+        if (!(v > 0)) return ""
+        val s = if (v >= 1) String.format(BR, "%,.2f", v) else String.format(BR, "%.8f", v).trimEnd('0').let { if (it.endsWith(",")) it + "00" else it }
+        return "$cur $s"
+    }
+
+    private fun moved(d: Double): String = (if (d < 0) "caiu " else "subiu ") + String.format(BR, "%.1f%%", Math.abs(d))
+
+    /** Um ativo so: titulo "PETR4 caiu 5,2% hoje" e texto "Agora: R$ 36,80" */
+    private fun oneTitle(h: Hit, pre: String, suf: String): String = pre + h.name + " " + moved(h.pct) + suf
+    private fun oneBody(h: Hit, extra: String): String {
+        val m = money(h.px, h.cur)
+        return (if (m.isNotEmpty()) "Agora: $m" else "Variação de " + pct(h.pct)) + extra
+    }
 
     private fun listText(hits: List<Hit>): String {
         val sorted = hits.sortedByDescending { Math.abs(it.pct) }
@@ -209,6 +253,8 @@ object Notify {
             if (n >= 5) break
             if (n > 0) sb.append(" · ")
             sb.append(h.name).append(' ').append(pct(h.pct))
+            val m = money(h.px, h.cur)
+            if (m.isNotEmpty()) sb.append(" (agora ").append(m).append(')')
             n++
         }
         if (sorted.size > n) sb.append(" · +").append(sorted.size - n)
@@ -263,6 +309,9 @@ object Notify {
             }
         }
 
+        // DeCripto: lembrete nos 5 dias antes do prazo e na semana depois, uma vez por dia, das 9h as 20h
+        try { decripto(ctx, sp, root, now, mins, day) } catch (e: Exception) { }
+
         val dow = now.get(Calendar.DAY_OF_WEEK)
         if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY) return
         if (mins < AL_FROM || mins > AL_TO) return
@@ -305,7 +354,7 @@ object Notify {
                 if (d < worstP) { worstP = d; worstT = tk }
                 if (ad > 0 && dirOk(d, adir)) {
                     val b = newBand(sp, "ad_" + tk, day, Math.abs(d), ad, fq)
-                    if (b > 0) hits.add(Hit(tk, d, "ad_" + tk, b))
+                    if (b > 0) hits.add(Hit(tk, d, "ad_" + tk, b, q.p))
                 }
             }
             if (pd > 0 && todayN > 0 && dayBase > 0) {
@@ -327,8 +376,8 @@ object Notify {
                 }
             }
             if (hits.isNotEmpty() && capLeft(sp, day, cap)) {
-                val title = if (hits.size == 1) hits[0].name + " " + pct(hits[0].pct) + " hoje" else hits.size.toString() + " ativos da carteira mexendo muito"
-                post(ctx, 5, title, "Passaram de " + String.format(BR, "%.0f", ad) + "% no dia: " + listText(hits))
+                if (hits.size == 1) post(ctx, 5, oneTitle(hits[0], "", " hoje"), oneBody(hits[0], ". Cotação com cerca de 30 min de atraso."))
+                else post(ctx, 5, hits.size.toString() + " ativos da carteira mexendo muito", "Passaram de " + String.format(BR, "%.0f", ad) + "% no dia: " + listText(hits))
                 for (h in hits) sp.edit().putString(h.key, day + ":" + h.band).apply()
                 capUse(sp, day)
             }
@@ -346,11 +395,11 @@ object Notify {
                 if (!sameDay(q.t, now)) continue
                 val d = (q.p / q.prev - 1) * 100
                 val b = newBand(sp, "fv_" + tk, day, Math.abs(d), fv, fq)
-                if (b > 0) hits.add(Hit(tk, d, "fv_" + tk, b))
+                if (b > 0) hits.add(Hit(tk, d, "fv_" + tk, b, q.p))
             }
             if (hits.isNotEmpty() && capLeft(sp, day, cap)) {
-                val title = if (hits.size == 1) "Favorito " + hits[0].name + " " + pct(hits[0].pct) + " hoje" else hits.size.toString() + " favoritos mexendo muito"
-                post(ctx, 6, title, "Passaram de " + String.format(BR, "%.0f", fv) + "% no dia: " + listText(hits))
+                if (hits.size == 1) post(ctx, 6, oneTitle(hits[0], "Favorito ", " hoje"), oneBody(hits[0], ". Cotação com cerca de 30 min de atraso."))
+                else post(ctx, 6, hits.size.toString() + " favoritos mexendo muito", "Passaram de " + String.format(BR, "%.0f", fv) + "% no dia: " + listText(hits))
                 for (h in hits) sp.edit().putString(h.key, day + ":" + h.band).apply()
                 capUse(sp, day)
             }
@@ -364,31 +413,32 @@ object Notify {
             for (i in 0 until n) {
                 val c = coins.optString(i, "")
                 if (c.isEmpty()) continue
-                val d = fetchCripto(c) ?: continue
+                val cq = fetchCripto(c) ?: continue
+                val d = cq.pct
                 try { Thread.sleep(120) } catch (e: Exception) { }
                 val b = newBand(sp, "cr_" + c, day, Math.abs(d), cr, fq)
-                if (b > 0) hits.add(Hit(c, d, "cr_" + c, b))
+                if (b > 0) hits.add(Hit(c, d, "cr_" + c, b, cq.px, cq.cur))
             }
             if (hits.isNotEmpty() && capLeft(sp, day, cap)) {
-                val title = if (hits.size == 1) hits[0].name + " " + pct(hits[0].pct) + " em 24 h" else hits.size.toString() + " moedas mexendo muito"
-                post(ctx, 7, title, "Passaram de " + String.format(BR, "%.0f", cr) + "% em 24 horas: " + listText(hits))
+                if (hits.size == 1) post(ctx, 7, oneTitle(hits[0], "", " em 24 h"), oneBody(hits[0], ""))
+                else post(ctx, 7, hits.size.toString() + " moedas mexendo muito", "Passaram de " + String.format(BR, "%.0f", cr) + "% em 24 horas: " + listText(hits))
                 for (h in hits) sp.edit().putString(h.key, day + ":" + h.band).apply()
                 capUse(sp, day)
             }
         }
     }
 
-    private fun fetchCripto(coin: String): Double? {
+    private fun fetchCripto(coin: String): CQ? {
         for (suf in arrayOf("BRL", "USDT")) {
             for (host in arrayOf("https://data-api.binance.vision", "https://api.binance.com")) {
                 val v = try { fetchBinance(host, coin + suf) } catch (e: Exception) { null }
-                if (v != null) return v
+                if (v != null) return CQ(v.first, v.second, if (suf == "BRL") "R$" else "US$")
             }
         }
         return null
     }
 
-    private fun fetchBinance(host: String, sym: String): Double? {
+    private fun fetchBinance(host: String, sym: String): Pair<Double, Double>? {
         val u = URL(host + "/api/v3/ticker/24hr?symbol=" + URLEncoder.encode(sym, "UTF-8"))
         val c = u.openConnection() as HttpURLConnection
         try {
@@ -399,8 +449,10 @@ object Notify {
             c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
             if (c.responseCode !in 200..299) return null
             val body = c.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            val v = JSONObject(body).optDouble("priceChangePercent", Double.NaN)
-            return if (v.isNaN()) null else v
+            val o = JSONObject(body)
+            val v = o.optDouble("priceChangePercent", Double.NaN)
+            val p = o.optString("lastPrice", "").toDoubleOrNull() ?: 0.0
+            return if (v.isNaN()) null else Pair(v, p)
         } finally {
             c.disconnect()
         }
