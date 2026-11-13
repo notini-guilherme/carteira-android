@@ -21,10 +21,16 @@ class BioBridge(private val act: MainActivity) {
         }
     }
 
-    /** Abre a janela de digital. O resultado volta para a pagina em window.__bioDone(true ou false). */
+    /** Abre a janela de digital. O resultado volta para a pagina em window.__bioDone(ok, codigo, seq). */
     @JavascriptInterface
-    fun prompt() {
+    fun prompt(seq: Int) {
         act.runOnUiThread {
+            var finished = false
+            fun fin(ok: Boolean, code: Int) {
+                if (finished) return
+                finished = true
+                done(ok, code, seq)
+            }
             try {
                 cancel?.cancel()
                 val cs = CancellationSignal()
@@ -33,24 +39,24 @@ class BioBridge(private val act: MainActivity) {
                 val bp = BiometricPrompt.Builder(act)
                     .setTitle("STOX3")
                     .setSubtitle("Confirme com a sua digital ou o seu rosto")
-                    .setNegativeButton("Usar o PIN", ex) { _, _ -> done(false) }
+                    .setNegativeButton("Usar o PIN", ex) { _, _ -> fin(false, -1) }
                     .build()
                 bp.authenticate(cs, ex, object : BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
-                        done(true)
+                        fin(true, 0)
                     }
 
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                        done(false)
+                        fin(false, errorCode)
                     }
                 })
             } catch (e: Exception) {
-                done(false)
+                fin(false, 0)
             }
         }
     }
 
-    private fun done(ok: Boolean) {
-        act.runJs("window.__bioDone&&window.__bioDone(" + ok + ")")
+    private fun done(ok: Boolean, code: Int, seq: Int) {
+        act.runJs("window.__bioDone&&window.__bioDone(" + ok + "," + code + "," + seq + ")")
     }
 }

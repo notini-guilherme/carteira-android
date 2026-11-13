@@ -183,6 +183,14 @@ class MainActivity : ComponentActivity() {
         web.loadUrl("https://$HOST/assets/index.html")
     }
 
+    /** Quando a janela do app volta a ter o foco, avisa a pagina (ela pede a digital de novo se estiver bloqueada). */
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && ::web.isInitialized) {
+            runJs("window.__bioFocus&&window.__bioFocus()")
+        }
+    }
+
     override fun onDestroy() {
         web.removeJavascriptInterface("AndroidHttp")
         web.removeJavascriptInterface("AndroidFiles")
