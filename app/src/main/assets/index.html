@@ -1,6 +1,33 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
+<head><script>/* v3.2.2: vigia da abertura. Se o app nao terminar de abrir, mostra o erro e oferece o modo seguro (sem os modulos novos da 3.2) */
+(function(){
+var E=window.__bootE=window.__bootE||[],t0=Date.now();
+try{window.__S32SAFE=localStorage.getItem('stox3-safe')==='1'}catch(e){}
+window.addEventListener('error',function(e){try{E.push((e.message||'erro')+(e.lineno?' (linha '+e.lineno+':'+e.colno+')':''))}catch(x){}});
+window.addEventListener('unhandledrejection',function(e){try{var r=e.reason;E.push('promessa: '+(r&&r.message||String(r)).slice(0,200))}catch(x){}});
+function show(why){if(document.getElementById('bootx'))return;
+  var d=document.createElement('div');d.id='bootx';d.setAttribute('role','alertdialog');
+  d.style.cssText='position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;background:#f4f6fb;color:#111;padding:28px 20px;font:16px/1.45 system-ui,sans-serif;overflow:auto';
+  var safe=!!window.__S32SAFE,msg=(E.length?E.slice(0,8).join('\n'):'(nenhuma mensagem de erro)')+'\n\nversão: '+(window.STX3&&STX3.ver||'?')+' · '+why+' · '+Math.round((Date.now()-t0)/1000)+' s';
+  d.innerHTML='<div style="max-width:520px;margin:0 auto"><div style="font-size:22px;font-weight:800;margin-bottom:8px">O STOX3 não terminou de abrir</div>'+
+   '<p style="margin:0 0 12px">Seus dados continuam guardados no aparelho. '+(safe?'O modo seguro já está ligado.':'Toque em <b>Abrir em modo seguro</b> para usar o app sem os módulos novos (fica como na versão 3.1).')+' Tire um print desta tela e mande para o suporte.</p>'+
+   '<pre id="bootm" style="white-space:pre-wrap;word-break:break-word;background:#fff;border:1px solid #ccd;border-radius:12px;padding:12px;font-size:12.5px;max-height:40vh;overflow:auto"></pre>'+
+   '<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">'+
+   (safe?'<button type="button" id="bootn" style="min-height:52px;font:inherit;font-weight:800;border-radius:14px;border:0;background:#1f4fd1;color:#fff">Sair do modo seguro e tentar de novo</button>':'<button type="button" id="boots" style="min-height:52px;font:inherit;font-weight:800;border-radius:14px;border:0;background:#1f4fd1;color:#fff">Abrir em modo seguro</button>')+
+   '<button type="button" id="bootr" style="min-height:48px;font:inherit;font-weight:700;border-radius:14px;border:1.5px solid #99a;background:#fff;color:#111">Tentar abrir de novo</button>'+
+   (why==='lento'?'<button type="button" id="bootc" style="min-height:44px;font:inherit;border-radius:14px;border:0;background:transparent;color:#1f4fd1;text-decoration:underline">Fechar este aviso</button>':'')+'</div></div>';
+  document.documentElement.appendChild(d);document.getElementById('bootm').textContent=msg;
+  var on=function(id,f){var b=document.getElementById(id);if(b)b.onclick=f};
+  on('boots',function(){try{localStorage.setItem('stox3-safe','1')}catch(e){}location.reload()});
+  on('bootn',function(){try{localStorage.removeItem('stox3-safe')}catch(e){}location.reload()});
+  on('bootr',function(){location.reload()});
+  on('bootc',function(){d.remove()})}
+window.__bootShow=show;
+setTimeout(function(){if(!window.__bootOK)show('não terminou')},12000);
+window.addEventListener('load',function(){setTimeout(function(){if(!window.__bootOK)show('erro na abertura')},1500)});
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>try{if(localStorage.getItem('carteira-pin-v1'))document.documentElement.classList.add('pnlk')}catch(e){}</script>
@@ -570,7 +597,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.1 · 13/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.2 · 13/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam neste aparelho e, com o login do Google ligado, também no seu Google Drive. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto, 3 = conta Google, sincronização entre aparelhos e PIN); o segundo conta as atualizações.</p></div>
@@ -2539,7 +2566,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.2.1',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='3.2.2',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -5564,7 +5591,7 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 window.NZX={nt:nzNtSum,preset:nzNtPre,all:nzAllHtml,allData:nzAllData,hrs:nzHrs,hol:nzHol,my:nzMyTks,crSync:nzCrSync,crInput:nzCrInput};
 
 
-/* ===================== v3.2: menu de modulos (Total, Bolsa B3, Cripto, Dolar, Renda fixa) + base dos graficos =====================
+try{if(!window.__S32SAFE){/* ===================== v3.2: menu de modulos (Total, Bolsa B3, Cripto, Dolar, Renda fixa) + base dos graficos =====================
    O botao do topo deixa de alternar Acoes <-> Cripto e passa a abrir um menu com todos os modulos e o total de cada um.
    Cada modulo novo tem a sua barra de abas (navtt, navdz, navrf) e as suas secoes (ttr..ttm, dzh..dzd, rfc, rfd), desenhadas por S32.render[aba].
    Tudo fica dentro desta funcao; a unica coisa publica e window.S32. */
@@ -5757,7 +5784,8 @@ window.S32={st:st,stSave:stSave,lsGet:lsGet,lsSet:lsSet,on:on,cur:cur,set:setMod
   menu:{open:menuOpen,close:menuClose,html:menuHtml}};
 })();
 
-/* ===================== v3.2: modulo Total (Resumo, Evolucao, Proventos, Agenda, Alocacao) ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32a.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2: modulo Total (Resumo, Evolucao, Proventos, Agenda, Alocacao) ===================== */
 (function(){
 var S=window.S32,U=S.u,R=S.render,SNK='stox3-snap-v1',LW=0;
 var TCOL={ACAO:'#2563eb',FII:'#eab308',ETF:'#8b5cf6',BDR:'#ec4899',CRIPTO:'#ea580c',DOLAR:'#10b981'},
@@ -5963,7 +5991,8 @@ document.addEventListener('change',function(e){var t=e.target;if(t&&t.matches&&t
 S.tot={data:data,flows:flows,snap:snapMaybe,snapRead:snapRead,suggest:suggest,metaGet:metaGet,TCOL:TCOL,TNAME:TNAME,typeOf:typeOf};
 })();
 
-/* ===================== v3.2: modulo Dolar (compras e vendas de dolar, IOF, taxas, custo efetivo, preco medio, valor atual) ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32t.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2: modulo Dolar (compras e vendas de dolar, IOF, taxas, custo efetivo, preco medio, valor atual) ===================== */
 (function(){
 var S=window.S32,U=S.u,R=S.render,K='stox3-dz-v1';
 var $i=function(id){return document.getElementById(id)};
@@ -6196,7 +6225,8 @@ S.dz={sum:sum,ops:function(){return load().ops},calc:calc,fx:fx,load:load,save:s
 if(S.keep)S.keep.dzn=1;
 })();
 
-/* ===================== v3.2: Renda fixa (calculadora com Selic/CDI, IR regressivo, liquido por mes e tabela "se ficar parado") ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32d.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2: Renda fixa (calculadora com Selic/CDI, IR regressivo, liquido por mes e tabela "se ficar parado") ===================== */
 (function(){
 var S=window.S32,U=S.u,R=S.render,K='stox3-rf-v1';
 var $i=function(id){return document.getElementById(id)};
@@ -6323,7 +6353,8 @@ S.rf={load:load,save:save,calc:calc,lump:lump,sim:sim,irRate:irRate,daysOf:daysO
 if(S.keep)S.keep.rfc=1;
 })();
 
-/* ===================== v3.2: BDR e ETF (avisos ao lancar, dividendos de BDR) e botoes de tipo na aba Declarar IR ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32r.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2: BDR e ETF (avisos ao lancar, dividendos de BDR) e botoes de tipo na aba Declarar IR ===================== */
 (function(){
 var S=window.S32,IRF='all';
 function typeOf(t){try{return S.tot.typeOf(t)}catch(e){return 'ACAO'}}
@@ -6390,7 +6421,8 @@ document.addEventListener('input',function(e){var t=e.target;if(!t||t.id!=='pt')
 S.ir={post:irPost,isBdr:isBdr,set:function(k){IRF=k;irPost()},get:function(){return IRF}};
 })();
 
-/* ===================== v3.2: agenda de resultados (balancos), contador de uso das APIs, liga/desliga dos modulos e atalho do Total no Inicio ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32x.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2: agenda de resultados (balancos), contador de uso das APIs, liga/desliga dos modulos e atalho do Total no Inicio ===================== */
 (function(){
 var S=window.S32,U=S.u;
 var $i=function(id){return document.getElementById(id)};
@@ -6494,7 +6526,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 S.api={info:apiInfo,html:apiHtml,get:apiGet,count:apiCount,flush:apiFlush,host:apiHost};
 })();
 
-/* ===================== v3.2.1: numeros que nao cabem no quadro diminuem sozinhos ===================== */
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32e.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* ===================== v3.2.1: numeros que nao cabem no quadro diminuem sozinhos ===================== */
 (function(){
 var SEL='.cpm span>b,.cpv>b,.nzpi input.qp,.cpq input.qp,.hmk>b,.s3kv,.s3pg b,.mdk>b,.s3rtc b',Q=false,MIN=9;
 function fit(el){if(!el||!el.isConnected)return;el.style.removeProperty('font-size');var cw=el.clientWidth;if(!(cw>0))return;
@@ -6508,7 +6541,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 window.S32FIT={fit:fit,all:all,sel:SEL};
 })();
 
-addLine();$('#pd').value=new Date().toISOString().slice(0,10);$("#dt").value=new Date().toISOString().slice(0,10);
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n32u.js: '+(e&&e.message||e))}catch(x){}}
+addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
 </body>
