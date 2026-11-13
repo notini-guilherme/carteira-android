@@ -597,7 +597,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <div class="row" style="margin-top:8px"><button class="btn sm" id="cp" style="margin:0">Copiar backup</button><button class="btn sm" id="rs" style="margin:0">Restaurar</button></div>
 <div class="mu" id="bm"></div>
 </details></div>
-<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.2 · 13/11/2026</div></div></div>
+<div class='sxsec sxab'><div class='sxabh'><svg class='vzlg' viewBox='0 0 64 64' aria-hidden='true'><use href='#stlogo'/></svg><div><b class='sxabn'>STOX<em>3</em></b><div class='mu' id='sxver'>versão 3.2.3 · 13/11/2026</div></div></div>
 <p class='mu'>Seus lançamentos e preferências ficam neste aparelho e, com o login do Google ligado, também no seu Google Drive. O STOX3 ajuda a acompanhar a carteira e a preparar a declaração, mas não é recomendação de investimento: confira sempre os números com a corretora e a Receita.</p>
 <p class='mu'><b>Confira o imposto.</b> As regras de IR, principalmente as de cripto, mudam com frequência e o app pode estar desatualizado. Confirme na Receita Federal ou com um contador antes de pagar ou declarar.</p>
 <p class='mu'>Sobre o número da versão: o primeiro número só sobe com uma grande novidade (1 = Ações e FIIs, 2 = Cripto, 3 = conta Google, sincronização entre aparelhos e PIN); o segundo conta as atualizações.</p></div>
@@ -1140,7 +1140,7 @@ if(canonAll())save();
 /* v63: privacidade (botao de olho), perfil e tema. Este bloco vem antes do historico, do Inicio e do Cripto
    porque eles usam vzScope para esconder os valores em reais enquanto desenham as telas */
 var VZ={ui:{hide:0,hideOpen:0,theme:'auto',name:'',photo:'',sv:0,lg:1,pr:1,pg:1},d:0,T0:null};
-var VZK='carteira-ui-v1';
+var QI={A:{},C:{},K:{}};var VZK='carteira-ui-v1';
 (function(){
   try{var u=JSON.parse(localStorage.getItem(VZK)||'null');
     if(u&&typeof u==='object'){
@@ -2326,7 +2326,7 @@ function wire(){
   document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-lk=CRIPTO]');if(b){e.preventDefault();e.stopImmediatePropagation();setMod('cr')}},true);
   var _rr=render;render=function(){_rr.apply(this,arguments);crBk()};
 }
-function init(){crLoad();wire();mkInit();$('#zd').value=new Date().toISOString().slice(0,10);if(CR.pf){$('#zw').value=CR.pf.w||'';$('#zr').value=CR.pf.reg==='EX'?'EX':'BR';$('#zcu').value=CR.pf.cu==='USD'?'USD':'BRL'}zUI();zEx(false,true);crAll();var m='rv';try{m=localStorage.getItem(KMOD)||'rv'}catch(e){}if(m==='cr')setMod('cr')}
+function init(){crLoad();wire();mkInit();$('#zd').value=new Date().toISOString().slice(0,10);if(CR.pf){$('#zw').value=CR.pf.w||'';$('#zr').value=CR.pf.reg==='EX'?'EX':'BR';$('#zcu').value=CR.pf.cu==='USD'?'USD':'BRL'}zUI();zEx(false,true);try{crAll()}catch(e){try{(window.__bootE=window.__bootE||[]).push('cripto: '+(e&&e.message||e))}catch(x){}setTimeout(function(){try{crAll()}catch(z){}},0)}var m='rv';try{m=localStorage.getItem(KMOD)||'rv'}catch(e){}if(m==='cr')setMod('cr')}
 window.CRX={quotes:zQuotes,exd:EXD,canon:crCanon,exFind:exFind,exTxt:exTxt,rg:rg,calc:calc,mon:mon,exY:exY,crTax:crTax,get:function(){return CR},mkTick:function(){return MKF.fav.map(function(c){var o=mkPrice(c),y=mkSym(c),v=y?mkPct(y):null;return {c:c,p:o.p>0?o.p:0,ch:typeof v==='number'&&isFinite(v)?v:null}})},mkOne:function(c){var y=mkSym(c),v=y?mkPct(y):null;return typeof v==='number'&&isFinite(v)?v:null},mkWarm:async function(){var l,h=[];if(!MK.busy&&(!MK.map||Date.now()-MK.t>3*6e4))await mkRefresh();try{h=Object.keys(mkHeld())}catch(e){}l=MKF.fav.concat(h).map(mkSym).filter(function(x,i,a){return x&&a.indexOf(x)===i});if(l.length)await mkChg(l)},set:function(o){CR=norm(o);crSave();crAll()},setMod:setMod,all:crAll,poolsAt:poolsAt,LIM:LIM};
 init();
 })();
@@ -2566,7 +2566,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.2.2',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='3.2.3',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
