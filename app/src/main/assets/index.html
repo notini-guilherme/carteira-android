@@ -2822,7 +2822,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.4',APPD='17/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='4.0',APPD='17/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -8180,8 +8180,8 @@ function pSim(){var p=px(),b=n(V.brl),h='<h3 class="dxh">Quanto dólar eu levo?<
   if(!(p>0))return h+'<div class="empty">Sem a cotação do dólar agora. Toque em Atualizar.</div>';
   h+='<div class="dxf"><label>Quero gastar (R$)<input inputmode="decimal" data-dxv="brl" value="'+esc(V.brl)+'"></label><span class="mu">Dólar comercial agora: <b>R$ '+f4(p)+'</b></span></div>';
   var rows=FORMS.map(function(f){var sp=D.sp[f.k]!=null?+D.sp[f.k]:f.sp,vet=p*(1+sp/100)*(1+f.iof/100);return {f:f,sp:sp,vet:vet,u:b>0?b/vet:0}}),best=rows.reduce(function(a,r){return r.vet<a.vet?r:a},rows[0]);
-  h+='<div class="dxtw"><table class="dxt"><thead><tr><th>Forma</th><th>Spread</th><th>IOF</th><th>Custo por US$ 1</th><th>Você leva</th></tr></thead><tbody>';
-  rows.forEach(function(r){h+='<tr class="'+(r===best?'dxbest':'')+'"><td>'+esc(r.f.n)+(r===best?' <span class="dxtag">mais barato</span>':'')+'</td><td><input class="dxsp" inputmode="decimal" data-dxsp="'+r.f.k+'" value="'+String(r.sp).replace('.',',')+'">%</td><td>'+String(r.f.iof).replace('.',',')+'%</td><td><b>R$ '+f4(r.vet)+'</b></td><td><b>US$ '+f2(r.u)+'</b></td></tr>'});
+  h+='<div class="dxtw"><table class="dxt dxts"><thead><tr><th>Forma</th><th>Spread</th><th>IOF</th><th>Custo por US$ 1</th><th>Você leva</th></tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr class="'+(r===best?'dxbest':'')+'"><td>'+esc(r.f.n)+(r===best?' <span class="dxtag">mais barato</span>':'')+'</td><td data-l="Spread"><input class="dxsp" inputmode="decimal" data-dxsp="'+r.f.k+'" value="'+String(r.sp).replace('.',',')+'">%</td><td data-l="IOF">'+String(r.f.iof).replace('.',',')+'%</td><td data-l="Por US$ 1"><b>R$ '+f4(r.vet)+'</b></td><td data-l="Você leva"><b>US$ '+f2(r.u)+'</b></td></tr>'});
   h+='</tbody></table></div><div class="mu dxn">O <b>spread</b> é a diferença que a instituição cobra acima do dólar comercial; os números acima são estimativas e você pode trocar. O IOF é 3,5% para conta, cartão e espécie e 1,1% para remessa de investimento (Decreto 12.499/2025). '+(rows[1]&&best?'Comprando por <b>'+esc(best.f.n.split(' (')[0])+'</b> você leva <b>US$ '+f2(best.u-rows.reduce(function(a,r){return r.u<a?r.u:a},1e18))+'</b> a mais que na forma mais cara.':'')+'</div>';
   /* e se eu vender */
   var Z=DZ.sum();h+='<h3 class="dxh">E se eu vender?</h3>';
@@ -8385,7 +8385,7 @@ window.DZX={get:function(){return D},evs:evs,hit:hitMsg};
 .dxev{display:grid;grid-template-columns:86px 1fr;gap:10px;border:1px solid var(--bd);border-left:4px solid;border-radius:10px;padding:9px 11px;font-size:13px}
 .dxed{display:flex;flex-direction:column;font-size:12px;color:var(--mu)}.dxed b{font-size:16px;color:var(--tx)}
 .dxhit{margin:10px 0}
-@media(max-width:560px){.dxf label{min-width:130px}.dxt{font-size:12px}.dxt th,.dxt td{padding:6px 5px}.dxcats>div{grid-template-columns:80px 1fr 86px}.dxev{grid-template-columns:70px 1fr}}
+@media(max-width:560px){.dxts thead{display:none}.dxts tr{display:grid;grid-template-columns:1fr .7fr 1.2fr 1.2fr;gap:2px 8px;padding:9px 6px;border-bottom:1px solid var(--bd)}.dxts td{border:0!important;padding:1px!important}.dxts td:first-child{grid-column:1/-1;font-weight:700;margin-bottom:3px}.dxts td[data-l]:before{content:attr(data-l);display:block;font-size:10.5px;color:var(--mu);font-weight:600}.dxf label{min-width:130px}.dxt{font-size:12px}.dxt th,.dxt td{padding:6px 5px}.dxcats>div{grid-template-columns:80px 1fr 86px}.dxev{grid-template-columns:70px 1fr}}
 </style>
 
 <script>/* ===================== 4.0 bloco 8 (item 16): modulo Exterior (acoes, ETFs e REITs nos EUA) — Lei 14.754/2023 ===================== */
