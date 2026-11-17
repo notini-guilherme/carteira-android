@@ -200,4 +200,31 @@ class FilesBridge(private val ctx: Context) {
             e.message ?: "erro"
         }
     }
+
+    /** 4.0: salva a imagem (PNG em base64) em Imagens/STOX3 e abre a janela de compartilhar. Devolve "" se deu certo, ou o motivo do erro. */
+    @JavascriptInterface
+    fun shareImage(name: String, b64: String, title: String): String {
+        return try {
+            val bytes = android.util.Base64.decode(b64, android.util.Base64.DEFAULT)
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, name)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/STOX3")
+            }
+            val uri = ctx.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                ?: return "nao foi possivel criar a imagem"
+            val out = ctx.contentResolver.openOutputStream(uri) ?: return "nao foi possivel gravar"
+            out.use { it.write(bytes) }
+            val send = Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            val chooser = Intent.createChooser(send, title).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+            ctx.startActivity(chooser)
+            ""
+        } catch (e: Exception) {
+            e.message ?: "erro"
+        }
+    }
 }
