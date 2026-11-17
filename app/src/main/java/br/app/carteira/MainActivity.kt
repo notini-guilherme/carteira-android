@@ -152,9 +152,14 @@ class MainActivity : ComponentActivity() {
                 val u = request?.url ?: return true
                 if (u.host == HOST) return false
                 try {
-                    startActivity(Intent(Intent.ACTION_VIEW, u))
+                    // 4.0: paginas da internet (noticias, Receita...) abrem numa aba por cima do app; o resto vai para o app certo
+                    if (u.scheme == "https" || u.scheme == "http") {
+                        androidx.browser.customtabs.CustomTabsIntent.Builder().setShowTitle(true).build().launchUrl(this@MainActivity, u)
+                    } else {
+                        startActivity(Intent(Intent.ACTION_VIEW, u))
+                    }
                 } catch (e: Exception) {
-                    // sem aplicativo para abrir o link: ignora
+                    try { startActivity(Intent(Intent.ACTION_VIEW, u)) } catch (e2: Exception) { }
                 }
                 return true
             }

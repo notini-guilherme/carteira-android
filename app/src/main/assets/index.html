@@ -5995,13 +5995,16 @@ var UPB=false;
 function upSpin(on){var b=$s('#vzup');if(b){b.disabled=!!on;b.classList.toggle('spin',!!on)}}
 async function upRun(){var m=cur();
   if(typeof QXRUN!=='undefined'&&QXRUN)return;if(UPB)return;
-  if(m==='rv'||m==='cr'){if(typeof qxRun==='function')qxRun(m==='cr'?'C':'A');return}
+  /* 4.0: o botao atualiza tudo, em todos os modulos (comeca pelo que esta na tela) */
   UPB=true;upSpin(true);
   try{
-    if(m==='tt'){if(typeof qxRun==='function'){await qxRun('A');upSpin(true);if(on('cr'))await qxRun('C');upSpin(true)}}
-    if((m==='tt'||m==='dz')&&on('dz')&&window.S32.dz&&S32.dz.refresh)await S32.dz.refresh();
-    if(m==='rf'&&window.S32.rf&&S32.rf.refresh)await S32.rf.refresh(true);
-    if(m==='tt'&&window.S32.earn&&S32.earn.run)try{await S32.earn.run(false)}catch(e){}
+    var first=m==='cr'?'C':'A';if(typeof qxRun==='function'){await qxRun(first);upSpin(true);if(first==='A'&&on('cr'))await qxRun('C');else if(first==='C')await qxRun('A');upSpin(true)}
+    try{if(typeof nxFetch==='function')await nxFetch(true)}catch(e){}
+    if(on('dz')&&window.S32.dz&&S32.dz.refresh)try{await S32.dz.refresh()}catch(e){}
+    if(on('rf')&&window.S32.rf&&S32.rf.refresh)try{await S32.rf.refresh(true)}catch(e){}
+    if(window.S32.earn&&S32.earn.run)try{await S32.earn.run(false)}catch(e){}
+    try{if(typeof qiKRun==='function')qiKRun(true)}catch(e){}
+    try{if(window.X5&&X5.wm)X5.wm(true)}catch(e){}
   }catch(e){}
   UPB=false;upSpin(false);refresh(true)}
 /* ---------- botao do topo + painel do menu ---------- */
@@ -7403,7 +7406,7 @@ html,body{overflow-x:hidden;max-width:100%}body{overscroll-behavior-x:none}
     if(row.dataset.h!==h){row.innerHTML=h;row.dataset.h=h}
     cards.forEach(function(c){var on=!cur||String(c.dataset.brk).split('|').indexOf(cur)>=0;c.classList.toggle('brx',!on)})}
   document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-brf]');if(!b)return;var sec=b.closest('section');if(!sec)return;var m=brGet();m[sec.id]=b.dataset.brf;try{localStorage.setItem(BRK,JSON.stringify(m))}catch(x){}brPaint(sec)});
-  var BT=0;function brAll(){clearTimeout(BT);BT=setTimeout(function(){['b','crp'].forEach(function(id){brPaint(document.getElementById(id))})},60)}
+  var BT=0;function brAll(){if(BT)return;BT=setTimeout(function(){BT=0;['b','crp'].forEach(function(id){brPaint(document.getElementById(id))})},60)}
   ['b','crp'].forEach(function(id){var el=document.getElementById(id);if(el)new MutationObserver(function(ms){if(ms.some(function(m){return !(m.target.closest&&m.target.closest('.brf'))}))brAll()}).observe(el,{childList:true,subtree:true})});
   brAll();
   /* 19: foto do usuario no topo, com menu ao tocar */
@@ -7592,7 +7595,7 @@ html,body{overflow-x:hidden;max-width:100%}body{overscroll-behavior-x:none}
       c.toBlob(function(bl){try{var f=new File([bl],nm,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'Mapa da carteira'}).catch(function(){});return}}catch(z){}var a=document.createElement('a');a.href=u;a.download=nm;document.body.appendChild(a);a.click();a.remove()},'image/png')};
     img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(x)}
   function alertBox(t){var d=document.createElement('div');d.className='trt';d.innerHTML='<div class="trm"><b>'+esc(t)+'</b></div>';document.body.appendChild(d);setTimeout(function(){d.remove()},4000)}
-  var MT=0;new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('.mpw,.mpbar,.pvseg')}))return;clearTimeout(MT);MT=setTimeout(mpPaint,80)}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
+  var MT=0;new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('.mpw,.mpbar,.pvseg')}))return;if(!MT)MT=setTimeout(function(){MT=0;mpPaint()},80)}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
   setTimeout(mpPaint,500);
 
   /* ---------- 36 e 37: Carteira (ou ativo) x indice e calendario verde/vermelho ---------- */
@@ -7773,7 +7776,7 @@ html,body{overflow-x:hidden;max-width:100%}body{overscroll-behavior-x:none}
     '<div class="mu">Fontes: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/Lei/L14754.htm" target="_blank" rel="noopener">Lei 14.754/2023</a> · <a href="https://planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15270.htm" target="_blank" rel="noopener">Lei 15.270/2025</a> · <a href="https://www.gov.br/receitafederal" target="_blank" rel="noopener">Receita Federal</a>. Regras mudam: confirme com a Receita ou um contador antes de pagar ou declarar.</div></div>';
   function rlPaint(){['crd','ir'].forEach(function(id){var sec=document.getElementById(id);if(!sec||!sec.classList.contains('on')||$('.rlck',sec))return;var d=document.createElement('div');d.innerHTML=RULES;var a=id==='crd'?$('.dsb',sec):null;if(a)a.insertAdjacentElement('afterend',d.firstChild);else sec.appendChild(d.firstChild)})}
 
-  var T=0;function all(){clearTimeout(T);T=setTimeout(function(){try{rfPaint()}catch(e){}try{irPaint()}catch(e){}try{balPaint()}catch(e){}try{rlPaint()}catch(e){}},60)}
+  var T=0;function all(){if(T)return;T=setTimeout(function(){T=0;try{rfPaint()}catch(e){}try{irPaint()}catch(e){}try{balPaint()}catch(e){}try{rlPaint()}catch(e){}},60)}
   new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('.zirx,.zirp,.tmbx,.exask,.zbcp,.rlck,.rfnt')}))return;all()}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
   all();
 })();
@@ -7838,7 +7841,7 @@ html,body{overflow-x:hidden;max-width:100%}body{overscroll-behavior-x:none}
       if(!nb.pos&&!nb.mov)throw new Error('Não reconheci o arquivo. Use os arquivos de Posição ou de Movimentação baixados da Área do Investidor da B3, em Excel.');
       nb.t=Date.now();B3=nb;save();var w=$('#b3w');if(w){w.dataset.on='';paint()}}catch(x){if(m)m.textContent=String(x&&x.message||x)}});
   document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-b3x]')){B3=null;try{localStorage.removeItem(K)}catch(x){}var w=$('#b3w');if(w){w.dataset.on='';paint()}var wr=$('.b3wr');if(wr)wr.remove()}});
-  var T=0;new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('#b3w,.b3wr')}))return;var w0=$('#b3w');if(w0&&!document.getElementById('b').contains(w0))w0.remove();var bb=document.getElementById('b');if(bb&&bb.classList.contains('on')&&!$('#b3w',bb)){paint();return}clearTimeout(T);T=setTimeout(paint,120)}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
+  var T=0;new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('#b3w,.b3wr')}))return;var w0=$('#b3w');if(w0&&!document.getElementById('b').contains(w0))w0.remove();var bb=document.getElementById('b');if(bb&&bb.classList.contains('on')&&!$('#b3w',bb)){paint();return}if(!T)T=setTimeout(function(){T=0;paint()},120)}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
   setTimeout(paint,600);
 })();
 </script>
@@ -7846,6 +7849,173 @@ html,body{overflow-x:hidden;max-width:100%}body{overscroll-behavior-x:none}
 .b3box{margin-top:16px}.b3b{padding:4px 2px}.b3up{display:inline-flex!important;align-items:center;width:auto!important;padding:0 16px!important;height:40px;margin:0!important;cursor:pointer;color:var(--ac)!important}.b3cl{width:auto;padding:0 14px;height:40px}
 .b3b h3{font-size:15px;margin:14px 0 6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.b3b .tb.rd{background:color-mix(in srgb,var(--rd) 15%,var(--sf));color:var(--rd)}.b3b .tb.gn{background:color-mix(in srgb,var(--gn) 15%,var(--sf));color:var(--gn)}
 tr.b3bad td{background:color-mix(in srgb,var(--rd) 8%,var(--sf))!important}.b3m{margin-top:8px}
+</style>
+<script>
+/* ===== v4.0 · Bloco 5: mercado, noticias e agenda ===== */
+(function(){
+  var $=function(q,r){return (r||document).querySelector(q)},$$=function(q,r){return Array.prototype.slice.call((r||document).querySelectorAll(q))};
+  function cqf(n){if(typeof vzOn==='function'&&vzOn())return '***';return (+(+n||0).toPrecision(12)).toLocaleString('pt-BR',{maximumFractionDigits:8})}
+  function sg(v){return v>0?'+':v<0?'−':''}
+  function pcs(v){return v===null||v===undefined||!isFinite(v)?'—':(v>0?'▲ ':v<0?'▼ ':'')+pct(Math.abs(v)/100)}
+  function tn(v){return v>0?'gn':v<0?'rd':'mu'}
+  function hm(ms){var d=new Date(ms);try{return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'})}catch(e){return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}}
+  function onSec(id){var s=document.getElementById(id);return s&&s.classList.contains('on')?s:null}
+  function held(){var m={};try{calc(ops).open.forEach(function(c){m[c.ticker]=1})}catch(e){}try{var P=CRX.calc(CRX.get().ops).pools;Object.keys(P).forEach(function(c){if(P[c].qty>1e-9)m[c]=1})}catch(e){}return m}
+  function isCoin(n){try{var P=CRX.calc(CRX.get().ops).pools;if(P[n]&&P[n].qty>1e-9)return true}catch(e){}return !/\d$/.test(n)}
+
+  /* ---------- 11: bolsas do mundo e acoes brasileiras nos EUA ---------- */
+  var WM=[['^GSPC','S&P 500','EUA'],['^IXIC','Nasdaq','EUA'],['^DJI','Dow Jones','EUA'],['^STOXX50E','Euro Stoxx 50','Europa'],['^GDAXI','DAX','Alemanha'],['^FTSE','FTSE 100','Reino Unido'],['^N225','Nikkei 225','Japão'],['^HSI','Hang Seng','Hong Kong'],['000001.SS','Xangai','China'],
+    ['EWZ','EWZ (ETF do Brasil)','Nova York'],['BDORY','Banco do Brasil (ADR)','Nova York'],['PBR','Petrobras (ADR)','Nova York'],['VALE','Vale (ADR)','Nova York'],['ITUB','Itaú (ADR)','Nova York'],['NU','Nubank','Nova York'],['BBD','Bradesco (ADR)','Nova York']];
+  var WD={},WB=false,WT=0;try{WD=JSON.parse(localStorage.getItem('stox3-wm')||'{}')}catch(e){WD={}}
+  async function wmLoad(force){if(WB||(!force&&Date.now()-WT<5*6e4))return;WB=true;WT=Date.now();
+    for(var i=0;i<WM.length;i++){var s=WM[i][0];try{var q=await nxYahoo(s,'1d','15m');if(q&&q.m){var m=q.m,tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular||{},p=+m.regularMarketPrice,pv=+m.chartPreviousClose||+m.previousClose;
+        WD[s]={t:Date.now(),p:p,c:p>0&&pv>0?(p/pv-1)*100:null,s:(+tp.start||0)*1000,e:(+tp.end||0)*1000,mt:(+m.regularMarketTime||0)*1000,cur:m.currency||''}}}catch(e){}}
+    WB=false;try{localStorage.setItem('stox3-wm',JSON.stringify(WD))}catch(e){}paintAll()}
+  function wmRow(a){var x=WD[a[0]],now=Date.now(),open=x&&x.s&&x.e&&now>=x.s&&now<=x.e&&now-x.mt<20*6e4,st;
+    if(!x)st='<span class="mu">sem dados</span>';else if(open)st='<span class="wmo">Aberto</span> <small class="mu">fecha às '+hm(x.e)+' (Brasília)</small>';
+    else st='<span class="wmc">Fechado</span> <small class="mu">'+(x.mt?'fechou às '+hm(x.mt):'')+(x.s?' · abre às '+hm(x.s+(now>x.e?864e5:0)):'')+'</small>';
+    return '<div class="wmr"><div class="wmn"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></div><div class="wmv">'+(x&&x.p>0?'<b>'+x.p.toLocaleString('pt-BR',{maximumFractionDigits:2})+'</b> <span class="'+tn(x.c)+'">'+pcs(x.c)+'</span>':'—')+'<div class="wms">'+st+'</div></div></div>'}
+  function wmBox(){return '<details class="wmbox"'+((localStorage.getItem('stox3-wmo')||((window.innerWidth||0)>=900?'1':'0'))==='1'?' open':'')+'><summary>Bolsas do mundo e ações brasileiras nos EUA</summary><div class="wmg"><div class="wmc1"><div class="wmh">Índices</div>'+WM.slice(0,9).map(wmRow).join('')+'</div><div class="wmc1"><div class="wmh">Brasil em Nova York</div>'+WM.slice(9).map(wmRow).join('')+'</div></div><div class="mu wmf">Fonte: Yahoo Finance (pode atrasar alguns minutos). Horários de Brasília. <button type="button" class="lk" data-wmup="1">Atualizar</button></div></details>'}
+
+  /* ---------- 53: bolsa fechada (fins de semana e feriados) ---------- */
+  function spNow(){try{return qxSp(Date.now())}catch(e){return {d:new Date().toISOString().slice(0,10)}}}
+  function bizDay(D){var w=new Date(D+'T12:00:00Z').getUTCDay();return w>0&&w<6&&!(typeof nzHol==='function'&&nzHol(D))}
+  function addD(D,n){var d=new Date(D+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+  var WDN=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+  function dname(D){var d=new Date(D+'T12:00:00Z');return WDN[d.getUTCDay()]+', '+D.slice(8,10)+'/'+D.slice(5,7)}
+  var HOLN={'01-01':'Confraternização','04-21':'Tiradentes','05-01':'Dia do Trabalho','09-07':'Independência','10-12':'Nossa Senhora Aparecida','11-02':'Finados','11-15':'Proclamação da República','11-20':'Consciência Negra','12-24':'Véspera de Natal','12-25':'Natal','12-31':'Véspera de Ano Novo'};
+  function holName(D){return HOLN[D.slice(5)]||'Feriado na B3'}
+  function closedBox(){var D=spNow().d;if(bizDay(D))return '';var nx=D,g=0;do{nx=addD(nx,1)}while(!bizDay(nx)&&g++<10);var lp=D,g2=0;do{lp=addD(lp,-1)}while(!bizDay(lp)&&g2++<10);
+    var why=typeof nzHol==='function'&&nzHol(D)?holName(D):'fim de semana';
+    var wk=[],c=lp,k=0;while(wk.length<5&&k++<12){if(bizDay(c))wk.push(c);c=addD(c,-1)}
+    var sum='';try{var S=qhSeries('A',14);if(S&&S.pts){var pp=S.pts.filter(function(p){return p.d<=lp}),last=pp[pp.length-1],w0=pp.filter(function(p){return p.d<wk[wk.length-1]}).pop(),pr=pp[pp.length-2];
+        if(last&&pr&&pr.c>0)sum+='<div><small>Último pregão ('+dname(lp)+')</small><b class="'+tn(last.c-last.fl-pr.c)+'">'+pc2r((last.c-last.fl)/pr.c-1)+'</b></div>';
+        if(last&&w0&&w0.c>0){var fl=0;pp.forEach(function(p){if(p.d>w0.d)fl+=p.fl});sum+='<div><small>Semana na carteira</small><b class="'+tn(last.c-fl-w0.c)+'">'+pc2r((last.c-fl)/w0.c-1)+'</b></div>'}}}catch(e){}
+    var ib=NX&&NX.ix&&NX.ix.ibov;if(ib&&ib.c!==null&&ib.c!==undefined)sum+='<div><small>Ibovespa no último pregão</small><b class="'+tn(ib.c)+'">'+pcs(ib.c)+'</b></div>';
+    var us=['EWZ','PBR','VALE','ITUB','NU','BBD'].map(function(s){var x=WD[s];return x&&x.c!==null?'<span>'+esc(s)+' <b class="'+tn(x.c)+'">'+pcs(x.c)+'</b></span>':''}).filter(Boolean).join(' · ');
+    var cr='';try{var T=window.S32&&S32.sum?S32.sum():null;if(T&&T.cr&&T.cr.V>0)cr='<div class="bfcr">A cripto não fecha: sua carteira de cripto '+(T.cr.dayPct!==null&&T.cr.dayPct!==undefined?'está <b class="'+tn(T.cr.dayPct)+'">'+pcs(T.cr.dayPct*100)+'</b> em 24 h':'segue aberta')+'. <button type="button" class="lk" data-s3go="cr:chm">Ver a cripto</button></div>'}catch(e){}
+    var nxw='';try{var ev=window.S32&&S32.earn?S32.earn.list().filter(function(x){return x.date>=nx&&x.date<=addD(nx,6)}):[];if(ev.length)nxw='<div class="bfnx"><b>Próxima semana:</b> '+ev.slice(0,6).map(function(x){return esc(x.tks.join(', '))+' divulga resultado em '+x.date.slice(8,10)+'/'+x.date.slice(5,7)}).join(' · ')+'</div>'}catch(e){}
+    var hol=Object.keys(typeof NZHOL==='object'?NZHOL:{}).filter(function(h){return h>D&&h<=addD(D,120)}).sort().slice(0,6).map(function(h){var w=new Date(h+'T12:00:00Z').getUTCDay();return '<li>'+h.slice(8,10)+'/'+h.slice(5,7)+' ('+WDN[w]+'): '+esc(holName(h))+'</li>'}).join('');
+    return '<div class="pc cp bfbox"><div class="bfh"><b>Bolsa fechada hoje ('+esc(why)+')</b><span class="bfre">Reabre '+dname(nx)+' às 10:00</span></div>'+(sum?'<div class="bfg">'+sum+'</div>':'')+(us?'<div class="bfus"><b>Prévia pelos EUA:</b> '+us+'</div>':'')+cr+nxw+(hol?'<details class="bfhol"><summary>Próximos feriados da B3</summary><ul>'+hol+'</ul></details>':'')+'</div>'}
+  function pc2r(v){return (v>0?'▲ ':v<0?'▼ ':'')+pct(Math.abs(v))}
+
+  /* ---------- 54: noticias que movem o mercado ---------- */
+  var NB=[['br','Ações nacionais','Ibovespa OR "B3" ações'],['us','Ações internacionais','"Wall Street" OR Nasdaq OR "S&P 500"'],['gl','Impacto global','Fed juros OR petróleo OR China economia OR dólar'],['cr','Criptomoedas','bitcoin OR criptomoedas OR ethereum']],NBK='stox3-nb',NBS=localStorage.getItem('stox3-nbs')||'br',NBD={},NBB={};
+  try{NBD=JSON.parse(localStorage.getItem(NBK)||'{}')}catch(e){NBD={}}
+  async function nbLoad(k,force){var e=NBD[k];if(NBB[k]||(!force&&e&&Date.now()-e.t<20*6e4))return;NBB[k]=1;var b=NB.filter(function(x){return x[0]===k})[0];
+    try{var r=await qxGet('https://news.google.com/rss/search?q='+encodeURIComponent(b[2]+' when:1d')+'&hl=pt-BR&gl=BR&ceid=BR:pt-419',15000);if(r&&r.ok&&typeof r.tx==='string'){var it=nwParseRss(r.tx);if(it.length){NBD[k]={t:Date.now(),it:it.slice(0,8)};try{localStorage.setItem(NBK,JSON.stringify(NBD))}catch(x){}}}}catch(x){}
+    NBB[k]=0;paintAll()}
+  function nbBox(){var e=NBD[NBS];return '<div class="nbbox"><h2 class="h2s">Notícias que movem o mercado</h2><div class="pkf nbt" role="tablist">'+NB.map(function(b){return '<button type="button" class="tkc'+(b[0]===NBS?' on':'')+'" data-nbs="'+b[0]+'">'+b[1]+'</button>'}).join('')+'</div>'+
+    (e&&e.it&&e.it.length?(typeof nwList==='function'?nwList(e.it,6):''):'<div class="mu" style="padding:8px 0">'+(NBB[NBS]?'buscando…':'carregando as notícias…')+'</div>')+'</div>'}
+
+  /* ---------- 42: rankings no Mercado ---------- */
+  var RK={k:'vol',ty:'stock',pe:'d'},RKD={},RKB=0;
+  async function rkCrypto(){var k='c|'+RK.pe;if(RKD[k]&&Date.now()-RKD[k].t<5*6e4)return;RKB=1;paintAll();
+    try{var r=await qxGet('https://data-api.binance.vision/api/v3/ticker/24hr?type=MINI',25000),u=0,L=[];
+      if(r&&r.ok&&Array.isArray(r.j)){r.j.forEach(function(x){if(x.symbol==='USDTBRL')u=+x.lastPrice});
+        r.j.forEach(function(x){var s=x.symbol;if(!/USDT$/.test(s))return;var b=s.slice(0,-4);if(/^(USDC|FDUSD|TUSD|BUSD|DAI|EUR|GBP|USDP|USDE|USD1|PAXG|BRL|TRY|AEUR)$/.test(b)||/(UP|DOWN|BULL|BEAR)$/.test(b))return;var o=+x.openPrice,c=+x.lastPrice,qv=+x.quoteVolume;if(!(o>0)||!(c>0))return;L.push({n:b,p:c*(u||1),c:(c/o-1)*100,v:qv*(u||1)})})}
+      if(RK.pe==='w'&&L.length){var top=L.slice().sort(function(a,b){return b.v-a.v}).slice(0,100),syms=top.map(function(x){return x.n+'USDT'}),r2=await qxGet('https://data-api.binance.vision/api/v3/ticker?windowSize=7d&type=MINI&symbols='+encodeURIComponent(JSON.stringify(syms)),25000);
+        if(r2&&r2.ok&&Array.isArray(r2.j)){var m={};r2.j.forEach(function(x){var o=+x.openPrice,c=+x.lastPrice;if(o>0&&c>0)m[x.symbol.slice(0,-4)]={c:(c/o-1)*100,v:+x.quoteVolume*(u||1)}});L=top.filter(function(x){return m[x.n]}).map(function(x){return {n:x.n,p:x.p,c:m[x.n].c,v:m[x.n].v}})}}
+      RKD[k]={t:Date.now(),L:L}}catch(e){RKD[k]={t:Date.now(),L:[],err:1}}RKB=0;paintAll()}
+  async function rkStock(){var k='a|'+RK.ty+'|'+RK.k;if(RKD[k]&&Date.now()-RKD[k].t<10*6e4)return;var key='';try{key=qxKey()}catch(e){}if(!key){RKD[k]={t:Date.now(),L:[],nk:1};paintAll();return}RKB=1;paintAll();
+    try{var sb=RK.k==='vol'?'volume':'change',so=RK.k==='dn'?'asc':'desc',r=await qxGet('https://brapi.dev/api/quote/list?sortBy='+sb+'&sortOrder='+so+'&limit=15&type='+RK.ty+'&token='+encodeURIComponent(key),20000),L=[];
+      if(r&&r.ok&&r.j&&Array.isArray(r.j.stocks))r.j.stocks.forEach(function(x){if(x&&x.stock)L.push({n:x.stock,p:+x.close||0,c:+x.change,v:+x.volume*(+x.close||1),nm:x.name||''})});RKD[k]={t:Date.now(),L:L,err:!(r&&r.ok)}}catch(e){RKD[k]={t:Date.now(),L:[],err:1}}RKB=0;paintAll()}
+  function rkBox(cr){var H=held(),k=cr?'c|'+RK.pe:'a|'+RK.ty+'|'+RK.k,e=RKD[k],L=e&&e.L?e.L.slice():[];
+    if(cr){if(RK.k==='vol')L.sort(function(a,b){return b.v-a.v});else if(RK.k==='up')L.sort(function(a,b){return b.c-a.c});else L.sort(function(a,b){return a.c-b.c});L=L.slice(0,15)}
+    var ch=function(a,v,l){return '<button type="button" class="tkc'+(RK[a]===v?' on':'')+'" data-rk="'+a+'|'+v+'">'+l+'</button>'};
+    return '<details class="rkbox"><summary>Rankings do mercado</summary><div class="pkf">'+ch('k','vol','Mais negociados')+ch('k','up','Maiores altas')+ch('k','dn','Maiores baixas')+'</div>'+
+      (cr?'<div class="pkf"><span class="pkl">Período</span>'+ch('pe','d','24 h')+ch('pe','w','7 dias')+'</div>':'<div class="pkf"><span class="pkl">Tipo</span>'+ch('ty','stock','Ações')+ch('ty','fund','FIIs')+ch('ty','bdr','BDRs')+'<span class="mu" style="font-size:12px">Período: hoje</span></div>')+
+      (e&&e.nk?'<div class="mu">Para os rankings da bolsa é preciso a chave de acesso da brapi (Configurações, em Avançado).</div>':!e||RKB?'<div class="mu">Buscando…</div>':!L.length?'<div class="mu">Não consegui o ranking agora. Tente de novo em alguns minutos.</div>':
+      '<div class="rkl">'+L.map(function(x,i){return '<button type="button" class="rkr" data-ast="'+esc(x.n)+'"><span class="rki">'+(i+1)+'</span><b>'+esc(x.n)+'</b>'+(H[x.n]?'<span class="tb rkh">você tem</span>':'')+'<span class="rkp">'+(window.ncPx?ncPx(x.p):brl(x.p))+'</span><span class="'+tn(x.c)+'">'+pcs(x.c)+'</span><small class="mu">vol. '+(typeof fmtK==='function'?fmtK(x.v):brl(x.v))+'</small></button>'}).join('')+'</div>')+'</details>'}
+
+  /* ---------- 13: agenda de balancos: motivo da falha, nova tentativa, datas guardadas ---------- */
+  function agBox(){var S=window.S32&&S32.earn;if(!S)return '';var st=S.status(),n=S.list().length;
+    return '<div class="pc cp agst'+(st.err?' bad':'')+'">'+(st.busy?'<b>Buscando as datas dos resultados…</b>':st.err?'<b>Não consegui atualizar a agenda de resultados.</b><div class="mu">Motivo: '+esc(st.err)+'</div>':'<b>Agenda de resultados atualizada'+(st.t?' em '+new Date(st.t).toLocaleDateString('pt-BR')+' às '+hm(st.t):'')+'</b>')+
+      (n?'<div class="mu">'+(st.err?'Mostrando as '+n+' datas guardadas'+(st.t?' da última busca que deu certo ('+new Date(st.t).toLocaleDateString('pt-BR')+')':'')+'.':n+' datas guardadas neste aparelho.')+'</div>':'')+
+      '<button type="button" class="sb2" data-agr="1"'+(st.busy?' disabled':'')+'>'+(st.err?'Tentar de novo':'Atualizar a agenda')+'</button></div>'}
+
+  /* ---------- 40: tocar em qualquer ativo abre a pagina completa dele por cima ---------- */
+  var _mh=window.mdHtml;
+  if(typeof _mh==='function')window.mdHtml=function(tk){var h=_mh(tk);try{h+=astExtra(tk)}catch(e){}return h};
+  function astExtra(tk){var R=calc(ops),pos=R.open.filter(function(c){return c.ticker===tk}),os=ops.filter(function(o){return o.ticker===tk}).sort(function(a,b){return a.date<b.date?1:-1}),pv=(typeof prov!=='undefined'?prov:[]).filter(function(p){return p.ticker===tk}).sort(function(a,b){return a.date<b.date?1:-1}),q=+quotes[tk]||0,h='<div class="astx">';
+    h+='<h3>Sua posição</h3>'+(pos.length?'<div class="tw"><table><thead><tr><th>Corretora</th><th>Cotas</th><th>Preço médio</th><th>Valor</th><th>Resultado</th></tr></thead><tbody>'+pos.map(function(c){var a=c.buyCost/c.buyQty,v=q>0?q*c.qty:a*c.qty,r=v-a*c.qty;return '<tr><td>'+bchip(c.broker)+'</td><td>'+qf(c.qty)+'</td><td>'+pm(a)+'</td><td>'+brl(v)+'</td><td class="'+cls(r)+'">'+brl(r)+'</td></tr>'}).join('')+'</tbody></table></div>':'<div class="mu">Você não tem '+esc(tk)+' agora.</div>');
+    h+='<div class="pcb astb"><button class="sb2 b" type="button" data-act="buy" data-tk="'+ea(tk)+'" data-br="'+ea(pos[0]?pos[0].broker:'')+'">Comprar</button>'+(pos.length?'<button class="sb2 v" type="button" data-act="sell" data-tk="'+ea(tk)+'" data-br="'+ea(pos[0].broker)+'">Vender</button><button class="sb2" type="button" data-act="sim" data-tk="'+ea(tk)+'" data-br="'+ea(pos[0].broker)+'">Simular</button>':'')+'</div>';
+    if(os.length)h+='<h3>Suas operações <span class="tb">'+os.length+'</span></h3><div class="tw"><table><thead><tr><th>Data</th><th>Tipo</th><th>Corretora</th><th>Cotas</th><th>Preço</th></tr></thead><tbody>'+os.slice(0,30).map(function(o){return '<tr><td>'+o.date.slice(8,10)+'/'+o.date.slice(5,7)+'/'+o.date.slice(0,4)+'</td><td>'+esc(o.type==='COMPRA'?'Compra':o.type==='VENDA'?'Venda':o.type)+'</td><td>'+esc(o.broker||'')+'</td><td>'+qf(o.qty)+'</td><td>'+(o.price?brl(o.price):'—')+'</td></tr>'}).join('')+'</tbody></table></div>';
+    if(pv.length){var tot=pv.reduce(function(s,p){return s+p.unit*p.qty-(p.ret||0)},0);h+='<h3>Proventos recebidos <span class="tb">'+brl(tot)+'</span></h3><div class="tw"><table><thead><tr><th>Data</th><th>Tipo</th><th>Líquido</th></tr></thead><tbody>'+pv.slice(0,20).map(function(p){return '<tr><td>'+p.date.slice(8,10)+'/'+p.date.slice(5,7)+'/'+p.date.slice(0,4)+'</td><td>'+esc(p.kind||'')+'</td><td>'+brl(p.unit*p.qty-(p.ret||0))+'</td></tr>'}).join('')+'</tbody></table></div>'}
+    try{var ag=window.S32&&S32.earn?S32.earn.list().filter(function(x){return x.tks.indexOf(tk)>=0}):[];if(ag.length)h+='<h3>Agenda</h3><div class="mu">Resultado'+(ag[0].per?' do '+esc(ag[0].per):'')+' em '+ag[0].date.slice(8,10)+'/'+ag[0].date.slice(5,7)+(ag[0].est?' (data estimada)':'')+'.</div>'}catch(e){}
+    return h+'</div>'}
+  var CRA='',CRR=1;
+  function crPage(){var el=$('#crpg');if(!el||!CRA)return;var c=CRA,C=CRX.get(),P=CRX.calc(C.ops).pools,p=P[c]||{qty:0,cost:0},px=+C.px[c]||0,v=px>0?p.qty*px:p.cost,s=null,ch='';
+    try{s=chData('C',c,CRR)}catch(e){}ch=s&&s.pts&&s.pts.length>=2?chBuild({id:'cp:'+c,s:s,k:'C',r:CRR,sz:'big',avg:p.qty>0?p.cost/p.qty:0,qty:p.qty}):'<div class="mgn mu">Sem gráfico para esta moeda agora.</div>';
+    var os=C.ops.filter(function(o){return o.coin===c||o.coin2===c}).sort(function(a,b){return a.date<b.date?1:-1}),w={};os.forEach(function(o){if(o.where)w[o.where]=1});
+    var nk='C:'+c,nw=typeof NW!=='undefined'&&NW.c&&NW.c[nk]&&NW.c[nk].items||[];
+    el.querySelector('.crpb').innerHTML='<div class="crph">'+(typeof pcAv==='function'?pcAv('C',c):'')+'<div><b class="crpn">'+esc(c)+'</b><div class="mu">'+(px>0?'<b>'+(window.ncPx?ncPx(px):brl(px))+'</b> ':'')+'<span class="'+tn(qxDay('C',c))+'">'+pcs(qxDay('C',c))+' em 24 h</span></div></div></div>'+
+      '<div class="pcgr one" role="group">'+[[1,'24 h'],[5,'5 dias'],[30,'30 dias'],[90,'90 dias']].map(function(a){return '<button type="button" class="pcrb'+(a[0]===CRR?' on':'')+'" data-crpr="'+a[0]+'">'+a[1]+'</button>'}).join('')+'</div>'+ch+
+      '<h3>Sua posição</h3>'+(p.qty>1e-9?'<div class="cpm nzst c4"><span>Quantidade<b>'+cqf(p.qty)+'</b></span><span>Custo médio<b>'+(window.ncPx?ncPx(p.cost/p.qty):brl(p.cost/p.qty))+'</b></span><span>Valor<b>'+brl(v)+'</b></span><span>Resultado<b class="'+cls(v-p.cost)+'">'+brl(v-p.cost)+'</b></span></div><div class="mu" style="margin-top:6px">Onde: '+Object.keys(w).map(function(x){return bchip(x)}).join(' ')+'</div>':'<div class="mu">Você não tem '+esc(c)+' agora.</div>')+
+      '<div class="pcb astb"><button class="sb2 b" type="button" data-zact="COMPRA" data-zcc="'+ea(c)+'">Comprar</button>'+(p.qty>1e-9?'<button class="sb2 v" type="button" data-zact="VENDA" data-zcc="'+ea(c)+'">Vender</button><button class="sb2" type="button" data-zact="PERMUTA" data-zcc="'+ea(c)+'">Trocar</button>':'')+'</div>'+
+      (os.length?'<h3>Suas operações <span class="tb">'+os.length+'</span></h3><div class="tw"><table><thead><tr><th>Data</th><th>Tipo</th><th>Onde</th><th>Quantidade</th><th>Valor</th></tr></thead><tbody>'+os.slice(0,30).map(function(o){return '<tr><td>'+o.date.slice(8,10)+'/'+o.date.slice(5,7)+'/'+o.date.slice(0,4)+'</td><td>'+esc({COMPRA:'Compra',VENDA:'Venda',PERMUTA:'Troca',RECEB:'Recebido'}[o.type]||o.type)+'</td><td>'+esc(o.where||'')+'</td><td>'+cqf(o.coin===c?o.qty:o.qty2)+'</td><td>'+(o.total?brl(o.total):'—')+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
+      (nw.length&&typeof nwList==='function'?'<h3>Notícias</h3>'+nwList(nw,5):'')}
+  function crOpen(c){CRA=c;CRR=1;var el=$('#crpg');if(!el){el=document.createElement('div');el.id='crpg';el.className='ixfm crpg';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.innerHTML='<div class="ixfc"><button type="button" class="ixfx" data-crpx="1" aria-label="Fechar">×</button><div class="crpb"></div></div>';document.body.appendChild(el)}
+    document.body.classList.add('sxo');crPage();try{if(typeof nwLoad==='function')nwLoad('C',[c])}catch(e){}try{if(typeof ivNeed==='function')ivNeed(c,1)}catch(e){}}
+  function crClose(){var el=$('#crpg');if(el)el.remove();CRA='';if(!$('.sxs:not([hidden])'))document.body.classList.remove('sxo')}
+  window.astOpen=function(n){n=String(n||'').trim().toUpperCase();if(!n)return;if(isCoin(n))crOpen(n);else if(typeof mdOpen==='function')mdOpen(n)};
+  document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;var n='',b;
+    if(t.closest('[data-crpx]')){crClose();return}if(t.id==='crpg'){crClose();return}
+    if(b=t.closest('[data-crpr]')){CRR=+b.dataset.crpr;crPage();return}
+    if(b=t.closest('[data-ast]'))n=b.dataset.ast;
+    else if(b=t.closest('#b .nc .lk[data-tg]'))n=b.textContent;
+    else if(b=t.closest('[data-zc] .ptk'))n=b.textContent;
+    else if(b=t.closest('.hmch'))n=($('b',b)||{}).textContent;
+    else if(b=t.closest('.s3now tr[data-s3go], .s3hl[data-s3go]'))n=($('b',b)||{}).textContent;
+    else if(b=t.closest('.lti'))n=($('.ltn',b)||{}).textContent;
+    if(!n||n==='Dólar'||!/^[A-Z0-9]{2,10}$/.test(n.trim().toUpperCase()))return;
+    e.preventDefault();e.stopPropagation();astOpen(n)},true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('#crpg'))crClose()});
+
+  /* ---------- 44: noticias abrem dentro do app ---------- */
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a.nwi');if(!a||window.AndroidFiles)return;var u=a.getAttribute('href');if(!/^https?:/.test(u||''))return;
+    var w=null;try{w=window.open(u,'stox3ler','popup=yes,width=1100,height=860,left=80,top=40')}catch(x){}if(w){e.preventDefault();try{w.focus()}catch(x){}}},true);
+
+  /* ---------- 49: quantidades de cripto para o resumo das 08h e 21h no celular ---------- */
+  if(typeof window.ntSnap==='function'){var _ns=window.ntSnap;window.ntSnap=function(){var s=_ns.apply(this,arguments);try{var j=JSON.parse(s),P=CRX.calc(CRX.get().ops).pools,cq=[];Object.keys(P).sort().forEach(function(k){if(P[k].qty>1e-9&&!/^(USDT|USDC|BRL|BRZ)$/.test(k)&&cq.length<20)cq.push([k,+P[k].qty.toPrecision(10)])});j.cq=cq;return JSON.stringify(j)}catch(e){return s}};try{if(typeof ntPush==='function')setTimeout(ntPush,2500)}catch(e){}}
+
+  /* ---------- 34: o botao de atualizar atualiza tudo ---------- */
+  /* (feito no proprio upRun) */
+
+  /* ---------- pintura ---------- */
+  function ins(sec,cls,html,after){var w=$('.'+cls,sec);if(w&&w.dataset.h===html)return;var d=document.createElement('div');d.innerHTML=html;var n=d.firstChild;n.classList.add(cls);n.dataset.h=html;
+    if(w){var op=w.tagName==='DETAILS'?w.open:null;w.replaceWith(n);if(op!==null&&n.tagName==='DETAILS')n.open=op;return}var a=after?$(after,sec):null;if(a)a.insertAdjacentElement('afterend',n);else sec.insertBefore(n,sec.firstChild)}
+  var PT=0;function paintAll(){if(PT)return;PT=setTimeout(function(){PT=0;try{paintNow()}catch(e){window.__x5e=String(e&&e.stack||e)}},120)}
+  function paintNow(){
+    var mk=onSec('mk');if(mk){ins(mk,'x5wm',wmBox(),'h2');ins(mk,'x5rk',rkBox(false),'.x5wm');if(Date.now()-WT>5*6e4)wmLoad();if(!RKD['a|'+RK.ty+'|'+RK.k]&&!RKB)rkStock()}
+    var cm=onSec('crm');if(cm){ins(cm,'x5rk',rkBox(true),'h2');if(!RKD['c|'+RK.pe]&&!RKB)rkCrypto()}
+    var hm=onSec('hm');if(hm){var cb=closedBox();if(cb){ins(hm,'x5bf',cb,'.hmh');if(Date.now()-WT>10*6e4)wmLoad()}else{var o=$('.x5bf',hm);if(o)o.remove()}ins(hm,'x5nb',nbBox(),null);var nb=$('.x5nb',hm);if(nb&&nb.parentNode===hm&&nb!==hm.lastElementChild)hm.appendChild(nb);nbLoad(NBS)}
+    var ta=onSec('tta');if(ta)ins(ta,'x5ag',agBox(),'h2')}
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-wmup],[data-nbs],[data-rk],[data-agr]');if(!b)return;
+    if(b.dataset.wmup){wmLoad(true);return}
+    if(b.dataset.nbs){NBS=b.dataset.nbs;try{localStorage.setItem('stox3-nbs',NBS)}catch(x){}paintAll();nbLoad(NBS);return}
+    if(b.dataset.rk){var p=b.dataset.rk.split('|');RK[p[0]]=p[1];var cr=!!b.closest('#crm');paintAll();if(cr)rkCrypto();else rkStock();return}
+    if(b.dataset.agr){try{S32.earn.run(true).then(function(){try{S32.refresh()}catch(x){}paintAll()},function(){paintAll()})}catch(x){}paintAll()}});
+  document.addEventListener('toggle',function(e){if(e.target.classList&&e.target.classList.contains('x5wm'))try{localStorage.setItem('stox3-wmo',e.target.open?'1':'0')}catch(x){}},true);
+  new MutationObserver(function(ms){if(ms.every(function(m){return m.target.closest&&m.target.closest('.x5wm,.x5rk,.x5bf,.x5nb,.x5ag,#crpg')}))return;paintAll();if(CRA)setTimeout(crPage,50)}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
+  paintAll();window.X5={wm:wmLoad,paint:paintAll};
+})();
+</script>
+<style>/* ===== v4.0 · Bloco 5 ===== */
+.wmbox,.rkbox{margin:10px 0}.wmg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin-top:6px}.wmh{font-weight:800;font-size:13px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin:4px 0}
+.wmr{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--sf);margin-bottom:6px}.wmn small{display:block;font-size:11.5px}.wmv{text-align:right}.wmv b{font-size:15px}.wms{font-size:12px;margin-top:2px}
+.wmo{color:var(--gn);font-weight:800}.wmc{color:var(--mu);font-weight:800}.wmf{margin-top:6px;font-size:12px}
+.bfbox{border-left:6px solid var(--yl);margin:10px 0}.bfh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}.bfh b{font-size:16px}.bfre{background:var(--yb);color:var(--yk);padding:2px 10px;border-radius:999px;font-weight:800;font-size:13px}
+.bfg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}.bfg>div{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}.bfg small{display:block;color:var(--mu);font-size:12px}.bfg b{font-size:16px}
+.bfus,.bfcr,.bfnx{margin-top:8px;font-size:13.5px;line-height:1.5}.bfhol{margin-top:8px}.bfhol>summary{padding:8px 12px;font-size:14px}.bfhol ul{margin:6px 0;padding-left:18px;font-size:13px}
+.nbbox{margin-top:14px}.nbt{margin:6px 0 8px}
+.rkl{display:flex;flex-direction:column;gap:4px;margin-top:6px}.rkr{display:grid;grid-template-columns:28px minmax(60px,auto) auto 1fr auto auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--sf);color:var(--tx);font:inherit;font-size:14px;text-align:left;cursor:pointer;margin:0;width:100%}
+.rkr:hover{border-color:var(--ac)}.rki{color:var(--mu);font-weight:800}.rkp{text-align:right;font-weight:700}.rkh{background:color-mix(in srgb,var(--gn) 15%,var(--sf));color:var(--gn);font-size:10.5px}
+@media(max-width:520px){.rkr{grid-template-columns:24px 1fr auto auto;font-size:13px}.rkr small,.rkr .rkh{display:none}}
+.agst{margin:10px 0;border-left:6px solid var(--gn)}.agst.bad{border-left-color:var(--rd)}.agst .sb2{width:auto;padding:0 14px;height:38px;margin-top:8px}
+.astx{padding:0 14px 24px;max-width:980px;margin:0 auto}.astx h3,.crpb h3{font-size:16px;margin:16px 0 6px;display:flex;gap:8px;align-items:center}.astb{margin-top:10px}
+.crph{display:flex;gap:12px;align-items:center;padding-right:50px;margin-bottom:8px}.crph .av{width:48px;height:48px}.crpn{font-size:22px}
+a.nwi .nwm::after{content:'Ler aqui ›';margin-left:auto;font-weight:700;color:var(--ac);font-size:12px}
 </style>
 </body>
 </html>
