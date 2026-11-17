@@ -129,6 +129,13 @@ class MainActivity : ComponentActivity() {
         s.domStorageEnabled = true
         s.allowFileAccess = false
         s.setSupportMultipleWindows(false)
+        // 4.0: tela fixa (sem zoom e sem o tamanho de fonte do sistema deformar o layout)
+        s.textZoom = 100
+        s.setSupportZoom(false)
+        s.builtInZoomControls = false
+        s.displayZoomControls = false
+        web.isHorizontalScrollBarEnabled = false
+        web.overScrollMode = View.OVER_SCROLL_NEVER
 
         val loader = WebViewAssetLoader.Builder()
             .setDomain(HOST)
