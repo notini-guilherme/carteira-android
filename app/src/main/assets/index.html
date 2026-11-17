@@ -559,7 +559,7 @@ try{document.documentElement.classList.add('dsk')}catch(e){}
 <button class="btn" id="sv">Salvar lançamento</button><button class='btn sm' id='ce' hidden style='margin-top:8px'>Cancelar edição</button>
 </section>
 
-<section id='hm' class='on'><div id='hmc'></div></section><section id='nv'><div class='ps nvk' role='group' aria-label='O que lançar'><button type='button' data-nk='n' class='on' aria-pressed='true'>Compra ou venda</button><button type='button' data-nk='p' aria-pressed='false'>Provento</button></div><h2 id='nvh' style='margin-top:6px'>Lançar nota de corretagem</h2><div id='nimp' hidden><h2>Ler a nota por foto ou PDF</h2><div class='pv' style='margin:0 0 4px'><b>Importar nota de corretagem</b><div class='mu' style='margin:4px 0 8px'>Envie a foto ou o PDF de uma ou mais notas (até 10 de uma vez). O app lê os dados e preenche a tela para você conferir cada nota antes de salvar.</div><input id='nfile' type='file' multiple accept='image/*,application/pdf'><div id='nst' class='mu' style='margin-top:8px'></div><button class='btn sm' id='nskip' type='button' hidden style='margin-top:8px'>Pular esta nota</button></div></div><div id='nvman'><h2>Lançar manualmente</h2><div class='mu'>Preencha um bloco para cada ativo da nota.<span class='nvr'> Se você enviou uma foto ou PDF acima, os campos já vêm preenchidos para você conferir.</span></div></div><div id='nl'></div><button class='btn sm addln' id='na' type='button'>+ Adicionar outro ativo desta nota</button><div class='pc nnc'><b class='nnh'>Taxas da nota</b><div class='row'><div><label for='nf'>Taxas e impostos totais da nota (R$)</label><input id='nf' inputmode='decimal' placeholder='0,00'></div><div><label for='nn'>Nº da nota (opcional)</label><input id='nn' autocomplete='off'></div></div><div class='mu' style='margin-top:6px'>Informe o total uma única vez. O app divide as taxas entre os ativos proporcionalmente ao valor de cada um (quantidade × preço) e soma a parte de cada ativo ao custo dele.</div></div><div id='npv' class='pv' hidden></div><button class='btn' id='nsv'>Salvar nota</button><button class='btn sm' id='nce' hidden style='margin-top:8px'>Cancelar edição</button><details id='tfdet'><summary><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 8h14l-3-3M20 16H6l3 3'/></svg>Transferir entre corretoras</summary><div class='fxi'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg><div>Move os ativos que você escolher de uma corretora para outra, inteiros ou só parte das cotas, mantendo o preço médio de cada ativo. Não gera lucro, prejuízo nem imposto, e o histórico original é preservado.</div></div><div class='stp2'><span class='stn'>1</span><b>Corretoras</b></div><div class='tfrt'><div><label for='tfa'>De</label><select id='tfa'></select></div><div class='tfar' aria-hidden='true'><svg viewBox='0 0 24 24'><path d='M5 12h14M13 6l6 6-6 6'/></svg></div><div><label for='tfb'>Para</label><input id='tfb' list='crs' autocomplete='off' placeholder='Nova corretora'></div></div><div class='stp2'><span class='stn'>2</span><b>Escolha os ativos que serão transferidos</b><span class='stc' id='tfcnt'></span></div><div id='tfl'></div><div class='stp2'><span class='stn'>3</span><label for='tfd'>Data da transferência</label></div><input id='tfd' type='date'><button class='btn bgo' id='tfg'>Transferir selecionados</button><div id='tfm' class='mu' style='margin-top:6px'></div><div class='fxi fx2'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg><div>O app só registra a mudança na sua carteira. A transferência de verdade é pedida às corretoras (formulário STVM ou portabilidade na Área do Investidor da B3) e vale só entre contas do mesmo CPF.</div></div></details><div id='nvp'><div class='row'><div><label for='pd'>Data do pagamento</label><input id='pd' type='date'></div><div><label for='pt'>Ativo</label><input id='pt' list='tks' placeholder='BBAS3' autocapitalize='characters' autocomplete='off'></div></div><div class='row'><div><label for='pc'>Corretora</label><input id='pc' list='crs' autocomplete='off'></div><div><label for='pk'>Modalidade</label><select id='pk'><option value='DIVIDENDOS'>Dividendos</option><option value='JCP'>JCP</option><option value='RENDIMENTO'>Rendimento</option><option value='RENDFII'>Rendimento FII</option><option value='OUTROS'>Outros</option></select></div></div><div class='row r3'><div><label for='pu'>Valor por cota (R$)</label><input id='pu' inputmode='decimal' placeholder='0,10'></div><div><label for='pq'>Cotas</label><input id='pq' inputmode='decimal'></div><div><label for='pi'>IR retido (R$)</label><input id='pi' inputmode='decimal' placeholder='0,00'></div></div><label for='pn'>Ou informe o total líquido recebido (R$)</label><input id='pn' inputmode='decimal' placeholder='Se preencher, o valor por cota é calculado'><div id='ppv' class='pv' hidden></div><button class='btn' id='ps'>Salvar provento</button><div id='pvsg' class='pvsg'></div></div></section><section id='b'></section><section id='p'><div class='ps' role='group' aria-label='Proventos'><button type='button' data-ps='p' class='on'>Lançamentos</button><button type='button' data-ps='r'>Resumo e gráficos</button></div><button type='button' class='pgo' data-pgo='1'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 5v14M5 12h14'/></svg>Lançar provento</button><div id='pl'></div></section><section id='bl'><h2 style='margin-top:6px'>Apuração mensal do imposto</h2><div class='dac'><a class='dab y' id='dpay' href='https://sicalc.receita.fazenda.gov.br/sicalc/principal' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z'/><path d='M8.5 8h7M8.5 12h7M8.5 16h4'/></svg><span>Emitir e pagar o DARF<small>Abre o Sicalc, da Receita Federal</small></span></a><button class='dab b' id='dprej' type='button'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 7l6 6 4-4 8 8'/><path d='M21 12v5h-5'/></svg><span>Lançar prejuízo anterior<small>Informe o saldo que você declarou no IR</small></span></button></div><div id='dfc'></div><div class='row r3'><div><label for='bt'>Tipo de operação</label><select id='bt'><option value='S'>Swing trade</option><option value='D'>Day trade</option></select></div><div><label for='by'>Ano</label><select id='by'></select></div><div><label for='bc'>Corretora</label><select id='bc'></select></div></div><div id='bal'></div><h2 id='pja'>Prejuízo acumulado de anos anteriores</h2><div class='pjx'><b>Para que serve</b><ul><li>Informe o saldo de prejuízo a compensar que você declarou no IR.</li><li>Ele vale a partir de 1º de janeiro do ano escolhido e substitui o saldo que o app calcularia até ali.</li><li>Depois disso, o app continua levando o saldo mês a mês e de um ano para o outro.</li><li>Campo em branco vale zero: o app só compensa o que você informou. Prejuízo que não foi declarado na ficha Renda Variável não pode ser compensado.  Se você não tinha prejuízo a compensar, digite 0 em um dos campos.</li></ul></div><div id='cll'></div><div class='pc pjf' id='pjf'><b class='nnh'>Informar ou corrigir um saldo</b><div class='row'><div><label for='cy'>Início do ano</label><input id='cy' inputmode='numeric' placeholder='2026'></div><div class='pjh'>Vale a partir de 1º de janeiro desse ano.</div></div><div class='row r3'><div><label for='cm'>Ações e ETFs (R$)</label><input id='cm' inputmode='decimal'></div><div><label for='cf'>FIIs (R$)</label><input id='cf' inputmode='decimal'></div><div><label for='cd'>Day trade (R$)</label><input id='cd' inputmode='decimal'></div></div><button class='btn' id='cs'>Salvar prejuízo anterior</button><button class='btn sm' id='cx' hidden style='margin-top:8px'>Cancelar edição</button><div id='cl' class='pjm' role='status'></div></div></section><section id='r'><div class='ps' role='group' aria-label='Proventos'><button type='button' data-ps='p'>Lançamentos</button><button type='button' data-ps='r' class='on'>Resumo e gráficos</button></div><label for='ys'>Ano</label><select id='ys'></select><div id='rsm'></div></section>
+<section id='hm' class='on'><div id='hmc'></div></section><section id='nv'><div class='ps nvk' role='group' aria-label='O que lançar'><button type='button' data-nk='n' class='on' aria-pressed='true'>Compra ou venda</button><button type='button' data-nk='p' aria-pressed='false'>Provento</button></div><h2 id='nvh' style='margin-top:6px'>Lançar nota de corretagem</h2><div id='nimp' hidden><h2>Ler a nota por foto ou PDF</h2><div class='pv' style='margin:0 0 4px'><b>Importar nota de corretagem</b><div class='mu' style='margin:4px 0 8px'>Envie a foto ou o PDF de uma ou mais notas (até 10 de uma vez). O app lê os dados e preenche a tela para você conferir cada nota antes de salvar.</div><input id='nfile' type='file' multiple accept='image/*,application/pdf'><div id='nst' class='mu' style='margin-top:8px'></div><button class='btn sm' id='nskip' type='button' hidden style='margin-top:8px'>Pular esta nota</button></div></div><div id='nvman'><h2>Lançar manualmente</h2><div class='mu'>Preencha um bloco para cada ativo da nota.<span class='nvr'> Se você enviou uma foto ou PDF acima, os campos já vêm preenchidos para você conferir.</span></div></div><div id='nl'></div><button class='btn sm addln' id='na' type='button'>+ Adicionar outro ativo desta nota</button><div class='pc nnc'><b class='nnh'>Taxas da nota</b><div class='row'><div><label for='nf'>Taxas e impostos totais da nota (R$)</label><input id='nf' inputmode='decimal' placeholder='0,00'></div><div><label for='nn'>Nº da nota (opcional)</label><input id='nn' autocomplete='off'></div></div><div class='mu' style='margin-top:6px'>Informe o total uma única vez. O app divide as taxas entre os ativos proporcionalmente ao valor de cada um (quantidade × preço) e soma a parte de cada ativo ao custo dele.</div></div><div id='npv' class='pv' hidden></div><button class='btn' id='nsv'>Salvar nota</button><button class='btn sm' id='nce' hidden style='margin-top:8px'>Cancelar edição</button><details id='tfdet'><summary><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 8h14l-3-3M20 16H6l3 3'/></svg>Transferir entre corretoras</summary><div class='fxi'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg><div>Move os ativos que você escolher de uma corretora para outra, inteiros ou só parte das cotas, mantendo o preço médio de cada ativo. Não gera lucro, prejuízo nem imposto, e o histórico original é preservado.</div></div><div class='stp2'><span class='stn'>1</span><b>Corretoras</b></div><div class='tfrt'><div><label for='tfa'>De</label><select id='tfa'></select></div><div class='tfar' aria-hidden='true'><svg viewBox='0 0 24 24'><path d='M5 12h14M13 6l6 6-6 6'/></svg></div><div><label for='tfb'>Para</label><input id='tfb' list='crs' autocomplete='off' placeholder='Nova corretora'></div></div><div class='stp2'><span class='stn'>2</span><b>Escolha os ativos que serão transferidos</b><span class='stc' id='tfcnt'></span></div><div id='tfl'></div><div class='stp2'><span class='stn'>3</span><label for='tfd'>Data da transferência</label></div><input id='tfd' type='date'><button class='btn bgo' id='tfg'>Transferir selecionados</button><div id='tfm' class='mu' style='margin-top:6px'></div><div class='fxi fx2'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg><div>O app só registra a mudança na sua carteira. A transferência de verdade é pedida às corretoras (formulário STVM ou portabilidade na Área do Investidor da B3) e vale só entre contas do mesmo CPF.</div></div></details><div id='nvp'><div class='row'><div><label for='pd'>Data do pagamento</label><input id='pd' type='date'></div><div><label for='pt'>Ativo</label><input id='pt' list='tks' placeholder='BBAS3' autocapitalize='characters' autocomplete='off'></div></div><div class='row'><div><label for='pc'>Corretora</label><input id='pc' list='crs' autocomplete='off'></div><div><label for='pk'>Modalidade</label><select id='pk'><option value='DIVIDENDOS'>Dividendos</option><option value='JCP'>JCP</option><option value='RENDIMENTO'>Rendimento</option><option value='RENDFII'>Rendimento FII</option><option value='OUTROS'>Outros</option></select></div></div><div class='row r3'><div><label for='pu'>Valor por cota (R$)</label><input id='pu' inputmode='decimal' placeholder='0,10'></div><div><label for='pq'>Cotas</label><input id='pq' inputmode='decimal'></div><div><label for='pi'>IR retido (R$)</label><input id='pi' inputmode='decimal' placeholder='0,00'></div></div><label for='pn'>Ou informe o total líquido recebido (R$)</label><input id='pn' inputmode='decimal' placeholder='Se preencher, o valor por cota é calculado'><div id='ppv' class='pv' hidden></div><button class='btn' id='ps'>Salvar provento</button><div id='pvsg' class='pvsg'></div></div></section><section id='b'></section><section id='p'><div class='ps' role='group' aria-label='Proventos'><button type='button' data-ps='p' class='on'>Lançamentos</button><button type='button' data-ps='r'>Resumo e gráficos</button></div><button type='button' class='pgo' data-pgo='1'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 5v14M5 12h14'/></svg>Lançar provento</button><div id='pl'></div></section><section id='bl'><h2 style='margin-top:6px'>Apuração mensal do imposto</h2><div class='dac'><a class='dab y' id='dpay' href='https://sicalc.receita.fazenda.gov.br/sicalc/principal' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z'/><path d='M8.5 8h7M8.5 12h7M8.5 16h4'/></svg><span>Emitir e pagar o DARF<small>Código 6015 · abre o Sicalc, da Receita Federal</small></span></a><button class='dab b' id='dprej' type='button'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 7l6 6 4-4 8 8'/><path d='M21 12v5h-5'/></svg><span>Lançar prejuízo anterior<small>Informe o saldo que você declarou no IR</small></span></button></div><div id='dfc'></div><div class='row r3'><div><label for='bt'>Tipo de operação</label><select id='bt'><option value='S'>Swing trade</option><option value='D'>Day trade</option></select></div><div><label for='by'>Ano</label><select id='by'></select></div><div><label for='bc'>Corretora</label><select id='bc'></select></div></div><div id='bal'></div><h2 id='pja'>Prejuízo acumulado de anos anteriores</h2><div class='pjx'><b>Para que serve</b><ul><li>Informe o saldo de prejuízo a compensar que você declarou no IR.</li><li>Ele vale a partir de 1º de janeiro do ano escolhido e substitui o saldo que o app calcularia até ali.</li><li>Depois disso, o app continua levando o saldo mês a mês e de um ano para o outro.</li><li>Campo em branco vale zero: o app só compensa o que você informou. Prejuízo que não foi declarado na ficha Renda Variável não pode ser compensado.  Se você não tinha prejuízo a compensar, digite 0 em um dos campos.</li></ul></div><div id='cll'></div><div class='pc pjf' id='pjf'><b class='nnh'>Informar ou corrigir um saldo</b><div class='row'><div><label for='cy'>Início do ano</label><input id='cy' inputmode='numeric' placeholder='2026'></div><div class='pjh'>Vale a partir de 1º de janeiro desse ano.</div></div><div class='row r3'><div><label for='cm'>Ações e ETFs (R$)</label><input id='cm' inputmode='decimal'></div><div><label for='cf'>FIIs (R$)</label><input id='cf' inputmode='decimal'></div><div><label for='cd'>Day trade (R$)</label><input id='cd' inputmode='decimal'></div></div><button class='btn' id='cs'>Salvar prejuízo anterior</button><button class='btn sm' id='cx' hidden style='margin-top:8px'>Cancelar edição</button><div id='cl' class='pjm' role='status'></div></div></section><section id='r'><div class='ps' role='group' aria-label='Proventos'><button type='button' data-ps='p'>Lançamentos</button><button type='button' data-ps='r' class='on'>Resumo e gráficos</button></div><label for='ys'>Ano</label><select id='ys'></select><div id='rsm'></div></section>
 <section id="ir"></section><section id="c"></section><section id='mk'><h2 style='margin-top:6px'>Mercado</h2><input id='mq' type='search' placeholder='Buscar ativo (ex.: PETR4 ou Petrobras)' autocomplete='off' autocapitalize='characters' spellcheck='false' enterkeyhint='search'><div id='mch' style='display:flex;gap:8px;flex-wrap:wrap;margin:10px 0'></div><div id='ml'></div><div class='mu' style='margin-top:10px'>Esta lista mostra só alguns ativos conhecidos. O preço de cada um aparece no cartão, com o horário da última atualização: o botão Atualizar das Posições atualiza os ativos que você tem, e aqui você busca os da lista ou digita um código. A busca também procura em uma base interna da B3 (ações e FIIs, que pode ter ativos antigos e não tem os mais novos), e qualquer código que você digitar pode ser usado em Comprar e Simular. A lista completa e atualizada, o ranking de mais negociados e as logos das empresas ficam para uma próxima versão.</div></section><section id='sm'><h2>Simular uma operação</h2><div class='mu simi'>Veja o preço médio, o resultado e o imposto estimado antes de fazer a operação. Nada é salvo.</div><label>Toque no ativo que você tem para preencher</label><div id='smpk' class='tkcs'></div><div class='pc simf'><div class='seg stp' style='grid-template-columns:1fr 1fr'><label><input type='radio' name='stp' value='VENDA' checked><span>Venda</span></label><label><input type='radio' name='stp' value='COMPRA'><span>Compra</span></label></div><div class='row'><div><label for='sd'>Data</label><input id='sd' type='date'></div><div><label for='sc'>Corretora</label><input id='sc' list='crs' autocomplete='off'></div></div><div class='row'><div><label for='st'>Ativo</label><input id='st' list='tks' placeholder='BBAS3' autocapitalize='characters' autocomplete='off'></div><div><label for='sk'>Tipo do ativo</label><select id='sk'><option value='ACAO'>Ação</option><option value='FII'>FII</option></select></div></div><div class='row'><div><label for='sq'>Quantidade</label><input id='sq' inputmode='decimal'></div><div><label for='sp'>Preço por cota (R$)</label><input id='sp' inputmode='decimal'></div></div><label for='sf'>Taxas estimadas (R$, opcional)</label><input id='sf' inputmode='decimal' placeholder='0,00'></div><div id='sr' style='margin-top:4px'></div></section><section id='chm'><div class='zchk' role='note'><b>Confira as informações.</b> Preços podem ter atraso e as regras de IR de cripto mudam com frequência. Antes de declarar ou pagar, confirme na Receita Federal ou com um contador.<span class='mu'>Regras do app: versão <span data-stxv>atual</span>.</span></div><div id='chmc'></div></section>
 <section id='crn' data-op='COMPRA'><h2 style='margin-top:6px'>Lançar operação de cripto</h2><div class='mu' style='margin:6px 0 2px'>Primeira vez com cripto? Veja o passo a passo e o glossário na aba Dicas. <button type='button' class='sb2' data-zgo='crd' style='margin-left:4px;vertical-align:middle'>Abrir Dicas</button></div><div class='zf' id='zfc'><div class='zfh' id='zfh'>Nova compra</div><div class='lw' style='margin-top:10px'><span class='lbt'>O que você fez?</span><button type='button' class='hq' data-h='zt' aria-expanded='false' aria-label='Ajuda: O que você fez?'>?</button></div><div class='seg' id='zt' role='radiogroup' aria-label='Tipo da operação'><label><input type='radio' name='zt' value='COMPRA' checked><span>Compra</span></label><label><input type='radio' name='zt' value='VENDA'><span>Venda</span></label><label><input type='radio' name='zt' value='PERMUTA'><span>Troca</span></label><label><input type='radio' name='zt' value='RECEB'><span>Recebido</span></label></div><div class='mu' id='zh' style='margin:8px 0 2px'></div><div class='row'><div><div class='lw'><label for='zd'>Data</label><button type='button' class='hq' data-h='zd' aria-expanded='false' aria-label='Ajuda: Data'>?</button></div><input id='zd' type='date'></div><div><div class='lw'><label for='zw'>Corretora ou carteira</label><button type='button' class='hq' data-h='zw' aria-expanded='false' aria-label='Ajuda: Corretora ou carteira'>?</button></div><input id='zw' list='zws' placeholder='Mercado Bitcoin, Binance, Ledger' autocomplete='off'></div></div><div id='zwi' class='exi' hidden></div><div id='zwx' class='exp' hidden><div class='row'><div><div class='lw'><label for='zwt'>Esta corretora é</label><button type='button' class='hq' data-h='zwt' aria-expanded='false' aria-label='Ajuda: Esta corretora é'>?</button></div><select id='zwt'><option value=''>Escolha</option><option value='BR'>Nacional (Brasil)</option><option value='EX'>Estrangeira</option><option value='SC'>Carteira própria</option></select></div><div id='zwpw'><div class='lw'><label for='zwp' id='zwpl'>País da empresa</label><button type='button' class='hq' data-h='zwp' aria-expanded='false' aria-label='Ajuda: país ou CNPJ'>?</button></div><input id='zwp' autocomplete='off' placeholder='Ex.: Estados Unidos'></div></div></div><div id='zrg' hidden><div class='lw'><label for='zr'>Onde foi feita a venda?</label><button type='button' class='hq' data-h='zr' aria-expanded='false' aria-label='Ajuda: Onde foi feita a venda?'>?</button></div><select id='zr'><option value='BR'>Brasil: corretora nacional ou carteira própria</option><option value='EX'>Exterior: corretora estrangeira</option></select></div><div class='row'><div><div class='lw'><label id='zl1' for='zc'>Moeda</label><button type='button' class='hq' data-h='zc' aria-expanded='false' aria-label='Ajuda: Moeda'>?</button></div><input id='zc' list='zcs' placeholder='BTC' autocapitalize='characters' autocomplete='off'></div><div><div class='lw'><label id='zl2' for='zq'>Quantidade</label><button type='button' class='hq' data-h='zq' aria-expanded='false' aria-label='Ajuda: Quantidade'>?</button></div><input id='zq' inputmode='decimal' placeholder='0,00000000'></div></div><div class='row' id='zp2' hidden><div><div class='lw'><label for='zc2'>Moeda recebida</label><button type='button' class='hq' data-h='zc2' aria-expanded='false' aria-label='Ajuda: Moeda recebida'>?</button></div><input id='zc2' list='zcs' placeholder='ETH' autocapitalize='characters' autocomplete='off'></div><div><div class='lw'><label for='zq2'>Quantidade recebida</label><button type='button' class='hq' data-h='zq2' aria-expanded='false' aria-label='Ajuda: Quantidade recebida'>?</button></div><input id='zq2' inputmode='decimal' placeholder='0,00000000'></div></div><div id='zrm' hidden><div class='lw'><label for='zm'>Como tratar este recebimento?</label><button type='button' class='hq' data-h='zm' aria-expanded='false' aria-label='Ajuda: Como tratar este recebimento?'>?</button></div><select id='zm'><option value='ZERO'>Custo zero (airdrop, hard fork, bônus)</option><option value='REND'>Rendimento a declarar (staking, mineração, pagamento): o valor em R$ vira o custo</option></select></div><div class='row' id='zcw'><div><div class='lw'><label for='zcu'>Valor informado em</label><button type='button' class='hq' data-h='zcu' aria-expanded='false' aria-label='Ajuda: Valor informado em'>?</button></div><select id='zcu'><option value='BRL'>Reais (R$)</option><option value='USD'>Dólares (US$)</option></select></div><div id='zxw' hidden><div class='lw'><label for='zfx'>Dólar do dia (R$ por US$)</label><button type='button' class='hq' data-h='zfx' aria-expanded='false' aria-label='Ajuda: Dólar do dia (R$ por US$)'>?</button></div><input id='zfx' inputmode='decimal' placeholder='5,4321'><button type='button' class='btn sm' id='zptx' style='margin:6px 0 0'>Buscar PTAX do dia</button><div class='mu' id='zptm' style='margin-top:6px'></div></div></div><div class='mu' id='zxl' hidden style='margin:6px 0 0'>Use a cotação <b>PTAX de venda</b> do Banco Central do <b>dia da operação</b> (fim de semana ou feriado: a do último dia útil anterior). O app converte tudo para reais com esta cotação. <a href='https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes' target='_blank' rel='noopener noreferrer'>Consultar a PTAX no site do Banco Central</a>. No programa para Windows e no app Android, o botão <b>Buscar PTAX do dia</b> faz essa consulta para você.</div><div class='row'><div id='zvw'><div class='lw'><label id='zl3' for='zv'>Valor</label><button type='button' class='hq' data-h='zv' aria-expanded='false' aria-label='Ajuda: Valor'>?</button></div><input id='zv' inputmode='decimal' placeholder='0,00'></div><div id='zfw'><div class='lw'><label id='zl4' for='zf'>Taxas (R$)</label><button type='button' class='hq' data-h='zf' aria-expanded='false' aria-label='Ajuda: Taxas (R$)'>?</button></div><input id='zf' inputmode='decimal' placeholder='0,00'></div></div><div id='zvs' class='pv' hidden></div><div class='lw'><label for='zn'>Observação (opcional)</label><button type='button' class='hq' data-h='zn' aria-expanded='false' aria-label='Ajuda: Observação (opcional)'>?</button></div><input id='zn' autocomplete='off' placeholder='Ex.: hash da transação'><div class='zft'><span id='zftl'>Custo total (com taxas)</span><b id='zftv'>R$ 0,00</b></div></div><div id='zpv' class='pv' hidden></div><button class='btn' id='zs' type='button'>Salvar operação</button><button class='btn sm' id='zx' type='button' hidden style='margin-top:8px'>Cancelar edição</button><datalist id='zcs'></datalist><datalist id='zws'></datalist></section>
 <section id='crp'><div id='zpos'></div></section>
@@ -1587,7 +1587,7 @@ function qhKMap(rows,tz){var m={};rows.forEach(function(x){if(!Array.isArray(x)|
 async function qhUsdt(){var k=await qhKl('USDTBRL');if(!k.rows)return {err:k.err||'nf'};var m=qhKMap(k.rows,k.tz);return Object.keys(m).length?{d:m}:{err:'nf'}}
 async function qhCoin(c,ctx){
   if(c==='BRL')return {err:'nf'};
-  var k=await qhKl(c+'BRL'),m,old=null,ks;
+  var k=(window.qzU&&qzU(c))?{err:'nf'}:await qhKl(c+'BRL'),m,old=null,ks;
   if(k.rows){m=qhKMap(k.rows,k.tz);if(Object.keys(m).length){
     ks=Object.keys(m).sort();
     /* par em reais que parou de negociar (acabou ou virou USDT): guarda o que existe e completa os dias seguintes pelo par em USDT */
@@ -1895,7 +1895,7 @@ window.HMX={render:hmRender,data:hmData};
 /* ===== v54: modulo Cripto (abas proprias, regras de imposto proprias) ===== */
 (function(){
 var KEY='carteira-cr-v1',KMOD='carteira-mod',LIM=35000,EX0='2024-01-01';
-function CR0(){return{ops:[],px:{},cat:{},paid:{},ir:{},tr:[],pf:{w:'',reg:'BR',cu:'BRL'},fx:{},ex:{}}}
+function CR0(){return{ops:[],px:{},cat:{},paid:{},ir:{},tr:[],pf:{w:'',reg:'BR',cu:'BRL'},fx:{},ex:{},pp:{},lk:{}}}
 var CR=CR0(),CXE=null,FXAUTO='',VAUTO='',EXOPEN=false,CBY=String(new Date().getFullYear()),CIY=CBY,CMOD='rv',LAST={rv:'hm',cr:'chm'},ZSEQ=0;
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var ALIAS={BITCOIN:'BTC',XBT:'BTC',ETHEREUM:'ETH',ETHER:'ETH',TETHER:'USDT',SOLANA:'SOL',RIPPLE:'XRP',CARDANO:'ADA',DOGECOIN:'DOGE',LITECOIN:'LTC',POLKADOT:'DOT',CHAINLINK:'LINK',AVALANCHE:'AVAX'};
@@ -1909,13 +1909,13 @@ var TYC={COMPRA:'var(--gn)',VENDA:'var(--rd)',PERMUTA:'var(--ac)',RECEB:'#d4a017
 function cn(v){var s=String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'');return ALIAS[s]||s}
 function rg(o){return o.reg==='EX'&&o.date>=EX0?'EX':'BR'}
 function crCat(c){return CR.cat[c]||(c==='BTC'?'01':STB[c]?'03':'02')}
-function fq(n){return vzOn()?'***':(+n||0).toLocaleString('pt-BR',{maximumFractionDigits:8})}
+function fq(n){return vzOn()?'***':(+(+n||0).toPrecision(12)).toLocaleString('pt-BR',{maximumFractionDigits:8})}
 function fin(n){return n?String(+n).replace('.',','):''}
 function pq(n){n=+n||0;return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:Math.abs(n)<1&&n!==0?8:2})}
 function mon2(v){return r2(v).toFixed(2).replace('.',',')}
 function newId(){ZSEQ=(ZSEQ+1)%10;return Date.now()*10+ZSEQ}
 function crTax(g){var t=0,prev=0;[[5e6,.15],[1e7,.175],[3e7,.2],[Infinity,.225]].forEach(function(f){if(g>prev){t+=(Math.min(g,f[0])-prev)*f[1];prev=f[0]}});return r2(t)}
-function norm(o){var c=CR0();if(o&&typeof o==='object'){c.ops=Array.isArray(o.ops)?o.ops.filter(function(x){return x&&typeof x==='object'&&x.date&&x.coin}):[];['px','cat','paid','ir','fx','ex'].forEach(function(k){if(o[k]&&typeof o[k]==='object'&&!Array.isArray(o[k]))c[k]=o[k]});c.tr=Array.isArray(o.tr)?o.tr:[];if(o.pf&&typeof o.pf==='object')c.pf={w:String(o.pf.w||''),reg:o.pf.reg==='EX'?'EX':'BR',cu:o.pf.cu==='USD'?'USD':'BRL'}}return c}
+function norm(o){var c=CR0();if(o&&typeof o==='object'){c.ops=Array.isArray(o.ops)?o.ops.filter(function(x){return x&&typeof x==='object'&&x.date&&x.coin}):[];['px','cat','paid','ir','fx','ex','pp','lk'].forEach(function(k){if(o[k]&&typeof o[k]==='object'&&!Array.isArray(o[k]))c[k]=o[k]});c.tr=Array.isArray(o.tr)?o.tr:[];if(o.pf&&typeof o.pf==='object')c.pf={w:String(o.pf.w||''),reg:o.pf.reg==='EX'?'EX':'BR',cu:o.pf.cu==='USD'?'USD':'BRL'}}return c}
 /* v55: nome unico de corretora (canonB e compartilhado com a aba Acoes) */
 function crCanon(){var n=0;CR.ops.forEach(function(o){if(typeof o.where==='string'){var v=canonB(o.where);if(v!==o.where){o.where=v;n++}}});
   if(CR.pf&&typeof CR.pf.w==='string'){var w=canonB(CR.pf.w);if(w!==CR.pf.w){CR.pf.w=w;n++}}
@@ -2200,9 +2200,12 @@ function zRound(p){return +(+p).toPrecision(8)}
 function zIdle(st,s){var x=st&&st[s];return !!(x&&((typeof x.n==='number'&&x.n===0)||(typeof x.v==='number'&&x.v===0)))}
 function zPick(m,c,st){if(!m)return null;c=String(c).toUpperCase();var u=m.USDTBRL>0;
   if(c==='USDT')return u?{s:'USDTBRL',k:'b'}:null;
-  var b=m[c+'BRL']>0,d=m[c+'USDT']>0&&u;
-  if(b&&d&&zIdle(st,c+'BRL')&&!zIdle(st,c+'USDT'))return {s:c+'USDT',k:'u'};
-  if(b)return {s:c+'BRL',k:'b'};
+  var b=m[c+'BRL']>0,d=m[c+'USDT']>0&&u,pf=(CR.pp||{})[c],dv=b&&d?m[c+'BRL']/(m[c+'USDT']*m.USDTBRL)-1:0;
+  if(pf==='BRL'&&b)return {s:c+'BRL',k:'b',m:1,dv:dv};
+  if(pf==='USDT'&&d)return {s:c+'USDT',k:'u',m:1,dv:dv};
+  if(b&&d&&zIdle(st,c+'BRL')&&!zIdle(st,c+'USDT'))return {s:c+'USDT',k:'u',w:'idle',dv:dv};
+  if(b&&d&&Math.abs(dv)>0.05)return {s:c+'USDT',k:'u',w:'div',dv:dv};
+  if(b)return {s:c+'BRL',k:'b',dv:dv};
   if(d)return {s:c+'USDT',k:'u'};
   return null}
 function zPx(m,k){return k.k==='u'?m[k.s]*m.USDTBRL:m[k.s]}
@@ -2219,21 +2222,30 @@ function zChg(k,st){var x=st&&st[k.s];if(!x||typeof x.c!=='number')return null;v
   if(k.k==='u'&&k.s!=='USDTBRL'&&f&&typeof f.c==='number')v=((1+v/100)*(1+f.c/100)-1)*100;
   return Math.round(v*10000)/10000}
 /* aviso no cartao quando o preco vem do par em USDT (e se o par em reais ja existiu para esta moeda) */
-function zVia(c){var e=QXT['C:'+c],s=e&&e.y;if(!e||e.s!=='Binance'||typeof s!=='string'||!/^[A-Z0-9]{1,20}USDT$/.test(s))return '';
-  var m=typeof e.mg==='string'&&/^[A-Z0-9]{1,20}BRL$/.test(e.mg)?e.mg:'';
-  return '<div class="mu zvia" title="O preço vem do par em USDT multiplicado pelo dólar (USDTBRL). Pode diferir um pouco do preço em reais que a corretora mostra.">Cotação via '+esc(s)+' × dólar'+(m?' · o par '+esc(m)+' deixou de ser negociado na Binance, e o app já trocou sozinho':'')+'</div>'}
+function zVia(c){var e=QXT['C:'+c],s=e&&e.y,lk=(CR.lk||{})[c],pf=(CR.pp||{})[c]||'',h='',al=e&&Array.isArray(e.al)?e.al:[];
+  if(lk)return '<div class="zvia zwarn"><b>Preço digitado à mão, travado.</b> O botão de atualizar não muda este preço. <button type="button" class="sb" data-zunlk="'+esc(c)+'">Destravar</button></div>';
+  if(!e||e.s!=='Binance'||typeof s!=='string')return '';
+  var u=/^[A-Z0-9]{1,20}USDT$/.test(s)&&s!=='USDTBRL',dv=typeof e.dv==='number'?e.dv:null,
+    why=e.mn?'você escolheu este par':e.w==='idle'?'o par '+esc(c)+'BRL está parado (sem negócios em 24 h)':e.w==='div'?'o par '+esc(c)+'BRL está '+(dv>0?'+':'')+String(dv).replace('.',',')+'% diferente do preço em USDT × dólar':typeof e.mg==='string'?'o par '+esc(e.mg)+' deixou de ser negociado na Binance':'',
+    warn=!e.mn&&(e.w==='idle'||e.w==='div');
+  if(!u&&!pf&&!(al.length>1))return '';
+  h='<div class="zvia'+(warn?' zwarn':'')+'">'+(warn?'<b>Atenção ao preço.</b> ':'')+'Cotação via <b>'+esc(s)+(u?' × dólar':'')+'</b>'+(why?' · '+why:'');
+  if(al.length>1)h+=' <label class="zpsl">Par: <select data-zpp="'+esc(c)+'" aria-label="Par de cotação de '+esc(c)+'"><option value=""'+(pf?'':' selected')+'>Automático</option><option value="BRL"'+(pf==='BRL'?' selected':'')+'>'+esc(c)+'BRL</option><option value="USDT"'+(pf==='USDT'?' selected':'')+'>'+esc(c)+'USDT × dólar</option></select></label>';
+  return h+'</div>'}
 async function zQuotes(prog){
   var P=calc(CR.ops).pools,coins=Object.keys(P).filter(function(c){return P[c].qty>1e-9}).sort(),L={k:'C',t:Date.now(),n:coins.length,ok:0,fail:[],skip:[],rest:[]},rest=[],i,B,m,net=0,st;
   if(!coins.length){L.msg='Nenhuma moeda em carteira para atualizar.';return L}
   B=await qxBinance();
   if(B.map){st=await qxTick24(zCand(coins,B.map));
-    coins.forEach(function(c){var k=zPick(B.map,c,st);if(!k){rest.push(c);return}
-      var o=QXT['C:'+c],e=qxEnt('Binance',zChg(k,st));CR.px[c]=zRound(zPx(B.map,k));e.y=k.s;
+    coins.forEach(function(c){if((CR.lk||{})[c]&&+CR.px[c]>0){L.ok++;return}var k=zPick(B.map,c,st);if(!k){rest.push(c);return}
+      var o=QXT['C:'+c],e=qxEnt('Binance',zChg(k,st));CR.px[c]=zRound(zPx(B.map,k));e.y=k.s;if(k.w)e.w=k.w;if(k.m)e.mn=1;if(k.dv)e.dv=Math.round(k.dv*1000)/10;
+      if(!o||o.y!==k.s){if(window.qzReset)qzReset(c)}var b2=c+'BRL',u2=c+'USDT';e.al=[B.map[b2]>0?b2:'',B.map[u2]>0&&B.map.USDTBRL>0?u2:''].filter(Boolean);
       if(k.k==='u'&&o&&o.s==='Binance'&&typeof o.y==='string'){if(/BRL$/.test(o.y)&&o.y!=='USDTBRL')e.mg=o.y;else if(typeof o.mg==='string')e.mg=o.mg}
       QXT['C:'+c]=e;L.ok++})}
   else rest=coins.slice();
   for(i=0;i<rest.length;i++){
     if(prog)prog(L.ok+L.fail.length+1,coins.length);
+    if((CR.lk||{})[rest[i]]&&+CR.px[rest[i]]>0){L.ok++;continue}
     m=await qxMB(rest[i]);
     if(m.p>0){CR.px[rest[i]]=zRound(m.p);QXT['C:'+rest[i]]=qxEnt('Mercado Bitcoin');L.ok++;net=0}
     else{var w=B.map?(m.err&&m.err!=='nf'&&m.err!=='http'&&m.err!=='parse'?m.err:'nf'):(B.err==='net'||m.err==='net'?'net':(B.err||m.err||'nf'));L.fail.push({k:rest[i],w:w});
@@ -2364,7 +2376,7 @@ function mkClock(t){var d=new Date(t),n=new Date(),p=function(x){return (x<10?'0
   return d.toDateString()===n.toDateString()?'hoje às '+h:p(d.getDate())+'/'+p(d.getMonth()+1)+' às '+h}
 function mkUsd(n){n=+n||0;return 'US$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:n>=1?2:8})}
 function mkUni(){var u={},m=MK.map||{};Object.keys(m).forEach(function(s){var b='';if(/USDT$/.test(s))b=s.slice(0,-4);else if(/BRL$/.test(s))b=s.slice(0,-3);if(b&&/^[A-Z0-9]{1,12}$/.test(b))u[b]=1});u.USDT=1;MK.uni=u}
-function mkSym(c){var m=MK.map;if(!m)return '';if(m[c+'BRL']>0)return c+'BRL';if(m[c+'USDT']>0)return c+'USDT';return ''}
+function mkSym(c){var m=MK.map;if(!m)return '';if(window.qzU&&qzU(c)&&m[c+'USDT']>0&&m.USDTBRL>0)return c+'USDT';if(m[c+'BRL']>0)return c+'BRL';if(m[c+'USDT']>0)return c+'USDT';return ''}
 function mkPrice(c){var m=MK.map,p=0,u=0,s='Binance',t=MK.t;
   if(m){p=zPriceFrom(m,c);if(p>0){u=c==='USDT'?(m.USDTBRL>0?1:0):(m[c+'USDT']>0?m[c+'USDT']:(m.USDTBRL>0?p/m.USDTBRL:0))}}
   if(p>0&&m&&c!=='USDT'&&!(m[c+'BRL']>0)&&m[c+'USDT']>0)s='Binance · '+c+'USDT × dólar';
@@ -2542,6 +2554,7 @@ function wire(){
       if(typeof askDlg==='function')askDlg('Excluir '+esc(xc)+'?','<p style="margin:0 0 8px">Serão apagados <b>'+xl.length+(xl.length>1?' lançamentos':' lançamento')+'</b> de '+esc(xc)+' (compras, vendas, trocas e recebimentos). O custo médio, o Histórico e o Balanço são recalculados na hora.</p>'+(xp?'<p style="margin:0 0 8px"><b>Atenção:</b> '+xp+(xp>1?' trocas':' troca')+' em que você recebeu '+esc(xc)+' também '+(xp>1?'serão apagadas':'será apagada')+', e isso muda a moeda que você entregou nelas.</p>':'')+'<p style="margin:0">Dá para desfazer logo depois ou no Histórico, em Excluídos recentemente.</p>','Excluir '+esc(xc),function(){zDelCoin(xc)});
       else if(b.dataset.ok)zDelCoin(xc);else{b.dataset.ok='1';b.textContent='Confirmar'}
       return}
+    if(b=t.closest('[data-zunlk]')){var uc=b.dataset.zunlk;if(CR.lk)delete CR.lk[uc];crSave();if(typeof qxRun==='function')qxRun('C');else rPos();return}
     if(b=t.closest('[data-mkstar]')){var mc=b.dataset.mkstar,mi=MKF.fav.indexOf(mc);if(mi>=0)MKF.fav.splice(mi,1);else MKF.fav.push(mc);mkSave();mkRender();return}
     if(b=t.closest('[data-mkpr]')){if(MKPK[b.dataset.mkpr]){MKF.pr=b.dataset.mkpr;mkSave();mkRender();if(MKBIG){mkBigPaint();var bs=mkSym(MKBIG);if(bs)mkSer([bs])}}return}
     if(b=t.closest('[data-mkbx]')){mkBigClose();return}
@@ -2559,7 +2572,8 @@ function wire(){
   });
   document.addEventListener('change',function(e){var t=e.target,k;
     if(t.dataset&&t.dataset.exf!==undefined){exSet(t.dataset.exn,t.dataset.exf==='t'?'t':'v',t.value);crAll();zEx(false,true);return}
-    if(t.dataset&&t.dataset.zpx!==undefined){k=t.dataset.zpx;var v=num(t.value);if(v>0)CR.px[k]=v;else delete CR.px[k];crSave();rPos();crBk();return}
+    if(t.dataset&&t.dataset.zpx!==undefined){k=t.dataset.zpx;var v=num(t.value);CR.lk=CR.lk||{};if(v>0){CR.px[k]=v;CR.lk[k]=1}else{delete CR.px[k];delete CR.lk[k]}crSave();rPos();crBk();return}
+    if(t.dataset&&t.dataset.zpp!==undefined){k=t.dataset.zpp;CR.pp=CR.pp||{};if(t.value)CR.pp[k]=t.value;else delete CR.pp[k];crSave();if(typeof qxRun==='function')qxRun('C');else rPos();return}
     if(t.dataset&&t.dataset.zcat!==undefined){CR.cat[t.dataset.zcat]=t.value;crSave();rPos();rIR();crBk();return}
     if(t.dataset&&t.dataset.zpd!==undefined){var p=CR.paid[t.dataset.zpd]||(CR.paid[t.dataset.zpd]={});p.p=t.checked;crSave();rBal();rIR();crBk();return}
     if(t.dataset&&t.dataset.zpv!==undefined){var q=CR.paid[t.dataset.zpv]||(CR.paid[t.dataset.zpv]={});q.v=num(t.value);crSave();rBal();crBk();return}
@@ -2695,7 +2709,7 @@ async function qiKGet(sym,iv,lim){var H=['https://data-api.binance.vision','http
   return null}
 function qiKRows(rows){var o=[];(rows||[]).forEach(function(x){if(Array.isArray(x)&&x.length>=5){var t=+x[0],c=+x[4],op=+x[1];if(t>0&&c>0)o.push([t,c,op>0?op:c])}});return o}
 async function qiCoin(c,ctx){
-  var r=await qiKGet(c+'BRL','15m',96),rows=qiKRows(r),now=Date.now();
+  var r=(window.qzU&&qzU(c))?null:await qiKGet(c+'BRL','15m',96),rows=qiKRows(r),now=Date.now();
   if(rows.length>=8&&now-rows[rows.length-1][0]<3*36e5)return rows;
   var r2=await qiKGet(c+'USDT','15m',96);if(!r2)return rows.length>=8?rows:null;
   var u=ctx.U||(ctx.U=qiKRows(await qiKGet('USDTBRL','15m',96)));if(!u.length)return rows.length>=8?rows:null;
@@ -2809,7 +2823,7 @@ function estA(c){
 
 /* v2.63: barra do topo (atualizar, olho, engrenagem), painel de configuracoes, perfil, tema, compartilhar e titulos com valor */
 (function(){
-var APPV='3.3',APPD='13/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
+var APPV='3.4',APPD='17/11/2026',APPURL='https://github.com/notini-guilherme/carteira-android/releases/tag/ultima';
 var $s=function(s,r){return (r||document).querySelector(s)};
 var timer=0;
 function txtMsg(id,t){var e=$s(id);if(e)e.textContent=t||''}
@@ -3187,8 +3201,10 @@ function chDataMk(tk,r){var s=null,q=QXT['A:'+tk],real=!!(q&&q.t)||!qhEnv(),has=
 function chTag(p,r,i){var l=String(p.l||'');
   if(r===1){if(l==='10:00'&&i===0)return '10:00 · abertura';if(l==='fech.')return 'fechamento';if(l==='fech. ant.')return 'fech. anterior';return l}
   return l}
+function chFmtFor(P){var m=Infinity;(P||[]).forEach(function(p){var v=Math.abs(+(p&&p.p));if(v>0&&v<m)m=v});if(!(m<1))return brl;var d=Math.min(10,Math.max(2,Math.ceil(-Math.log10(m))+3));
+  return function(v){if(typeof vzOn==='function'&&vzOn())return brl(v);return 'R$ '+(+v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})}}
 function chBuild(o){
-  var F=typeof o.fmt==='function'?o.fmt:brl,
+  var F=typeof o.fmt==='function'?o.fmt:chFmtFor(o.s&&o.s.pts),
       s=o.s,P=s.pts,n=P.length,sz=o.sz||'card',k=o.k||'A',r=o.r,W=420,H=sz==='card'?122:(sz==='big'?236:0),T=sz==='full'?28:(sz==='big'?26:24),B=sz==='full'?26:(sz==='big'?24:22),L=6,R=6,i;
   if(sz==='full'){W=Math.max(320,Math.min(1400,window.innerWidth||800));H=Math.max(170,Math.min(Math.round(W*1.15),Math.round(((window.innerHeight||600)-200)*W/Math.max(320,(window.innerWidth||800)-24))))}
   var prs=P.map(function(p){return p.p}),mn=Math.min.apply(null,prs),mx=Math.max.apply(null,prs),i0=prs.indexOf(mn),i1=prs.indexOf(mx),
@@ -3611,7 +3627,7 @@ async function ivRaw(sym,iv,n,ttl){var key=sym+'|'+iv,e=IVR[key],now=Date.now(),
   delete IVX[key];IVR[key]={t:now,rows:rows};return rows}
 /* serie de uma moeda em reais: par BRL ou USDT x USDT/BRL */
 async function ivCoin(c,r){var f=ivCfg(r),now=Date.now(),st=IVMS[f.iv],rows,r2,u,out=[],j=-1;
-  rows=await ivRaw(c==='USDT'?'USDTBRL':c+'BRL',f.iv,f.n,f.ttl);
+  rows=(c!=='USDT'&&window.qzU&&qzU(c))?null:await ivRaw(c==='USDT'?'USDTBRL':c+'BRL',f.iv,f.n,f.ttl);
   if(c==='USDT')return rows;
   if(rows&&rows.length>=8&&now-rows[rows.length-1][0]<Math.max(3*36e5,3*st))return rows;
   r2=await ivRaw(c+'USDT',f.iv,f.n,f.ttl);u=await ivRaw('USDTBRL',f.iv,f.n,f.ttl);
@@ -5255,7 +5271,7 @@ function nyHm(t){var d=new Date(t),p=function(n){return (n<10?'0':'')+n};return 
 function nyLs(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}return null}
 
 /* ---------- 14) preco atual com 2 casas (15,5 vira 15,50; 0,00002 continua como esta) ---------- */
-function nyP2(v){v=+v;if(!(v>0))return '';var s=String(v),d;if(/e/i.test(s))return s.replace('.',',');d=(s.split('.')[1]||'').length;return d<2?v.toFixed(2).replace('.',','):s.replace('.',',')}
+function nyP2(v){v=+v;if(!(v>0))return '';v=+v.toPrecision(12);var s=String(v),d;if(/e/i.test(s))return s.replace('.',',');d=(s.split('.')[1]||'').length;return d<2?v.toFixed(2).replace('.',','):s.replace('.',',')}
 
 /* ---------- 8) Patrimonio dia a dia: 2 casas decimais nas marcas ---------- */
 qhC=function(v){var a=Math.abs(v),f=function(x,d){return x.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})};return 'R$ '+(a>=1e6?f(v/1e6,3)+' mi':a>=1e3?f(v/1e3,3)+' mil':f(v,2))};
@@ -5615,7 +5631,7 @@ function nzMyTks(){var o=[];try{hmData('A').items.forEach(function(a){if(a.qty>0
 /* ---------- 2) cripto: campo "Preco da moeda"; a quantidade (ou o preco) e calculada ---------- */
 var NZP={busy:0};
 function nzNum(s){s=String(s==null?'':s).trim();if(!s)return 0;var v=typeof num==='function'?num(s):parseFloat(s.replace(/\./g,'').replace(',','.'));return v>0?v:0}
-function nzFmtQ(x){return String(+(+x).toFixed(8)).replace('.',',')}
+function nzFmtQ(x){return String(+(+(+x).toFixed(8)).toPrecision(12)).replace('.',',')}
 function nzFmtV(x){return (+x).toFixed(2).replace('.',',')}
 function nzFmtP(x){x=+x;return x>=1?x.toFixed(2).replace('.',','):String(+x.toPrecision(6)).replace('.',',')}
 function nzCrType(){var r=document.querySelector('input[name=zt]:checked');return r?r.value:'COMPRA'}
@@ -5634,20 +5650,23 @@ function nzCrVis(){
     ph.innerHTML='Informe o valor '+(t==='VENDA'?'recebido':'pago')+' e o preço: a quantidade é calculada sozinha. Se preferir, digite a quantidade e o preço sai do valor.'+(px>0&&!usd?' <button type="button" class="lk nzuse" data-nzuse="'+px+'">Usar o preço de agora: '+nzEsc(typeof brl==='function'?brl(px):px)+'</button>':'')}}
 function nzCoin(){var e=document.getElementById('zc');return e?String(e.value||'').toUpperCase().replace(/[^A-Z0-9]/g,''):''}
 function nzMkPx(c){try{if(!c||!window.CRX)return 0;var p=window.CRX.get().px||{};return +p[c]>0?+p[c]:0}catch(e){return 0}}
-function nzPut(id,txt){var el=document.getElementById(id);if(!el)return;NZP.busy=1;try{el.value=txt;el.classList.add('nzau');el.dispatchEvent(new Event('input',{bubbles:true}))}finally{NZP.busy=0}}
-function nzClearAuto(){['nzpx','zq','zv'].forEach(function(id){var el=document.getElementById(id);if(el&&el.classList.contains('nzau')){NZP.busy=1;try{el.value='';el.classList.remove('nzau');el.dispatchEvent(new Event('input',{bubbles:true}))}finally{NZP.busy=0}}})}
+function nzPut(id,txt){var el=document.getElementById(id);if(!el)return;NZP.busy=1;try{el.value=txt;el.classList.add('nzau');el.dispatchEvent(new Event('input',{bubbles:true}))}finally{NZP.busy=0}nzTags()}
+function nzTags(){['nzpx','zq','zv'].forEach(function(i){var el=document.getElementById(i),lb=document.querySelector('label[for="'+i+'"]');if(!el||!lb)return;var t=lb.querySelector('.nzcalc'),on=el.classList.contains('nzau')&&!!el.value;if(on&&!t)lb.insertAdjacentHTML('beforeend','<span class="nzcalc">calculado</span>');else if(!on&&t)t.remove()})}
+function nzClearAuto(){['nzpx','zq','zv'].forEach(function(id){var el=document.getElementById(id);if(el&&el.classList.contains('nzau')){NZP.busy=1;try{el.value='';el.classList.remove('nzau');el.dispatchEvent(new Event('input',{bubbles:true}))}finally{NZP.busy=0}}});nzTags()}
 function nzCrOn(){var t=nzCrType();return (t==='COMPRA'||t==='VENDA')&&!!document.getElementById('nzpx')}
 function nzCrInput(e){
   var id=e.target&&e.target.id;if(NZP.busy||(id!=='nzpx'&&id!=='zq'&&id!=='zv'))return;
   if(!nzCrOn())return;
-  var el=e.target;el.classList.remove('nzau');
+  var el=e.target;el.classList.remove('nzau');setTimeout(nzTags,0);
   var P=nzNum(document.getElementById('nzpx').value),Q=nzNum(document.getElementById('zq').value),V=nzNum(document.getElementById('zv').value);
   var au=function(i){var x=document.getElementById(i);return !!(x&&x.classList.contains('nzau'))};
   var cur=id==='nzpx'?P:id==='zq'?Q:V;
   if(!(cur>0)){nzClearAuto();return}
-  if(id==='nzpx'){if(V>0)nzPut('zq',nzFmtQ(V/P));else if(Q>0&&au('zv'))nzPut('zv',nzFmtV(P*Q));else if(Q>0)nzPut('zv',nzFmtV(P*Q))}
-  else if(id==='zq'){if(V>0&&!au('zv'))nzPut('nzpx',nzFmtP(V/Q));else if(P>0)nzPut('zv',nzFmtV(P*Q))}
-  else{if(P>0&&!au('nzpx'))nzPut('zq',nzFmtQ(V/P));else if(Q>0&&!au('zq'))nzPut('nzpx',nzFmtP(V/Q));else if(P>0)nzPut('zq',nzFmtQ(V/P))}}
+  var tP=P>0&&!au('nzpx'),tQ=Q>0&&!au('zq'),tV=V>0&&!au('zv');
+  if(tP&&tQ&&!tV)nzPut('zv',nzFmtV(P*Q));
+  else if(tP&&tV&&!tQ)nzPut('zq',nzFmtQ(V/P));
+  else if(tQ&&tV&&!tP)nzPut('nzpx',nzFmtP(V/Q));
+  else if((tP?1:0)+(tQ?1:0)+(tV?1:0)<2)['nzpx','zq','zv'].forEach(function(i){if(i!==id&&au(i)){var x=document.getElementById(i);NZP.busy=1;try{x.value='';x.classList.remove('nzau');x.dispatchEvent(new Event('input',{bubbles:true}))}finally{NZP.busy=0}}})}
 function nzCrSync(){
   nzCrBuild();nzCrVis();
   var p=document.getElementById('nzpx'),q=document.getElementById('zq'),v=document.getElementById('zv');if(!p||!q||!v)return;
@@ -5887,7 +5906,7 @@ function dmShort(k){return k?k.slice(8,10)+'/'+k.slice(5,7):''}
 /* ---------- graficos (SVG) ---------- */
 function donut(rows,top,sub){var R=15.9155,o=0,s='<svg class="s3dn" viewBox="0 0 42 42" role="img" aria-label="'+esc(top+' '+sub)+'"><circle cx="21" cy="21" r="'+R+'" fill="none" stroke="var(--bg)" stroke-width="6"/>';
   rows.forEach(function(r){var p=Math.max(0,r.p*100);if(p<=0)return;s+='<circle cx="21" cy="21" r="'+R+'" fill="none" stroke="'+r.c+'" stroke-width="6" stroke-dasharray="'+p.toFixed(3)+' '+(100-p).toFixed(3)+'" stroke-dashoffset="'+(25-o).toFixed(3)+'"/>';o+=p});
-  return s+'<text x="21" y="20.5" text-anchor="middle" font-size="'+(String(top).length>5?5.4:String(top).length>3?6.6:8.5)+'" font-weight="800" fill="currentColor">'+esc(top)+'</text><text x="21" y="26.5" text-anchor="middle" font-size="4.2" fill="var(--mu)">'+esc(sub)+'</text></svg>'}
+  return s+'<text x="21" y="20.5" text-anchor="middle" font-size="'+(String(top).length>11?3.7:String(top).length>9?4.2:String(top).length>7?4.8:String(top).length>5?5.4:String(top).length>3?6.6:8.5)+'" font-weight="800" fill="currentColor">'+esc(top)+'</text><text x="21" y="26.5" text-anchor="middle" font-size="4.2" fill="var(--mu)">'+esc(sub)+'</text></svg>'}
 /* legenda do rosquinha: nome, barra e porcentagem */
 function legend(rows,showV){var h='<div class="s3lg">';
   rows.forEach(function(r){h+='<div class="s3lr" style="--wc:'+r.c+'"><span class="s3ln"><i class="s3lc"></i>'+esc(r.n)+'</span><span class="s3lb"><i style="width:'+Math.max(2,Math.round(r.p*100))+'%"></i></span><span class="s3lp">'+(masked()?'**%':pc1(r.p))+'</span>'+(showV?'<span class="s3lv mu">'+brl(r.v)+'</span>':'')+'</div>'});
@@ -6147,7 +6166,7 @@ R.ttr=function(){
   /* proventos por tipo de investimento (12 meses) */
   var pt={};Object.keys(p12.by).forEach(function(k){Object.keys(p12.by[k]).forEach(function(t){pt[t]=(pt[t]||0)+p12.by[k][t]})});
   var pr=Object.keys(TT).filter(function(t){return pt[t]>0}).map(function(t){return {n:TT[t],v:pt[t],p:p12.tot>0?pt[t]/p12.tot:0,c:TCOL[t]}});
-  G.push(blk('Proventos por tipo de investimento','Dividendos, JCP e rendimentos líquidos dos últimos 12 meses.',pr.length?U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(pr,U.fmtK?U.fmtK(p12.tot):brl(p12.tot),'12 meses')+'</div>'+U.legend(pr,true)+'</div><button type="button" class="lk" data-s3go="tt:ttp">Ver os proventos mês a mês</button>'):U.card(U.empty('Nenhum provento lançado nos últimos 12 meses.'))));
+  G.push(blk('Proventos por tipo de investimento','Dividendos, JCP e rendimentos líquidos dos últimos 12 meses.',pr.length?U.card('<div class="s3wd"><div class="s3dnw">'+U.donut(pr,brl(p12.tot),'12 meses')+'</div>'+U.legend(pr,true)+'</div><button type="button" class="lk" data-s3go="tt:ttp">Ver os proventos mês a mês</button>'):U.card(U.empty('Nenhum provento lançado nos últimos 12 meses.'))));
   /* destaques do dia, com o preco */
   var ups=D.ups.slice().sort(function(a,b){return b.d-a.d});
   if(ups.length>=2){var hi=ups.filter(function(x){return x.d>0}).slice(0,3),lo=ups.filter(function(x){return x.d<0}).slice(-3).reverse(),
@@ -6915,7 +6934,7 @@ var $i=function(id){return document.getElementById(id)},A2=false;
 function typ(){var r=document.querySelector('input[name=zt]:checked');return r?r.value:'COMPRA'}
 function cn2(v){return String(v||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'')}
 function n(v){var x=num(v);return isFinite(x)?x:0}
-function fq(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
+function fq(v){return (+(+v||0).toPrecision(12)).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
 function fp(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:v<1?8:2})}
 function pxOf(c){try{return typeof nzMkPx==='function'?(+nzMkPx(c)||0):0}catch(e){return 0}}
 function put(id,v){var e=$i(id);if(!e)return;e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))}
@@ -6972,7 +6991,7 @@ try{if(!window.__S32SAFE){/* ===================== v3.3: Simular da Cripto e gra
 var TRY={};
 var $i=function(id){return document.getElementById(id)},S=window.S32,U=S?S.u:null,PR='1d';
 function n(v){var x=num(v);return isFinite(x)?x:0}
-function fq(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
+function fq(v){return (+(+v||0).toPrecision(12)).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:8})}
 function fp(v){return (+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:v<1?8:2})}
 function pq2(v){return 'R$ '+fp(v)}
 function cnx(v){return String(v||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'')}
@@ -7207,6 +7226,93 @@ window.S33P={apply:apply,pick:function(){return pick(rd())}};
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n33p.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
+</script>
+<style>/* ===== v3.4 ===== */
+/* 1: letreiro do topo claro no modo claro */
+:root[data-theme="light"] .ltk{background:var(--sf);border-color:var(--bd);box-shadow:0 1px 3px rgba(15,27,45,.08)}
+:root[data-theme="light"] .ltk::after{display:none}
+:root[data-theme="light"] .ltpn{background:color-mix(in srgb,var(--ac) 8%,var(--sf));border-left-color:var(--bd)}
+:root[data-theme="light"] .lti,:root[data-theme="light"] .ltpn{text-shadow:none}
+:root[data-theme="light"] .lti::after{background:var(--bd);box-shadow:none}
+:root[data-theme="light"] .lti.p,:root[data-theme="light"] .lti.i{background:color-mix(in srgb,var(--ac) 8%,var(--sf));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 28%,var(--bd))}
+:root[data-theme="light"] .ltl,:root[data-theme="light"] .lti.i .ltn{color:var(--ac)}
+:root[data-theme="light"] .lti.p .ltn{color:var(--tx)}
+:root[data-theme="light"] .ltp,:root[data-theme="light"] .ltv0{color:var(--tx)}
+:root[data-theme="light"] .lti.f .ltn{color:#b45309}:root[data-theme="light"] .lti.f .ltp{color:#78350f}
+:root[data-theme="light"] .ltc.up{color:#047857;background:rgba(16,185,129,.13)}
+:root[data-theme="light"] .ltc.dn{color:#b91c1c;background:rgba(239,68,68,.12)}
+:root[data-theme="light"] .ltc.ne{color:#92400e;background:rgba(250,204,21,.2)}
+@media (prefers-color-scheme:light){
+:root:not([data-theme="dark"]) .ltk{background:var(--sf);border-color:var(--bd);box-shadow:0 1px 3px rgba(15,27,45,.08)}
+:root:not([data-theme="dark"]) .ltk::after{display:none}
+:root:not([data-theme="dark"]) .ltpn{background:color-mix(in srgb,var(--ac) 8%,var(--sf));border-left-color:var(--bd)}
+:root:not([data-theme="dark"]) .lti,:root:not([data-theme="dark"]) .ltpn{text-shadow:none}
+:root:not([data-theme="dark"]) .lti::after{background:var(--bd);box-shadow:none}
+:root:not([data-theme="dark"]) .lti.p,:root:not([data-theme="dark"]) .lti.i{background:color-mix(in srgb,var(--ac) 8%,var(--sf));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 28%,var(--bd))}
+:root:not([data-theme="dark"]) .ltl,:root:not([data-theme="dark"]) .lti.i .ltn{color:var(--ac)}
+:root:not([data-theme="dark"]) .lti.p .ltn{color:var(--tx)}
+:root:not([data-theme="dark"]) .ltp,:root:not([data-theme="dark"]) .ltv0{color:var(--tx)}
+:root:not([data-theme="dark"]) .lti.f .ltn{color:#b45309}:root:not([data-theme="dark"]) .lti.f .ltp{color:#78350f}
+:root:not([data-theme="dark"]) .ltc.up{color:#047857;background:rgba(16,185,129,.13)}
+:root:not([data-theme="dark"]) .ltc.dn{color:#b91c1c;background:rgba(239,68,68,.12)}
+:root:not([data-theme="dark"]) .ltc.ne{color:#92400e;background:rgba(250,204,21,.2)}
+}
+/* 17: botao de fechar redondo e do mesmo tamanho em todo o app */
+.mdx,.wlcl,.sxcl,[data-mkbx],button[data-trcl]{width:40px!important;height:40px!important;min-width:40px;flex:none!important;padding:0!important;border-radius:50%!important;display:inline-flex!important;align-items:center;justify-content:center;font-size:20px!important;line-height:1!important}
+/* 17: botoes de acao dos cartoes com a mesma altura e largura */
+.pcb{display:grid!important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px}
+.pcb>.sb2,.pcb>button{height:40px!important;min-width:0;margin:0!important;padding:0 4px!important;font-size:13px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:420px){.pcb{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* 24: faixa lateral do cartao com uma cor so (a do resultado) */
+.pcx.nzc.kb,.pc.kb.nzc:not(.done){border-left:1px solid color-mix(in srgb,var(--kc) 38%,var(--bd))}
+/* 30: "Total de todos os investimentos" so aparece na aba Total */
+.s3tl{display:none!important}
+/* 41: cartao completo de cada ativo ocupa a linha inteira no celular */
+@media(max-width:640px){html.dsk .cg:has(>.nzc){grid-template-columns:minmax(0,1fr)}}
+/* 22: aviso do par de cotacao */
+.zvia{font-size:12px;line-height:1.45;margin:4px 0 8px;color:var(--mu)}
+.zvia.zwarn{padding:7px 10px;border-radius:10px;border-left:4px solid #d97706;background:color-mix(in srgb,#f59e0b 13%,var(--sf));color:var(--tx)}
+.zvia .zpsl{display:inline-flex;align-items:center;gap:6px;margin:4px 0 0;font-size:12px;color:var(--mu);white-space:nowrap}
+.zvia select{width:auto;display:inline-block;padding:3px 8px;font-size:12px;border-radius:8px;min-width:0}
+.zvia .sb{margin-left:6px}
+/* 50: lista de sugestoes logo abaixo do campo */
+.acl{position:relative;z-index:30;margin-top:4px;display:flex;flex-direction:column;max-height:min(260px,38vh);overflow:auto;border:1px solid var(--bd);border-radius:12px;background:var(--sf);box-shadow:0 8px 22px rgba(15,27,45,.16)}
+.acl button{display:flex;align-items:baseline;gap:8px;width:100%;margin:0;padding:10px 12px;border:0;border-bottom:1px solid var(--bd);background:none;color:var(--tx);font:inherit;font-size:15px;text-align:left;cursor:pointer}
+.acl button:last-child{border-bottom:0}.acl button:hover,.acl button:focus{background:color-mix(in srgb,var(--ac) 10%,var(--sf))}
+.acl small{color:var(--mu);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+input[data-acl]{scroll-margin-top:120px}
+/* 51: etiqueta "calculado" nos campos que o app preencheu */
+.nzpw:has(input.nzau),label:has(+input.nzau){position:relative}
+input.nzau{background-image:linear-gradient(transparent,transparent)}
+.nzcalc{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:800;color:var(--ac);background:color-mix(in srgb,var(--ac) 13%,var(--sf));vertical-align:1px}
+</style>
+<script>
+/* ===== v3.4 ===== */
+window.qzReset=function(c){try{if(QH&&QH.C)delete QH.C[c]}catch(x){}try{if(QI&&QI.K)delete QI.K[c]}catch(x){}try{Object.keys(IVD).forEach(function(k){if(k.indexOf(c+'|')===0)delete IVD[k]})}catch(x){}};
+window.qzU=function(c){try{var e=QXT['C:'+String(c).toUpperCase()];return !!(e&&e.s==='Binance'&&typeof e.y==='string'&&/USDT$/.test(e.y)&&e.y!=='USDTBRL')}catch(x){return false}};
+(function(){
+  /* 35: ao abrir Posicoes, o grafico dos cartoes volta para Hoje (Cripto: 24 h) */
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('nav button[data-t]');if(!b||b.classList.contains('on'))return;var t=b.dataset.t;
+    if((t==='b'||t==='crp')&&typeof VZ!=='undefined'&&VZ.ui){if(+VZ.ui.pr!==1||VZ.ui.prc!==undefined){VZ.ui.pr=1;delete VZ.ui.prc;try{vzSave()}catch(x){}}}},true);
+  /* 50: lista de sugestoes (acoes, moedas, corretoras) desenhada pelo app, logo abaixo do campo */
+  var AC=null,AI=null;
+  function acHide(){if(AC){AC.remove();AC=null}AI=null}
+  function acOpts(id){var d=document.getElementById(id);if(!d)return [];return Array.prototype.map.call(d.options,function(o){return {v:o.value,l:o.label&&o.label!==o.value?o.label:(o.textContent&&o.textContent!==o.value?o.textContent:'')}})}
+  function acShow(inp){var id=inp.dataset.acl,q=String(inp.value||'').trim().toUpperCase(),all=acOpts(id),seen={},a=[],b=[];
+    all.forEach(function(o){if(!o.v||seen[o.v])return;seen[o.v]=1;var V=o.v.toUpperCase(),L=String(o.l||'').toUpperCase();if(!q||V.indexOf(q)===0)a.push(o);else if(V.indexOf(q)>0||L.indexOf(q)>=0)b.push(o)});
+    var L=a.concat(b).slice(0,q?8:6);if(!L.length||(L.length===1&&L[0].v.toUpperCase()===q)){if(AC)AC.remove();AC=null;return}
+    if(!AC){AC=document.createElement('div');AC.className='acl';AC.setAttribute('role','listbox')}
+    AC.innerHTML=L.map(function(o){return '<button type="button" role="option" data-acv="'+String(o.v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'"><b>'+String(o.v).replace(/</g,'&lt;')+'</b>'+(o.l?'<small>'+String(o.l).replace(/</g,'&lt;')+'</small>':'')+'</button>'}).join('');
+    if(AC.previousElementSibling!==inp)inp.insertAdjacentElement('afterend',AC);AI=inp}
+  function acPrep(inp){if(inp.dataset.acl)return true;var l=inp.getAttribute('list');if(!l)return false;inp.dataset.acl=l;inp.removeAttribute('list');inp.setAttribute('autocomplete','off');return true}
+  document.addEventListener('focusin',function(e){var t=e.target;if(!t||t.tagName!=='INPUT'||!(t.getAttribute('list')||t.dataset.acl))return;acPrep(t);acShow(t);
+    if(window.matchMedia&&matchMedia('(max-width:720px)').matches)setTimeout(function(){if(document.activeElement===t)try{t.scrollIntoView({block:'start',behavior:'smooth'})}catch(x){}},320)});
+  document.addEventListener('input',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.acl&&document.activeElement===t)acShow(t)});
+  document.addEventListener('focusout',function(e){if(e.target===AI)setTimeout(function(){if(AI&&document.activeElement!==AI)acHide()},180)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&AC)acHide()});
+  document.addEventListener('pointerdown',function(e){var b=e.target.closest&&e.target.closest('[data-acv]');if(!b||!AI)return;e.preventDefault();var inp=AI;inp.value=b.dataset.acv;acHide();inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}))});
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-acv]');if(b)e.preventDefault()});
+})();
 </script>
 </body>
 </html>
