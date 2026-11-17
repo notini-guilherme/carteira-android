@@ -164,6 +164,9 @@ object Notify {
         } catch (e: Exception) {
             // um erro nos avisos de movimento nao pode derrubar o resumo de abertura e fechamento
         }
+        try {
+            dzAlerts(ctx, sp, snap, mins, day)
+        } catch (e: Exception) { }
     }
 
 
@@ -177,6 +180,8 @@ object Notify {
 
     private fun rulesOn(snapJson: String): Boolean {
         val snap = try { JSONObject(snapJson) } catch (e: Exception) { return false }
+        val dz = snap.optJSONObject("dz")
+        if (dz != null && (dz.optDouble("lo", 0.0) > 0 || dz.optDouble("hi", 0.0) > 0)) return true
         val r = snap.optJSONObject("r") ?: return false
         return r.optDouble("pd", 0.0) > 0 || r.optDouble("ad", 0.0) > 0 || r.optDouble("fv", 0.0) > 0 ||
             r.optDouble("cr", 0.0) > 0 || r.optInt("ev", 0) > 0 || ((snap.optJSONArray("dc")?.length() ?: 0) > 0)
@@ -487,6 +492,47 @@ object Notify {
             val p = m.optDouble("regularMarketPrice", 0.0)
             val prev = m.optDouble("chartPreviousClose", m.optDouble("previousClose", 0.0))
             return if (p > 0 && prev > 0) (p / prev - 1) * 100 else null
+        } finally {
+            c.disconnect()
+        }
+    }
+
+    // 4.0: avisos do dolar (abaixo de / acima de), dias uteis das 9h as 18h, uma vez por dia cada
+    private fun dzAlerts(ctx: Context, sp: SharedPreferences, snapJson: String, mins: Int, day: String) {
+        val dz = try { JSONObject(snapJson).optJSONObject("dz") } catch (e: Exception) { null } ?: return
+        val lo = dz.optDouble("lo", 0.0)
+        val hi = dz.optDouble("hi", 0.0)
+        if (lo <= 0 && hi <= 0) return
+        if (mins < 9 * 60 || mins > 18 * 60) return
+        val needLo = lo > 0 && sp.getString("done_dzlo", "") != day
+        val needHi = hi > 0 && sp.getString("done_dzhi", "") != day
+        if (!needLo && !needHi) return
+        val p = fetchPx("BRL=X") ?: return
+        val f = String.format(Locale("pt", "BR"), "%.4f", p)
+        if (needLo && p <= lo) {
+            post(ctx, 11, "Dólar abaixo do seu aviso", "O dólar está em R$ " + f + ", abaixo de R$ " + String.format(Locale("pt", "BR"), "%.4f", lo) + ".")
+            sp.edit().putString("done_dzlo", day).apply()
+        }
+        if (needHi && p >= hi) {
+            post(ctx, 12, "Dólar acima do seu aviso", "O dólar está em R$ " + f + ", acima de R$ " + String.format(Locale("pt", "BR"), "%.4f", hi) + ".")
+            sp.edit().putString("done_dzhi", day).apply()
+        }
+    }
+
+    private fun fetchPx(sym: String): Double? {
+        val u = URL("https://query1.finance.yahoo.com/v8/finance/chart/" + sym + "?range=1d&interval=1d")
+        val c = u.openConnection() as HttpURLConnection
+        try {
+            c.requestMethod = "GET"
+            c.connectTimeout = 10000
+            c.readTimeout = 15000
+            c.setRequestProperty("Accept", "application/json")
+            c.setRequestProperty("User-Agent", "Mozilla/5.0")
+            if (c.responseCode !in 200..299) return null
+            val body = c.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+            val m = JSONObject(body).optJSONObject("chart")?.optJSONArray("result")?.optJSONObject(0)?.optJSONObject("meta") ?: return null
+            val p = m.optDouble("regularMarketPrice", 0.0)
+            return if (p > 0) p else null
         } finally {
             c.disconnect()
         }

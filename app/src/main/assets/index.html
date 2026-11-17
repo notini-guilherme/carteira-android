@@ -8133,5 +8133,252 @@ a.nwi .nwm::after{content:'Ler aqui ›';margin-left:auto;font-weight:700;color:
 @media(max-width:440px){#vzmod .mml{max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}.vzbr{min-width:0;flex:0 1 auto}.vzwm{font-size:19px}}
 @media(max-width:370px){.vzwm{display:none}}
 </style>
+<script>/* ===================== 4.0 bloco 7 (item 14): Dolar completo — simular, mercado, IR, metas, viagens e gastos, avisos e agenda ===================== */
+try{(function(){
+var S=window.S32;if(!S||!S.dz||!S.render||!S.render.dzh)return;
+var U=S.u,R=S.render,DZ=S.dz,K='stox3-dzx-v1';
+try{if(typeof GDDATA!=='undefined'){[K,'stox3-rfm'].forEach(function(k){if(GDDATA.indexOf(k)<0)GDDATA.push(k)})}}catch(e){}
+function ld(){var o=null;try{o=JSON.parse(localStorage.getItem(K)||'null')}catch(e){}if(!o||typeof o!=='object')o={};
+  o.sp=o.sp&&typeof o.sp==='object'?o.sp:{};o.goal=o.goal||{};o.al=o.al||{};o.trips=Array.isArray(o.trips)?o.trips:[];o.g=Array.isArray(o.g)?o.g:[];o.tab=o.tab||'sim';return o}
+var D=ld();function sv(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}}
+var V={brl:'1.000,00',su:'',sr:''};
+function n(v){v=String(v==null?'':v).replace(/US\$|R\$|\s/gi,'');if(v.indexOf(',')>=0)v=v.replace(/\./g,'').replace(',','.');var x=parseFloat(v);return isFinite(x)?x:0}
+function f2(v){return (+v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function f4(v){return (+v||0).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})}
+function M(){return U.masked&&U.masked()}
+function R$(v){return M()?'R$ *****':'R$ '+f2(v)}
+function US(v){return M()?'US$ *****':'US$ '+f2(v)}
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function px(){var q=DZ.fx();return q&&q.p>0?q.p:0}
+function iso(d){d=d||new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function dbr(s){var a=String(s).split('-');return a[2]+'/'+a[1]+'/'+a[0]}
+function tn(v){return v>0?'up':v<0?'dn':''}
+function ops(){return DZ.load().ops}
+/* tipo de cada lugar: especie, conta, investimento ou cartao (pela forma das compras) */
+function kindOf(w,os){var c={};os.forEach(function(o){if(o.type==='COMPRA'&&String(o.where).trim().toLowerCase()===String(w).trim().toLowerCase()){var k=o.way==='especie'?'esp':o.way==='invest'?'inv':o.way==='credito'?'cc':'cta';c[k]=(c[k]||0)+o.usd}});
+  var b='cta',m=-1;Object.keys(c).forEach(function(k){if(c[k]>m){m=c[k];b=k}});return b}
+var KN={esp:'Dinheiro em espécie',cta:'Conta em dólar (Wise, Nomad...)',inv:'Corretora / investimento no exterior',cc:'Cartão internacional'};
+
+/* ---------- abas ---------- */
+var TABS=[['sim','Simular'],['mer','Mercado'],['ir','Imposto'],['meta','Metas'],['via','Viagens e gastos'],['avi','Avisos'],['age','Agenda']];
+function box(){var h='<div class="dxw" id="dxw"><h2>Ferramentas do dólar</h2><div class="dxtb" role="tablist">';
+  TABS.forEach(function(t){h+='<button type="button" class="'+(D.tab===t[0]?'on':'')+'" data-dxt="'+t[0]+'">'+t[1]+'</button>'});
+  h+='</div><div class="ch s3c dxp">'+panel()+'</div></div>';return h}
+function panel(){try{return ({sim:pSim,mer:pMer,ir:pIr,meta:pMeta,via:pVia,avi:pAvi,age:pAge}[D.tab]||pSim)()}catch(e){try{console.error('dx',e)}catch(x){}return '<div class="empty">Não foi possível montar esta parte agora.</div>'}}
+
+/* ---------- 1) Simular: quanto custa cada forma de comprar + e se eu vender ---------- */
+var FORMS=[{k:'cta',n:'Conta em dólar (Wise, Nomad, Inter, C6...)',iof:3.5,sp:1},{k:'cc',n:'Cartão de crédito internacional',iof:3.5,sp:4},{k:'esp',n:'Dinheiro em espécie (casa de câmbio)',iof:3.5,sp:6},{k:'inv',n:'Remessa para investir (Avenue e outras)',iof:1.1,sp:1}];
+function pSim(){var p=px(),b=n(V.brl),h='<h3 class="dxh">Quanto dólar eu levo?</h3>';
+  if(!(p>0))return h+'<div class="empty">Sem a cotação do dólar agora. Toque em Atualizar.</div>';
+  h+='<div class="dxf"><label>Quero gastar (R$)<input inputmode="decimal" data-dxv="brl" value="'+esc(V.brl)+'"></label><span class="mu">Dólar comercial agora: <b>R$ '+f4(p)+'</b></span></div>';
+  var rows=FORMS.map(function(f){var sp=D.sp[f.k]!=null?+D.sp[f.k]:f.sp,vet=p*(1+sp/100)*(1+f.iof/100);return {f:f,sp:sp,vet:vet,u:b>0?b/vet:0}}),best=rows.reduce(function(a,r){return r.vet<a.vet?r:a},rows[0]);
+  h+='<div class="dxtw"><table class="dxt"><thead><tr><th>Forma</th><th>Spread</th><th>IOF</th><th>Custo por US$ 1</th><th>Você leva</th></tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr class="'+(r===best?'dxbest':'')+'"><td>'+esc(r.f.n)+(r===best?' <span class="dxtag">mais barato</span>':'')+'</td><td><input class="dxsp" inputmode="decimal" data-dxsp="'+r.f.k+'" value="'+String(r.sp).replace('.',',')+'">%</td><td>'+String(r.f.iof).replace('.',',')+'%</td><td><b>R$ '+f4(r.vet)+'</b></td><td><b>US$ '+f2(r.u)+'</b></td></tr>'});
+  h+='</tbody></table></div><div class="mu dxn">O <b>spread</b> é a diferença que a instituição cobra acima do dólar comercial; os números acima são estimativas e você pode trocar. O IOF é 3,5% para conta, cartão e espécie e 1,1% para remessa de investimento (Decreto 12.499/2025). '+(rows[1]&&best?'Comprando por <b>'+esc(best.f.n.split(' (')[0])+'</b> você leva <b>US$ '+f2(best.u-rows.reduce(function(a,r){return r.u<a?r.u:a},1e18))+'</b> a mais que na forma mais cara.':'')+'</div>';
+  /* e se eu vender */
+  var Z=DZ.sum();h+='<h3 class="dxh">E se eu vender?</h3>';
+  if(!(Z.usd>1e-6))return h+'<div class="mu">Quando você tiver dólar guardado, aqui aparece quanto receberia vendendo hoje e o lucro sobre o seu preço médio.</div>';
+  var su=V.su!==''?n(V.su):Z.usd,sr=V.sr!==''?n(V.sr):p*0.99;su=Math.min(su,Z.usd);
+  var got=su*sr,cost=su*Z.avg,g=got-cost;
+  h+='<div class="dxf"><label>Quanto vender (US$)<input inputmode="decimal" data-dxv="su" value="'+esc(V.su!==''?V.su:f2(Z.usd))+'"></label><label>A que cotação (R$)<input inputmode="decimal" data-dxv="sr" value="'+esc(V.sr!==''?V.sr:f4(p*0.99))+'"></label></div>';
+  h+='<div class="dxk"><div><span>Você recebe</span><b>'+R$(got)+'</b></div><div><span>Custou (preço médio '+(M()?'*****':'R$ '+f4(Z.avg))+')</span><b>'+R$(cost)+'</b></div><div><span>Resultado</span><b class="'+tn(g)+'">'+(g>=0?'+':'−')+R$(Math.abs(g)).replace('R$ ','R$ ')+'</b></div></div>';
+  h+='<div class="mu dxn">Quem compra seu dólar paga um pouco menos que o comercial (sugerimos 1% abaixo). Venda de dólar em espécie até US$ 5 mil no ano não paga IR sobre a variação; veja a aba Imposto.</div>';
+  return h}
+
+/* ---------- 2) Mercado: moedas e DXY (Yahoo, sem chave) ---------- */
+var MK=[['BRL=X','Dólar','R$',4],['EURBRL=X','Euro','R$',4],['GBPBRL=X','Libra','R$',4],['CADBRL=X','Dólar canadense','R$',4],['CHFBRL=X','Franco suíço','R$',4],['JPYBRL=X','Iene','R$',4],['CNYBRL=X','Yuan','R$',4],['ARSBRL=X','Peso argentino','R$',5],['EURUSD=X','Euro em dólar','US$',4],['DX-Y.NYB','DXY (dólar no mundo)','',2]];
+var MQ={},MT=0,MB=0;
+function mLoad(){if(MB||typeof qxGet!=='function')return;MB=1;var left=MK.length;
+  MK.forEach(function(m){qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(m[0])+'?range=1mo&interval=1d',15000).then(function(r){
+    try{var res=r&&r.j&&r.j.chart&&r.j.chart.result&&r.j.chart.result[0],me=res.meta||{},cl=(res.indicators.quote[0].close||[]).filter(function(x){return x>0}),p=+me.regularMarketPrice||cl[cl.length-1],pv=+me.chartPreviousClose;
+      var prev=cl.length>1?cl[cl.length-2]:0;if(cl.length&&Math.abs(cl[cl.length-1]-p)/p>1e-6)prev=cl[cl.length-1];
+      if(p>0)MQ[m[0]]={p:p,d:prev>0?p/prev-1:null,m:pv>0?p/pv-1:(cl[0]>0?p/cl[0]-1:null),c:cl.concat([p]).slice(-24)}}catch(e){}
+  }).catch(function(){}).then(function(){if(--left<=0){MB=0;MT=Date.now();rp()}})})}
+function spark(a,up){if(!a||a.length<2)return '';var mn=Math.min.apply(null,a),mx=Math.max.apply(null,a),w=90,h=26,r=mx-mn||1;
+  return '<svg class="dxsk" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline fill="none" stroke="'+(up?'#16a34a':'#dc2626')+'" stroke-width="1.8" points="'+a.map(function(v,i){return (i*w/(a.length-1)).toFixed(1)+','+(h-2-(v-mn)/r*(h-4)).toFixed(1)}).join(' ')+'"/></svg>'}
+function pc(v){return v==null?'—':(v>0?'▲ ':v<0?'▼ ':'')+Math.abs(v*100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
+function pMer(){if(Date.now()-MT>10*6e4)setTimeout(mLoad,10);
+  var h='<h3 class="dxh">Moedas agora</h3><div class="dxmg">';
+  MK.forEach(function(m){var q=MQ[m[0]];h+='<div class="dxm"><div class="dxmn">'+m[1]+'</div>'+(q?'<b>'+(m[2]?m[2]+' ':'')+q.p.toLocaleString('pt-BR',{minimumFractionDigits:m[3],maximumFractionDigits:m[3]})+'</b><div class="dxmv"><span class="'+tn(q.d)+'">'+pc(q.d)+' dia</span><span class="'+tn(q.m)+'">'+pc(q.m)+' mês</span></div>'+spark(q.c,(q.m||0)>=0):'<span class="mu">'+(MB?'buscando…':'sem cotação')+'</span>')+'</div>'});
+  h+='</div><div class="mu dxn">Valores com cerca de 15 minutos de atraso (Yahoo Finance). O <b>DXY</b> mede o dólar contra seis moedas fortes: quando ele sobe, o dólar costuma subir também aqui. '+(MT?'Atualizado às '+new Date(MT).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.':'')+' <button type="button" class="lnk" data-dxmr="1">Atualizar</button></div>';
+  return h}
+
+/* ---------- 3) Imposto: especie x conta x investimento, limite de US$ 5 mil ---------- */
+function pIr(){var os=ops(),yr=new Date().getFullYear(),ys={};os.forEach(function(o){ys[o.date.slice(0,4)]=1});ys[yr]=1;
+  var Y=D.iry&&ys[D.iry]?D.iry:String(yr),h='<div class="dxf"><label>Ano<select data-dxiry="1">'+Object.keys(ys).sort().reverse().map(function(y){return '<option'+(y===Y?' selected':'')+'>'+y+'</option>'}).join('')+'</select></label></div>';
+  var C=DZ.calc(os),G={};C.rows.forEach(function(r){if(r.type!=='VENDA'||r.date.slice(0,4)!==Y)return;var k=kindOf(r.where,os),g=G[k]||(G[k]={u:0,g:0,b:0,n:0});g.u+=r.usd;g.g+=r.gain||0;g.b+=r.brl;g.n++});
+  h+='<h3 class="dxh">Vendas e gastos de dólar em '+Y+'</h3>';
+  var e=G.esp||{u:0,g:0,b:0},pct=Math.min(1,e.u/5000);
+  h+='<div class="dxir"><b>Dinheiro em espécie</b><div class="dxbar"><i style="width:'+(pct*100).toFixed(1)+'%;background:'+(e.u>5000?'#dc2626':pct>0.8?'#f59e0b':'#16a34a')+'"></i></div><div class="mu">'+(M()?'US$ *****':'US$ '+f2(e.u))+' de US$ 5.000,00 vendidos ou gastos no ano.</div>'+
+    (e.u>5000?'<div class="pv bad">Passou de US$ 5 mil: a variação cambial de <b>todas</b> as vendas de espécie no ano passa a pagar IR (15% sobre o ganho, pelo GCAP). Ganho no ano: <b>'+R$(e.g)+'</b>'+(e.g>0?' · imposto estimado <b>'+R$(e.g*0.15)+'</b>':'')+'. DARF código 4600 até o último dia útil do mês seguinte a cada venda.</div>':'<div class="pv">Até US$ 5 mil por ano a variação cambial do dólar em espécie é isenta (Lei 14.754/2023, art. 7º, §4º). Ganho no ano: '+R$(e.g)+'.</div>')+'</div>';
+  var c=G.cta;h+='<div class="dxir"><b>Conta em dólar (Wise, Nomad, C6 Global...)</b><div class="mu">'+(c?'Vendas no ano: '+US(c.u)+' · resultado '+R$(c.g)+'.':'Nenhuma venda no ano.')+' Saldo parado em conta que <b>não rende juros</b> tem a variação cambial isenta. Se a conta paga juros, os juros entram na regra das aplicações no exterior (15% na declaração anual).</div></div>';
+  var v=G.inv;h+='<div class="dxir"><b>Corretora / investimento no exterior</b><div class="mu">'+(v?'Vendas no ano: '+US(v.u)+' · resultado '+R$(v.g)+(v.g>0?' · 15% seria '+R$(v.g*0.15):'')+'.':'Nenhuma venda no ano.')+' Pela Lei 14.754/2023, o ganho (incluindo a variação do dólar) é somado no ano e paga 15% na declaração anual, sem DARF mensal.</div></div>';
+  if(G.cc)h+='<div class="dxir"><b>Cartão internacional</b><div class="mu">Gastos no cartão são consumo: não há ganho de capital a declarar.</div></div>';
+  /* bens e direitos em 31/12 */
+  var end=Y+'-12-31',P=DZ.calc(os.filter(function(o){return o.date<=end})).P,lines=[];
+  Object.keys(P).forEach(function(k){var p=P[k];if(p.q<1e-6)return;var kd=kindOf(p.n,os);lines.push({n:p.n,q:p.q,c:p.cost,kd:kd,code:kd==='esp'?'06 – 11 (Dinheiro em espécie – moeda estrangeira)':'06 – 01 (Depósito em conta corrente ou conta pagamento), país onde fica a conta'})});
+  h+='<h3 class="dxh">O que declarar em Bens e Direitos (31/12/'+Y+')</h3>';
+  if(!lines.length)h+='<div class="mu">Nenhum dólar guardado no fim de '+Y+'.</div>';
+  lines.forEach(function(l,i){var t=(l.kd==='esp'?'Dinheiro em espécie: ':'Saldo em conta no exterior em ')+esc(l.n)+'. US$ '+f2(l.q)+', adquiridos por R$ '+f2(l.c)+' (custo em reais, com IOF e taxas).';
+    h+='<div class="dxir"><b>'+esc(l.n)+'</b> <span class="mu">· '+KN[l.kd]+'</span><div class="mu">Grupo/código: <b>'+l.code+'</b></div><div class="mu">Situação em 31/12: <b>'+R$(l.c)+'</b></div><div class="dxcp">'+(M()?'*****':t)+'</div><button type="button" class="lnk" data-dxcp="'+esc(t)+'">Copiar discriminação</button></div>'});
+  h+='<div class="mu dxn">O valor declarado é o custo em reais, não a cotação de 31/12. Confira sempre com o programa da Receita; o app não substitui um contador.</div>';
+  return h}
+
+/* ---------- 4) Metas ---------- */
+function pMeta(){var Z=DZ.sum(),p=px(),g=D.goal,t=+g.usd||0,h='<h3 class="dxh">Minha meta em dólar</h3>';
+  h+='<div class="dxf"><label>Quero juntar (US$)<input inputmode="decimal" data-dxg="usd" value="'+(t?f2(t):'')+'" placeholder="5.000,00"></label><label>Até<input type="month" data-dxg="ym" value="'+esc(g.ym||'')+'"></label><label>Para quê<input data-dxg="nm" maxlength="40" value="'+esc(g.nm||'')+'" placeholder="Viagem, reserva..."></label></div>';
+  if(!t)return h+'<div class="mu">Defina um valor para ver quanto falta e quanto comprar por mês.</div>';
+  var have=Z.usd||0,f=Math.max(0,t-have),pc_=Math.min(1,have/t);
+  h+='<div class="dxbar big"><i style="width:'+(pc_*100).toFixed(1)+'%"></i></div><div class="dxk"><div><span>Já tenho</span><b>'+US(have)+'</b></div><div><span>Falta</span><b>'+US(f)+'</b></div><div><span>Concluído</span><b>'+Math.round(pc_*100)+'%</b></div></div>';
+  if(f>0&&p>0){var cost=f*p*1.035*1.01;h+='<div class="mu dxn">Comprando hoje numa conta em dólar (IOF 3,5% + spread 1%), o que falta custaria cerca de <b>'+R$(cost)+'</b>.';
+    if(g.ym){var a=g.ym.split('-'),now=new Date(),mo=(+a[0]-now.getFullYear())*12+(+a[1]-1-now.getMonth())+1;if(mo>0)h+=' Até '+a[1]+'/'+a[0]+' são '+mo+' '+(mo>1?'meses':'mês')+': <b>'+US(f/mo)+' por mês</b> (≈ '+R$(cost/mo)+').';else h+=' O prazo já passou.'}
+    h+=' Comprar aos poucos ajuda a não depender da cotação de um único dia.</div>'}
+  else if(f<=0)h+='<div class="pv">Meta alcançada! 🎉</div>';
+  return h}
+
+/* ---------- 5) Viagens e gastos ---------- */
+var CATS=['Hospedagem','Comida','Transporte','Compras','Passeios','Outros'];
+function wallets(){var P=DZ.calc(ops()).P;return Object.keys(P).map(function(k){return P[k]}).filter(function(p){return p.q>1e-6})}
+function pVia(){var p=px(),h='',tr=D.trips.slice().sort(function(a,b){return (b.a||'').localeCompare(a.a||'')}),sel=D.tsel&&D.trips.some(function(t){return t.id===D.tsel})?D.tsel:(tr[0]&&tr[0].id);
+  h+='<h3 class="dxh">Minhas viagens</h3>';
+  if(tr.length){h+='<div class="dxtb sm">'+tr.map(function(t){return '<button type="button" class="'+(t.id===sel?'on':'')+'" data-dxts="'+t.id+'">'+esc(t.n)+'</button>'}).join('')+'<button type="button" data-dxts="new">+ Nova</button></div>'}
+  if(!tr.length||D.tsel==='new'){
+    h+='<div class="dxf"><label>Nome da viagem<input id="dxtn" maxlength="40" placeholder="Orlando 2027"></label><label>Ida<input id="dxta" type="date"></label><label>Volta<input id="dxtb" type="date"></label><label>Orçamento (US$)<input id="dxto" inputmode="decimal" placeholder="3.000,00"></label></div><button type="button" class="btn" data-dxtadd="1">Criar viagem</button>';
+    if(!tr.length)h+='<div class="mu dxn">Crie uma viagem para anotar os gastos em dólar. Se pagar com o dólar de uma carteira (Wise, espécie...), o app tira o valor da sua posição e calcula a variação para o IR.</div>';
+    return h}
+  var T=D.trips.filter(function(t){return t.id===sel})[0],gs=D.g.filter(function(g){return g.t===T.id}).sort(function(a,b){return b.d.localeCompare(a.d)}),tot=gs.reduce(function(a,g){return a+g.usd},0),bud=+T.bud||0;
+  var today=iso(),dl=T.b&&T.b>=today?Math.max(1,Math.round((new Date(T.b)-new Date(today<T.a?T.a:today))/864e5)+1):0;
+  h+='<div class="dxk"><div><span>Gasto</span><b>'+US(tot)+'</b></div>'+(bud?'<div><span>Orçamento</span><b>'+US(bud)+'</b></div><div><span>Sobra</span><b class="'+(bud-tot<0?'dn':'')+'">'+US(bud-tot)+'</b></div>':'')+(bud&&dl?'<div><span>Pode gastar por dia</span><b>'+US(Math.max(0,bud-tot)/dl)+'</b></div>':'')+'</div>';
+  if(bud)h+='<div class="dxbar"><i style="width:'+Math.min(100,tot/bud*100).toFixed(1)+'%;background:'+(tot>bud?'#dc2626':tot>bud*0.85?'#f59e0b':'#16a34a')+'"></i></div>';
+  h+='<div class="mu">'+(T.a?dbr(T.a):'')+(T.b?' a '+dbr(T.b):'')+' · <button type="button" class="lnk" data-dxtdel="'+T.id+'">apagar viagem</button></div>';
+  /* por categoria */
+  var bc={};gs.forEach(function(g){bc[g.cat]=(bc[g.cat]||0)+g.usd});var cs=Object.keys(bc).sort(function(a,b){return bc[b]-bc[a]});
+  if(cs.length)h+='<div class="dxcats">'+cs.map(function(c){return '<div><span>'+esc(c)+'</span><i style="width:'+(bc[c]/tot*100).toFixed(1)+'%"></i><b>'+US(bc[c])+'</b></div>'}).join('')+'</div>';
+  /* lancar gasto */
+  var W=wallets();
+  h+='<h3 class="dxh">Gastei</h3><div class="dxf"><label>O quê<input id="dxgd" maxlength="60" placeholder="Jantar, hotel..."></label><label>Valor (US$)<input id="dxgu" inputmode="decimal"></label><label>Dia<input id="dxgt" type="date" value="'+today+'"></label><label>Categoria<select id="dxgc">'+CATS.map(function(c){return '<option>'+c+'</option>'}).join('')+'</select></label><label>Paguei com<select id="dxgw">'+W.map(function(w){return '<option value="w:'+esc(w.n)+'">Dólar de '+esc(w.n)+' ('+(M()?'*****':'US$ '+f2(w.q))+')</option>'}).join('')+'<option value="cc">Cartão de crédito internacional</option><option value="x">Outro (só anotar)</option></select></label><label id="dxgbl">Valor na fatura (R$, opcional)<input id="dxgb" inputmode="decimal"></label></div><button type="button" class="btn" data-dxgadd="'+T.id+'">Anotar gasto</button>';
+  if(gs.length){h+='<div class="dxtw"><table class="dxt"><thead><tr><th>Dia</th><th>O quê</th><th>Categoria</th><th>Pago com</th><th>US$</th><th></th></tr></thead><tbody>'+gs.map(function(g){return '<tr><td>'+dbr(g.d).slice(0,5)+'</td><td>'+esc(g.ds)+'</td><td>'+esc(g.cat)+'</td><td>'+(g.w?esc(g.w):g.cc?'Cartão'+(g.brl?' · '+R$(g.brl):''):'—')+'</td><td><b>'+US(g.usd)+'</b></td><td><button type="button" class="dxx" data-dxgdel="'+g.id+'" aria-label="Apagar">×</button></td></tr>'}).join('')+'</tbody></table></div>';
+    var cc=gs.filter(function(g){return g.cc}).reduce(function(a,g){return a+(g.brl||(p>0?g.usd*p*1.035*1.04:0))},0);if(cc>0)h+='<div class="mu dxn">No cartão: cerca de <b>'+R$(cc)+'</b> na fatura (quando você não informa, estimamos com IOF 3,5% e spread de 4%).</div>'}
+  return h}
+
+/* ---------- 6) Avisos ---------- */
+function pAvi(){var p=px(),a=D.al,h='<h3 class="dxh">Me avise quando o dólar…</h3>';
+  h+='<div class="dxf"><label>ficar abaixo de (R$)<input inputmode="decimal" data-dxa="lo" value="'+(a.lo?f4(a.lo):'')+'" placeholder="'+(p?f4(p*0.98):'')+'"></label><label>ficar acima de (R$)<input inputmode="decimal" data-dxa="hi" value="'+(a.hi?f4(a.hi):'')+'" placeholder="'+(p?f4(p*1.02):'')+'"></label></div>';
+  h+='<div class="mu">Agora: <b>'+(p?'R$ '+f4(p):'sem cotação')+'</b>'+(a.lo&&p?' · faltam '+((p/a.lo-1)*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% para o aviso de baixa':'')+(a.hi&&p?' · faltam '+((a.hi/p-1)*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% para o aviso de alta':'')+'.</div>';
+  var hit=hitMsg();if(hit)h+='<div class="pv">'+hit+'</div>';
+  h+='<div class="mu dxn">'+(window.AndroidNotif?'No celular o STOX3 manda uma notificação (de segunda a sexta, das 9h às 18h, uma vez por dia para cada aviso), mesmo com o app fechado, se as notificações estiverem ligadas em Configurações.':'No computador, o aviso aparece aqui e no topo da tela Início do Dólar quando você abre o app.')+(a.lo||a.hi?' <button type="button" class="lnk" data-dxaclr="1">Apagar avisos</button>':'')+'</div>';
+  return h}
+function hitMsg(){var p=px(),a=D.al;if(!(p>0))return '';if(a.lo&&p<=a.lo)return '⬇️ O dólar está em R$ '+f4(p)+', abaixo do seu aviso de R$ '+f4(a.lo)+'.';if(a.hi&&p>=a.hi)return '⬆️ O dólar está em R$ '+f4(p)+', acima do seu aviso de R$ '+f4(a.hi)+'.';return ''}
+
+/* ---------- 7) Agenda: Copom, Fed e payroll ---------- */
+var COP=['2026-12-09','2027-01-27','2027-03-17','2027-04-28','2027-06-16','2027-08-04','2027-09-22','2027-10-27','2027-12-08'];
+var FED=['2026-12-09','2027-01-27','2027-03-17','2027-04-28','2027-06-09','2027-07-28','2027-09-15','2027-11-17'];
+function usDst(d){var y=d.getFullYear(),m=new Date(y,2,1),s=new Date(y,10,1);var a=new Date(y,2,1+((7-m.getDay())%7)+7),b=new Date(y,10,1+((7-s.getDay())%7));return d>=a&&d<b}
+function pd(s){var a=s.split('-');return new Date(+a[0],+a[1]-1,+a[2])}
+function evs(){var o=[],t=iso();
+  COP.forEach(function(d){o.push({d:d,h:'18h30',n:'Copom decide a Selic',x:'Juros mais altos aqui costumam segurar o dólar; cortes tendem a pressionar para cima.',c:'#0f9d58'});var at=pd(d);at.setDate(at.getDate()+6);o.push({d:iso(at),h:'8h',n:'Ata do Copom',x:'Detalhes da decisão; pode mexer com os juros futuros e o câmbio.',c:'#0f9d58'})});
+  FED.forEach(function(d){o.push({d:d,h:usDst(pd(d))?'15h':'16h',n:'Fed decide os juros nos EUA',x:'Juros altos nos EUA costumam fortalecer o dólar no mundo todo.',c:'#2563eb'})});
+  o.push({d:'2027-10-27',h:'',n:'Fed: reunião só de estratégia',x:'Neste encontro o Fed disse que não vai votar os juros.',c:'#2563eb'});
+  var now=new Date();for(var i=0;i<13;i++){var m=new Date(now.getFullYear(),now.getMonth()+i,1),f=new Date(m);f.setDate(1+((5-m.getDay()+7)%7));if(f.getMonth()===0&&f.getDate()<3)f.setDate(f.getDate()+7);
+    o.push({d:iso(f),h:usDst(f)?'9h30':'10h30',n:'Payroll (empregos nos EUA)',x:'Data prevista (primeira sexta do mês). Dados fortes costumam levar o dólar para cima.',c:'#7c3aed',pv:1})}
+  return o.filter(function(e){return e.d>=t}).sort(function(a,b){return a.d.localeCompare(b.d)})}
+function pAge(){var t=pd(iso()),h='<h3 class="dxh">O que pode mexer com o dólar</h3><div class="dxag">';
+  evs().slice(0,12).forEach(function(e){var dd=Math.round((pd(e.d)-t)/864e5),w=pd(e.d).toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','');
+    h+='<div class="dxev" style="border-left-color:'+e.c+'"><div class="dxed"><b>'+dbr(e.d).slice(0,5)+'</b><span>'+w+(e.h?' · '+e.h:'')+'</span></div><div><b>'+e.n+'</b> <span class="dxtag'+(dd<=1?' hot':'')+'">'+(dd===0?'hoje':dd===1?'amanhã':'em '+dd+' dias')+'</span><div class="mu">'+e.x+'</div></div></div>'});
+  h+='</div><div class="mu dxn">Horários de Brasília. Datas do Copom e do Fed pelos calendários oficiais do Banco Central e do Federal Reserve; o payroll é uma previsão (o Departamento do Trabalho dos EUA pode mudar a data).</div>';
+  return h}
+
+/* ---------- montagem ---------- */
+var oDzh=R.dzh;
+R.dzh=function(){var h=oDzh.apply(this,arguments);if(typeof h!=='string')return h;var hm=hitMsg(),a='';if(hm)a='<div class="pv dxhit">'+hm+' <button type="button" class="lnk" data-dxt="avi">Ver avisos</button></div>';
+  var i=h.indexOf('<h2>');return (a&&i>0?h.slice(0,i)+a+h.slice(i):h+a)+box()};
+function rp(){var w=document.getElementById('dxw');if(!w)return;var p=w.querySelector('.dxp');if(p)p.innerHTML=panel();
+  w.querySelectorAll('[data-dxt]').forEach(function(b){b.classList.toggle('on',b.dataset.dxt===D.tab)})}
+function soonNt(){try{if(typeof ntSoon==='function')ntSoon()}catch(e){}}
+var IT=0;
+document.addEventListener('input',function(e){var t=e.target;if(!t.closest||!t.closest('#dxw'))return;
+  if(t.dataset.dxv){V[t.dataset.dxv]=t.value;clearTimeout(IT);IT=setTimeout(function(){keepFocus(rp)},500)}
+  else if(t.dataset.dxsp){D.sp[t.dataset.dxsp]=n(t.value);sv();clearTimeout(IT);IT=setTimeout(function(){keepFocus(rp)},500)}
+  else if(t.dataset.dxg){D.goal[t.dataset.dxg]=t.dataset.dxg==='usd'?n(t.value):t.value;sv();clearTimeout(IT);IT=setTimeout(function(){keepFocus(rp)},700)}
+  else if(t.dataset.dxa){D.al[t.dataset.dxa]=n(t.value);D.al.t=Date.now();sv();soonNt();clearTimeout(IT);IT=setTimeout(function(){keepFocus(rp)},700)}},true);
+document.addEventListener('change',function(e){var t=e.target;if(!t.closest||!t.closest('#dxw'))return;if(t.dataset.dxiry){D.iry=t.value;sv();rp()}
+  if(t.id==='dxgw'){var l=document.getElementById('dxgbl');if(l)l.style.display=t.value==='cc'?'':'none'}},true);
+function keepFocus(f){var a=document.activeElement,id=a&&(a.dataset.dxv?'[data-dxv="'+a.dataset.dxv+'"]':a.dataset.dxsp?'[data-dxsp="'+a.dataset.dxsp+'"]':a.dataset.dxg?'[data-dxg="'+a.dataset.dxg+'"]':a.dataset.dxa?'[data-dxa="'+a.dataset.dxa+'"]':''),pos=a&&a.selectionStart;f();
+  if(id){var b=document.querySelector('#dxw '+id);if(b){b.focus();try{b.setSelectionRange(pos,pos)}catch(x){}}}}
+function msg(t,bad){try{if(typeof pv==='function')return pv(t,bad)}catch(e){}try{alert(t)}catch(e){}}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#dxw button,.dxhit button');if(!b)return;var d=b.dataset;
+  if(d.dxt){D.tab=d.dxt;sv();if(!document.getElementById('dxw'))return;rp();if(b.closest('.dxhit'))document.getElementById('dxw').scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(d.dxmr){MT=0;mLoad();rp();return}
+  if(d.dxcp){try{navigator.clipboard.writeText(d.dxcp);b.textContent='Copiado ✓'}catch(x){}return}
+  if(d.dxaclr){D.al={};sv();soonNt();rp();return}
+  if(d.dxts){D.tsel=d.dxts==='new'?'new':+d.dxts;sv();rp();return}
+  if(d.dxtadd){var nm=(document.getElementById('dxtn').value||'').trim();if(!nm)return msg('Dê um nome para a viagem.',1);
+    var t={id:Date.now(),n:nm.slice(0,40),a:document.getElementById('dxta').value||'',b:document.getElementById('dxtb').value||'',bud:n(document.getElementById('dxto').value)};
+    D.trips.push(t);D.tsel=t.id;sv();rp();return}
+  if(d.dxtdel){if(!confirm('Apagar esta viagem? Os gastos pagos com dólar continuam no seu histórico do Dólar.'))return;var id=+d.dxtdel;D.trips=D.trips.filter(function(t){return t.id!==id});D.g=D.g.filter(function(g){return g.t!==id});D.tsel=0;sv();rp();return}
+  if(d.dxgadd){var u=n(document.getElementById('dxgu').value),ds=(document.getElementById('dxgd').value||'').trim()||'Gasto',dt=document.getElementById('dxgt').value||iso(),c=document.getElementById('dxgc').value,w=document.getElementById('dxgw').value,p=px();
+    if(!(u>0))return msg('Informe o valor em dólar.',1);
+    var g={id:Date.now(),t:+d.dxgadd,d:dt,ds:ds.slice(0,60),usd:u,cat:c};
+    if(w.indexOf('w:')===0){var wn=w.slice(2),W=wallets().filter(function(x){return x.n===wn})[0];if(!W||W.q<u-1e-6)return msg('Você não tem esse tanto de dólar em '+wn+'.',1);
+      if(!(p>0))return msg('Sem a cotação do dólar agora. Atualize e tente de novo.',1);
+      var st=DZ.load(),op={id:g.id,type:'VENDA',date:dt,where:wn,way:'gasto',usd:u,rate:p,iofp:0,iof:0,fee:0,brl:Math.round(u*p*100)/100,note:('Gasto: '+ds).slice(0,80)};st.ops.push(op);DZ.save(st);g.w=wn;g.op=op.id}
+    else if(w==='cc'){g.cc=1;g.brl=n(document.getElementById('dxgb').value)}
+    D.g.push(g);sv();rp();msg('Gasto anotado.');return}
+  if(d.dxgdel){var id2=+d.dxgdel,G=D.g.filter(function(x){return x.id===id2})[0];if(!G)return;
+    if(G.op){var st2=DZ.load();st2.ops=st2.ops.filter(function(o){return o.id!==G.op});DZ.save(st2)}
+    D.g=D.g.filter(function(x){return x.id!==id2});sv();rp();return}
+},true);
+/* sincronizacao do Google: se os dados chegarem de outro aparelho */
+window.addEventListener('storage',function(e){if(e.key===K){D=ld();rp()}});
+/* notificacao no Android: manda os limites junto do resumo */
+if(typeof window.ntSnap==='function'){var _ns=window.ntSnap;window.ntSnap=function(){var s=_ns.apply(this,arguments);try{var j=JSON.parse(s);if(D.al.lo||D.al.hi)j.dz={lo:+D.al.lo||0,hi:+D.al.hi||0};return JSON.stringify(j)}catch(e){return s}}}
+window.DZX={get:function(){return D},evs:evs,hit:hitMsg};
+})()}catch(e){try{(window.__bootE=window.__bootE||[]).push('b7: '+(e&&e.message||e))}catch(x){}}
+</script>
+<style>
+.dxw{margin-top:18px}
+.dxtb{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.dxtb::-webkit-scrollbar{display:none}
+.dxtb button{flex:0 0 auto;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.dxtb button.on{background:#0f9d58;border-color:#0f9d58;color:#fff}
+.dxtb.sm{border:0!important;padding:0 0 8px!important;background:none!important}.dxtb.sm button{padding:5px 11px;font-size:12px}
+.dxp{padding:14px 16px}
+.dxh{margin:4px 0 10px;font-size:15px}
+.dxp .dxh~.dxh{margin-top:20px}
+.dxf{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:10px}
+.dxf label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:var(--mu);min-width:150px;flex:1 1 150px}
+.dxf input,.dxf select{font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg,#fff);color:var(--tx);width:100%;box-sizing:border-box}
+.dxtw{overflow-x:auto;margin:6px 0}
+.dxt{width:100%;border-collapse:collapse;font-size:13px}
+.dxt th{text-align:left;color:var(--mu);font-size:11px;font-weight:700;padding:6px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}
+.dxt td{padding:8px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.dxt tr.dxbest td{background:rgba(16,185,129,.09)}
+.dxsp{width:52px;font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx);text-align:right}
+.dxtag{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:999px;background:rgba(16,185,129,.15);color:#047857;vertical-align:middle}
+.dxtag.hot{background:rgba(245,158,11,.18);color:#b45309}
+.dxn{margin-top:8px;font-size:12.5px;line-height:1.45}
+.dxk{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.dxk>div{border:1px solid var(--bd);border-radius:12px;padding:9px 11px;display:flex;flex-direction:column;gap:3px}
+.dxk span{font-size:11.5px;color:var(--mu)}.dxk b{font-size:16px}
+.dxk .up,.dxmv .up{color:#16a34a}.dxk .dn,.dxmv .dn{color:#dc2626}
+.dxbar{height:9px;border-radius:99px;background:var(--bd);overflow:hidden;margin:6px 0}.dxbar.big{height:14px}
+.dxbar i{display:block;height:100%;background:#0f9d58;border-radius:99px}
+.dxmg{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px}
+.dxm{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.dxmn{font-size:12px;color:var(--mu);font-weight:700}.dxm b{font-size:16px}
+.dxmv{display:flex;gap:10px;font-size:11.5px;font-weight:700;flex-wrap:wrap}
+.dxsk{width:100%;height:26px;margin-top:2px}
+.dxir{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;flex-direction:column;gap:4px}
+.dxcp{font-size:12.5px;background:rgba(127,127,127,.08);border-radius:8px;padding:7px 9px}
+.dxcats{display:flex;flex-direction:column;gap:5px;margin:8px 0}
+.dxcats>div{display:grid;grid-template-columns:100px 1fr 100px;gap:8px;align-items:center;font-size:12.5px}
+.dxcats i{display:block;height:8px;border-radius:99px;background:#0f9d58}.dxcats b{text-align:right}
+.dxx{border:0;background:rgba(220,38,38,.1);color:#dc2626;width:26px;height:26px;border-radius:50%;font-size:16px;cursor:pointer}
+.dxag{display:flex;flex-direction:column;gap:8px}
+.dxev{display:grid;grid-template-columns:86px 1fr;gap:10px;border:1px solid var(--bd);border-left:4px solid;border-radius:10px;padding:9px 11px;font-size:13px}
+.dxed{display:flex;flex-direction:column;font-size:12px;color:var(--mu)}.dxed b{font-size:16px;color:var(--tx)}
+.dxhit{margin:10px 0}
+@media(max-width:560px){.dxf label{min-width:130px}.dxt{font-size:12px}.dxt th,.dxt td{padding:6px 5px}.dxcats>div{grid-template-columns:80px 1fr 86px}.dxev{grid-template-columns:70px 1fr}}
+</style>
+
 </body>
 </html>
