@@ -152,14 +152,9 @@ class MainActivity : ComponentActivity() {
                 val u = request?.url ?: return true
                 if (u.host == HOST) return false
                 try {
-                    // 4.0: paginas da internet (noticias, Receita...) abrem numa aba por cima do app; o resto vai para o app certo
-                    if (u.scheme == "https" || u.scheme == "http") {
-                        androidx.browser.customtabs.CustomTabsIntent.Builder().setShowTitle(true).build().launchUrl(this@MainActivity, u)
-                    } else {
-                        startActivity(Intent(Intent.ACTION_VIEW, u))
-                    }
+                    startActivity(Intent(Intent.ACTION_VIEW, u))
                 } catch (e: Exception) {
-                    try { startActivity(Intent(Intent.ACTION_VIEW, u)) } catch (e2: Exception) { }
+                    // sem aplicativo para abrir o link: ignora
                 }
                 return true
             }
@@ -188,6 +183,7 @@ class MainActivity : ComponentActivity() {
         web.addJavascriptInterface(FilesBridge(this), "AndroidFiles")
         web.addJavascriptInterface(NotifBridge(this), "AndroidNotif")
         web.addJavascriptInterface(BioBridge(this), "AndroidBio")
+        web.addJavascriptInterface(ReaderBridge(this), "AndroidWeb")
 
         Notify.ensureChannel(this)
         Notify.schedule(this)

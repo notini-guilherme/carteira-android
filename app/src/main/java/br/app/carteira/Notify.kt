@@ -125,18 +125,10 @@ object Notify {
         }
         val mins = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
         val day = dayKey(now)
-        // 4.0: resumo da cripto as 08h e as 21h, todos os dias (a cripto nao fecha)
-        if (sp.getBoolean("close", false)) {
-            for (slot in arrayOf("cm", "cn")) {
-                val from = if (slot == "cm") 8 * 60 else 21 * 60
-                if (mins < from || mins > from + 119) continue
-                if (sp.getString("done_" + slot, "") == day) continue
-                try {
-                    val out = composeCripto(snap, slot, now)
-                    if (out != null) { post(ctx, if (slot == "cm") 8 else 9, out.first, out.second) }
-                    sp.edit().putString("done_" + slot, day).apply()
-                } catch (e: Exception) { }
-            }
+        try {
+            cryptoDigest(ctx, sp, snap, mins, day)
+        } catch (e: Exception) {
+            // o resumo da cripto nao pode derrubar os outros avisos
         }
         val dow = now.get(Calendar.DAY_OF_WEEK)
         if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY) return
@@ -164,9 +156,6 @@ object Notify {
         } catch (e: Exception) {
             // um erro nos avisos de movimento nao pode derrubar o resumo de abertura e fechamento
         }
-        try {
-            dzAlerts(ctx, sp, snap, mins, day)
-        } catch (e: Exception) { }
     }
 
 
@@ -180,11 +169,10 @@ object Notify {
 
     private fun rulesOn(snapJson: String): Boolean {
         val snap = try { JSONObject(snapJson) } catch (e: Exception) { return false }
-        val dz = snap.optJSONObject("dz")
-        if (dz != null && (dz.optDouble("lo", 0.0) > 0 || dz.optDouble("hi", 0.0) > 0)) return true
         val r = snap.optJSONObject("r") ?: return false
         return r.optDouble("pd", 0.0) > 0 || r.optDouble("ad", 0.0) > 0 || r.optDouble("fv", 0.0) > 0 ||
-            r.optDouble("cr", 0.0) > 0 || r.optInt("ev", 0) > 0 || ((snap.optJSONArray("dc")?.length() ?: 0) > 0)
+            r.optDouble("cr", 0.0) > 0 || r.optInt("ev", 0) > 0 || ((snap.optJSONArray("dc")?.length() ?: 0) > 0) ||
+            snap.optInt("c8", 0) > 0 || snap.optInt("c21", 0) > 0
     }
 
     private fun dirOk(d: Double, dir: String): Boolean = when (dir) {
@@ -476,113 +464,6 @@ object Notify {
         }
     }
 
-    // 4.0: indice (Yahoo, sem chave): variacao do dia em %
-    private fun fetchIdx(sym: String): Double? {
-        val u = URL("https://query1.finance.yahoo.com/v8/finance/chart/" + sym + "?range=1d&interval=1d")
-        val c = u.openConnection() as HttpURLConnection
-        try {
-            c.requestMethod = "GET"
-            c.connectTimeout = 10000
-            c.readTimeout = 15000
-            c.setRequestProperty("Accept", "application/json")
-            c.setRequestProperty("User-Agent", "Mozilla/5.0")
-            if (c.responseCode !in 200..299) return null
-            val body = c.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            val m = JSONObject(body).optJSONObject("chart")?.optJSONArray("result")?.optJSONObject(0)?.optJSONObject("meta") ?: return null
-            val p = m.optDouble("regularMarketPrice", 0.0)
-            val prev = m.optDouble("chartPreviousClose", m.optDouble("previousClose", 0.0))
-            return if (p > 0 && prev > 0) (p / prev - 1) * 100 else null
-        } finally {
-            c.disconnect()
-        }
-    }
-
-    // 4.0: avisos do dolar (abaixo de / acima de), dias uteis das 9h as 18h, uma vez por dia cada
-    private fun dzAlerts(ctx: Context, sp: SharedPreferences, snapJson: String, mins: Int, day: String) {
-        val dz = try { JSONObject(snapJson).optJSONObject("dz") } catch (e: Exception) { null } ?: return
-        val lo = dz.optDouble("lo", 0.0)
-        val hi = dz.optDouble("hi", 0.0)
-        if (lo <= 0 && hi <= 0) return
-        if (mins < 9 * 60 || mins > 18 * 60) return
-        val needLo = lo > 0 && sp.getString("done_dzlo", "") != day
-        val needHi = hi > 0 && sp.getString("done_dzhi", "") != day
-        if (!needLo && !needHi) return
-        val p = fetchPx("BRL=X") ?: return
-        val f = String.format(Locale("pt", "BR"), "%.4f", p)
-        if (needLo && p <= lo) {
-            post(ctx, 11, "Dólar abaixo do seu aviso", "O dólar está em R$ " + f + ", abaixo de R$ " + String.format(Locale("pt", "BR"), "%.4f", lo) + ".")
-            sp.edit().putString("done_dzlo", day).apply()
-        }
-        if (needHi && p >= hi) {
-            post(ctx, 12, "Dólar acima do seu aviso", "O dólar está em R$ " + f + ", acima de R$ " + String.format(Locale("pt", "BR"), "%.4f", hi) + ".")
-            sp.edit().putString("done_dzhi", day).apply()
-        }
-    }
-
-    private fun fetchPx(sym: String): Double? {
-        val u = URL("https://query1.finance.yahoo.com/v8/finance/chart/" + sym + "?range=1d&interval=1d")
-        val c = u.openConnection() as HttpURLConnection
-        try {
-            c.requestMethod = "GET"
-            c.connectTimeout = 10000
-            c.readTimeout = 15000
-            c.setRequestProperty("Accept", "application/json")
-            c.setRequestProperty("User-Agent", "Mozilla/5.0")
-            if (c.responseCode !in 200..299) return null
-            val body = c.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            val m = JSONObject(body).optJSONObject("chart")?.optJSONArray("result")?.optJSONObject(0)?.optJSONObject("meta") ?: return null
-            val p = m.optDouble("regularMarketPrice", 0.0)
-            return if (p > 0) p else null
-        } finally {
-            c.disconnect()
-        }
-    }
-
-    // 4.0: resumo da cripto em 24 h (Binance), comparado com o Bitcoin
-    private fun composeCripto(snapJson: String, slot: String, now: Calendar): Pair<String, String>? {
-        val snap = try { JSONObject(snapJson) } catch (e: Exception) { return null }
-        val arr = snap.optJSONArray("cq") ?: return null
-        if (arr.length() == 0) return null
-        val usd = try { fetchCripto("USDT") } catch (e: Exception) { null }
-        var tot = 0.0
-        var chg = 0.0
-        var bestT = ""; var bestP = Double.NEGATIVE_INFINITY; var worstT = ""; var worstP = Double.POSITIVE_INFINITY
-        for (i in 0 until Math.min(arr.length(), 20)) {
-            val row = arr.optJSONArray(i) ?: continue
-            val coin = row.optString(0, "")
-            val qty = row.optDouble(1, 0.0)
-            if (coin.isEmpty() || !(qty > 0)) continue
-            val cq = try { fetchCripto(coin) } catch (e: Exception) { null } ?: continue
-            try { Thread.sleep(120) } catch (e: Exception) { }
-            var px = cq.px
-            if (cq.cur == "US$") px *= (usd?.px ?: 0.0)
-            val v = qty * px
-            if (!(v > 0)) continue
-            tot += v
-            chg += v * cq.pct / 100
-            if (cq.pct > bestP) { bestP = cq.pct; bestT = coin }
-            if (cq.pct < worstP) { worstP = cq.pct; worstT = coin }
-        }
-        if (!(tot > 0)) return null
-        val p = chg / tot * 100
-        val btc = try { fetchCripto("BTC") } catch (e: Exception) { null }
-        val vs = if (btc == null) "" else " · Bitcoin " + pct(btc.pct)
-        val pick = now.get(Calendar.DAY_OF_YEAR) % 3
-        val title = if (slot == "cm") when (pick) {
-            0 -> "Bom dia: cripto " + pct(p) + " em 24 h" + vs
-            1 -> "Cripto na madrugada: carteira " + pct(p) + vs
-            else -> "Sua cripto ao acordar: " + pct(p) + " em 24 h" + vs
-        } else when (pick) {
-            0 -> "Cripto à noite: carteira " + pct(p) + " em 24 h" + vs
-            1 -> "Fechando o dia na cripto: " + pct(p) + vs
-            else -> "Sua cripto hoje: " + pct(p) + " em 24 h" + vs
-        }
-        val sb = StringBuilder()
-        if (btc != null) { val d = p - btc.pct; sb.append(if (Math.abs(d) < 0.05) "Junto com o Bitcoin. " else if (d > 0) "Acima do Bitcoin por " + String.format(BR, "%.1f", d) + " ponto(s). " else "Abaixo do Bitcoin por " + String.format(BR, "%.1f", -d) + " ponto(s). ") }
-        if (bestT.isNotEmpty() && worstT.isNotEmpty() && bestT != worstT) sb.append("Destaque: ").append(bestT).append(' ').append(pct(bestP)).append(". Pior: ").append(worstT).append(' ').append(pct(worstP)).append('.')
-        return Pair(title, sb.toString().trim())
-    }
-
     private fun pct(v: Double): String = String.format(BR, "%+.2f%%", v)
 
     private fun compose(snapJson: String, kind: String, now: Calendar, test: Boolean): Out {
@@ -624,22 +505,18 @@ object Notify {
         if (fetched == 0) return Out.NoData
         if (todayN == 0 || !(dayBase > 0)) return Out.Closed
         val dayPct = dayChg / dayBase * 100
-        val ibov = try { fetchIdx("%5EBVSP") } catch (e: Exception) { null }
-        val vs = if (ibov == null) "" else " · Ibovespa " + pct(ibov)
-        val pick = (now.get(Calendar.DAY_OF_YEAR) + (if (kind == "open") 0 else 3)) % 3
-        val title = if (kind == "open") when (pick) {
-            0 -> "B3 abriu: sua carteira " + pct(dayPct) + vs
-            1 -> "Bolsa aberta · carteira " + pct(dayPct) + " até agora" + vs
-            else -> "Começo de pregão na B3: " + pct(dayPct) + " na carteira" + vs
-        } else when (pick) {
-            0 -> "B3 fechou: sua carteira " + pct(dayPct) + " hoje" + vs
-            1 -> "Fim do pregão · carteira " + pct(dayPct) + vs
-            else -> "Bolsa encerrada: " + pct(dayPct) + " na carteira hoje" + vs
-        }
+        val pick = now.get(Calendar.DAY_OF_YEAR)
+        val tOpen = arrayOf("Bolsa (B3) abriu: carteira %s até agora", "Abertura da B3: sua carteira %s", "B3 começou o dia: carteira %s")
+        val tClose = arrayOf("Bolsa (B3) fechou: carteira %s hoje", "Fechamento da B3: sua carteira %s", "B3 encerrou o dia: carteira %s", "Fim do pregão: sua carteira %s")
+        val arrT = if (kind == "open") tOpen else tClose
+        val title = String.format(BR, arrT[pick % arrT.size], pct(dayPct))
         val sb = StringBuilder()
-        if (ibov != null) {
-            val d = dayPct - ibov
-            sb.append(if (Math.abs(d) < 0.05) "Carteira junto com o Ibovespa. " else if (d > 0) "Carteira " + String.format(BR, "%.1f", d) + " ponto(s) acima do Ibovespa. " else "Carteira " + String.format(BR, "%.1f", -d) + " ponto(s) abaixo do Ibovespa. ")
+        val ib = try { fetch("^BVSP", key) } catch (e: Exception) { null }
+        if (ib != null && ib.prev > 0) {
+            val ip = (ib.p / ib.prev - 1) * 100
+            val dif = dayPct - ip
+            sb.append("IBOV ").append(pct(ip)).append(": você ficou ")
+                .append(String.format(BR, "%.2f", Math.abs(dif))).append(if (dif >= 0) " ponto percentual acima. " else " ponto percentual abaixo. ")
         }
         if (cost > 0) sb.append("Resultado total das posições: ").append(pct((value / cost - 1) * 100)).append(". ")
         if (todayN >= 2 && bestT.isNotEmpty() && worstT.isNotEmpty() && bestT != worstT) {
@@ -649,6 +526,61 @@ object Notify {
         if (todayN < arr.length()) sb.append("Contei ").append(todayN).append(" de ").append(arr.length()).append(" ativos. ")
         if (kind == "open") sb.append("Cotações com atraso de cerca de 30 min.")
         return Out.Ok(title, sb.toString().trim())
+    }
+
+    /** v4.0: resumo da cripto as 08h (madrugada) e as 21h (dia), todos os dias. Pesa cada moeda pelo valor em reais. */
+    private fun cryptoDigest(ctx: Context, sp: SharedPreferences, snapJson: String, mins: Int, day: String) {
+        val snap = try { JSONObject(snapJson) } catch (e: Exception) { return }
+        val arr = snap.optJSONArray("cp") ?: return
+        if (arr.length() == 0) return
+        for (kind in arrayOf("c8", "c21")) {
+            if (snap.optInt(kind, 0) <= 0) continue
+            val from = if (kind == "c8") 8 * 60 else 21 * 60
+            if (mins < from || mins > from + 100) continue
+            if (sp.getString("done_" + kind, "") == day) continue
+            var usdt = 0.0
+            for (host in arrayOf("https://data-api.binance.vision", "https://api.binance.com")) {
+                val v = try { fetchBinance(host, "USDTBRL") } catch (e: Exception) { null }
+                if (v != null) { usdt = v.second; break }
+            }
+            var tot = 0.0
+            var chg = 0.0
+            var bestT = ""
+            var bestP = Double.NEGATIVE_INFINITY
+            var worstT = ""
+            var worstP = Double.POSITIVE_INFINITY
+            var btc = Double.NaN
+            var n = 0
+            for (i in 0 until arr.length()) {
+                val row = arr.optJSONArray(i) ?: continue
+                val coin = row.optString(0, "")
+                val qty = row.optDouble(1, 0.0)
+                if (coin.isEmpty() || !(qty > 0)) continue
+                val q = fetchCripto(coin) ?: continue
+                val px = if (q.cur == "US$") q.px * (if (usdt > 0) usdt else 5.4) else q.px
+                val v = qty * px
+                if (!(v > 0)) continue
+                n++
+                tot += v
+                chg += v - v / (1 + q.pct / 100)
+                if (q.pct > bestP) { bestP = q.pct; bestT = coin }
+                if (q.pct < worstP) { worstP = q.pct; worstT = coin }
+                if (coin == "BTC") btc = q.pct
+            }
+            if (n == 0 || !(tot > 0)) continue
+            if (btc.isNaN()) { val b = fetchCripto("BTC"); if (b != null) btc = b.pct }
+            val p = chg / (tot - chg) * 100
+            val pick = Calendar.getInstance(SP).get(Calendar.DAY_OF_YEAR)
+            val t8 = arrayOf("Cripto de madrugada: carteira %s em 24 h", "Bom dia! Sua cripto %s nas últimas 24 h", "Enquanto você dormia, a cripto %s")
+            val t21 = arrayOf("Cripto hoje: carteira %s em 24 h", "Resumo da cripto: %s em 24 h", "Fim do dia na cripto: %s em 24 h")
+            val arrT = if (kind == "c8") t8 else t21
+            val title = String.format(BR, arrT[pick % arrT.size], pct(p))
+            val sb = StringBuilder()
+            if (!btc.isNaN()) sb.append("Bitcoin ").append(pct(btc)).append(". ")
+            if (n >= 2 && bestT != worstT) sb.append("Maior alta: ").append(bestT).append(' ').append(pct(bestP)).append(". Maior queda: ").append(worstT).append(' ').append(pct(worstP)).append('.')
+            post(ctx, if (kind == "c8") 8 else 9, title, sb.toString().trim())
+            sp.edit().putString("done_" + kind, day).apply()
+        }
     }
 
     private fun parseTime(o: JSONObject): Long {

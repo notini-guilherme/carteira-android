@@ -184,26 +184,9 @@ class FilesBridge(private val ctx: Context) {
         }
     }
 
-    /** Abre a janela de compartilhar do Android (WhatsApp, e-mail, etc.). Devolve "" se deu certo, ou o motivo do erro. */
+    /** v4.0: compartilha uma imagem (o mapa da carteira). Grava em Imagens/STOX3 e abre a janela de compartilhar. */
     @JavascriptInterface
-    fun shareText(title: String, text: String): String {
-        return try {
-            val send = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, title)
-                putExtra(Intent.EXTRA_TEXT, text)
-            }
-            val chooser = Intent.createChooser(send, title).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-            ctx.startActivity(chooser)
-            ""
-        } catch (e: Exception) {
-            e.message ?: "erro"
-        }
-    }
-
-    /** 4.0: salva a imagem (PNG em base64) em Imagens/STOX3 e abre a janela de compartilhar. Devolve "" se deu certo, ou o motivo do erro. */
-    @JavascriptInterface
-    fun shareImage(name: String, b64: String, title: String): String {
+    fun shareImage(name: String, b64: String): String {
         return try {
             val bytes = android.util.Base64.decode(b64, android.util.Base64.DEFAULT)
             val values = ContentValues().apply {
@@ -220,7 +203,24 @@ class FilesBridge(private val ctx: Context) {
                 putExtra(Intent.EXTRA_STREAM, uri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-            val chooser = Intent.createChooser(send, title).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+            val chooser = Intent.createChooser(send, "Compartilhar").apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+            ctx.startActivity(chooser)
+            ""
+        } catch (e: Exception) {
+            e.message ?: "erro"
+        }
+    }
+
+    /** Abre a janela de compartilhar do Android (WhatsApp, e-mail, etc.). Devolve "" se deu certo, ou o motivo do erro. */
+    @JavascriptInterface
+    fun shareText(title: String, text: String): String {
+        return try {
+            val send = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, title)
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
+            val chooser = Intent.createChooser(send, title).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
             ctx.startActivity(chooser)
             ""
         } catch (e: Exception) {
