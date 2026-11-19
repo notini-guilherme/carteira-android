@@ -1123,6 +1123,25 @@ html.dsk nav#navex{display:none!important}
 #exn .zf .exsv{width:100%;margin-top:14px;background:var(--opc);border-color:var(--opc);color:var(--opx,#fff);font-weight:800}
 #exn .zf .hqb{margin-top:8px}
 #exn .zf .exk input{width:100%;margin-top:4px}
+/* 4.3 itens 5 e 6: quadro do topo (patrimonio) compacto e igual em todos os modulos */
+.hmh{padding:12px 16px 11px!important;border-radius:16px!important;margin:6px 0 8px!important}
+.hmh .hml{font-size:13px!important;font-weight:700}
+.hmh .hmv{display:flex;gap:8px!important;align-items:center!important;flex-wrap:wrap}
+.hmh .hmv b,.hmh.s3h .hmv b{font-size:28px!important;line-height:1.1!important;letter-spacing:-.02em}
+.hmh .hmp{font-size:13px!important;padding:3px 10px!important}
+.hmh .hmd{font-size:12.5px!important;line-height:1.35!important;margin-top:4px!important}
+.hmh .hmgr{font-size:12.5px!important;margin:0 0 4px!important;gap:6px!important}
+.hmh .hmgr .vzav{display:none!important}
+.hmh .s3evo{gap:4px 18px!important;margin-top:6px!important}
+.hmh .s3ev2 small{font-size:11.5px!important}
+.hmh .s3ev2 b{font-size:14px!important}
+@media(min-width:720px){.hmh .hmv b,.hmh.s3h .hmv b{font-size:32px!important}}
+/* Renda fixa e Exterior: sem o titulo azul em cima do quadro (as outras abas Inicio nao tem) */
+#rfh>h2:first-child,#exh>h2:first-child{display:none!important}
+/* Cripto: o aviso "Confira as informacoes" vai para o fim do Inicio e fica menor */
+#chm.on{display:flex!important;flex-direction:column}
+#chm.on>*{min-width:0;max-width:100%;width:100%;box-sizing:border-box}
+#chm>.zchk{order:2;font-size:12.5px!important;padding:8px 12px!important;margin-top:4px}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -6763,8 +6782,8 @@ function data(){
   var cl=[clsOf('rv','Bolsa (B3)','#2563eb',A)];
   if(S.on('cr'))cl.push(clsOf('cr','Cripto','#ea580c',C));
   if(S.on('dz'))cl.push(clsOf('dz','Dólar','#10b981',Z&&Z.V>0?Z:null));
-  var EX=null;if(S.on('ex')&&S.ex&&S.ex.sum){try{EX=S.ex.sum()}catch(e){EX=null}if(EX&&EX.V>0)cl.push(clsOf('ex','Exterior','#db2777',EX))}
-  var Y=null;if(S.on('rf')&&S.rfp&&S.rfp.sum){try{Y=S.rfp.sum()}catch(e){Y=null}if(Y&&Y.V>0)cl.push(clsOf('rf','Renda fixa','#0891b2',Y))}
+  var EX=null;if(S.on('ex')&&S.ex&&S.ex.sum){try{EX=S.ex.sum()}catch(e){EX=null}cl.push(clsOf('ex','Exterior','#db2777',EX&&EX.V>0?EX:null))}
+  var Y=null;if(S.on('rf')&&S.rfp&&S.rfp.sum){try{Y=S.rfp.sum()}catch(e){Y=null}cl.push(clsOf('rf','Renda fixa','#0891b2',Y&&Y.V>0?Y:null))}
   var T={V:0,cost:0,res:0,real:0,dd:0,base:0,dayPct:null},types={},top=[],ups=[];
   cl.forEach(function(c){T.V+=c.V;T.cost+=c.cost;T.res+=c.res;T.real+=c.real;if(c.dayPct!==null){T.dd+=c.dd;T.base+=c.base}});
   T.resPct=T.cost>0?T.res/T.cost:null;T.dayPct=T.base>0?T.dd/T.base:null;
@@ -6847,7 +6866,7 @@ R.ttr=function(){
   var hello='';try{hello=hmHello()}catch(e){}
   var ev=function(x,lb){if(!x)return '';return '<span class="s3ev2"><small class="mu">'+lb+(x.since?' (desde '+x.since+')':'')+'</small><b class="'+U.tn(x.g)+'">'+U.arrow(x.g)+U.sg(x.g)+brl(Math.abs(x.g))+' <em>'+U.sg(x.g)+pm(Math.abs(x.gp))+'</em></b>'+(Math.abs(x.ap)>=0.01?'<small class="mu">'+(x.ap>0?'+ ':'− ')+brl(Math.abs(x.ap))+' de aportes</small>':'')+'</span>'};
   h+='<div class="hmh s3h">'+hello+'<div class="hml">Seu patrimônio total</div><div class="hmv"><b>'+brl(T.V)+'</b>'+(T.dayPct!==null?'<span class="hmp '+U.tn(T.dd)+'">'+U.arrow(T.dd)+U.pc1(Math.abs(T.dayPct))+' hoje</span>':'')+'</div>'+
-    '<div class="mu hmd'+(T.dayPct!==null?(T.dd>0?' hmdg':T.dd<0?' hmdr':''):'')+'">'+(T.dayPct!==null?U.sg(T.dd)+brl(Math.abs(T.dd))+' no dia somado (ações no pregão, cripto em 24 h e dólar do dia).':(T.V>0?'Sem a variação do dia ainda. Toque no botão ↻, no topo.':'Ainda não há lançamentos. Comece pelo módulo da Bolsa, do Cripto ou do Dólar.'))+'</div>'+
+    '<div class="mu hmd'+(T.dayPct!==null?(T.dd>0?' hmdg':T.dd<0?' hmdr':''):'')+'" title="Soma do dia: ações no pregão, cripto em 24 h e dólar do dia">'+(T.dayPct!==null?U.sg(T.dd)+brl(Math.abs(T.dd))+' hoje (ações, cripto em 24 h e dólar)':(T.V>0?'Sem a variação do dia ainda. Toque no botão ↻, no topo.':'Ainda não há lançamentos. Comece pelo módulo da Bolsa, do Cripto ou do Dólar.'))+'</div>'+
     (E.m||E.a?'<div class="s3evo">'+ev(E.m,'Ganho no mês')+ev(E.a,'Ganho no ano')+'</div>':'')+'</div>';
   if(!(T.V>0)){
     h+='<div class="s3k0">'+D.cl.map(function(c){return clsCard(c,T)}).join('')+'</div>';
@@ -8110,7 +8129,7 @@ async function yLoad(k){var e=Y[k];if(e&&Date.now()-e.t<6*36e5)return;if(YB[k]&&
 function series(k,r){try{if(r===365){var e=Y[k];if(!e)return null;return {pts:e.pts.map(function(a){var d=new Date(a[0]);return {p:a[1],l:('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+String(d.getFullYear()).slice(2),ax:(typeof S32!=='undefined'?S32.u.MES[d.getMonth()]:'')}}),ref:0}}
   return nxSeries(k,r)}catch(e){return null}}
 function html(){var k=IX.k,x=(typeof NX!=='undefined'&&NX.ix)?NX.ix[k]:null,s=series(k,IX.r),F=fm(k),h='';
-  h+='<div class="mdb"><button type="button" class="mdx mdback" data-ixclose aria-label="Voltar"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button><div class="mdt"><div class="mdn"><b>'+nm(k)+'</b><span class="mu">'+(k==='usd'?'Real por dólar · cerca de 15 min de atraso':'Índice da Bolsa (B3) · cerca de 15 min de atraso')+'</span></div></div></div><div class="mdc">';
+  h+='<div class="mdb"><button type="button" class="mdx mdback" data-ixclose aria-label="Voltar"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button><div class="mdt"><div class="mdn"><b>'+nm(k)+'</b><span class="mu">'+(k==='usd'?'Real por dólar · cerca de 15 min de atraso':'Índice da Bolsa (B3) · cerca de 15 min de atraso')+'</span></div></div>'+(function(){var y=k==='usd'?'BRL=X':'^BVSP',f=false;try{f=window.S42B&&S42B.isFav(y)}catch(e){}return window.S42B?'<button type="button" class="g43f'+(f?' on':'')+'" data-xfav="'+y+'" aria-pressed="'+f+'" aria-label="Favoritar" title="Favoritar">'+(f?'★':'☆')+'</button>':''})()+'</div><div class="mdc">';
   h+='<div class="mds appx"><div class="appv"><small class="mu">Agora</small><b>'+(x&&x.p>0?F(x.p):'—')+'</b></div><div class="appd '+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'"><small class="mu">No dia</small><b>'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c):'—')+'</b></div></div>';
   if(k==='usd'){var ut=0;try{ut=CRX.price('USDT')}catch(e){}if(ut>0)h+='<div class="mds"><div class="mu">USDT em reais na Binance (o “dólar da cripto”): <b>R$ '+ut.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})+'</b>'+(x&&x.p>0?' · '+(ut>=x.p?'+':'−')+Math.abs((ut/x.p-1)*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% sobre o comercial':'')+'</div></div>'}
   h+='<div class="mds"><div class="pcgr one" role="group" aria-label="Período do gráfico">'+PRS.map(function(a){return '<button type="button" class="pcrb'+(IX.r===a[0]?' on':'')+'" data-ixpr="'+a[0]+'" aria-pressed="'+(IX.r===a[0])+'">'+a[1]+'</button>'}).join('')+'</div><div class="mdchart">';
@@ -9606,7 +9625,7 @@ function favQ(){if(!window.S42B||typeof qhEnv==='function'&&!qhEnv())return;var 
   Promise.all(F.map(function(s){return S42B.q1(s).then(function(r){if(r)XQ[s]=r})})).then(function(){try{LT.sig='';ltDraw()}catch(e){}},function(){})}
 function nameOf(s){var o=s;try{Object.keys(S42B.G).forEach(function(k){S42B.G[k].L.forEach(function(a){if(a[0]===s)o=a[1]})})}catch(e){}return o}
 function look(s){if(XQ[s])return XQ[s];try{for(var k in S42B.CA){var d=S42B.CA[k]&&S42B.CA[k].d;if(d&&d[s])return d[s]}}catch(e){}return null}
-if(typeof ltItems==='function'){var _li=ltItems;ltItems=function(m){var o=_li.apply(this,arguments);try{if(window.S42B&&m!=='C'){S42B.favs().forEach(function(s){var q=look(s);if(!q||!(q.p>0))return;var F=S42B.fmt(s),n=nameOf(s);
+if(typeof ltItems==='function'){var _li=ltItems;ltItems=function(m){var o=_li.apply(this,arguments);try{if(window.S42B&&m!=='C'){S42B.favs().forEach(function(s){if(s==='^BVSP'||s==='BRL=X')return;var q=look(s);if(!q||!(q.p>0))return;var F=S42B.fmt(s),n=nameOf(s);
   o.items.push({k:'f',n:n,h:'<b class="ltn" data-x="'+esc(s)+'">★ '+esc(n)+'</b> <span class="ltp">'+esc(F(q.p))+'</span> '+ltChg(q.c)})})}}catch(e){}return o}}
 setTimeout(favQ,2500);setInterval(favQ,5*6e4);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-xfav]'))setTimeout(function(){XQT=0;favQ()},50)});
@@ -9664,7 +9683,9 @@ function years(D){var Y={};(D.C.sales||[]).forEach(function(s){var y=String(s.da
   return '<h2>Resultado por ano</h2><div class="tw"><table class="t42 c43y"><thead><tr><th>Ano</th><th>Vendas e trocas (líquido)</th><th>Ganhos</th><th>Perdas</th><th>Resultado</th></tr></thead><tbody>'+b+'</tbody><tfoot>'+row('Total',T,'td')+'</tfoot></table></div><div class="mu" style="margin-top:6px">Resultado = valor líquido da venda ou da troca menos o custo médio. O imposto (Brasil e exterior) fica na aba Balanço.</div>'}
 function build(D){var hoje=D.it.reduce(function(a,x){return a+x.v},0),tp={};D.it.forEach(function(x){var k=TN[CRX.cat(x.c)]||'Outros';tp[k]=(tp[k]||0)+x.v});
   return evo(D,hoje)+'<h2>Peso na carteira (gráfico)</h2><div class="chg">'+donut(D.it.map(function(x){return {n:x.c,v:x.v}}),'Por moeda')+donut(Object.keys(tp).map(function(k){return {n:k,v:tp[k]}}),'Por tipo')+donut(byW(D),'Por corretora',typeof bcol==='function'?bcol:null)+'</div><div class="mu" style="margin-top:6px">Usa o preço de agora; a moeda sem cotação entra pelo custo. Os gráficos são da carteira de cripto toda, mesmo com o filtro de corretora ligado.</div>'+years(D)}
-function put(){var z=document.getElementById('zpos');if(!z||z.querySelector('.c43g'))return;var D;try{D=data()}catch(e){return}if(!D||!D.it.length)return;var h;try{h='<i class="c43g" hidden></i>'+build(D)}catch(e){return}
+/* olho fechado: os valores ficam escondidos como no resto das Posicoes (so dentro do vzScope) */
+function put(){return typeof vzScope==='function'?vzScope(put0)():put0()}
+function put0(){var z=document.getElementById('zpos');if(!z||z.querySelector('.c43g'))return;var D;try{D=data()}catch(e){return}if(!D||!D.it.length)return;var h;try{h='<i class="c43g" hidden></i>'+build(D)}catch(e){return}
   var ref=null,l=z.children;for(var i=0;i<l.length;i++)if(l[i].tagName==='H2'&&/^Corretoras e carteiras/.test(l[i].textContent)){ref=l[i];break}
   if(ref)ref.insertAdjacentHTML('beforebegin',h);else{var last=z.lastElementChild;if(last&&last.classList.contains('mu'))last.insertAdjacentHTML('beforebegin',h);else z.insertAdjacentHTML('beforeend',h)}}
 (function go(n){var z=document.getElementById('zpos');if(!z){if(n<60)setTimeout(function(){go(n+1)},250);return}new MutationObserver(function(){put()}).observe(z,{childList:true});put()})(0);
@@ -9705,7 +9726,8 @@ function crList(){var X=window.CRX;if(!X||!X.calc)return null;var ops=X.get().op
   /* a mesma moeda pode ter mais de uma posicao encerrada: a contagem segue a ordem do tempo */
   return out}
 var CRT=[['01','Bitcoin'],['02','Altcoins'],['03','Stablecoins']];
-function crPut(){var z=document.getElementById('zpos');if(!z||z.querySelector('[data-c43k="cenc"]'))return;var L;try{L=crList()}catch(e){return}if(!L)return;
+function crPut(){return typeof vzScope==='function'?vzScope(crPut0)():crPut0()}
+function crPut0(){var z=document.getElementById('zpos');if(!z||z.querySelector('[data-c43k="cenc"]'))return;var L;try{L=crList()}catch(e){return}if(!L)return;
   /* tira o "Moedas zeradas" antigo (o resultado delas agora aparece nas Posicoes encerradas) */
   var l=z.children,i,rm=[];for(i=0;i<l.length;i++)if(l[i].tagName==='H2'&&/^Moedas zeradas/.test(l[i].textContent)){rm.push(l[i]);for(var j=i+1;j<l.length&&l[j].tagName!=='H2'&&!(l[j].classList&&l[j].classList.contains('c43g'));j++)rm.push(l[j]);break}
   if(!L.length&&!rm.length)return;
@@ -9727,12 +9749,36 @@ function exList(){var E=window.S40S;if(!E)return null;var o=E.ld(),st={},out=[],
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-c43f],[data-c43t]');if(!b)return;
   if(b.dataset.c43t){var d=document.querySelector('[data-c43d="'+b.dataset.c43t+'"]');if(d){d.hidden=!d.hidden;b.setAttribute('aria-expanded',String(!d.hidden))}return}
   var p=b.dataset.c43f.split('|');FL[p[0]]=p[1];
-  if(p[0]==='cenc'){var z=document.getElementById('zpos'),old=z?z.querySelectorAll('[data-c43k="cenc"]'):[];if(!old.length)return;var ref=old[old.length-1].nextElementSibling;[].forEach.call(old,function(x){x.remove()});var L=crList();if(L)ins(z,ref,html('cenc',L,CRT),'cenc')}
+  if(p[0]==='cenc'){var z=document.getElementById('zpos'),old=z?z.querySelectorAll('[data-c43k="cenc"]'):[];if(!old.length)return;var ref=old[old.length-1].nextElementSibling;[].forEach.call(old,function(x){x.remove()});var L=crList();if(L){var mk=function(){return html('cenc',L,CRT)};ins(z,ref,typeof vzScope==='function'?vzScope(mk)():mk(),'cenc')}}
   else if(p[0]==='xenc'){try{window.S32.paint('exp')}catch(x){}}});
 window.S43D={crList:crList,exList:exList};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43d.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.3 itens 4 e 5: todo modulo abre no Inicio; Inicio de todos os modulos no mesmo modelo
+   (quadro do patrimonio compacto e, logo abaixo, os quadros do IBOV e do dolar, como nas Acoes) */
+(function(){
+function home(m){try{S42A.home(m)}catch(e){}}
+var USED=false;document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('nav[id^=nav] button[data-t],#bnav [data-bt],[data-s3go*=":"]'))USED=true},true);
+try{var g0=S32.go;S32.go=function(){USED=true;return g0.apply(this,arguments)}}catch(e){}
+/* quadro de classe do Total (e outros atalhos so com o modulo) abre o Inicio do modulo */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-s3go]');if(!b)return;var v=b.dataset.s3go||'';if(!v||v.indexOf(':')>=0)return;var t0=Date.now();USED=false;
+  var go=function(){if(USED)return;home(v)};setTimeout(go,60);setTimeout(go,300)},true);
+/* abrir o app (APK) tambem cai no Inicio do modulo em que estava */
+var win=window.__DESKTOP__&&!window.AndroidHttp&&!window.AndroidBio&&!/Android/i.test(navigator.userAgent||'');
+if(!window.__STX_KEEPMOD__&&!win)setTimeout(function(){if(!USED)home()},450);
+/* IBOV e dolar abaixo do quadro do topo no Total, Dolar, Renda fixa e Exterior */
+var KEYS={ttr:['ibov','usd'],dzh:['ibov','usd'],rfh:['ibov','usd'],exh:['usd','ibov']};
+function strip(t,el){try{var root=el&&el.querySelector?el:document.getElementById(t);if(!root||typeof nxStrip!=='function')return;var hm=root.querySelector('.hmh');if(!hm)return;
+  var old=root.querySelector('.ixs.ix43');if(old)old.remove();var h=nxStrip(KEYS[t]);if(!h)return;var d=document.createElement('div');d.innerHTML=h;var x=d.firstChild;x.classList.add('ix43');hm.insertAdjacentElement('afterend',x)}catch(e){}}
+(function hook(n){var S=window.S32;if(!S||!S.render){if(n<60)setTimeout(function(){hook(n+1)},250);return}var R=S.render;
+  Object.keys(KEYS).forEach(function(t){var k=t+'#after',o=R[k];R[k]=function(el){var r;if(o)r=o.apply(this,arguments);strip(t,el);return r}});
+  /* 8: logos dos ativos na Agenda, nos Proventos do Total e no Exterior (as telas do Total nao chamavam o carregador de logos) */
+  ['ttr','tta','ttp','tte','exh','exp','dzh'].forEach(function(t){var k=t+'#after',o=R[k];R[k]=function(el){var r;if(o)r=o.apply(this,arguments);setTimeout(function(){try{STX3.logos()}catch(e){}},0);return r}})})(0);
+window.S43E={strip:strip};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43e.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
