@@ -9116,6 +9116,7 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest)retur
   if(b=t.closest('[data-exdel]')){if(b.dataset.ok!=='1'){b.dataset.ok='1';b.textContent='toque de novo para apagar';setTimeout(function(){b.dataset.ok='';b.textContent='apagar'},3000);return}var o2=ld();o2.ops=o2.ops.filter(function(x){return x.id!==+b.dataset.exdel});sv(o2);S.paint('exr');return}
   if(b=t.closest('[data-exdec]')){var q=b.dataset.exdec.split(':'),o3=ld();o3.dec[q[0]]=q[1];sv(o3);S.paint('exb');return}});
 document.addEventListener('change',function(e){var t=e.target;if(!t||!t.dataset||!t.dataset.expx)return;var o=ld(),v2=num(t.value);if(v2>0)o.px[t.dataset.expx]=v2;else delete o.px[t.dataset.expx];sv(o);S.paint('exp')});
+window.S40S={ETF:ETF,ld:ld};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n40s.js: '+(e&&e.message||e))}catch(x){}}
@@ -9671,6 +9672,67 @@ window.S43C={put:put};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43c.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.3: "Posicoes encerradas" da Cripto e do Exterior no mesmo desenho das Acoes:
+   titulo com Comprado/Vendido e numero de posicoes, filtro por tipo, Expandir/Recolher, um grupo por ano com o resultado,
+   cartao de cada posicao (ativo, corretora, resultado, comprado, vendido, periodo, Nª posicao) e o quadro de totais */
+(function(){
+var FL={},TY={};
+function card(key,c,i){var id=key+i,ops=(c.ops||[]).map(function(o){return '<tr><td>'+dfm(o.d)+'</td><td>'+esc(o.t)+'</td><td>'+esc(o.q)+'</td><td>'+brl(o.v)+'</td></tr>'}).join('');
+  return '<div class="pc cp"><div class="cph"><div class="cpt"><button type="button" class="lk" data-c43t="'+id+'" aria-expanded="false">'+esc(c.tk)+'</button>'+(c.wal||[]).map(function(w){return bchip(w)}).join('')+'</div><div class="cpv"><b class="'+cls(c.res)+'">'+brl(c.res)+'</b><span class="'+cls(c.res)+'">'+(c.buy>0?pct(c.res/c.buy):'—')+'</span></div></div>'+
+    '<div class="cpm"><span>Comprado<b>'+brl(c.buy)+'</b></span><span>Vendido<b>'+brl(c.sold)+'</b></span><span class="pn">'+c.n+'ª posição · '+dfm(c.start).slice(3)+' a '+dfm(c.end).slice(3)+'</span></div>'+
+    (ops?'<div class="c43d" data-c43d="'+id+'" hidden><div class="tw"><table><thead><tr><th>Data</th><th>Operação</th><th>Quantidade</th><th>Valor</th></tr></thead><tbody>'+ops+'</tbody></table></div></div>':'')+'</div>'}
+function html(key,L,types){var F=FL[key]||'all',cnt={all:L.length};L.forEach(function(x){cnt[x.ty]=(cnt[x.ty]||0)+1});if(F!=='all'&&!cnt[F])F='all';
+  var V=L.filter(function(x){return F==='all'||x.ty===F}).sort(function(a,b){return a.end<b.end?1:a.end>b.end?-1:0}),B=0,Vn=0,Rs=0,w=0,l=0,Y={},ord=[];
+  V.forEach(function(c,i){B+=c.buy;Vn+=c.sold;Rs+=c.res;if(c.res>=0)w++;else l++;var y=c.end.slice(0,4);if(!Y[y]){Y[y]={n:0,res:0,h:''};ord.push(y)}Y[y].n++;Y[y].res+=c.res;Y[y].h+=card(key,c,i)});ord.sort().reverse();
+  var h='<h2>Posições encerradas<span class="h2v h2c" title="Soma do que foi comprado e do que foi vendido nas posições encerradas">Comprado <b>'+brl(B)+'</b> · Vendido <b>'+brl(Vn)+'</b></span><span class="h2t">'+V.length+(V.length===1?' posição':' posições')+'</span></h2>';
+  h+='<div class="pkf" role="group" aria-label="Filtrar posições encerradas por tipo"><span class="pkl">Tipo</span>'+[['all','Todos']].concat(types).map(function(t){return '<button type="button" class="tkc'+(F===t[0]?' on':'')+(t[0]!=='all'&&!cnt[t[0]]?' tk0':'')+'" data-c43f="'+key+'|'+t[0]+'" aria-pressed="'+(F===t[0])+'">'+t[1]+'<small>'+(cnt[t[0]]||0)+'</small></button>'}).join('')+'</div>';
+  if(!V.length)return h+'<div class="empty">Nenhuma posição encerrada ainda.</div>';
+  h+=yrGroups(key,ord.map(function(y){var x=Y[y];return {k:y,label:y,n:x.n+(x.n>1?' posições':' posição'),t:ytot('Resultado',brl(x.res),cls(x.res)),html:'<div class="cg">'+x.h+'</div>'}}));
+  h+='<div class="pc cp"><div class="cpm" style="margin-top:0;justify-content:space-between"><span>Comprado<b>'+brl(B)+'</b></span><span>Vendido<b>'+brl(Vn)+'</b></span><span>Resultado<b class="'+cls(Rs)+'">'+brl(Rs)+'</b></span></div><div class="mu" style="margin-top:6px">'+V.length+' '+(V.length>1?'posições':'posição')+': '+w+' com lucro e '+l+' com prejuízo</div></div>';
+  return h}
+function fq(q){return (+q||0).toLocaleString('pt-BR',{maximumFractionDigits:8})}
+/* ---------- Cripto: uma posicao vai da primeira compra ate a moeda zerar (todas as corretoras juntas) ---------- */
+function crList(){var X=window.CRX;if(!X||!X.calc)return null;var ops=X.get().ops||[],C=X.calc(ops),R=C.rows||{},st={},out=[],cnt={},TN={'COMPRA':'Compra','VENDA':'Venda','PERMUTA':'Troca','RECEB':'Recebido'};
+  var ord=Array.isArray(C.order)&&C.order.length?C.order:ops.slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.id-b.id});
+  function cur(c,d){return st[c]||(st[c]={q:0,mx:0,buy:0,sold:0,res:0,start:d,w:{},ops:[]})}
+  function inn(c,q,cost,o,t){var x=cur(c,o.date);x.q+=q;if(x.q>x.mx)x.mx=x.q;x.buy+=cost;if(o.where)x.w[o.where]=1;x.ops.push({d:o.date,t:t,q:fq(q),v:cost})}
+  function out1(c,q,net,g,o,t){var x=st[c];if(!x)return;x.q-=q;x.sold+=net;x.res+=g;if(o.where)x.w[o.where]=1;x.ops.push({d:o.date,t:t,q:fq(q),v:net});
+    if(x.q<=Math.max(1e-9,x.mx*1e-6)){cnt[c]=(cnt[c]||0)+1;out.push({tk:c,ty:X.cat(c),wal:Object.keys(x.w),buy:x.buy,sold:x.sold,res:x.res,start:x.start,end:o.date,n:cnt[c],ops:x.ops});delete st[c]}}
+  ord.forEach(function(o){var r=R[o.id]||{},q=+o.qty||0;
+    if(o.type==='COMPRA'||o.type==='RECEB')inn(o.coin,q,+r.cost||0,o,TN[o.type]);
+    else if(o.type==='VENDA')out1(o.coin,q,+r.net||0,+r.gain||0,o,'Venda');
+    else if(o.type==='PERMUTA'){out1(o.coin,q,+r.net||0,+r.gain||0,o,'Troca (saída)');if(o.coin2&&+o.qty2>0)inn(o.coin2,+o.qty2,+(r.cost2||r.net)||0,o,'Troca (entrada)')}});
+  /* a mesma moeda pode ter mais de uma posicao encerrada: a contagem segue a ordem do tempo */
+  return out}
+var CRT=[['01','Bitcoin'],['02','Altcoins'],['03','Stablecoins']];
+function crPut(){var z=document.getElementById('zpos');if(!z||z.querySelector('[data-c43k="cenc"]'))return;var L;try{L=crList()}catch(e){return}if(!L)return;
+  /* tira o "Moedas zeradas" antigo (o resultado delas agora aparece nas Posicoes encerradas) */
+  var l=z.children,i,rm=[];for(i=0;i<l.length;i++)if(l[i].tagName==='H2'&&/^Moedas zeradas/.test(l[i].textContent)){rm.push(l[i]);for(var j=i+1;j<l.length&&l[j].tagName!=='H2'&&!(l[j].classList&&l[j].classList.contains('c43g'));j++)rm.push(l[j]);break}
+  if(!L.length&&!rm.length)return;
+  var ref=z.querySelector('.c43g');if(!ref)for(i=0;i<l.length;i++)if(l[i].tagName==='H2'&&/^Corretoras e carteiras/.test(l[i].textContent)){ref=l[i];break}
+  if(!ref){ref=z.lastElementChild;if(!(ref&&ref.classList.contains('mu')))ref=null}
+  ins(z,ref,html('cenc',L,CRT),'cenc');rm.forEach(function(e){e.remove()})}
+function ins(par,ref,h,key){var t=document.createElement('div');t.innerHTML=h;var a=[].slice.call(t.children);a.forEach(function(e){e.setAttribute('data-c43k',key);par.insertBefore(e,ref)})}
+(function go(n){var z=document.getElementById('zpos');if(!z){if(n<60)setTimeout(function(){go(n+1)},250);return}new MutationObserver(function(){crPut()}).observe(z,{childList:true});crPut()})(0);
+/* ---------- Exterior ---------- */
+function exList(){var E=window.S40S;if(!E)return null;var o=E.ld(),st={},out=[],cnt={};
+  o.ops.slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.id-b.id}).forEach(function(x){var tk=x.tk;
+    if(x.type==='COMPRA'){var s=st[tk]||(st[tk]={q:0,mx:0,cu:0,cr:0,buy:0,sold:0,res:0,start:x.date,w:{},ops:[]}),cu=x.q*x.p+(+x.fee||0);s.q+=x.q;if(s.q>s.mx)s.mx=s.q;s.cu+=cu;s.cr+=cu*x.fx;s.buy+=cu*x.fx;if(x.br)s.w[x.br]=1;s.ops.push({d:x.date,t:'Compra',q:fq(x.q),v:cu*x.fx})}
+    else if(x.type==='VENDA'&&st[tk]&&st[tk].q>0){var p=st[tk],k=Math.min(1,x.q/p.q),cr2=p.cr*k,vr=(x.q*x.p-(+x.fee||0))*x.fx;p.q-=x.q;p.cu-=p.cu*k;p.cr-=cr2;p.sold+=vr;p.res+=vr-cr2;if(x.br)p.w[x.br]=1;p.ops.push({d:x.date,t:'Venda',q:fq(x.q),v:vr});
+      if(p.q<=Math.max(1e-9,p.mx*1e-6)){cnt[tk]=(cnt[tk]||0)+1;out.push({tk:tk,ty:E.ETF.test(tk)?'ETF':'ACAO',wal:Object.keys(p.w),buy:p.buy,sold:p.sold,res:p.res,start:p.start,end:x.date,n:cnt[tk],ops:p.ops});delete st[tk]}}});
+  return out}
+(function hook(n){var S=window.S32;if(!S||!S.render||!S.render.exp||!window.S40S){if(n<60)setTimeout(function(){hook(n+1)},250);return}var R=S.render,o=R.exp;
+  R.exp=function(){var h=o.apply(this,arguments),L=null;try{L=exList()}catch(e){}if(L&&L.length)h+=html('xenc',L,[['ACAO','Ações'],['ETF','ETFs']]).replace(/<(h2|div) /g,'<$1 data-c43k="xenc" ');return h}})(0);
+/* ---------- cliques ---------- */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-c43f],[data-c43t]');if(!b)return;
+  if(b.dataset.c43t){var d=document.querySelector('[data-c43d="'+b.dataset.c43t+'"]');if(d){d.hidden=!d.hidden;b.setAttribute('aria-expanded',String(!d.hidden))}return}
+  var p=b.dataset.c43f.split('|');FL[p[0]]=p[1];
+  if(p[0]==='cenc'){var z=document.getElementById('zpos'),old=z?z.querySelectorAll('[data-c43k="cenc"]'):[];if(!old.length)return;var ref=old[old.length-1].nextElementSibling;[].forEach.call(old,function(x){x.remove()});var L=crList();if(L)ins(z,ref,html('cenc',L,CRT),'cenc')}
+  else if(p[0]==='xenc'){try{window.S32.paint('exp')}catch(x){}}});
+window.S43D={crList:crList,exList:exList};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43d.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
