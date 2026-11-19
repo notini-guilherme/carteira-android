@@ -434,14 +434,48 @@ object Notify {
         }
     }
 
-    private fun fetchCripto(coin: String): CQ? {
-        for (suf in arrayOf("BRL", "USDT")) {
-            for (host in arrayOf("https://data-api.binance.vision", "https://api.binance.com")) {
-                val v = try { fetchBinance(host, coin + suf) } catch (e: Exception) { null }
-                if (v != null) return CQ(v.first, v.second, if (suf == "BRL") "R$" else "US$")
-            }
+    /* 4.3: o par em reais (BONKBRL, NEIROBRL...) pode estar parado na Binance e dar uma variacao falsa (ex.: -40%).
+       Mesma regra das telas do app: usa o par em reais so se ele tem negocios (30+ em 24 h) e o preco fica a ate 5% do par em USDT x dolar;
+       senao usa o par em USDT, convertido para reais e com a variacao do dolar. */
+    private class TK(val c: Double, val p: Double, val n: Long)
+    private fun tick24(sym: String): TK? {
+        for (host in arrayOf("https://data-api.binance.vision", "https://api.binance.com")) {
+            val v = try { fetchTick(host, sym) } catch (e: Exception) { null }
+            if (v != null) return v
         }
         return null
+    }
+    private fun fetchCripto(coin: String): CQ? {
+        val b = tick24(coin + "BRL")
+        if (coin == "USDT") return if (b != null) CQ(b.c, b.p, "R$") else null
+        val u = tick24(coin + "USDT") ?: return if (b != null) CQ(b.c, b.p, "R$") else null
+        val fx = tick24("USDTBRL")
+        if (fx == null || !(fx.p > 0) || !(u.p > 0)) return if (b != null) CQ(b.c, b.p, "R$") else CQ(u.c, u.p, "US$")
+        val pu = u.p * fx.p
+        val cu = ((1 + u.c / 100) * (1 + fx.c / 100) - 1) * 100
+        val brlOk = b != null && b.n >= 30 && b.p > 0 && Math.abs(b.p / pu - 1) <= 0.05 && Math.abs(b.c - cu) <= 5.0
+        return if (brlOk) CQ(b!!.c, b.p, "R$") else CQ(cu, pu, "R$")
+    }
+
+    private fun fetchTick(host: String, sym: String): TK? {
+        val u = URL(host + "/api/v3/ticker/24hr?symbol=" + URLEncoder.encode(sym, "UTF-8"))
+        val c = u.openConnection() as HttpURLConnection
+        try {
+            c.requestMethod = "GET"
+            c.connectTimeout = 10000
+            c.readTimeout = 15000
+            c.setRequestProperty("Accept", "application/json")
+            c.setRequestProperty("User-Agent", "CarteiraApp/1.0")
+            if (c.responseCode !in 200..299) return null
+            val body = c.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+            val o = JSONObject(body)
+            val v = o.optDouble("priceChangePercent", Double.NaN)
+            val p = o.optString("lastPrice", "").toDoubleOrNull() ?: 0.0
+            val n = o.optLong("count", 0L)
+            return if (v.isNaN()) null else TK(v, p, n)
+        } finally {
+            c.disconnect()
+        }
     }
 
     private fun fetchBinance(host: String, sym: String): Pair<Double, Double>? {

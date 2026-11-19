@@ -9623,13 +9623,54 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 /* 13b: quando o historico termina de chegar (ou outra atualizacao redesenha a Cripto), o grafico tambem fica parado na tela */
 function qAnc(){var l=document.querySelectorAll('.qhc'),h=innerHeight||800;for(var i=0;i<l.length;i++){var e=l[i];if(e.offsetParent===null)continue;var r=e.getBoundingClientRect();if(r.bottom>0&&r.top<h)return {k:e.dataset.qhc,t:r.top}}return null}
 function qFix(a){if(!a)return;var l=document.querySelectorAll('.qhc[data-qhc="'+a.k+'"]');for(var i=0;i<l.length;i++)if(l[i].offsetParent!==null){var d=l[i].getBoundingClientRect().top-a.t;if(Math.abs(d)>2)window.scrollBy(0,d);return}}
-(function wr(n){var C=window.CRX;if(!C||!C.all){if(n<40)setTimeout(function(){wr(n+1)},250);return}if(C.__w43)return;var o=C.all;C.all=function(){var a=qAnc(),r=o.apply(this,arguments);qFix(a);if(a)setTimeout(function(){qFix(a)},60);return r};C.__w43=1})(0);
+(function wr(n){var C=window.CRX;if(!C||!C.all){if(n<40)setTimeout(function(){wr(n+1)},250);return}if(C.__w43)return;var o=C.all;C.all=function(){var a=qAnc(),r=o.apply(this,arguments);qFix(a);if(a)setTimeout(function(){qFix(a)},60);return r};C.__w43=1;
+  /* letreiro e favoritos: a variacao de 24 h das moedas da carteira vem do mesmo par dos cartoes (o par em reais parado, como BONKBRL, dava -40% falso) */
+  if(C.mkOne){var o1=C.mkOne;C.mkOne=function(c){try{var d=qxDay('C',c);if(d!==null&&d!==undefined)return d}catch(e){}return o1.apply(this,arguments)}}
+  if(C.mkTick){var o2=C.mkTick;C.mkTick=function(){return o2.apply(this,arguments).map(function(f){try{var d=qxDay('C',f.c);if(d!==null&&d!==undefined)f.ch=d}catch(e){}return f})}}})(0);
 /* Posicoes da Cripto abrem em 24 h: se os cartoes ja estavam desenhados com outro periodo, redesenha (antes o botao 1h/4h continuava aceso) */
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#navcr button[data-t=crp],[data-s3go="cr:crp"],[data-hmgo=crp]');if(!b)return;setTimeout(function(){try{var l=document.querySelectorAll('#zpos .pcrb.on[data-pcr]');for(var i=0;i<l.length;i++)if(/^-?\d+$/.test(l[i].dataset.pcr)&&l[i].dataset.pcr!=='1'){window.CRX.all();return}}catch(x){}},0)});
 window.S43B={favQ:favQ,fresh:fresh};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43b.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.3: Posicoes da Cripto com os mesmos graficos das Posicoes das Acoes:
+   Evolucao da carteira, Peso na carteira (por moeda, por tipo e por corretora) e Resultado por ano */
+(function(){
+var TN={'01':'Bitcoin','02':'Altcoins','03':'Stablecoins'};
+function p2(n){return (n<10?'0':'')+n}
+function px(c){try{return +CRX.price(c)||0}catch(e){return 0}}
+function data(){var X=window.CRX;if(!X||!X.calc||!X.get)return null;var ops=X.get().ops||[],C=X.calc(ops),P=C.pools,it=[],miss=0;
+  Object.keys(P).forEach(function(c){if(!(P[c].qty>1e-9))return;var p=px(c),v=p>0?P[c].qty*p:P[c].cost;if(!(p>0))miss++;if(v>=0.01)it.push({c:c,v:v})});
+  return {ops:ops,C:C,P:P,it:it,miss:miss}}
+function byW(D){var W={},out={};D.ops.forEach(function(o){W[o.where||'']=1});
+  Object.keys(W).forEach(function(w){var P=CRX.calc(D.ops.filter(function(o){return (o.where||'')===w})).pools,n=w||'Sem corretora';
+    Object.keys(P).forEach(function(c){var q=Math.min(P[c].qty,(D.P[c]||{}).qty||0);if(!(q>1e-9))return;var p=px(c),v=p>0?q*p:0;if(v>=0.01)out[n]=(out[n]||0)+v})});
+  return Object.keys(out).map(function(k){return {n:k,v:out[k]}})}
+function evo(D,hoje){var now=new Date(),lab=[],cu=[],i;
+  for(i=11;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i+1,0),e=d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),P=CRX.calc(D.ops.filter(function(o){return o.date<=e})).pools;
+    lab.push(MS[d.getMonth()]);cu.push(Object.keys(P).reduce(function(a,c){return a+(P[c].qty>1e-9?P[c].cost:0)},0))}
+  var custo=cu[11];if(!custo&&!hoje)return '';
+  var W=360,H=190,L=14,T=16,B=24,mx=Math.max(custo,hoje,Math.max.apply(null,cu),1)*1.08,X=function(k){return L+(W-2*L)*k/11},Y=function(v){return T+(H-T-B)*(1-v/mx)},
+    pts=cu.map(function(v,k){return X(k).toFixed(1)+','+Y(v).toFixed(1)}),c0=PAL[0],c1=PAL[1],
+    s='<path d="M'+pts.join(' L')+' L'+X(11).toFixed(1)+','+(H-B)+' L'+X(0).toFixed(1)+','+(H-B)+' Z" fill="'+c0+'" fill-opacity=".16"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="'+c0+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  cu.forEach(function(v,k){s+='<circle cx="'+X(k).toFixed(1)+'" cy="'+Y(v).toFixed(1)+'" r="3" fill="'+c0+'"><title>'+lab[k]+': custo '+brl(v)+'</title></circle><text x="'+X(k).toFixed(1)+'" y="'+(H-8)+'" font-size="11" text-anchor="middle" fill="currentColor" opacity=".7">'+lab[k]+'</text>'});
+  s+='<line x1="'+X(11).toFixed(1)+'" x2="'+X(11).toFixed(1)+'" y1="'+Y(custo).toFixed(1)+'" y2="'+Y(hoje).toFixed(1)+'" stroke="'+c1+'" stroke-width="2" stroke-dasharray="3 3"/><circle cx="'+X(11).toFixed(1)+'" cy="'+Y(hoje).toFixed(1)+'" r="6" fill="'+c1+'"><title>Valor atual hoje: '+brl(hoje)+'</title></circle>';
+  var dif=hoje-custo;
+  return '<h2>Evolução da carteira (gráfico)</h2><div class="ch"><div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px"><div><div class="mu">Custo investido</div><b style="font-size:17px">'+brl(custo)+'</b></div><div><div class="mu">Valor atual</div><b style="font-size:17px">'+brl(hoje)+'</b></div><div><div class="mu">Diferença</div><b style="font-size:17px" class="'+cls(dif)+'">'+brl(dif)+'</b></div></div><svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Custo investido no fim de cada mês">'+s+'</svg></div><div class="mu" style="margin-top:6px">A linha mostra o custo investido no fim de cada mês; o ponto da direita é o valor de hoje. O valor dia a dia está em "Patrimônio dia a dia", no Início.</div>'}
+function years(D){var Y={};(D.C.sales||[]).forEach(function(s){var y=String(s.date||'').slice(0,4);if(!y)return;var x=Y[y]||(Y[y]={n:0,v:0,g:0,l:0}),g=+s.gain||0;x.n++;x.v+=+s.net||0;if(g>=0)x.g+=g;else x.l+=g});
+  var ks=Object.keys(Y).sort().reverse();if(!ks.length)return '';var T={n:0,v:0,g:0,l:0},row=function(a,x,tag){return '<tr><'+tag+'>'+a+'</'+tag+'><'+tag+'>'+brl(x.v)+'<small class="mu"> '+x.n+(x.n>1?' operações':' operação')+'</small></'+tag+'><'+tag+' class="gn">'+brl(x.g)+'</'+tag+'><'+tag+' class="rd">'+brl(x.l)+'</'+tag+'><'+tag+' class="'+cls(x.g+x.l)+'"><b>'+brl(x.g+x.l)+'</b></'+tag+'></tr>'};
+  var b=ks.map(function(y){var x=Y[y];T.n+=x.n;T.v+=x.v;T.g+=x.g;T.l+=x.l;return row(y,x,'td')}).join('');
+  return '<h2>Resultado por ano</h2><div class="tw"><table class="t42 c43y"><thead><tr><th>Ano</th><th>Vendas e trocas (líquido)</th><th>Ganhos</th><th>Perdas</th><th>Resultado</th></tr></thead><tbody>'+b+'</tbody><tfoot>'+row('Total',T,'td')+'</tfoot></table></div><div class="mu" style="margin-top:6px">Resultado = valor líquido da venda ou da troca menos o custo médio. O imposto (Brasil e exterior) fica na aba Balanço.</div>'}
+function build(D){var hoje=D.it.reduce(function(a,x){return a+x.v},0),tp={};D.it.forEach(function(x){var k=TN[CRX.cat(x.c)]||'Outros';tp[k]=(tp[k]||0)+x.v});
+  return evo(D,hoje)+'<h2>Peso na carteira (gráfico)</h2><div class="chg">'+donut(D.it.map(function(x){return {n:x.c,v:x.v}}),'Por moeda')+donut(Object.keys(tp).map(function(k){return {n:k,v:tp[k]}}),'Por tipo')+donut(byW(D),'Por corretora',typeof bcol==='function'?bcol:null)+'</div><div class="mu" style="margin-top:6px">Usa o preço de agora; a moeda sem cotação entra pelo custo. Os gráficos são da carteira de cripto toda, mesmo com o filtro de corretora ligado.</div>'+years(D)}
+function put(){var z=document.getElementById('zpos');if(!z||z.querySelector('.c43g'))return;var D;try{D=data()}catch(e){return}if(!D||!D.it.length)return;var h;try{h='<i class="c43g" hidden></i>'+build(D)}catch(e){return}
+  var ref=null,l=z.children;for(var i=0;i<l.length;i++)if(l[i].tagName==='H2'&&/^Corretoras e carteiras/.test(l[i].textContent)){ref=l[i];break}
+  if(ref)ref.insertAdjacentHTML('beforebegin',h);else{var last=z.lastElementChild;if(last&&last.classList.contains('mu'))last.insertAdjacentHTML('beforebegin',h);else z.insertAdjacentHTML('beforeend',h)}}
+(function go(n){var z=document.getElementById('zpos');if(!z){if(n<60)setTimeout(function(){go(n+1)},250);return}new MutationObserver(function(){put()}).observe(z,{childList:true});put()})(0);
+window.S43C={put:put};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43c.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
