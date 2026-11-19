@@ -1152,6 +1152,44 @@ html.dsk nav#navex{display:none!important}
 .k43c{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
 .k43c .btn{margin:0}
 .k43c .btn.on{background:var(--ac);color:var(--ax);border-color:var(--ac)}
+/* 4.3: cartoes com o mercado fechado ficam apagados e com etiqueta "Mercado fechado" */
+.g43c.g43x>*:last-child{opacity:.6;filter:grayscale(.4)}
+.wmc{font-style:normal;font-weight:800;color:#92400e;background:#fef3c7;border-radius:999px;padding:1px 8px;margin-right:4px;font-size:11.5px}
+html.dark .wmc,[data-theme=dark] .wmc{color:#fde68a;background:#451a03}
+/* 4.3: Mercado do Total, visao Simples em duas colunas */
+.k43h{margin:14px 0 6px;font-size:15px}
+.k43g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:720px){.k43g{grid-template-columns:repeat(4,1fr)}}
+.k43i{display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:left;padding:9px 10px;border:1px solid var(--bd);border-left:4px solid var(--mu);border-radius:12px;background:var(--sf);color:inherit;font:inherit;cursor:pointer;min-width:0}
+.k43i.up{border-left-color:var(--gn)}.k43i.dn{border-left-color:var(--rd)}
+.k43i.g43x{background:repeating-linear-gradient(135deg,var(--sf),var(--sf) 8px,var(--bg) 8px,var(--bg) 10px)}
+.k43t{display:flex;align-items:center;gap:6px;min-width:0}
+.k43t .g43av{width:24px;height:24px;border-radius:7px;font-size:9px}
+.k43t b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
+.k43p{font-weight:800;font-size:15px}
+.k43i>span:nth-child(3){font-size:12px;font-weight:700}
+.k43sp{width:100%;height:22px;margin-top:2px;color:var(--mu)}
+.k43i.up .k43sp{color:var(--gn)}.k43i.dn .k43sp{color:var(--rd)}
+/* 4.3: Posicoes do Exterior, Dolar e Renda fixa no padrao da Bolsa */
+[data-p43h]{display:none!important}
+.p43{margin:8px 0 10px}
+.p43s{display:flex;flex-direction:column;gap:6px}
+.p43r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--bd);border-left:4px solid var(--mu);border-radius:12px;background:var(--sf)}
+.p43r.up{border-left-color:var(--gn)}.p43r.dn{border-left-color:var(--rd)}
+.p43r>div{display:flex;flex-direction:column;min-width:0}
+.p43r small{font-size:12px}
+.p43v{text-align:right;align-items:flex-end}
+.p43t td small{display:block;font-size:11px;color:var(--mu)}
+.m43{display:flex;flex-wrap:wrap;gap:4px}
+.m43i{min-height:84px;border-radius:10px;padding:8px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 2px rgba(0,0,0,.35);overflow:hidden}
+.m43i b{font-size:14px}.m43i span{font-weight:800}.m43i small{font-size:11px;opacity:.95}
+/* sugestoes do Lancar */
+.ac43{display:flex;flex-direction:column;margin:4px 0 6px;border:1px solid var(--bd);border-radius:12px;background:var(--sf);overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.ac43 button{display:flex;gap:8px;align-items:baseline;text-align:left;padding:10px 12px;border:0;border-bottom:1px solid var(--bd);background:none;color:inherit;font:inherit;cursor:pointer}
+.ac43 button:last-child{border-bottom:0}
+.ac43 button:hover,.ac43 button:focus{background:var(--bg)}
+.ac43 small{color:var(--mu);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[data-p43x]{display:none!important}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -5639,7 +5677,7 @@ async function nxYahoo(sym,range,interval){
   return pts.length?{m:res.meta||{},pts:pts}:{err:'empty'}}
 /* o letreiro (lt.js) ja busca o mesmo endereco no Windows: aproveita a resposta dele para os mini graficos, sem pedir de novo */
 function nxFromLt(sym,res,p,pv){
-  var k=sym==='^BVSP'?'ibov':sym==='BRL=X'?'usd':'',ts,cl,pts=[],i,v;if(!k||!res)return;
+  var k=sym==='^BVSP'?'ibov':'',ts,cl,pts=[],i,v;if(!k||!res)return;/* 4.3: o dolar usa a busca propria (5 dias, horario fixo) */
   ts=Array.isArray(res.timestamp)?res.timestamp:[];cl=res.indicators&&res.indicators.quote&&res.indicators.quote[0]&&res.indicators.quote[0].close;cl=Array.isArray(cl)?cl:[];
   for(i=0;i<ts.length;i++){v=+cl[i];if(v>0&&ts[i]>0)pts.push([ts[i]*1000,v])}
   if(pts.length<2)return;
@@ -5655,6 +5693,8 @@ function nxWin(k,pts){
   /* v3.2.1: depois da meia-noite (ou no fim de semana) o ultimo ponto e de fora do horario: mostra o ultimo pregao do dolar */
   if(o.length<2&&k!=='ibov'){var i,Dd,f2,t2,o2;for(i=1;i<=4;i++){Dd=qhD(new Date(last-i*864e5));f2=qiAt(Dd,9,0);t2=qiAt(Dd,18,0)+6e4;o2=pts.filter(function(a){return a[0]>=f2&&a[0]<=t2});if(o2.length>=2)return o2}}
   return o.length>=2?o:pts}
+function nxSess(pts){var days={},order=[];(pts||[]).forEach(function(a){var D=qhD(new Date(a[0]));if(a[0]>=qiAt(D,9,0)&&a[0]<=qiAt(D,18,0)+6e4){if(!days[D]){days[D]=[];order.push(D)}days[D].push(a)}});
+  var L=order.filter(function(D){return days[D].length>=2});if(!L.length)return null;var D=L[L.length-1],P=L.length>1?days[L[L.length-2]]:null;return {S:days[D],D:D,pv:P?P[P.length-1][1]:0}}
 function nxOpen(){var o=false;try{o=mktOpen()}catch(e){}return o}
 /* v3.0: o dolar negocia o dia todo (seg-sex): atualiza a cada 2 min; o IBOV segue o horario da bolsa */
 function nxTtl(k,force){if(force)return 6e4;if(k==='usd'){var wd=new Date().getDay();return wd>=1&&wd<=5?2*6e4:30*6e4}return nxOpen()?3*6e4:30*6e4}
@@ -5664,12 +5704,15 @@ async function nxFetch(force){
   if(!due.length)return 0;
   NX.busy=true;
   try{for(i=0;i<due.length;i++){
-    r=await nxYahoo(NXSYM[due[i]],'1d','5m');
+    r=await nxYahoo(NXSYM[due[i]],due[i]==='usd'?'5d':'1d',due[i]==='usd'?'15m':'5m');
     if(!r.pts){NX.bk=Date.now()+5*6e4;break}
     m=r.m;lt=r.pts[r.pts.length-1][0];p=r.pts[r.pts.length-1][1];qt=+m.regularMarketTime>0?+m.regularMarketTime*1000:0;
     if(+m.regularMarketPrice>0&&(qt>=lt||Date.now()-lt<36e5))p=+m.regularMarketPrice;
     pv=+(m.chartPreviousClose>0?m.chartPreviousClose:m.previousClose);
-    NX.ix[due[i]]={p:p,pv:pv>0?pv:0,c:pv>0?(p/pv-1)*100:null,t:Date.now(),qt:Math.max(qt,lt),pts:nxThin(r.pts,80)};got++;
+    var pts=r.pts;
+    /* 4.3: dolar com horario fixo (9h as 18h de Brasilia): fora do pregao mostra o ultimo pregao e a variacao dele, e o mini grafico nao vira uma linha reta da madrugada */
+    if(due[i]==='usd'){var ss=nxSess(r.pts);if(ss){var inS=ss.D===qhD(new Date())&&Date.now()<=qiAt(ss.D,18,0)+6e4;if(!inS)p=ss.S[ss.S.length-1][1];if(ss.pv>0)pv=ss.pv;pts=ss.S;lt=ss.S[ss.S.length-1][0]}}
+    NX.ix[due[i]]={p:p,pv:pv>0?pv:0,c:pv>0?(p/pv-1)*100:null,t:Date.now(),qt:Math.max(qt,lt),pts:nxThin(pts,80)};got++;
     try{LT.x[due[i]]={p:p,c:pv>0?(p/pv-1)*100:null,t:Date.now()};ltSave()}catch(e){}}}catch(e){}
   NX.busy=false;if(got){nxSave();try{ltDraw()}catch(e){}}
   nxPaint();return got}
@@ -8588,7 +8631,7 @@ function paint(){try{
   ['w40wm','w40rk','w40nb','w40rkc','w40nbc','w40wmt','w40nbt'].forEach(function(i){var e=$i(i);if(e)e.remove()});
   if($i('mk')){chip();sec('mk','w41rk','Rankings do dia',rkBody('A'));sec('mk','w41nb','Notícias que movem o mercado',newsBody('A'));last('mk',['w41rk','w41nb'])}
   var cm=$i('crm');if(cm&&cm.children.length>1){sec('crm','w41rkc','Rankings da cripto',rkBody('C'));sec('crm','w41nbc','Notícias que movem o mercado',newsBody('C'));last('crm',['w41rkc','w41nbc'])}
-  var tr=$i('ttr');if(tr&&tr.children.length){sec('ttr','w41wmt','Bolsas do mundo',worldGrid('tt'));sec('ttr','w41nbt','Notícias que movem o mercado',newsBody('T'));last('ttr',['w41wmt','w41nbt'])}
+  var tr=$i('ttr');if(tr&&tr.children.length){/* 4.3: Bolsas do mundo saiu do Resumo do Total (fica na aba Mercado) */['w41wmt','w41wmth'].forEach(function(id){var e=$i(id);if(e)e.remove()});sec('ttr','w41nbt','Notícias que movem o mercado',newsBody('T'));last('ttr',['w41wmt','w41nbt'])}
   }catch(e){}}
 var LD={};function loadOnce(k,f){if(LD[k]&&Date.now()-LD[k]<10*6e4)return;LD[k]=Date.now();f()}
 function loads(){if(!env())return;
@@ -9146,7 +9189,7 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest)retur
   if(b=t.closest('[data-exdel]')){if(b.dataset.ok!=='1'){b.dataset.ok='1';b.textContent='toque de novo para apagar';setTimeout(function(){b.dataset.ok='';b.textContent='apagar'},3000);return}var o2=ld();o2.ops=o2.ops.filter(function(x){return x.id!==+b.dataset.exdel});sv(o2);S.paint('exr');return}
   if(b=t.closest('[data-exdec]')){var q=b.dataset.exdec.split(':'),o3=ld();o3.dec[q[0]]=q[1];sv(o3);S.paint('exb');return}});
 document.addEventListener('change',function(e){var t=e.target;if(!t||!t.dataset||!t.dataset.expx)return;var o=ld(),v2=num(t.value);if(v2>0)o.px[t.dataset.expx]=v2;else delete o.px[t.dataset.expx];sv(o);S.paint('exp')});
-window.S40S={ETF:ETF,ld:ld};
+window.S40S={ETF:ETF,ld:ld,calc:calc};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n40s.js: '+(e&&e.message||e))}catch(x){}}
@@ -9423,7 +9466,7 @@ function fmt(s){var k=kind(s);if(k==='sa')return function(v){return 'R$ '+n2(v,2
 /* 4.3: busca 5 dias e mostra o ULTIMO pregao com pontos (de madrugada o "1 dia" vinha vazio e dava 0,00%).
    Moedas (=X) negociam 24 h: o grafico "Hoje" fica fixo das 9h as 18h de Brasilia, como o do dolar. */
 async function q1(sym){var r=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range=5d&interval=15m',15000);
-  try{var R=r.j.chart.result[0],m=R.meta,c=R.indicators.quote[0].close,fx=/=X$/.test(sym),off=fx?-3*36e5:(+m.gmtoffset||0)*1000,all=[];
+  try{var R=r.j.chart.result[0],m=R.meta,c=R.indicators.quote[0].close,fx=/=X$|=F$/.test(sym),off=fx?-3*36e5:(+m.gmtoffset||0)*1000,all=[];
     (R.timestamp||[]).forEach(function(t,i){if(c[i]>0)all.push([t*1000,c[i]])});
     var dk=function(ms){return new Date(ms+off).toISOString().slice(0,10)},hr=function(ms){var d=new Date(ms+off);return d.getUTCHours()+d.getUTCMinutes()/60},ok=function(p){return !fx||(hr(p[0])>=9&&hr(p[0])<=18)};
     var days=[];all.forEach(function(p){if(ok(p)){var k=dk(p[0]);if(days.indexOf(k)<0)days.push(k)}});
@@ -9448,14 +9491,14 @@ var PAL=['#2563eb','#db2777','#16a34a','#ea580c','#7c3aed','#0891b2','#ca8a04','
 function col(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return PAL[h%PAL.length]}
 function ab(n){var w=String(n).replace(/[^A-Za-zÀ-ú0-9& ]/g,'').split(/\s+/).filter(Boolean);return (w.length>1?w[0][0]+w[1][0]+(w[2]?w[2][0]:''):String(n).slice(0,3)).toUpperCase()}
 function hh(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
-function card(a,x){var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/=X$|^DX-Y|-USD$/.test(s);
+function card(a,x){var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/^DX-Y|-USD$/.test(s);/* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
   var ch='';if(x&&x.pts&&x.pts.length>=2&&typeof chBuild==='function'){try{ch=chBuild({id:'g:'+s,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:'X:'+s})}catch(e){ch=''}}
   if(!ch)ch='<div class="mu g43nc">'+(x?'sem gráfico de hoje agora':'carregando o gráfico…')+'</div>';
   var st=k24?'negociado 24 h':x&&x.st?(open?'Aberto · fecha às '+hh(x.en):(now>x.en?'Fechado · fechou às '+hh(x.en):'Fechado · abre às '+hh(x.st))):'';
-  return '<div class="pc g43c'+(fv?' g43fv':'')+'"><div class="g43h"><button type="button" class="g43o" data-asset="X:'+esc(s)+'" title="Abrir a página de '+esc(a[1])+'"><span class="g43av" style="background:'+col(s)+'" aria-hidden="true">'+esc(ab(a[1]))+'</span><span class="g43n"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></span></button>'+
+  var cl=x&&!k24&&x.st&&!open;return '<div class="pc g43c'+(fv?' g43fv':'')+(cl?' g43x':'')+'"><div class="g43h"><button type="button" class="g43o" data-asset="X:'+esc(s)+'" title="Abrir a página de '+esc(a[1])+'"><span class="g43av'+(/\.SA$/.test(s)||(/-USD$/.test(s)&&s!=='USDT-USD')?' pcav" data-sym="'+esc(s.replace(/\.SA$|-USD$/,''))+'" data-kd="'+(/\.SA$/.test(s)?'A':'C')+'"':'"')+' style="background:'+col(s)+'" aria-hidden="true">'+esc(ab(a[1]))+'</span><span class="g43n"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></span></button>'+
     '<button type="button" class="g43f'+(fv?' on':'')+'" data-xfav="'+esc(s)+'" aria-pressed="'+fv+'" aria-label="'+(fv?'Tirar dos favoritos':'Favoritar')+'" title="'+(fv?'Tirar dos favoritos':'Favoritar')+'">'+(fv?'★':'☆')+'</button></div>'+
     '<div class="g43p"><b>'+(x&&x.p>0?F(x.p):'—')+'</b><span class="'+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c)+(x.day&&x.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):' hoje'):'—')+'</span></div>'+
-    (st?'<small class="mu g43st">'+(open?'<i class="wmo">Aberto</i> ':'')+esc(st.replace(/^Aberto · /,''))+'</small>':'')+ch+'</div>'}
+    (st?'<small class="mu g43st">'+(open?'<i class="wmo">Aberto</i> ':cl?'<i class="wmc">Mercado fechado</i> ':'')+esc(st.replace(/^(Aberto|Fechado) · /,''))+'</small>':'')+ch+'</div>'}
 function sortF(L){var f=favs();return L.slice().sort(function(a,b){return (f.indexOf(b[0])>=0)-(f.indexOf(a[0])>=0)})}
 document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;var b=t.closest('[data-xfav]');
   if(b){e.preventDefault();e.stopPropagation();var on=favTog(b.dataset.xfav);document.querySelectorAll('[data-xfav="'+b.dataset.xfav.replace(/"/g,'')+'"]').forEach(function(x){x.classList.toggle('on',on);x.textContent=on?'★':'☆';x.setAttribute('aria-pressed',String(on));var c=x.closest('.g43c');if(c)c.classList.toggle('g43fv',on)});try{LT.sig='';ltDraw()}catch(z){}return}
@@ -9883,16 +9926,25 @@ function addG(){var G=window.S42B&&S42B.G;if(!G||G.b43ac)return;
   G.b43cr={t:'Cripto',L:[['BTC-USD','Bitcoin','em dólar'],['ETH-USD','Ethereum','em dólar'],['SOL-USD','Solana','em dólar'],['XRP-USD','XRP','em dólar'],['BNB-USD','BNB','em dólar'],['DOGE-USD','Dogecoin','em dólar'],['ADA-USD','Cardano','em dólar'],['USDT-USD','Tether (USDT)','em dólar']]};
   G.b43com={t:'Petróleo, minério e commodities',L:[['BZ=F','Petróleo Brent','US$ por barril'],['CL=F','Petróleo WTI','US$ por barril'],['NG=F','Gás natural','US$ por MMBtu'],['TIO=F','Minério de ferro','US$ por tonelada'],['HG=F','Cobre','US$ por libra'],['ALI=F','Alumínio','US$ por tonelada'],['ZS=F','Soja','US$ centavos por bushel'],['ZC=F','Milho','US$ centavos por bushel'],['KC=F','Café','US$ centavos por libra'],['SB=F','Açúcar','US$ centavos por libra']]}}
 var CH=[['fav','★ Favoritos',null],['acoes','Ações',['b43ac']],['fiis','FIIs',['b43fii']],['etfs','ETFs',['b43etf']],['bdrs','BDRs',['b43bdr']],['cripto','Cripto',['b43cr']],['mundo','Bolsas do mundo',['idx','adr']],['ouro','Ouro e moedas',['met','cur']],['com','Petróleo e minério',['b43com']]];
-var CUR='acoes';try{CUR=localStorage.getItem('stox3-ttk')||'acoes'}catch(e){}
+var CUR='acoes',VW='c';try{CUR=localStorage.getItem('stox3-ttk')||'acoes';VW=localStorage.getItem('stox3-ttkv')||'c'}catch(e){}
 function keysOf(c){if(c==='fav')return ['b43ac','b43fii','b43etf','b43bdr','b43cr','idx','adr','met','cur','b43com'];var x=CH.filter(function(a){return a[0]===c})[0];return x?x[2]:['b43ac']}
 function render(){addG();var h='<h2>Mercado</h2><div class="mu" style="margin:4px 0 8px">Procure qualquer ativo e veja o gráfico, ou escolha uma lista. Toque no nome para abrir a página (Linha/Candle, Sobre e Notícias) e na ☆ para favoritar.</div>';
   h+='<form class="k43s" data-k43s="1" role="search"><input id="k43q" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="characters" placeholder="Ex.: PETR4, BTC, AAPL, ouro, dólar" aria-label="Procurar ativo"><button type="submit" class="btn">Ver gráfico</button></form><div id="k43m" class="mu" role="status"></div>';
+  h+='<div class="pvbar"><div class="pvseg" role="group" aria-label="Modo de exibição"><button class="pvb'+(VW==='c'?' on':'')+'" type="button" data-k43v="c" aria-pressed="'+(VW==='c')+'">Cartões</button><button class="pvb'+(VW==='s'?' on':'')+'" type="button" data-k43v="s" aria-pressed="'+(VW==='s')+'">Simples</button></div></div>';
   h+='<div class="k43c" role="group" aria-label="Listas">'+CH.map(function(a){return '<button type="button" class="btn sm'+(CUR===a[0]?' on':'')+'" data-k43c="'+a[0]+'" aria-pressed="'+(CUR===a[0])+'">'+a[1]+'</button>'}).join('')+'</div>';
   if(!window.S42B)return h+'<div class="mu">Carregando…</div>';
   var ks=keysOf(CUR);
-  if(CUR==='fav'){var f=S42B.favs();if(!f.length)return h+'<div class="empty">Você ainda não favoritou nada. Toque na ☆ de um cartão para ele aparecer aqui e no letreiro do topo.</div>';h+=S42B.grid(ks,{pick:f})}
-  else h+=S42B.grid(ks);
+  var pick=null;if(CUR==='fav'){pick=S42B.favs();if(!pick.length)return h+'<div class="empty">Você ainda não favoritou nada. Toque na ☆ de um cartão para ele aparecer aqui e no letreiro do topo.</div>'}
+  if(VW==='s')h+=simple(ks,pick);else h+=pick?S42B.grid(ks,{pick:pick}):S42B.grid(ks);
   return h}
+/* visao Simples: duas colunas com nome, preco, variacao e um mini grafico (menos rolagem) */
+function simple(ks,pick){var D=S42B.data(ks)||{},G=S42B.G,h='',seen={},td=tdL();
+  ks.forEach(function(k){var L=G[k].L.filter(function(a){return (!pick||pick.indexOf(a[0])>=0)&&!seen[a[0]]});if(!L.length)return;L.forEach(function(a){seen[a[0]]=1});
+    h+='<h3 class="k43h">'+esc(G[k].t)+'</h3><div class="k43g">'+L.map(function(a){var s=a[0],x=D[s],F=S42B.fmt(s),c=x&&x.c,lg=/\.SA$/.test(s)||(/-USD$/.test(s)&&s!=='USDT-USD');
+      var sp='';if(x&&x.pts&&x.pts.length>=2){var P=x.pts.map(function(q){return q[1]}),mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),r=(mx-mn)||mx*.001||1;sp='<svg class="k43sp" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+P.map(function(v,i){return (i/(P.length-1)*100).toFixed(1)+','+(22-(v-mn)/r*20).toFixed(1)}).join(' ')+'" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'}
+      var old=x&&x.day&&x.day!==td,cl=x&&x.st&&x.en&&(Date.now()<x.st||Date.now()>x.en)&&!/^DX-Y|-USD$/.test(s);
+      return '<button type="button" class="k43i'+(c>0?' up':c<0?' dn':'')+(cl?' g43x':'')+'" data-asset="X:'+esc(s)+'"><span class="k43t"><span class="g43av'+(lg?' pcav" data-sym="'+esc(s.replace(/\.SA$|-USD$/,''))+'" data-kd="'+(/\.SA$/.test(s)?'A':'C')+'"':'"')+' style="background:'+S42B.col(s)+'" aria-hidden="true">'+esc(S42B.ab(a[1]))+'</span><b>'+esc(a[2]&&/^[A-Z0-9]{4,6}$/.test(a[2])?a[2]:a[1])+'</b></span><span class="k43p">'+(x&&x.p>0?F(x.p):'—')+'</span><span class="'+(c>0?'gn':c<0?'rd':'mu')+'">'+(c!=null&&isFinite(c)?(c>0?'▲ ':c<0?'▼ ':'')+Math.abs(c).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'+(old?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):''):'—')+(cl?' · fechado':'')+'</span>'+sp+'</button>'}).join('')+'</div>'});
+  return h||'<div class="mu">Carregando…</div>'}
 function repaint(){try{if(S32.cur&&S32.cur()==='tt'&&$i('ttk')&&$i('ttk').classList.contains('on'))S32.paint('ttk')}catch(e){}}
 /* ---------- procurar ---------- */
 var NMAP={'OURO':'GC=F','PRATA':'SI=F','PETROLEO':'BZ=F','PETRÓLEO':'BZ=F','MINERIO':'TIO=F','MINÉRIO':'TIO=F','DOLAR':'BRL=X','DÓLAR':'BRL=X','EURO':'EURBRL=X','IBOV':'^BVSP','IBOVESPA':'^BVSP','S&P':'^GSPC','SP500':'^GSPC','NASDAQ':'^IXIC','DOW':'^DJI','BITCOIN':'BTC','ETHEREUM':'ETH','CAFE':'KC=F','CAFÉ':'KC=F','SOJA':'ZS=F','COBRE':'HG=F'};
@@ -9906,6 +9958,11 @@ document.addEventListener('submit',function(e){var f=e.target;if(!f||!f.matches|
   if(!o){if(m)m.textContent='Digite o código do ativo.';return}if(!openA(o)&&m)m.textContent='Não consegui abrir agora.'},true);
 document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;var b=t.closest('[data-k43c]');
   if(b){CUR=b.dataset.k43c;try{localStorage.setItem('stox3-ttk',CUR)}catch(x){}repaint();return}
+  var v=t.closest('[data-k43v]');if(v){VW=v.dataset.k43v;try{localStorage.setItem('stox3-ttkv',VW)}catch(x){}repaint();return}
+  /* ampliar o grafico de acao da B3 ou cripto: abre a pagina do ativo das Posicoes (o grafico de la tem Linha/Candle) */
+  var mx=t.closest('[data-mdx^="X:"]');if(mx){var y=mx.getAttribute('data-mdx').slice(2);if(/\.SA$/.test(y)){e.preventDefault();e.stopPropagation();openA({k:'A',s:y.replace(/\.SA$/,'')});return}if(/-USD$/.test(y)&&y!=='USDT-USD'){e.preventDefault();e.stopPropagation();openA({k:'C',s:y.replace(/-USD$/,'')});return}
+    /* se a pagina abrir em branco (erro), fecha e avisa em vez de deixar a tela branca */
+    setTimeout(function(){var w=$i('xapv');if(w&&!w.hidden&&w.offsetParent!==null&&(w.textContent||'').trim().length<20){try{S41F.close()}catch(x){}var m=$i('k43m');if(m)m.textContent='Não consegui abrir o gráfico de '+y+' agora. Tente de novo em instantes.'}},1200)}
   /* cartao de acao da B3 ou de cripto: abre a mesma pagina do ativo das Posicoes */
   var a=t.closest('[data-asset^="X:"]');if(a){var s=a.getAttribute('data-asset').slice(2);
     if(/\.SA$/.test(s)){e.preventDefault();e.stopPropagation();openA({k:'A',s:s.replace(/\.SA$/,'')});return}
@@ -9913,9 +9970,9 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest)retur
 /* ---------- aba nova no Total ---------- */
 function mount(){var S=window.S32;if(!S||!S.render)return false;var nav=$i('navtt'),r=$i('ttr');if(!nav||!r)return false;
   if(!nav.querySelector('button[data-t="ttk"]')){var ref=nav.querySelector('button[data-t="tte"]')||nav.querySelector('button[data-t]');var b=ref.cloneNode(true);b.dataset.t='ttk';b.classList.remove('on');b.setAttribute('aria-selected','false');
-    var sp=b.querySelector('span');if(sp)sp.textContent='Mercado';else b.textContent='Mercado';var sv=b.querySelector('svg');if(sv)sv.outerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>';ref.insertAdjacentElement('afterend',b)}
+    var sp=b.querySelector('span');if(sp)sp.textContent='Mercado';else b.textContent='Mercado';var sv=b.querySelector('svg');if(sv)sv.outerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v4M7 15v6M17 3v3M17 13v8"/><rect x="4.5" y="7" width="5" height="8" rx="1"/><rect x="14.5" y="6" width="5" height="7" rx="1"/></svg>';ref.insertAdjacentElement('afterend',b)}
   if(!$i('ttk')){var s=document.createElement('section');s.id='ttk';r.parentNode.insertBefore(s,r.nextSibling)}
-  S.render.ttk=render;/* so busca quando a lista ainda nao veio (senao o redesenho chamava a busca de novo, sem parar) */S.render['ttk#after']=function(){if(window.S42B){var ks=keysOf(CUR);if(!S42B.data(ks))S42B.after(ks,repaint)}};
+  S.render.ttk=render;/* so busca quando a lista ainda nao veio (senao o redesenho chamava a busca de novo, sem parar) */S.render['ttk#after']=function(){setTimeout(function(){try{STX3.logos()}catch(e){}},0);if(window.S42B){var ks=keysOf(CUR);if(!S42B.data(ks))S42B.after(ks,repaint)}};
   try{if(typeof bnBuild==='function')bnBuild()}catch(e){}return true}
 (function go(n){if(!mount()&&n<60)setTimeout(function(){go(n+1)},250)})(0);
 /* ---------- noticias na pagina do IBOV e do dolar ---------- */
@@ -9934,6 +9991,123 @@ window.S43G={find:find,render:render};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43g.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.3 (compilacao 54): Posicoes do Exterior, do Dolar e da Renda fixa no padrao da Bolsa e da Cripto
+   (quadro do topo, Completo/Simples/Tabela/Mapa, graficos no fim); numero da posicao na Cripto;
+   sugestoes ao digitar o ativo no Lancar; APK volta ao Total quando o app e reaberto */
+(function(){
+var $i=function(id){return document.getElementById(id)};
+function S(){return window.S32}
+function pct(v){return v==null||!isFinite(v)?'—':(v>0?'▲ ':v<0?'▼ ':'')+Math.abs(v*100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
+function sg(v){return (v>0?'+':v<0?'−':'')+brl(Math.abs(v))}
+function cl(v){return v>0?'gn':v<0?'rd':''}
+function fq(q,d){return (+q||0).toLocaleString('pt-BR',{maximumFractionDigits:d==null?4:d})}
+/* ---------- dados de cada modulo: {V,cost,real,dd,dayPct,items:[{n,sub,q,v,cost,res,rp,extra}],peso:[[titulo,[{n,v}]]],years:{ano:{n,v,g,l}},evo:fn(data)->custo} ---------- */
+function exD(){var E=S().ex,o=E.load(),C=E.calc(o),f=0;try{f=NX.ix.usd.p||0}catch(e){}var it=[],tp={},V=0,cost=0;
+  Object.keys(C.P).forEach(function(t){var p=C.P[t];if(!(p.q>1e-9))return;var px=+o.px[t]||0,v=px>0&&f>0?p.q*px*f:p.cr;V+=v;cost+=p.cr;
+    it.push({n:t,sub:Object.keys(p.br).join(', '),q:fq(p.q),v:v,cost:p.cr,res:v-p.cr,rp:p.cr>0?(v-p.cr)/p.cr:null,c1:px>0?'US$ '+px.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—',c2:'US$ '+(p.q>0?(p.cu/p.q):0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})});
+    var k=window.S40S&&S40S.ETF.test(t)?'ETFs':'Ações';tp[k]=(tp[k]||0)+v});
+  var Y={},real=0;C.sales.forEach(function(s){real+=s.g;var y=s.d.slice(0,4),x=Y[y]||(Y[y]={n:0,v:0,g:0,l:0});x.n++;x.v+=s.vr;if(s.g>=0)x.g+=s.g;else x.l+=s.g});
+  return {V:V,cost:cost,real:real,items:it,h1:'Preço (US$)',h2:'PM (US$)',peso:[['Por ativo',it.map(function(x){return {n:x.n,v:x.v}})],['Por tipo',Object.keys(tp).map(function(k){return {n:k,v:tp[k]}})]],years:Y,
+    evo:function(e){var c=0,P={};o.ops.filter(function(x){return x.date<=e}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.id-b.id}).forEach(function(x){var p=P[x.tk]||(P[x.tk]={q:0,cr:0});if(x.type==='COMPRA'){p.q+=x.q;p.cr+=(x.q*x.p+(+x.fee||0))*x.fx}else if(x.type==='VENDA'&&p.q>0){var k=Math.min(1,x.q/p.q);p.q-=x.q;p.cr-=p.cr*k}});Object.keys(P).forEach(function(t){if(P[t].q>1e-9)c+=P[t].cr});return c},go:'ex'}}
+function dzD(){var D=S().dz,Z=D.sum(),P=Z.C.P,it=[];Object.keys(P).forEach(function(k){var p=P[k];if(!(p.q>1e-6))return;var v=Z.px>0?p.q*Z.px:p.cost;
+    it.push({n:p.n||'Sem lugar',sub:'',q:'US$ '+fq(p.q,2),v:v,cost:p.cost,res:v-p.cost,rp:p.cost>0?(v-p.cost)/p.cost:null,c1:Z.px>0?'R$ '+Z.px.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4}):'—',c2:'R$ '+(p.cost/p.q).toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})})});
+  var ops=D.load().ops,Y={},st={};ops.slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:(a.id||0)-(b.id||0)}).forEach(function(o){var k=String(o.where||'').trim().toLowerCase(),s=st[k]||(st[k]={q:0,c:0});
+    if(o.type==='COMPRA'){s.q+=+o.usd||0;s.c+=+o.brl||0}else if(s.q>1e-9&&+o.usd>0){var t=Math.min(+o.usd,s.q),c=s.c/s.q*t,got=(+o.brl||0)*t/(+o.usd),g=got-c;s.q-=t;s.c-=c;var y=o.date.slice(0,4),x=Y[y]||(Y[y]={n:0,v:0,g:0,l:0});x.n++;x.v+=got;if(g>=0)x.g+=g;else x.l+=g}});
+  return {V:Z.V,cost:Z.cost,real:Z.real||0,dd:Z.dd,dayPct:Z.dayPct,items:it,h1:'Dólar agora',h2:'Dólar médio',peso:[['Por lugar',it.map(function(x){return {n:x.n,v:x.v}})]],years:Y,
+    evo:function(e){var s={},c=0;ops.filter(function(o){return o.date<=e}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:(a.id||0)-(b.id||0)}).forEach(function(o){var k=String(o.where||'').trim().toLowerCase(),x=s[k]||(s[k]={q:0,c:0});if(o.type==='COMPRA'){x.q+=+o.usd||0;x.c+=+o.brl||0}else if(x.q>1e-9&&+o.usd>0){var t=Math.min(+o.usd,x.q);x.c-=x.c/x.q*t;x.q-=t}});Object.keys(s).forEach(function(k){if(s[k].q>1e-6)c+=s[k].c});return c},go:'dz'}}
+var KN={cdb:'CDB / caixinha',tesouro:'Tesouro Direto',lci:'LCI',lca:'LCA',deb:'Debênture / CRI / CRA',outro:'Outro'};
+function rfD(){var F=S().rfp,items=F.load().items,it=[],tp={},V=0,cost=0,Y={},real=0;
+  items.forEach(function(x){var r;try{r=F.run(x)}catch(e){return}
+    if(r.net>0.01){var c=r.cost!=null?r.cost:Math.max(0,r.inv-r.out);V+=r.net;cost+=c;it.push({n:x.nm||'Investimento',sub:x.bank||'',q:KN[x.kind]||'',v:r.net,cost:c,res:r.net-c,rp:c>0?(r.net-c)/c:null,c1:brl(r.bal),c2:brl(r.inv)});var k=KN[x.kind]||'Outro';tp[k]=(tp[k]||0)+r.net}
+    else if(r.out>0){var mv=(x.mv||[]).filter(function(m){return m.t==='rs'}),d=(mv.length?mv[mv.length-1].d:'')||'',y=d.slice(0,4);if(y){var g=r.out-r.inv,z=Y[y]||(Y[y]={n:0,v:0,g:0,l:0});z.n++;z.v+=r.out;if(g>=0)z.g+=g;else z.l+=g;real+=g}}});
+  return {V:V,cost:cost,real:real,items:it,h1:'Saldo bruto',h2:'Aplicado',peso:[['Por investimento',it.map(function(x){return {n:x.n,v:x.v}})],['Por tipo',Object.keys(tp).map(function(k){return {n:k,v:tp[k]}})]],years:Y,
+    evo:function(e){var c=0;items.forEach(function(x){var a=0;(x.mv||[]).forEach(function(m){if(m.d<=e){if(m.t==='ap')a+=+m.v||0;else if(m.t==='rs')a-=+m.v||0}});if(a>0.01)c+=a});return c},go:'rf',lbl:'Valor líquido de hoje'}}
+var MOD={exp:exD,dzp:dzD,rfp:rfD},VW={};try{VW=JSON.parse(localStorage.getItem('stox3-pv43')||'{}')||{}}catch(e){}
+function saveVW(){try{localStorage.setItem('stox3-pv43',JSON.stringify(VW))}catch(e){}}
+/* ---------- pecas ---------- */
+function hero(d){var res=d.V-d.cost,rp=d.cost>0?res/d.cost:null;
+  return '<div class="pch p43" data-p43="1"><div class="pchl">'+(d.lbl||'Valor atual das posições abertas')+'</div><div class="pchv"><b>'+brl(d.V)+'</b>'+(d.dayPct!=null&&isFinite(d.dayPct)?'<span class="pchp '+cl(d.dayPct)+'">'+pct(d.dayPct/100)+' hoje</span>':'')+'</div>'+
+    (d.dd?'<div class="pchd '+cl(d.dd)+'">'+sg(d.dd)+' hoje</div>':'')+
+    '<div class="pchg"><div class="pck"><span>Resultado aberto</span><b class="'+cl(res)+'">'+sg(res)+'</b><small class="'+cl(res)+'">'+pct(rp)+'</small></div><div class="pck"><span>Investido</span><b>'+brl(d.cost)+'</b><small>custo das posições</small></div><div class="pck"><span>Resultado realizado</span><b class="'+cl(d.real)+'">'+sg(d.real)+'</b><small>vendas já feitas</small></div></div></div>'}
+function bar(t,v,ex){var B=[['c','Completo'],['s','Simples'],['t','Tabela'],['m','Mapa']];
+  return '<div class="pvbar p43b" data-p43="1"><div class="pvseg pv3" role="group" aria-label="Modo de exibição">'+B.map(function(b){var on=v===b[0];return '<button class="pvb'+(on?' on':'')+'" type="button" data-p43v="'+t+'|'+b[0]+'" aria-pressed="'+on+'">'+b[1]+'</button>'}).join('')+'</div></div>'}
+function simple(d){if(!d.items.length)return '<div class="empty">Nenhuma posição aberta.</div>';return '<div class="p43s">'+d.items.map(function(x){return '<div class="p43r '+(x.res>0?'up':x.res<0?'dn':'')+'"><div><b>'+esc(x.n)+'</b><small class="mu">'+esc([x.sub,x.q].filter(Boolean).join(' · '))+'</small></div><div class="p43v"><b>'+brl(x.v)+'</b><small class="'+cl(x.res)+'">'+sg(x.res)+' · '+pct(x.rp)+'</small></div></div>'}).join('')+'</div>'}
+function table(d){if(!d.items.length)return '<div class="empty">Nenhuma posição aberta.</div>';var T={v:0,c:0};
+  var rows=d.items.map(function(x){T.v+=x.v;T.c+=x.cost;return '<tr><td><b>'+esc(x.n)+'</b>'+(x.sub?'<small>'+esc(x.sub)+'</small>':'')+'</td><td>'+esc(x.q)+'</td><td>'+esc(x.c2)+'</td><td>'+esc(x.c1)+'</td><td>'+brl(x.cost)+'</td><td>'+brl(x.v)+'</td><td class="'+cl(x.res)+'">'+sg(x.res)+'</td><td class="'+cl(x.res)+'">'+pct(x.rp)+'</td></tr>'}).join('');
+  return '<div class="tw"><table class="t42 p43t"><thead><tr><th>Posição</th><th>Quantidade</th><th>'+d.h2+'</th><th>'+d.h1+'</th><th>Custo</th><th>Valor</th><th>Resultado</th><th>%</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr><td>Total</td><td></td><td></td><td></td><td>'+brl(T.c)+'</td><td>'+brl(T.v)+'</td><td class="'+cl(T.v-T.c)+'">'+sg(T.v-T.c)+'</td><td class="'+cl(T.v-T.c)+'">'+pct(T.c>0?(T.v-T.c)/T.c:null)+'</td></tr></tfoot></table></div>'}
+function mapa(d){var L=d.items.filter(function(x){return x.v>0}).sort(function(a,b){return b.v-a.v});if(!L.length)return '<div class="empty">Nenhuma posição aberta.</div>';var T=L.reduce(function(a,x){return a+x.v},0);
+  return '<div class="m43" role="img" aria-label="Mapa das posições pelo tamanho">'+L.map(function(x){var w=x.v/T,r=x.rp||0,a=Math.min(1,Math.abs(r)*3)*.55+.25;return '<div class="m43i" style="flex:'+Math.max(w*100,8).toFixed(2)+' 1 '+Math.max(w*100,22).toFixed(1)+'%;background:'+(r>=0?'rgba(22,163,74,'+a.toFixed(2)+')':'rgba(220,38,38,'+a.toFixed(2)+')')+'"><b>'+esc(x.n)+'</b><span>'+pct(x.rp)+'</span><small>'+(w*100).toLocaleString('pt-BR',{maximumFractionDigits:1})+'% · '+brl(x.v)+'</small></div>'}).join('')+'</div>'}
+function charts(d){var h='';var MS2=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  /* Evolucao: custo no fim de cada mes e o valor de hoje */
+  try{var now=new Date(),lab=[],cu=[],i;for(i=11;i>=0;i--){var dt=new Date(now.getFullYear(),now.getMonth()-i+1,0),e=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');lab.push(MS2[dt.getMonth()]);cu.push(d.evo(e))}
+    if(cu[11]>0||d.V>0){var W=360,H=170,mx=Math.max(d.V,Math.max.apply(null,cu),1)*1.08,X=function(k){return 14+(W-28)*k/11},Yy=function(v){return 14+(H-38)*(1-v/mx)},pts=cu.map(function(v,k){return X(k).toFixed(1)+','+Yy(v).toFixed(1)});
+      var sv='<path d="M'+pts.join(' L')+' L'+X(11).toFixed(1)+','+(H-24)+' L'+X(0).toFixed(1)+','+(H-24)+' Z" fill="var(--ac)" fill-opacity=".14"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="var(--ac)" stroke-width="2.5"/>';
+      cu.forEach(function(v,k){sv+='<circle cx="'+X(k).toFixed(1)+'" cy="'+Yy(v).toFixed(1)+'" r="3" fill="var(--ac)"><title>'+lab[k]+': custo '+brl(v)+'</title></circle><text x="'+X(k).toFixed(1)+'" y="'+(H-8)+'" font-size="11" text-anchor="middle" fill="currentColor" opacity=".7">'+lab[k]+'</text>'});
+      sv+='<circle cx="'+X(11).toFixed(1)+'" cy="'+Yy(d.V).toFixed(1)+'" r="6" fill="'+(d.V>=cu[11]?'var(--gn)':'var(--rd)')+'"><title>Valor de hoje: '+brl(d.V)+'</title></circle>';
+      h+='<h2 data-p43="1">Evolução da carteira (gráfico)</h2><div class="ch" data-p43="1"><svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Custo investido no fim de cada mês">'+sv+'</svg></div><div class="mu" data-p43="1" style="margin-top:6px">A linha é o custo investido no fim de cada mês; o ponto da direita é o valor de hoje.</div>'}}catch(e){}
+  var g=d.peso.filter(function(x){return x[1].length});if(g.length)h+='<h2 data-p43="1">Peso na carteira (gráfico)</h2><div class="chg" data-p43="1">'+g.map(function(x){return donut(x[1],x[0])}).join('')+'</div>';
+  var ks=Object.keys(d.years).sort().reverse();if(ks.length){var T={n:0,v:0,g:0,l:0},row=function(a,x){return '<tr><td>'+a+'</td><td>'+brl(x.v)+'<small class="mu"> '+x.n+(x.n>1?' operações':' operação')+'</small></td><td class="gn">'+brl(x.g)+'</td><td class="rd">'+brl(x.l)+'</td><td class="'+cl(x.g+x.l)+'"><b>'+sg(x.g+x.l)+'</b></td></tr>'};
+    var b=ks.map(function(y){var x=d.years[y];T.n+=x.n;T.v+=x.v;T.g+=x.g;T.l+=x.l;return row(y,x)}).join('');
+    h+='<h2 data-p43="1">Resultado por ano</h2><div class="tw" data-p43="1"><table class="t42 c43y"><thead><tr><th>Ano</th><th>'+(d.go==='rf'?'Resgatado':'Vendas (líquido)')+'</th><th>Ganhos</th><th>Perdas</th><th>Resultado</th></tr></thead><tbody>'+b+'</tbody><tfoot>'+row('Total',T)+'</tfoot></table></div>'}
+  return h}
+/* ---------- montagem nas Posicoes ---------- */
+function put(t,el){var root=el&&el.querySelector?el:$i(t);if(!root)return;root.querySelectorAll('[data-p43]').forEach(function(x){x.remove()});var d;try{d=MOD[t]()}catch(e){return}if(!d)return;
+  var v=VW[t]||'c',h2=root.querySelector(':scope>h2');
+  /* quadro do topo logo abaixo do titulo */
+  if(d.items.length||d.real){var hx=document.createElement('div');hx.innerHTML=hero(d);var hn=hx.firstChild;if(h2)h2.insertAdjacentElement('afterend',hn);else root.insertBefore(hn,root.firstChild)}
+  var after=root.querySelector('.p43')||h2;
+  /* barra de modos: no Exterior troca a dele (Cartoes/Mapa) pela padrao */
+  var xb=root.querySelector('.pvbar:not(.p43b)');if(xb&&t==='exp'){xb.setAttribute('data-p43x','1')}
+  if(d.items.length){var bx=document.createElement('div');bx.innerHTML=bar(t,v);var bn=bx.firstChild;var ref=t==='rfp'?(root.querySelector('.rf42n')||after):after;if(ref)ref.insertAdjacentElement('afterend',bn);else root.insertBefore(bn,root.firstChild)}
+  /* no Exterior o Mapa e o Completo sao os da propria aba */
+  if(t==='exp'){var xm=root.querySelector('[data-xv="m"]'),on=xm&&xm.classList.contains('on');if(v==='m'&&!on&&xm){xm.click();return}if(v==='c'&&on){var xl=root.querySelector('[data-xv="l"]');if(xl){xl.click();return}}}
+  if(v!=='c'&&!(t==='exp'&&v==='m')&&d.items.length){
+    var keep=function(x){return x.hasAttribute('data-p43')||x.hasAttribute('data-c43k')||x.tagName==='H2'&&x===h2||x.classList.contains('rf42n')||x.classList.contains('bfbar')||x.classList.contains('s3nt')||x.classList.contains('pvbar')};
+    [].slice.call(root.children).forEach(function(x){if(!keep(x))x.setAttribute('data-p43h','1')});
+    var body=v==='s'?simple(d):v==='t'?table(d):mapa(d);var bb=root.querySelector('.p43b');if(bb)bb.insertAdjacentHTML('afterend','<div data-p43="1" class="p43w">'+body+'</div>')}
+  else [].slice.call(root.querySelectorAll('[data-p43h]')).forEach(function(x){x.removeAttribute('data-p43h')});
+  /* graficos no fim, antes das posicoes encerradas */
+  var ch=charts(d);if(ch){var enc=root.querySelector(':scope>[data-c43k]');if(enc)enc.insertAdjacentHTML('beforebegin',ch);else root.insertAdjacentHTML('beforeend',ch)}
+  try{STX3.logos()}catch(e){}}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-p43v]');if(b){var p=b.dataset.p43v.split('|');VW[p[0]]=p[1];saveVW();try{S32.paint(p[0])}catch(x){}return}
+  var xv=e.target.closest&&e.target.closest('#exp [data-xv]');if(xv&&e.isTrusted){VW.exp=xv.dataset.xv==='m'?'m':'c';saveVW()}},true);
+(function hook(n){var s=S();if(!s||!s.render||!s.render.exp||!s.render.dzp||!s.render.rfp){if(n<60)setTimeout(function(){hook(n+1)},250);return}var R=s.render;
+  Object.keys(MOD).forEach(function(t){var k=t+'#after',o=R[k];R[k]=function(el){var r;if(o)r=o.apply(this,arguments);try{(typeof vzScope==='function'?vzScope(function(){put(t,el)}):function(){put(t,el)})()}catch(x){}return r}})})(0);
+/* ---------- Cripto: numero da posicao (como na Bolsa) ---------- */
+function crN(){var z=$i('zpos');if(!z||!window.S43D)return;var L;try{L=S43D.crList()}catch(e){return}var cnt={};(L||[]).forEach(function(x){cnt[x.tk]=Math.max(cnt[x.tk]||0,x.n)});
+  z.querySelectorAll('.pc[data-zc] .cpt').forEach(function(c){if(c.querySelector('.pn43'))return;var k=c.closest('.pc').getAttribute('data-zc');c.insertAdjacentHTML('beforeend','<span class="pn pn43">'+((cnt[k]||0)+1)+'ª posição</span>')})}
+var CT=0;(function w(n){var z=$i('zpos');if(!z){if(n<60)setTimeout(function(){w(n+1)},250);return}new MutationObserver(function(){clearTimeout(CT);CT=setTimeout(crN,60)}).observe(z,{childList:true,subtree:true});crN()})(0);
+/* ---------- Lancar: sugestoes depois de 3 letras ---------- */
+var B3='PETR4 Petrobras,PETR3 Petrobras ON,VALE3 Vale,ITUB4 Itaú Unibanco,ITUB3 Itaú ON,BBDC4 Bradesco,BBDC3 Bradesco ON,BBAS3 Banco do Brasil,ABEV3 Ambev,B3SA3 B3,WEGE3 WEG,ITSA4 Itaúsa,PRIO3 PRIO,SUZB3 Suzano,RENT3 Localiza,ELET3 Eletrobras,ELET6 Eletrobras PNB,GGBR4 Gerdau,RADL3 Raia Drogasil,MGLU3 Magazine Luiza,BPAC11 BTG Pactual,SANB11 Santander,BBSE3 BB Seguridade,CMIG4 Cemig,CPLE6 Copel,EGIE3 Engie,EQTL3 Equatorial,SBSP3 Sabesp,TAEE11 Taesa,TRPL4 ISA CTEEP,KLBN11 Klabin,CSNA3 CSN,USIM5 Usiminas,GOAU4 Gerdau Metalúrgica,CMIN3 CSN Mineração,JBSS3 JBS,BRFS3 BRF,MRFG3 Marfrig,BEEF3 Minerva,SLCE3 SLC Agrícola,LREN3 Lojas Renner,ARZZ3 Arezzo,VIIA3 Casas Bahia,BHIA3 Casas Bahia,AMER3 Americanas,PETZ3 Petz,ASAI3 Assaí,CRFB3 Carrefour Brasil,PCAR3 GPA,NTCO3 Natura,HAPV3 Hapvida,RDOR3 Rede DOr,FLRY3 Fleury,QUAL3 Qualicorp,TOTS3 Totvs,LWSA3 Locaweb,CASH3 Méliuz,VIVT3 Vivo,TIMS3 TIM,CYRE3 Cyrela,MRVE3 MRV,EZTC3 EZTec,DIRR3 Direcional,CURY3 Cury,TEND3 Tenda,MULT3 Multiplan,ALOS3 Allos,IGTI11 Iguatemi,CCRO3 CCR,ECOR3 EcoRodovias,RAIL3 Rumo,AZUL4 Azul,GOLL4 Gol,EMBR3 Embraer,UGPA3 Ultrapar,VBBR3 Vibra,CSAN3 Cosan,RAIZ4 Raízen,RECV3 PetroReconcavo,BRAP4 Bradespar,CXSE3 Caixa Seguridade,IRBR3 IRB,PSSA3 Porto Seguro,SULA11 SulAmérica,BRSR6 Banrisul,ABCB4 ABC Brasil,BMGB4 Banco BMG,INTB3 Intelbras,POMO4 Marcopolo,RAPT4 Randon,TUPY3 Tupy,FRAS3 Fras-le,KEPL3 Kepler Weber,YDUQ3 Yduqs,COGN3 Cogna,SEER3 Ser Educacional,SMTO3 São Martinho,CPFE3 CPFL,NEOE3 Neoenergia,ENGI11 Energisa,AURE3 Auren,ALUP11 Alupar,SAPR11 Sanepar,CSMG3 Copasa,MXRF11 Maxi Renda (FII),HGLG11 CSHG Logística (FII),KNRI11 Kinea Renda (FII),XPML11 XP Malls (FII),VISC11 Vinci Shopping (FII),BTLG11 BTG Logística (FII),KNCR11 Kinea Rendimentos (FII),HGRU11 CSHG Renda Urbana (FII),XPLG11 XP Log (FII),VGHF11 Valora Hedge (FII),CPTS11 Capitânia (FII),IRDM11 Iridium (FII),BOVA11 ETF Ibovespa,IVVB11 ETF S&P 500,SMAL11 ETF Small Caps,HASH11 ETF Cripto,NASD11 ETF Nasdaq,GOLD11 ETF Ouro,DIVO11 ETF Dividendos,AAPL34 Apple (BDR),MSFT34 Microsoft (BDR),AMZO34 Amazon (BDR),GOGL34 Google (BDR),NVDC34 Nvidia (BDR),TSLA34 Tesla (BDR),M1TA34 Meta (BDR),NFLX34 Netflix (BDR)';
+var US='AAPL Apple,MSFT Microsoft,AMZN Amazon,GOOGL Alphabet (Google),META Meta,NVDA Nvidia,TSLA Tesla,NFLX Netflix,AMD AMD,INTC Intel,BRK.B Berkshire Hathaway,JPM JPMorgan,V Visa,MA Mastercard,KO Coca-Cola,PEP PepsiCo,MCD McDonalds,DIS Disney,NKE Nike,WMT Walmart,COST Costco,JNJ Johnson & Johnson,PFE Pfizer,XOM Exxon,CVX Chevron,BA Boeing,VOO ETF S&P 500 (Vanguard),IVV ETF S&P 500 (iShares),SPY ETF S&P 500 (SPDR),QQQ ETF Nasdaq 100,VTI ETF mercado total EUA,VT ETF mundo,VXUS ETF fora dos EUA,BND ETF títulos,SCHD ETF dividendos,VNQ ETF imobiliário,GLD ETF ouro,TLT ETF Tesouro longo,O Realty Income,AVGO Broadcom,ORCL Oracle,CRM Salesforce,ADBE Adobe,PYPL PayPal,UBER Uber,ABNB Airbnb,SHOP Shopify,PLTR Palantir,COIN Coinbase,MELI Mercado Livre,NU Nubank,PBR Petrobras (ADR),VALE Vale (ADR),ITUB Itaú (ADR)';
+function parse(s){return s.split(',').map(function(x){var i=x.indexOf(' ');return [x.slice(0,i),x.slice(i+1)]})}
+var LB3=parse(B3),LUS=parse(US);
+function srcFor(id){if(id==='tk'||id==='pt'){var h=[];try{h=[].slice.call(($i('tks')||{options:[]}).options).map(function(o){return [o.value,'na carteira']})}catch(e){}return h.concat(LB3)}
+  if(id==='zc'||id==='zc2'){var L=[];try{[].slice.call(($i('zcs')||{options:[]}).options).forEach(function(o){var c=o.value;L.push([c,(window.CRX&&CRX.name(c))||o.label||''])})}catch(e){}return L}
+  if(id==='ex-k'){var hx=[];try{[].slice.call(($i('exl')||{options:[]}).options).forEach(function(o){hx.push([o.value,'na carteira'])})}catch(e){}return hx.concat(LUS)}return null}
+var AC=null;
+function acClose(){if(AC){AC.remove();AC=null}}
+function acShow(inp){var q=String(inp.value||'').trim().toUpperCase();var L=srcFor(inp.id);if(!L||q.length<3){acClose();return}
+  var seen={},m=[];L.forEach(function(a){if(seen[a[0]]||m.length>=8)return;if(a[0].toUpperCase().indexOf(q)===0){seen[a[0]]=1;m.push(a)}});
+  L.forEach(function(a){if(seen[a[0]]||m.length>=8)return;if(String(a[1]).toUpperCase().indexOf(q)>=0||a[0].toUpperCase().indexOf(q)>0){seen[a[0]]=1;m.push(a)}});
+  if(!m.length||(m.length===1&&m[0][0].toUpperCase()===q)){acClose();return}
+  if(!AC){AC=document.createElement('div');AC.className='ac43';AC.setAttribute('role','listbox')}
+  AC.innerHTML=m.map(function(a){return '<button type="button" role="option" data-ac43="'+esc(a[0])+'"><b>'+esc(a[0])+'</b><small>'+esc(a[1]||'')+'</small></button>'}).join('');
+  if(inp.getAttribute('list')){inp.dataset.l43=inp.getAttribute('list');inp.removeAttribute('list')}/* a lista nativa do Android ficava por cima */
+  AC._for=inp;inp.insertAdjacentElement('afterend',AC)}
+document.addEventListener('input',function(e){var t=e.target;if(t&&t.tagName==='INPUT'&&srcFor(t.id))acShow(t)},true);
+document.addEventListener('pointerdown',function(e){var b=e.target.closest&&e.target.closest('[data-ac43]');if(b)e.preventDefault()},true);
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ac43]');if(b&&AC&&AC._for){var inp=AC._for;inp.value=b.dataset.ac43;acClose();inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}));return}
+  if(AC&&!(e.target.closest&&e.target.closest('.ac43'))&&e.target!==AC._for)acClose()},true);
+document.addEventListener('focusout',function(e){if(AC&&e.target===AC._for)setTimeout(function(){if(AC&&document.activeElement!==AC._for)acClose()},250)},true);
+/* ---------- APK: reabrir o app (voltar depois de 1 minuto fora) leva ao Total ---------- */
+var HID=0;document.addEventListener('visibilitychange',function(){if(document.hidden){HID=Date.now();return}
+  if(!HID||Date.now()-HID<60000)return;HID=0;if(!(window.AndroidHttp||window.AndroidBio)||window.__STX_KEEPMOD__)return;
+  try{if(S32.on&&!S32.on('tt'))return;['S40C','S41F','S40D'].forEach(function(k){try{if(window[k]&&window[k].isOpen())window[k].close()}catch(x){}});S32.set('tt');S42A.home('tt');window.scrollTo(0,0)}catch(x){}});
+window.S43H={put:put,ex:exD,dz:dzD,rf:rfD};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43h.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
