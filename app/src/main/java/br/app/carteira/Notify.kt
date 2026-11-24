@@ -131,7 +131,7 @@ object Notify {
             // o resumo da cripto nao pode derrubar os outros avisos
         }
         val dow = now.get(Calendar.DAY_OF_WEEK)
-        if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY) return
+        if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY || b3Hol(now)) return
         for (kind in arrayOf("open", "close")) {
             if (!sp.getBoolean(kind, false)) continue
             val from = if (kind == "open") OPEN_FROM else CLOSE_FROM
@@ -319,7 +319,7 @@ object Notify {
         try { decripto(ctx, sp, root, now, mins, day) } catch (e: Exception) { }
 
         val dow = now.get(Calendar.DAY_OF_WEEK)
-        if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY) return
+        if (dow == Calendar.SATURDAY || dow == Calendar.SUNDAY || b3Hol(now)) return
         if (mins < AL_FROM || mins > AL_TO) return
         if (!(pd > 0 || ad > 0 || fv > 0 || cr > 0)) return
 
@@ -371,8 +371,7 @@ object Notify {
                         val sb = StringBuilder("Passou de ")
                         sb.append(String.format(BR, "%.0f", pd)).append("% no dia. ")
                         if (todayN >= 2 && bestT != worstT) {
-                            sb.append("Maior alta: ").append(bestT).append(' ').append(pct(bestP)).append(". ")
-                            sb.append("Maior queda: ").append(worstT).append(' ').append(pct(worstP)).append(". ")
+                            sb.append(extremes(bestT, bestP, worstT, worstP))
                         }
                         sb.append("As cotações chegam com cerca de 30 min de atraso.")
                         post(ctx, 4, "Carteira " + (if (dp > 0) "em alta: " else "em queda: ") + pct(dp) + " hoje", sb.toString().trim())
@@ -500,6 +499,32 @@ object Notify {
 
     private fun pct(v: Double): String = String.format(BR, "%+.2f%%", v)
 
+    /** 4.4: feriados da B3 para qualquer ano (fixos + Carnaval, Sexta-feira Santa e Corpus Christi pela Pascoa). Feriado nos EUA nao fecha a B3. */
+    private fun b3Hol(c: Calendar): Boolean {
+        val y = c.get(Calendar.YEAR)
+        val m = c.get(Calendar.MONTH) + 1
+        val d = c.get(Calendar.DAY_OF_MONTH)
+        val fixed = arrayOf(101, 421, 501, 907, 1012, 1102, 1115, 1120, 1224, 1225, 1231)
+        if (fixed.contains(m * 100 + d)) return true
+        val a = y % 19; val b = y / 100; val cc = y % 100; val dd = b / 4; val e = b % 4
+        val f = (b + 8) / 25; val g = (b - f + 1) / 3; val h = (19 * a + b - dd - g + 15) % 30
+        val i = cc / 4; val k = cc % 4; val l = (32 + 2 * e + 2 * i - h - k) % 7; val mm = (a + 11 * h + 22 * l) / 451
+        val em = (h + l - 7 * mm + 114) / 31; val ed = ((h + l - 7 * mm + 114) % 31) + 1
+        val easter = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+        easter.clear(); easter.set(y, em - 1, ed, 12, 0, 0)
+        val day = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+        day.clear(); day.set(y, m - 1, d, 12, 0, 0)
+        val diff = Math.round((day.timeInMillis - easter.timeInMillis) / 86400000.0).toInt()
+        return diff == -48 || diff == -47 || diff == -2 || diff == 60
+    }
+
+    /** 4.4: maior alta e maior queda sem chamar alta de queda (quando todas sobem ou todas caem) */
+    private fun extremes(bestT: String, bestP: Double, worstT: String, worstP: Double): String {
+        if (bestP > 0 && worstP < 0) return "Maior alta: " + bestT + " " + pct(bestP) + ". Maior queda: " + worstT + " " + pct(worstP) + ". "
+        if (worstP >= 0) return "Nenhuma caiu. Maior alta: " + bestT + " " + pct(bestP) + "; menor: " + worstT + " " + pct(worstP) + ". "
+        return "Nenhuma subiu. Maior queda: " + worstT + " " + pct(worstP) + "; menor: " + bestT + " " + pct(bestP) + ". "
+    }
+
     private fun compose(snapJson: String, kind: String, now: Calendar, test: Boolean): Out {
         val snap = try { JSONObject(snapJson) } catch (e: Exception) { return Out.Closed }
         val key = snap.optString("k", "")
@@ -554,8 +579,7 @@ object Notify {
         }
         if (cost > 0) sb.append("Resultado total das posições: ").append(pct((value / cost - 1) * 100)).append(". ")
         if (todayN >= 2 && bestT.isNotEmpty() && worstT.isNotEmpty() && bestT != worstT) {
-            sb.append("Maior alta: ").append(bestT).append(' ').append(pct(bestP)).append(". ")
-            sb.append("Maior queda: ").append(worstT).append(' ').append(pct(worstP)).append(". ")
+            sb.append(extremes(bestT, bestP, worstT, worstP))
         }
         if (todayN < arr.length()) sb.append("Contei ").append(todayN).append(" de ").append(arr.length()).append(" ativos. ")
         if (kind == "open") sb.append("Cotações com atraso de cerca de 30 min.")
@@ -611,7 +635,7 @@ object Notify {
             val title = String.format(BR, arrT[pick % arrT.size], pct(p))
             val sb = StringBuilder()
             if (!btc.isNaN()) sb.append("Bitcoin ").append(pct(btc)).append(". ")
-            if (n >= 2 && bestT != worstT) sb.append("Maior alta: ").append(bestT).append(' ').append(pct(bestP)).append(". Maior queda: ").append(worstT).append(' ').append(pct(worstP)).append('.')
+            if (n >= 2 && bestT != worstT) sb.append(extremes(bestT, bestP, worstT, worstP).trim())
             post(ctx, if (kind == "c8") 8 else 9, title, sb.toString().trim())
             sp.edit().putString("done_" + kind, day).apply()
         }

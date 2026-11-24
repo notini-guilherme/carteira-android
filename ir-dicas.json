@@ -1,0 +1,39 @@
+{
+  "versao": "2026-11-24",
+  "conferido": "2026-11-24",
+  "nota": "Dicas do STOX3 sobre Imposto de Renda. Leitura do app: confira no programa da Receita e, na dúvida, com um contador.",
+  "regras": {
+    "2026": {
+      "ano_base": 2025,
+      "tributaveis": 35584,
+      "isentos": 200000,
+      "bolsa": 40000,
+      "bens": 800000,
+      "rural": 177920,
+      "inicio": "2026-03-23",
+      "fim": "2026-05-29",
+      "multa_min": 165.74,
+      "fonte": "Receita Federal, regras do IRPF 2026 (coletiva de 16/03/2026)",
+      "link": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/marco/rfb-realizara-no-dia-16-03-as-10h-no-auditorio-do-ministerio-da-fazenda-bloco-p-coletiva-de-imprensa-para-anunciar-as-novas-regras-do-irpf-2026/pir-2026-coletiva-de-imprensa.pdf"
+    }
+  },
+  "mudancas": [
+    {"titulo": "Limite de quem é obrigado subiu", "texto": "Na declaração de 2026 (ano-base 2025), é obrigado quem recebeu mais de R$ 35.584 em rendimentos tributáveis. Antes eram R$ 33.888.", "fonte": "Congresso em Foco, 16/03/2026", "link": "https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026"},
+    {"titulo": "Operações da Bolsa na pré-preenchida", "texto": "Desde 2026, a declaração pré-preenchida (conta gov.br ouro ou prata) importa as operações em Bolsa e os DARFs pagos com o código 6015. Confira tudo: são informações de terceiros.", "fonte": "CRC-SP, 27/04/2026", "link": "https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824"},
+    {"titulo": "DeCripto no lugar da antiga declaração mensal", "texto": "A Instrução Normativa 2.291/2025 criou a DeCripto (declaração mensal de criptoativos), valendo na prática desde 1º de julho de 2026.", "fonte": "InvestNews", "link": "https://investnews.com.br/guias/criptomoedas-como-declarar/"}
+  ],
+  "dicas": [
+    {"mod": "geral", "titulo": "Quem é obrigado a declarar (declaração de 2026)", "texto": "Rendimentos tributáveis acima de R$ 35.584; isentos ou tributados na fonte acima de R$ 200 mil; vendas em bolsa acima de R$ 40 mil no ano ou com lucro tributável; ganho de capital com imposto; receita rural acima de R$ 177.920; bens e direitos acima de R$ 800 mil em 31/12; rendimentos de aplicações no exterior.", "vale": "Declaração de 2026 (ano-calendário 2025)", "fonte": "Bora Investir (B3)", "link": "https://borainvestir.b3.com.br/noticias/imposto-de-renda/ir-2026-quem-e-obrigado-a-declarar/", "data": "2026-11-24"},
+    {"mod": "geral", "titulo": "Prazo e multa", "texto": "A declaração de 2026 foi de 23/03 a 29/05. Quem entrega fora do prazo paga multa mínima de R$ 165,74 (até 20% do imposto devido).", "vale": "Declaração de 2026", "fonte": "Congresso em Foco, 16/03/2026", "link": "https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026", "data": "2026-11-24"},
+    {"mod": "geral", "titulo": "Perguntas e Respostas da Receita", "texto": "A Receita publica todo ano o \"Perguntão\" do IRPF (745 perguntas na edição de 2026). É a fonte oficial para tirar dúvidas.", "vale": "Declaração de 2026", "fonte": "Agência Gov, 22/04/2026", "link": "https://agenciagov.ebc.com.br/noticias/202604/receita-federal-publica-201cperguntas-e-respostas-irpf-2026201d-com-orientacoes-atualizadas-aos-contribuintes", "data": "2026-11-24"},
+    {"mod": "bolsa", "titulo": "Ações: isenção de R$ 20 mil por mês", "texto": "Em operações comuns (não day trade), o lucro de meses em que o total das vendas de ações não passou de R$ 20 mil é isento: vai em Rendimentos Isentos (soma do ano). Acima disso, ou em day trade, o lucro entra mês a mês na ficha Renda Variável.", "vale": "Declaração de 2026", "fonte": "CRC-SP, 27/04/2026", "link": "https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824", "data": "2026-11-24"},
+    {"mod": "bolsa", "titulo": "DARF da Bolsa: código 6015", "texto": "O imposto sobre lucro em ações (15% comum, 20% day trade) é pago por DARF código 6015 até o último dia útil do mês seguinte ao da venda. O app mostra os DARFs em Bolsa › Balanço.", "vale": "Regra permanente", "fonte": "CRC-SP, 27/04/2026", "link": "https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824", "data": "2026-11-24"},
+    {"mod": "cripto", "titulo": "Cripto: isenção de R$ 35 mil por mês", "texto": "Quem vendeu até R$ 35 mil por mês em cripto não paga imposto, mas informa o lucro em Rendimentos Isentos. Passou disso com lucro: imposto de ganho de capital (programa GCAP) e DARF até o último dia útil do mês seguinte.", "vale": "Declaração de 2026", "fonte": "InvestNews", "link": "https://investnews.com.br/guias/criptomoedas-como-declarar/", "data": "2026-11-24"},
+    {"mod": "cripto", "titulo": "Cripto em corretora estrangeira", "texto": "Cripto em corretora estrangeira (ex.: Binance) segue a Lei 14.754/2023: 15% sobre o lucro do ano, pago junto com a declaração. O app soma isso no Balanço da Cripto e no Exterior.", "vale": "Desde o ano-calendário 2024", "fonte": "Nomad, guia IR 2026", "link": "https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior", "data": "2026-11-24"},
+    {"mod": "exterior", "titulo": "Ações e ETFs no exterior: 15% no ano", "texto": "Lucro das vendas e dividendos de aplicações no exterior pagam 15% uma vez por ano, calculados na declaração (Lei 14.754/2023). Não há isenção de R$ 20 mil nem DARF mensal. Prejuízo só abate lucro dos anos seguintes se for informado na declaração.", "vale": "Desde o ano-calendário 2024", "fonte": "Nomad, guia IR 2026", "link": "https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior", "data": "2026-11-24"},
+    {"mod": "exterior", "titulo": "Como declarar o exterior", "texto": "Bens e Direitos com o país, o custo em reais e os campos de aplicação no exterior (lucro ou prejuízo e imposto pago lá). O programa da declaração gera o DARF dos 15%.", "vale": "Declaração de 2026", "fonte": "Contábeis", "link": "https://www.contabeis.com.br/noticias/76267/ir-2026-saiba-declarar-bens-e-investimentos-no-exterior/", "data": "2026-11-24"},
+    {"mod": "dolar", "titulo": "Dólar em espécie: grupo 06, código 11", "texto": "Dinheiro em espécie em moeda estrangeira vai em Bens e Direitos, grupo 06, código 11 (\"Dinheiro em espécie – moeda estrangeira\"), pelo custo em reais. Dólar em conta no exterior: grupo 06, código 01.", "vale": "Declaração de 2026", "fonte": "C6 Bank", "link": "https://www.c6bank.com.br/blog/como-declarar-moeda-estrangeira", "data": "2026-11-24"},
+    {"mod": "dolar", "titulo": "Venda de dólar em espécie", "texto": "Se o total vendido em espécie no ano não passar de US$ 5 mil, o ganho é isento. Acima disso, o ganho paga imposto (programa GCAP). A variação do dólar em conta no exterior que não rende juros é isenta.", "vale": "Regra permanente", "fonte": "Contabilidade Zen", "link": "https://www.contabilidadezen.com.br/blog/gcap-variacao-cambial-moeda-estrangeira-2026/", "data": "2026-11-24"},
+    {"mod": "rf", "titulo": "Renda fixa: use o informe do banco", "texto": "CDB, Tesouro, caixinhas e debêntures já têm o IR descontado pelo banco no resgate (tabela de 22,5% a 15%). O informe de rendimentos de cada banco traz os valores certos e diz em qual ficha vai cada um. LCI e LCA são isentas.", "vale": "Regra permanente", "fonte": "Bora Investir (B3)", "link": "https://borainvestir.b3.com.br/colunistas/professor-mira/imposto-de-renda-2026-veja-quem-precisa-declarar-e-os-erros-que-mais-levam-a-malha-fina/", "data": "2026-11-24"}
+  ]
+}

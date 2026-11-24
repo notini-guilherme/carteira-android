@@ -158,6 +158,17 @@ class MainActivity : ComponentActivity() {
                 }
                 return true
             }
+
+            // 4.4: se o Android encerrar a parte que desenha a tela (pouca memoria), recarrega o app em vez de ficar tudo branco
+            override fun onRenderProcessGone(view: WebView?, detail: android.webkit.RenderProcessGoneDetail?): Boolean {
+                try {
+                    (view?.parent as? android.view.ViewGroup)?.removeView(view)
+                    view?.destroy()
+                } catch (e: Exception) {
+                }
+                recreate()
+                return true
+            }
         }
 
         web.webChromeClient = object : WebChromeClient() {
