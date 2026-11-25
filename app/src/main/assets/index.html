@@ -1495,7 +1495,8 @@ body:not(.tt45on) #totop{opacity:0!important;pointer-events:none!important;trans
 
 /* 4.4.1 (127): filtro Todas/Abertas/Fechadas: no computador os botoes nao esticam a tela toda */
 @media(min-width:720px){.wf44{justify-content:flex-start}.wf44 .ch{flex:0 0 auto!important;min-width:110px}}
-.wf44 .wf44e{flex:1 1 100%;font-size:12.5px;margin-top:2px}
+.wf44 .wf44e{flex:1 1 100%;font-size:13.5px;line-height:1.45;margin-top:6px;padding:10px 12px;border-radius:12px;background:rgba(127,127,127,.13);border:1px solid var(--bd,rgba(127,127,127,.25))}
+.wf44 .wf44e .lk{font-weight:700;margin-left:4px}
 /* 4.4.1 (129): posicao por corretora com Resultado (atual) */
 .aprw.r5{grid-template-columns:minmax(96px,1.1fr) repeat(5,minmax(0,1fr))}
 .aprw>span>small:not(.mu){font-size:11px;font-weight:700}
@@ -9138,7 +9139,7 @@ function cached(k,ttl,fn){var e=CA[k];if(e&&Date.now()-e.t<ttl)return Promise.re
 var WI=[['^GSPC','S&P 500','EUA'],['^IXIC','Nasdaq','EUA'],['^DJI','Dow Jones','EUA'],['^STOXX50E','Euro Stoxx 50','Europa'],['^GDAXI','DAX','Alemanha'],['^FTSE','FTSE 100','Reino Unido'],['^N225','Nikkei 225','Japão'],['^HSI','Hang Seng','Hong Kong'],['000001.SS','Xangai','China'],['EWZ','EWZ (Brasil em Nova York)','EUA']];
 var AD=[['BDORY','Banco do Brasil'],['PBR','Petrobras'],['VALE','Vale'],['ITUB','Itaú'],['NU','Nubank'],['BBD','Bradesco'],['ABEV','Ambev'],['SBS','Sabesp'],['EMBJ','Embraer'],['GGB','Gerdau'],['SID','CSN'],['XP','XP Inc.'],['STNE','Stone'],['PAGS','PagSeguro']];
 async function q1(sym){var j=await getJ('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range=1d&interval=15m');try{var m=j.chart.result[0].meta,p=+m.regularMarketPrice,pv=+(m.chartPreviousClose||m.previousClose),tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular;
-  return {p:p,c:pv>0?(p/pv-1)*100:null,cur:m.currency||'',st:tp?tp.start*1000:0,en:tp?tp.end*1000:0,t:(+m.regularMarketTime||0)*1000}}catch(e){return null}}
+  var o={p:p,c:pv>0?(p/pv-1)*100:null,cur:m.currency||'',st:tp?tp.start*1000:0,en:tp?tp.end*1000:0,t:(+m.regularMarketTime||0)*1000};if((/\.SA$/.test(sym)||sym==='^BVSP')&&window.B3W){var w=B3W();if(w){o.st=w[0];o.en=w[1]}}return o}catch(e){return null}}
 function world(){return cached('world',10*6e4,async function(){var o={},L=WI.map(function(a){return a[0]}).concat(AD.map(function(a){return a[0]}));for(var i=0;i<L.length;i+=4){var P=L.slice(i,i+4).map(function(s){return q1(s).then(function(r){o[s]=r})});await Promise.all(P)}return o})}
 function wRow(a,x,nm,sub){var now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en;
   return '<div class="wmr"><div class="wmn"><b>'+nm+'</b><small class="mu">'+sub+'</small></div><div class="wmp">'+(x&&x.p>0?'<b>'+n2(x.p,x.p>=1000?0:2)+'</b><small class="mu">'+esc(x.cur==='USD'?'US$':x.cur)+'</small>':'<b class="mu">—</b>')+'</div><div class="wmc '+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c):'—')+'</div>'+
@@ -9965,7 +9966,7 @@ function xhtml(){var s=XP.s,d=(YC[s+'|'+XP.r]||{}).d,d1=(YC[s+'|1']||{}).d||d,o=
   h+='<div class="mds"><div class="pcgr one" role="group" aria-label="Período">'+PRS.map(function(a){return '<button type="button" class="pcrb'+(XP.r===a[0]?' on':'')+'" data-xpr="'+a[0]+'">'+a[1]+'</button>'}).join('')+'</div><div class="mdchart">';
   if(d&&d.pts.length>=2&&typeof chBuild==='function'){var pts=d.pts.map(function(a){var l=lab(a[0],XP.r);return {t:a[0],p:a[1],l:l,ax:l}});var lbl=(PRS.filter(function(a){return a[0]===XP.r})[0]||[0,''])[1];h+=chBuild({id:'x:'+s+':'+XP.r,s:{pts:pts,ref:XP.r===1&&d.pv>0?d.pv:0,refLb:'fechamento anterior'},k:'A',r:XP.r===1?1:30,sz:'big',fmt:F,avg:P&&P.q>0?P.cu/P.q:0,qty:P&&P.q>0?P.q:0}).replace(/(<div class="chh"><b>)[^<]*(<\/b>)/,'$1'+(XP.r===1?'Hoje':lbl)+'$2')
     /* 4.4.1 (156): ativo com poucos negocios (ex.: BDORY, balcao dos EUA): o grafico para no ultimo negocio; avisa a hora */
-    try{if(XP.r===1){var lt=+d.pts[d.pts.length-1][0];if(lt<1e12)lt*=1000;var ag=Date.now()-lt,hb=+new Date(lt).toLocaleString('en-GB',{hour:'2-digit',hour12:false,timeZone:'America/Sao_Paulo'});if(ag>20*6e4&&ag<10*36e5&&hb<17)h+='<div class="mu ln46">Último negócio às <b>'+new Date(lt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'})+'</b>. Ativo com poucos negócios: o gráfico só ganha um ponto novo quando alguém compra ou vende.</div>'}}catch(x){}}
+    try{if(XP.r===1){var lt=+d.pts[d.pts.length-1][0];if(lt<1e12)lt*=1000;var ag=Date.now()-lt,hb=+new Date(lt).toLocaleString('en-GB',{hour:'2-digit',hour12:false,timeZone:'America/Sao_Paulo'});var xw=window.S42B&&S42B.one?S42B.one(XP.s):null,en=xw&&xw.en;/* 171: compara com o fechamento do mercado do ativo (B3 18h) */if(ag>20*6e4&&ag<10*36e5&&(en?lt<en-20*6e4:hb<17))h+='<div class="mu ln46">Último negócio às <b>'+new Date(lt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'})+'</b>. Ativo com poucos negócios: o gráfico só ganha um ponto novo quando alguém compra ou vende.</div>'}}catch(x){}}
   else h+='<div class="mu" style="padding:30px 0;text-align:center">'+(env()?'carregando o gráfico…':'O gráfico aparece no aplicativo (Windows ou Android).')+'</div>';
   h+='</div></div>';
   if(P&&(P.q>0||P.cr>0)){var vu=px>0?P.q*px:0,vr=vu>0&&f>0?vu*f:0;h+='<div class="mds mdpos '+(vr>0?(vr>=P.cr?'up':'dn'):'')+'"><h3>Sua posição <span class="mdtag">NA CARTEIRA</span></h3><div class="mdg"><div class="mdk"><span>Cotas</span><b>'+(+P.q).toLocaleString('pt-BR',{maximumFractionDigits:6})+'</b></div><div class="mdk"><span>Preço médio</span><b>'+usd(P.q>0?P.cu/P.q:0)+'</b></div><div class="mdk"><span>Custo em reais</span><b>'+brl(P.cr)+'</b></div><div class="mdk"><span>Valor em US$</span><b>'+(vu>0?usd(vu):'—')+'</b></div><div class="mdk"><span>Valor em reais</span><b>'+(vr>0?brl(vr):'—')+'</b></div><div class="mdk"><span>Resultado</span><b class="'+(vr>0?cls(vr-P.cr):'mu')+'">'+(vr>0?brl(vr-P.cr):'—')+'</b></div></div></div>';
@@ -10067,6 +10068,13 @@ function kind(s){return /\.SA$/.test(s)?'sa':/^\^|^000001\.SS$|^DX-Y/.test(s)?'p
 function fmt(s){var k=kind(s);if(k==='sa')return function(v){return 'R$ '+n2(v,2)};return k==='pts'?function(v){return n2(v,v>=1000?0:2)+' pts'}:k==='brl'?function(v){return 'R$ '+n2(v,4)}:function(v){return 'US$ '+n2(v,v>=1000?0:2)}}
 /* 4.3: busca 5 dias e mostra o ULTIMO pregao com pontos (de madrugada o "1 dia" vinha vazio e dava 0,00%).
    Moedas (=X) negociam 24 h: o grafico "Hoje" fica fixo das 9h as 18h de Brasilia, como o do dolar. */
+/* 4.4.1 (171): acoes, FIIs, ETFs e BDRs da B3 (.SA) e o IBOVESPA seguem o horario da B3 (10:00 ate o fechamento: 18:00, ou 17:00 no horario de verao dos EUA),
+   com feriados, e nao o horario que o Yahoo informa (que estava fechando as 17h). */
+function isB3(s){return /\.SA$/.test(s)||s==='^BVSP'}
+function b3w(){try{var D=qxSp(Date.now()).d,g=0,biz=function(d){var w=new Date(d+'T12:00:00Z').getUTCDay();return w>0&&w<6&&!(typeof nzHol==='function'&&nzHol(d))};while(!biz(D)&&g++<12)D=qxDShift(D,1);var z=Date.parse(D+'T00:00:00-03:00');return [z+600*6e4,z+((typeof mhClose==='function'?mhClose(D):1075)+5)*6e4]}catch(e){return null}}
+function fixW(s,x){if(x&&isB3(s)){var w=b3w();if(w){x.st=w[0];x.en=w[1]}}return x}
+function one(s){for(var k in CA){var d=CA[k]&&CA[k].d;if(d&&d[s])return fixW(s,d[s])}return null}
+window.B3W=b3w;
 async function q1(sym){var r=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range=5d&interval=15m',15000);
   try{var R=r.j.chart.result[0],m=R.meta,c=R.indicators.quote[0].close,fx=/=X$|=F$/.test(sym),off=fx?-3*36e5:(+m.gmtoffset||0)*1000,all=[];
     (R.timestamp||[]).forEach(function(t,i){if(c[i]>0)all.push([t*1000,c[i]])});
@@ -10077,6 +10085,7 @@ async function q1(sym){var r=await qxGet('https://query1.finance.yahoo.com/v8/fi
     var pv=prev.length?prev[prev.length-1][1]:+(m.chartPreviousClose||m.previousClose)||0,live=+m.regularMarketPrice,p=pts.length?(fx?pts[pts.length-1][1]:(D===dk(Date.now())&&live>0?live:pts[pts.length-1][1])):live;
     var tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular,st=0,en=0;
     if(fx&&D){st=Date.parse(D+'T12:00:00Z');en=Date.parse(D+'T21:00:00Z')}else if(pts.length){st=pts[0][0];en=tp&&tp.end*1000>pts[pts.length-1][0]&&D===dk(Date.now())?tp.end*1000:pts[pts.length-1][0]}
+    if(isB3(sym)){var bw=b3w();if(bw){st=bw[0];en=bw[1]}}
     return {p:p,pv:pv>0?pv:0,c:pv>0&&p>0?(p/pv-1)*100:null,pts:pts,st:st,en:en,day:D}}catch(e){return null}}
 function load(keys){var L=[];keys.forEach(function(k){G[k].L.forEach(function(a){if(L.indexOf(a[0])<0)L.push(a[0])})});var key='g|'+keys.join(',');
   var e=CA[key];if(e&&Date.now()-e.t<8*6e4)return Promise.resolve(e.d);if(BU[key])return BU[key];
@@ -10093,7 +10102,7 @@ var PAL=['#2563eb','#db2777','#16a34a','#ea580c','#7c3aed','#0891b2','#ca8a04','
 function col(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return PAL[h%PAL.length]}
 function ab(n){var w=String(n).replace(/[^A-Za-zÀ-ú0-9& ]/g,'').split(/\s+/).filter(Boolean);return (w.length>1?w[0][0]+w[1][0]+(w[2]?w[2][0]:''):String(n).slice(0,3)).toUpperCase()}
 function hh(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
-function card(a,x){var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/^DX-Y|-USD$/.test(s);/* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
+function card(a,x){fixW(a[0],x);var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/^DX-Y|-USD$/.test(s);/* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
   var ch='';if(x&&x.pts&&x.pts.length>=2&&typeof chBuild==='function'){try{ch=chBuild({id:'g:'+s,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:'X:'+s})}catch(e){ch=''}}
   if(!ch)ch='<div class="mu g43nc">'+(x?'sem gráfico de hoje agora':'carregando o gráfico…')+'</div>';
   var st=k24?'negociado 24 h':x&&x.st?(open?'Aberto · fecha às '+hh(x.en):(now>x.en?'Fechado · fechou às '+hh(x.en):'Fechado · abre às '+hh(x.st))):'';
@@ -10120,7 +10129,7 @@ function lgA(s){s=String(s||'');if(/\.SA$/.test(s))return ' pcav" data-sym="'+es
   if(/^[A-Z]{1,5}$/.test(s))return ' pcav" data-sym="'+esc(s)+'" data-kd="X"';return '"'}
 function avH(s,nm){var f='';try{f=window.FLAG45?FLAG45(s):''}catch(e){}if(f)return '<span class="g43av fl45" aria-hidden="true">'+(typeof FLG==='function'?FLG(f):f)+'</span>';
   return '<span class="g43av'+lgA(s)+' style="background:'+col(s)+'" aria-hidden="true">'+esc(ab(nm))+'</span>'}
-window.S42B={lgA:lgA,avH:avH,grid:grid,load:load,data:data,after:after,fmt:fmt,kind:kind,G:G,q1:q1,favs:favs,isFav:isFav,favTog:favTog,col:col,ab:ab,CA:CA};
+window.S42B={fixW:fixW,b3w:b3w,one:one,isB3:isB3,lgA:lgA,avH:avH,grid:grid,load:load,data:data,after:after,fmt:fmt,kind:kind,G:G,q1:q1,favs:favs,isFav:isFav,favTog:favTog,col:col,ab:ab,CA:CA};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n42b.js: '+(e&&e.message||e))}catch(x){}}
@@ -10551,7 +10560,7 @@ function simple(ks,pick){var D=S42B.data(ks)||{},G=S42B.G,h='',seen={},td=tdL();
   ks.forEach(function(k){var L=G[k].L.filter(function(a){return (!pick||pick.indexOf(a[0])>=0)&&!seen[a[0]]});if(!L.length)return;L.forEach(function(a){seen[a[0]]=1});
     h+='<h3 class="k43h">'+esc(G[k].t)+'</h3><div class="k43g">'+L.map(function(a){var s=a[0],x=D[s],F=S42B.fmt(s),c=x&&x.c,lg=/\.SA$/.test(s)||(/-USD$/.test(s)&&s!=='USDT-USD');
       var sp='';if(x&&x.pts&&x.pts.length>=2){var P=x.pts.map(function(q){return q[1]}),mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),r=(mx-mn)||mx*.001||1;sp='<svg class="k43sp" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+P.map(function(v,i){return (i/(P.length-1)*100).toFixed(1)+','+(22-(v-mn)/r*20).toFixed(1)}).join(' ')+'" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'}
-      var old=x&&x.day&&x.day!==td,cl=x&&x.st&&x.en&&(Date.now()<x.st||Date.now()>x.en)&&!/^DX-Y|-USD$/.test(s);
+      if(S42B.fixW)S42B.fixW(s,x);var old=x&&x.day&&x.day!==td,cl=x&&x.st&&x.en&&(Date.now()<x.st||Date.now()>x.en)&&!/^DX-Y|-USD$/.test(s);
       return '<button type="button" class="k43i'+(c>0?' up':c<0?' dn':'')+(cl?' g43x':'')+'" data-asset="X:'+esc(s)+'"><span class="k43t"><span class="g43av'+(lg?' pcav" data-sym="'+esc(s.replace(/\.SA$|-USD$/,''))+'" data-kd="'+(/\.SA$/.test(s)?'A':'C')+'"':'"')+' style="background:'+S42B.col(s)+'" aria-hidden="true">'+esc(S42B.ab(a[1]))+'</span><b>'+esc(a[2]&&/^[A-Z0-9]{4,6}$/.test(a[2])?a[2]:a[1])+'</b></span><span class="k43p">'+(x&&x.p>0?F(x.p):'—')+'</span><span class="'+(c>0?'gn':c<0?'rd':'mu')+'">'+(c!=null&&isFinite(c)?(c>0?'▲ ':c<0?'▼ ':'')+Math.abs(c).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'+(old?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):''):'—')+(cl?' · fechado':'')+'</span>'+sp+'</button>'}).join('')+'</div>'});
   return h||'<div class="mu">Carregando…</div>'}
 function repaint(){try{if(S32.cur&&S32.cur()==='tt'&&$i('ttk')&&$i('ttk').classList.contains('on'))S32.paint('ttk')}catch(e){}}
@@ -11221,9 +11230,13 @@ function worldUi(){var b3o=null;document.querySelectorAll('.g43g,.k43g,#mk .cg,#
   /* 4.4.1 (154): "Ver mais" embaixo de toda lista do Mercado (mostra 8 e o resto ao tocar) */
   var fw=hasMkt?WF:'all',key=lk(g),more=!!MOREK[key],shown=0,lim=more?1e9:8,hid=0;
   cards.forEach(function(c){var ok=fw==='all'||(fw==='open'?!CLX(c):CLX(c));if(ok&&shown>=lim){ok=false;hid++}else if(ok)shown++;c.classList.toggle('hf44',!ok)});
-  if(bar){var em=bar.querySelector('.wf44e');if(!shown&&fw!=='all'){if(!em){em=document.createElement('div');em.className='mu wf44e';bar.appendChild(em)}var et=(fw==='open'?'Nenhum mercado desta lista está aberto agora.':'Nenhum mercado desta lista está fechado agora.')+' <button type="button" class="lk" data-wf44="all">Ver todas</button>';if(em.__h!==et){em.__h=et;em.innerHTML=et}}else if(em)em.remove()}
+  if(bar){var em=bar.querySelector('.wf44e');if(!shown&&fw!=='all'){if(!em){em=document.createElement('div');em.className='wf44e';em.setAttribute('role','status');bar.appendChild(em)}var b3l=g.matches('#mk .cg')||Array.prototype.every.call(cards,function(c){return /^X:(.+\.SA|\^BVSP)$/.test(AS(c))}),et=(fw==='open'?(b3l?b3Msg():'<b>Nenhum mercado desta lista está aberto agora.</b>'):'<b>Nenhum mercado desta lista está fechado agora.</b>')+' <button type="button" class="lk" data-wf44="all">Ver todas</button>';if(em.__h!==et){em.__h=et;em.innerHTML=et}}else if(em)em.remove()}
   var mb=g.nextElementSibling&&g.nextElementSibling.classList.contains('mr44')?g.nextElementSibling:null,wl=isWorld(g)?' bolsas':'';
   if(hid>0||(more&&shown>8)){if(!mb){mb=document.createElement('button');mb.type='button';mb.className='sb2 mr44';g.insertAdjacentElement('afterend',mb)}mb.setAttribute('data-k',key);var tx=more?'Ver menos'+wl:'Ver mais'+wl+' ('+hid+')';if(mb.textContent!==tx)mb.textContent=tx}else if(mb)mb.remove()})}
+/* 171: aviso quando o filtro Abertas fica vazio numa lista da B3 (diz por que e o horario do pregao) */
+function b3Msg(){var o='10:00',cc='18:00',T=qxSp(Date.now()),hol=typeof nzHol==='function'&&nzHol(T.d);try{var h=nzHrs();o=h.open;cc=h.call}catch(e){}
+  var why=hol?'Hoje é feriado na B3.':(T.w===0||T.w===6)?'Fim de semana: a B3 não abre.':T.m<600?'A B3 ainda não abriu hoje.':'O pregão de hoje já terminou.';
+  return '<b>A bolsa brasileira (B3) está fechada agora.</b> '+why+' O pregão vai das '+o+' às '+cc+' (dias úteis, horário de Brasília).'}
 var MOREK={};function lk(g){var sec=g.closest('section,[id]'),id=sec?sec.id:'',L=sec?Array.prototype.indexOf.call(sec.querySelectorAll('.g43g,.k43g,.cg,.mcg'),g):0;var c=g.querySelector('.g43c,.k43i,.mkc,.mcr'),a=c?(AS(c)||(c.querySelector('.ptk')||{}).textContent||''):'';return id+'|'+L+'|'+a}
 function isWorld(g){var c=g.querySelector('.g43c,.k43i');return !!(c&&/^X:\^/.test(AS(c)))}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-wf44],.mr44');if(!b)return;e.preventDefault();if(b.classList.contains('mr44')){var k=b.getAttribute('data-k');if(k)MOREK[k]=!MOREK[k];else MORE=!MORE}else{WF=b.dataset.wf44;try{localStorage.setItem('stox3-wf44',WF)}catch(x){}}worldUi()},true);
