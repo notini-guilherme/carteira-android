@@ -1447,6 +1447,26 @@ body:not(.tt45on) #totop{opacity:0!important;pointer-events:none!important;trans
 .k43i .x45{top:auto;bottom:6px;right:6px}
 .k43i .x45{top:6px!important;right:6px!important;bottom:auto!important}
 .x45 svg{width:14px!important;height:14px!important;max-width:none!important;max-height:none!important;flex:none!important}
+/* 4.4.1: cartao Simples do Mercado padronizado (todos os modulos e Total): estrela + ampliar no canto de cima */
+.k43mini .chx .chh{display:none!important}.x45{display:none!important}
+.k43mini .g43c,.k43mini .mkc,.k43mini .mcr,.k43mini .nxic{position:relative!important}
+.x45w{position:absolute;top:8px;right:8px;display:flex;gap:4px;z-index:3}
+.x45w>*,.x45w .mkst,.x45w .wlb,.x45w .g43f{width:28px!important;height:28px!important;min-width:28px!important;padding:0!important;display:grid!important;place-items:center;border-radius:8px!important;border:1px solid var(--bd)!important;background:var(--sf)!important;color:var(--tx);font-size:14px!important;transform:none!important;margin:0!important;line-height:1!important;cursor:pointer}
+.x45w .g43f.on,.x45w .mkst.on,.x45w .wlb[aria-pressed="true"]{color:#f5a524!important}
+.k43mini .g43h,.k43mini .mkc .cph .mkt,.k43mini .mcr .mkh,.k43mini .nxic .cph .mkt{padding-right:64px;min-width:0}
+.k43mini .g43n b{white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip;line-height:1.2}
+.nd45{display:none!important}
+.k43mini .nxic .cph{flex-wrap:wrap}.k43mini .nxic .nxpv{flex-basis:100%;text-align:left!important;display:flex;flex-direction:column;align-items:flex-start}
+.fl44{margin-right:4px}.nxic .nxfav{margin-left:auto}
+.x45w{flex-direction:column;gap:3px;top:7px;right:7px}
+.x45w>*,.k43mini .x45w .mkst,.k43mini .x45w .wlb,.k43mini .x45w .g43f,.k43mini .x45w .x45b{width:25px!important;height:25px!important;min-width:25px!important;display:grid!important;font-size:13px!important}
+.x45w .x45b svg{width:13px!important;height:13px!important}
+.k43mini .g43h,.k43mini .mkc .cph .mkt,.k43mini .mcr .mkh,.k43mini .nxic .cph .mkt{padding-right:30px!important}
+.k43mini .g43n b,.k43mini .nxic .ptk,.k43mini .mkc .ptk,.k43mini .mcr .ptk{white-space:normal!important}
+.k43mini .fl44{display:inline!important;margin-right:3px;font-size:.95em}
+.k43mini .nxic .mkt{flex-direction:row!important;align-items:center!important;gap:7px}
+#xapv .mds{position:relative}#xapv .ixfsr{position:absolute;top:14px;right:14px;margin:0;z-index:2}
+#fs45[hidden]{display:none!important}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -6049,7 +6069,7 @@ function nxMkCard(k){
   if(!VZ.ui.pg)ch='';
   else if(s&&s.pts&&s.pts.length>=2)ch=chBuild({id:'ix:'+k,s:s,k:'A',r:r,sz:'card',fmt:nxFmtF(k)});
   else ch='<div class="mgn mu">'+(!qhEnv()?'sem gráfico aqui (só no aplicativo)':((r===1?(!x&&!NX.busy&&Date.now()<NX.bk):(NX.sb[kk]&&Date.now()-NX.sb[kk]<3e5&&!NX.s[kk]))?'sem gráfico agora':'carregando gráfico…'))+'</div>';
-  return '<div class="pc cp nxic'+(r===1?' nxd1':'')+'"><div class="cph"><div class="mkt"><div class="av nxav">'+(k==='ibov'?'IB':'US')+'</div><div class="mkn"><b class="ptk">'+NXNM[k]+'</b><div class="mu">'+(k==='ibov'?'Índice da bolsa brasileira · pontos':'Dólar comercial · real por dólar')+'</div></div></div>'+
+  return '<div class="pc cp nxic'+(r===1?' nxd1':'')+'"><div class="cph"><div class="mkt"><div class="av nxav">'+(k==='ibov'?'IB':'US')+'</div><div class="mkn"><b class="ptk"><span class="fl44" aria-hidden="true">'+(k==='ibov'?'🇧🇷':'🇺🇸')+'</span>'+NXNM[k]+'</b></div></div>'+(function(){var y=k==='ibov'?'^BVSP':'BRL=X',f=false;try{f=window.S42B&&S42B.isFav(y)}catch(e){}return window.S42B?'<button type="button" class="g43f nxfav" data-xfav="'+y+'" aria-pressed="'+f+'" aria-label="Favoritar" title="Favoritar">'+(f?'★':'☆')+'</button>':''})()+
     '<div class="nxpv">'+(x?'<b>'+esc(nxFmt(k,x.p))+'</b>'+nxChg(x.c):'<span class="mu">sem dados</span>')+'</div></div><div class="nxich" data-ixk="'+k+'">'+ch+'</div></div>'}
 function nxMkGroup(){return '<div class="nxig"><div class="nxih"><b>Índices</b><span class="mu">IBOVESPA e dólar · fonte gratuita, atraso de cerca de 15 minutos</span></div><div class="cg">'+nxMkCard('ibov')+nxMkCard('usd')+'</div></div>'}
 function nxMkPaint(){
@@ -10265,7 +10285,8 @@ function render(){addG();var h='<h2>Mercado</h2><div class="mu" style="margin:4p
   if(!window.S42B)return h+'<div class="mu">Carregando…</div>';
   var ks=keysOf(CUR);
   var pick=null;if(CUR==='fav'){pick=S42B.favs();if(!pick.length)return h+'<div class="empty">Você ainda não favoritou nada. Toque na ☆ de um cartão para ele aparecer aqui e no letreiro do topo.</div>'}
-  if(VW==='s')h+=simple(ks,pick);else h+=pick?S42B.grid(ks,{pick:pick}):S42B.grid(ks);
+  /* 4.4.1: o Simples do Total usa os mesmos cartoes do Exterior (com estrela, bandeira e ampliar), so que em 2 colunas */
+  h+=(VW==='s'?'<i class="k45ms" hidden></i>':'')+(pick?S42B.grid(ks,{pick:pick}):S42B.grid(ks));
   return h}
 /* visao Simples: duas colunas com nome, preco, variacao e um mini grafico (menos rolagem) */
 function simple(ks,pick){var D=S42B.data(ks)||{},G=S42B.G,h='',seen={},td=tdL();
@@ -10921,7 +10942,7 @@ var FLAG={'^BVSP':'🇧🇷','^GSPC':'🇺🇸','^IXIC':'🇺🇸','^DJI':'🇺�
 var WF=(function(){try{return localStorage.getItem('stox3-wf44')||'all'}catch(e){return 'all'}})(),MORE=false;
 function AS(c){var o=c.matches('[data-asset]')?c:c.querySelector('.g43o[data-asset]');return o?o.getAttribute('data-asset'):''}
 function worldUi(){document.querySelectorAll('.g43g,.k43g').forEach(function(g){var cards=g.querySelectorAll('.g43c,.k43i');if(!cards.length)return;
-  cards.forEach(function(c){var a=AS(c);if(!a)return;var s=a.slice(2),f=FLAG[s];if(f&&!c.querySelector('.fl44')){var b=document.createElement('span');b.className='fl44';b.textContent=f;b.setAttribute('aria-hidden','true');var n=c.querySelector('.g43n b,.k43t b');if(n)n.appendChild(b)}});
+  cards.forEach(function(c){var a=AS(c);if(!a)return;var s=a.slice(2),f=FLAG[s];if(f&&!c.querySelector('.fl44')){var b=document.createElement('span');b.className='fl44';b.textContent=f;b.setAttribute('aria-hidden','true');var n=c.querySelector('.g43n b,.k43t b');if(n)n.insertBefore(b,n.firstChild)}});
   /* 4.4.1 (93): no Mercado do Dolar (moedas) nao tem filtro aberta/fechada */
   if(g.closest('#dzm')){var ob=g.previousElementSibling;if(ob&&ob.classList.contains('wf44'))ob.remove();cards.forEach(function(c){c.classList.remove('hf44')});return}
   /* so nas listas de bolsas, ouro e moedas (tem cartao fechado/aberto) */
@@ -11326,11 +11347,45 @@ try{if(!window.__S32SAFE){/* 4.4.1 (92): no Mercado > Simples, a faixa da esquer
 (function(){var T=0;
 function pct(c){var e=c.querySelector('.qxp .dayv,.qxp .gn,.qxp .rd,.mkv .gn,.mkv .rd,.chv');if(!e)return 0;var t=e.textContent||'';if(/▲|\+\d/.test(t)&&!/−|-\d/.test(t))return 1;if(/▼|−|-\d/.test(t))return -1;return e.classList.contains('gn')?1:e.classList.contains('rd')?-1:0}
 var XI='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
-/* 4.4.1: todo grafico pequeno do Mercado (Simples e Total) mostra o quadradinho de ampliar; tocar abre o grafico grande */
-function expand(){document.querySelectorAll('.k43mini .mkpp,.k43i,.k43mini .nxich,#ttk .k43i').forEach(function(b){if(b.querySelector(':scope > .x45'))return;var s=document.createElement('span');s.className='x45';s.innerHTML=XI;s.title='Ampliar o gráfico';b.appendChild(s)})}
-function run(){document.querySelectorAll('.k43mini .mkc,.k43mini .mcr').forEach(function(c){var v=pct(c);c.classList.toggle('u45',v>0);c.classList.toggle('d45',v<0)});try{expand()}catch(e){}}
+/* 4.4.1: cartao Simples do Mercado igual em todos os modulos: no canto de cima, a estrela de favorito e o quadradinho de ampliar
+   (abre a pagina do ativo, que tem o grafico grande e o botao de tela cheia) */
+function sym(card){var o=card.querySelector('.g43o[data-asset]');if(o)return o.getAttribute('data-asset');if(card.classList.contains('mkc')){var t=card.querySelector('.ptk');return t?'A:'+t.textContent.trim():''}
+  if(card.classList.contains('mcr'))return 'C:'+(card.dataset.mk||'');if(card.classList.contains('nxic')){var n=card.querySelector('[data-ixk]');return n?'I:'+n.dataset.ixk:''}return ''}
+function openS(v){var p=v.indexOf(':'),k=v.slice(0,p),s=v.slice(p+1);try{if(k==='I'){S40D.open(s);return}if(k==='A'){S40C.open('A',s);return}if(k==='C'){S40C.open('C',s);return}
+  var o=null,s2=s.replace(/\.SA$/,'').replace(/-USD$/,'');try{o=S43G.find(/\.SA$/.test(s)||/-USD$/.test(s)&&s!=='USDT-USD'?s2:s)}catch(e){}
+  if(o&&o.k==='I')S40D.open(o.s);else if(o&&(o.k==='A'||o.k==='C'))S40C.open(o.k,o.s);else S41F.open(s)}catch(e){}}
+function controls(){document.querySelectorAll('.k43mini .g43c,.k43mini .mkc,.k43mini .mcr,.k43mini .nxic').forEach(function(c){var v=sym(c);if(!v)return;var w=c.querySelector(':scope > .x45w');
+  if(!w){w=document.createElement('div');w.className='x45w';c.appendChild(w)}
+  var st=c.querySelector('.g43f,.wlb[data-wlt],.mkst');if(st&&st.parentNode!==w)w.insertBefore(st,w.firstChild);
+  var b=w.querySelector('[data-x45]');if(!b){b=document.createElement('button');b.type='button';b.className='x45b';b.setAttribute('aria-label','Ampliar o gráfico');b.title='Ampliar o gráfico';b.innerHTML=XI;w.appendChild(b)}b.dataset.x45=v})}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-x45]');if(!b)return;e.preventDefault();e.stopPropagation();openS(b.dataset.x45)},true);
+/* Total: o Simples tambem e o cartao g43c em 2 colunas */
+function ttk(){var t=document.getElementById('ttk');if(t)t.classList.toggle('k43mini',!!t.querySelector('.k45ms'))}
+/* bolsas sem dados ha mais de 20 s (codigo que nao respondeu) somem da lista, para nao parecer erro */
+var ND=new WeakMap();function nodata(){document.querySelectorAll('section.on .g43c').forEach(function(c){var p=c.querySelector('.g43p b');var none=!p||/^[—\-]?$/.test((p.textContent||'').trim());if(!none){ND.delete(c);c.classList.remove('nd45');return}var t=ND.get(c);if(!t){ND.set(c,Date.now());return}if(Date.now()-t>20000)c.classList.add('nd45')})}
+function run(){document.querySelectorAll('.k43mini .mkc,.k43mini .mcr').forEach(function(c){var v=pct(c);c.classList.toggle('u45',v>0);c.classList.toggle('d45',v<0)});try{ttk()}catch(e){}try{controls()}catch(e){}try{nodata()}catch(e){}}
 function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},300)}
 try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}go();
+})();
+/* 4.4.1: pagina dos ativos do Mercado (bolsas do mundo, EUA, ouro, moedas) com o botao de tela cheia, igual a do IBOV */
+(function(){var $i=function(id){return document.getElementById(id)},T=0;
+var XI2='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+function put(){var v=$i('xapv');if(!v||v.hidden)return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector(':scope > .ixfsr'))return;
+  s.insertAdjacentHTML('afterbegin','<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs45="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>')}
+function chart(){var v=$i('xapv'),c=v&&v.querySelector('.mdchart .chx[data-chid]');if(!c)return null;var d=null;try{d=chRg()[c.dataset.chid]}catch(e){}return d?{id:c.dataset.chid,d:d}:null}
+function paint(){var el=$i('fs45');if(!el||el.hidden)return;var v=$i('xapv'),x=chart(),nm=null;try{nm=[].slice.call(v.querySelectorAll('.mdb b,.mdt b,.mdn')).filter(function(b){var t=(b.textContent||'').trim();return t&&!/^[A-Z0-9^]{2,4}$/.test(t)&&!b.querySelector('b')})[0]}catch(e){}var ps=v?[].slice.call(v.querySelectorAll('.mds .pcgr button')):[];
+  var h='<div class="ixfh"><b>'+(nm?nm.textContent.trim().split('\n')[0]:'Gráfico')+'</b><button type="button" class="mdx" data-fs45c="1" aria-label="Fechar a tela cheia">✕</button></div>';
+  h+='<div class="pcgr one" role="group" aria-label="Período do gráfico">'+ps.map(function(b,i){return '<button type="button" class="pcrb'+(b.classList.contains('on')?' on':'')+'" data-fs45p="'+i+'">'+b.textContent.trim()+'</button>'}).join('')+'</div>';
+  h+=x?chBuild({id:x.id+':fs',s:{pts:x.d.P,ref:x.d.r===1?(x.d.base||0):0},k:'A',r:x.d.r,sz:'full',fmt:x.d.fm}):'<div class="mu" style="padding:40px 0;text-align:center">carregando o gráfico…</div>';
+  el.innerHTML=h;try{var pb=v.querySelector('.mdchart .chh b'),fb=el.querySelector('.chh b');if(pb&&fb)fb.textContent=pb.textContent}catch(e){}}
+function open(){var el=$i('fs45');if(!el){el=document.createElement('div');el.id='fs45';el.className='mdf ixf';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Gráfico em tela cheia');document.body.appendChild(el)}el.hidden=false;document.body.classList.add('mdfo');paint()}
+function close(){var el=$i('fs45');if(el){el.hidden=true;el.innerHTML=''}document.body.classList.remove('mdfo')}
+document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;
+  if(t.closest('[data-fs45]')){e.preventDefault();open();return}
+  if(t.closest('[data-fs45c]')){close();return}
+  var p=t.closest('[data-fs45p]');if(p){var bs=[].slice.call(document.querySelectorAll('#xapv .mds .pcgr button')),b=bs[+p.dataset.fs45p];if(b){b.click();var n=0,old=(chart()||{}).id;(function wait(){n++;var x=chart();if((x&&x.id!==old)||n>12){paint();return}setTimeout(wait,500)})()}}},true);
+var bk=window.__stxBack;window.__stxBack=function(){var f=$i('fs45');if(f&&!f.hidden){close();return true}return bk?bk():false};
+try{new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=0;try{put()}catch(e){}},250)}).observe(document.body,{childList:true,subtree:true})}catch(e){}
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45a.js: '+(e&&e.message||e))}catch(x){}}
