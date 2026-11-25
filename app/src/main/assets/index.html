@@ -1614,6 +1614,35 @@ html.dsk #crm2w .mcg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!i
 #crm2w .mcr.mkhold{border:1.5px solid var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 18%,transparent)}
 #crm2w .dz46 .mkv{display:block}#crm2w .dz46 .mkv b{display:block;font-size:17px}#crm2w .dz46 .mkv .mu{display:block;font-size:12px}
 #crm2w .dz46 .av.fl45{width:34px;height:34px;border-radius:50%;flex:0 0 34px}
+/* 4.4.1 (164): botao de tela cheia das paginas de grafico no fluxo da pagina (absoluto, no Android ficava parado na tela enquanto o grafico rolava) */
+#xapv .ixfsr,#apv .mds.fs46>.ixfsr{position:static!important;float:right;margin:0 0 6px 8px!important;top:auto;right:auto}
+/* 4.4.1 (163): cartao que voce tem (borda laranja) fica com a borda toda da mesma cor tambem no Simples (antes a esquerda seguia o dia) */
+.k43mini .mcr.mkhold.u45,.k43mini .mcr.mkhold.d45,.k43mini .mkc.mkhold.u45,.k43mini .mkc.mkhold.d45{border-left-color:var(--ac)!important}
+/* 4.4.1 (165): Mercado › Cartoes (Bolsa): logo no alto ao lado do codigo; preco, % e "atualizado" usam a largura toda do cartao (cartao mais baixo) */
+#mk:not(.k43mini) .mkc .cph{position:relative;display:block}
+#mk:not(.k43mini) .mkc .wlq{position:absolute;top:0;right:0;margin:0}
+#mk:not(.k43mini) .mkc .mkt{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:0;align-items:start}
+#mk:not(.k43mini) .mkc .mkt>.av{grid-row:1/span 2;align-self:start;margin:0}
+#mk:not(.k43mini) .mkc .mkn{display:contents}
+#mk:not(.k43mini) .mkc .mkn>.ptk,#mk:not(.k43mini) .mkc .mkn>.mu{grid-column:2;padding-right:78px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mk:not(.k43mini) .mkc .mkn>.qxp{grid-column:1/-1;margin-top:8px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+#mk:not(.k43mini) .mkc .mkn>.qxp>.mu{flex:1 1 100%;font-size:11.5px}
+/* 4.4.1 (164): botao de tela cheia preso no canto do quadro do grafico (antes flutuava e mudava de lugar ao rolar/atualizar) */
+#xapv .mds:has(> .ixfsr),#apv .mds.fs46{position:relative!important}
+#xapv .mds > .ixfsr,#apv .mds.fs46 > .ixfsr{position:absolute!important;float:none!important;top:12px!important;right:12px!important;margin:0!important;z-index:1}
+/* 4.4.1 (163): cartao da moeda que voce tem: borda toda da mesma cor (a faixa da esquerda tambem) */
+.k43mini .mcr.mkhold,.k43mini .mkc.mkhold{border-left-color:var(--ac)!important}
+/* 4.4.1 (165): Mercado da Bolsa › Cartoes: logo em cima ao lado do codigo, e preco/variacao/"atualizado" ocupando a largura toda do cartao (antes ficavam espremidos ao lado da logo) */
+#mk:not(.k43mini) .mkc>.cph{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;column-gap:10px;row-gap:2px;align-items:start}
+#mk:not(.k43mini) .mkc>.cph>.mkt,#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn{display:contents!important}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.av{grid-column:1;grid-row:1/span 2;align-self:start;margin:2px 0 0!important}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.ptk{grid-column:2;grid-row:1;align-self:end;min-width:0}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>:not(.ptk):not(.mdpr):not(.qxp){grid-column:2;min-width:0}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.hv{grid-row:2;font-size:12px}#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.hv+.mu{grid-row:3}
+#mk:not(.k43mini) .mkc>.cph>.wlq{grid-column:3;grid-row:1/span 2;align-self:start}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.mdpr,#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.qxp{grid-column:1/-1;margin-top:6px}
+#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.mdpr .mdwh{white-space:normal}
+#mk:not(.k43mini) .mkc>.cph>:not(.mkt):not(.wlq){grid-column:1/-1;min-width:0}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -11613,10 +11642,11 @@ try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true}
 /* 4.4.1: pagina dos ativos do Mercado (bolsas do mundo, EUA, ouro, moedas) com o botao de tela cheia, igual a do IBOV */
 (function(){var $i=function(id){return document.getElementById(id)},T=0;
 var XI2='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
-function putA(){var v=$i('apv');if(!v||v.hidden||!window.S40C||!S40C.isOpen())return;var g=v.querySelector('.mds .pcgr');if(!g)return;var s=g.closest('.mds');if(s.querySelector(':scope > .ixfsr'))return;
-  s.classList.add('fs46');s.insertAdjacentHTML('afterbegin','<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs46="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>')}
-function put(){try{putA()}catch(e){}var v=$i('xapv');if(!v||v.hidden)return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector(':scope > .ixfsr'))return;
-  s.insertAdjacentHTML('afterbegin','<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs45="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>')}
+function putA(){var v=$i('apv');if(!v||v.hidden||!window.S40C||!S40C.isOpen())return;var g=v.querySelector('.mds .pcgr');if(!g)return;var s=g.closest('.mds');if(s.querySelector('.ixfsr'))return;
+  s.classList.add('fs46');var row=s.querySelector(':scope > .cdlt'),hb='<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs46="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>';s.insertAdjacentHTML('afterbegin',hb)}
+function put(){try{putA()}catch(e){}var v=$i('xapv');if(!v||v.hidden)return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector('.ixfsr'))return;
+  /* 4.4.1 (164): botao preso ao canto do quadro do grafico (antes flutuava ao lado de Linha/Candle) */
+  var row=s.querySelector(':scope > .cdlt'),hb='<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs45="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>';s.insertAdjacentHTML('afterbegin',hb)}
 function chart(){var v=$i('xapv'),c=v&&v.querySelector('.mdchart .chx[data-chid]');if(!c)return null;var d=null;try{d=chRg()[c.dataset.chid]}catch(e){}return d?{id:c.dataset.chid,d:d}:null}
 function paint(){var el=$i('fs45');if(!el||el.hidden)return;var v=$i('xapv'),x=chart(),nm=null;try{nm=[].slice.call(v.querySelectorAll('.mdb b,.mdt b,.mdn')).filter(function(b){var t=(b.textContent||'').trim();return t&&!/^[A-Z0-9^]{2,4}$/.test(t)&&!b.querySelector('b')})[0]}catch(e){}var ps=v?[].slice.call(v.querySelectorAll('.mds .pcgr button')):[];
   var h='<div class="ixfh"><b>'+(nm?nm.textContent.trim().split('\n')[0]:'Gráfico')+'</b><button type="button" class="mdx" data-fs45c="1" aria-label="Fechar a tela cheia">✕</button></div>';
@@ -11804,18 +11834,21 @@ function ymd(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+
 function td(){return ymd(new Date())}
 var BR='Ibovespa OR Copom OR Selic OR "PIB do Brasil" OR "Banco Central" OR "contas públicas" OR inflação OR Congresso',
     US='"Wall Street" OR Fed OR "juros nos EUA" OR "economia dos EUA" OR "Casa Branca"';
-function xctx(v,s,n){var q=US,reg='us';
-  if(s==='^BVSP'||s==='EWZ')return {el:v,key:'ibov',nm:'o IBOVESPA',q:BR,reg:'all'};
-  if(/^(GC|SI|PL|PA)=F$/.test(s))q='ouro OR prata OR Fed OR "juros nos EUA" OR geopolítica';
-  else if(/^(CL|BZ)=F$/.test(s))q='petróleo OR OPEP OR "Oriente Médio" OR Brent';
-  else if(s==='NG=F')q='"gás natural" OR petróleo OR inverno OR clima';
-  else if(/^(HG|ALI)=F$/.test(s))q='cobre OR alumínio OR China OR metais';
-  else if(/=F$/.test(s))q=n+' OR safra OR clima OR China';
-  else if(/=X$/.test(s)){q=n+' OR câmbio OR Fed OR "banco central"';reg='all'}
-  else if(/^\^/.test(s)){q=/^\^(GSPC|IXIC|DJI|RUT|VIX|NYA)$/.test(s)?US:/^\^(STOXX50E|GDAXI|FTSE|FCHI|IBEX|FTSEMIB|AEX)$/.test(s)?'"bolsas europeias" OR BCE OR "economia europeia"':/^\^(N225|HSI|TWII|KS11|STI|AXJO|BSESN|NSEI)$/.test(s)?'"bolsas asiáticas" OR China economia OR Japão juros':/^\^(MXX|MERV|IPSA)$/.test(s)?'"América Latina" economia OR Argentina OR México':US}
-  /* 4.4.1 (149): acao, ADR, ETF e cripto mostram so as noticias do proprio ativo (o bloco fica nos indices, moedas e commodities) */
+/* 4.4.1 (166): o bloco e de cada indice, commodity ou moeda (titulo e noticias daquele mercado); ativos (acao, ETF como o EWZ, ADR, cripto) nao tem: ficam so com as noticias proprias */
+var BANK={'EUA':'Fed OR "Wall Street"','Brasil':'Copom OR Selic','Europa':'BCE OR "zona do euro"','Alemanha':'BCE OR "zona do euro"','França':'BCE OR "zona do euro"','Itália':'BCE OR "zona do euro"','Espanha':'BCE OR "zona do euro"','Holanda':'BCE OR "zona do euro"','Reino Unido':'"Banco da Inglaterra" OR libra','Japão':'"Banco do Japão" OR iene','China':'"economia chinesa" OR yuan','Hong Kong':'"economia chinesa" OR "Hong Kong"','Taiwan':'Taiwan OR semicondutores','Coreia do Sul':'"Coreia do Sul" OR won','Índia':'"economia indiana" OR rupia','Austrália':'"economia australiana" OR RBA','Canadá':'"economia canadense" OR "Banco do Canadá"','México':'"economia mexicana" OR peso mexicano','Argentina':'"economia argentina" OR Milei','Chile':'"economia chilena" OR cobre','Suíça':'"franco suíço" OR SNB'};
+var CURB={EUR:'BCE OR euro',GBP:'"Banco da Inglaterra" OR libra',JPY:'"Banco do Japão" OR iene',CNY:'yuan OR China',ARS:'"peso argentino" OR Argentina',CHF:'"franco suíço"',CAD:'"dólar canadense"',AUD:'"dólar australiano"',MXN:'"peso mexicano"',CLP:'"peso chileno"',USD:'dólar OR Fed OR Copom'};
+function info(s){var r=null;try{var G=S42B.G;Object.keys(G).forEach(function(k){(G[k].L||[]).forEach(function(a){if(!r&&a[0]===s)r={n:a[1],sub:a[2]||''}})})}catch(e){}return r}
+function xctx(v,s,n){var I=info(s)||{n:n,sub:''},nm=I.n||n,q='"'+nm+'"',reg='us';
+  if(s==='^BVSP')return {el:v,key:'ibov',nm:'o IBOVESPA',q:BR,reg:'all'};
+  if(/^\^/.test(s)){var c=String(I.sub||'').split(/ ·|,/)[0].trim();q+=(c?' OR "'+c+' economia"':'')+(BANK[c]?' OR '+BANK[c]:' OR '+US);reg=c==='Brasil'?'all':'us'}
+  else if(/^(GC|SI|PL|PA)=F$/.test(s))q+=' OR "preço do ouro" OR Fed OR "juros nos EUA" OR geopolítica';
+  else if(/^(CL|BZ)=F$/.test(s))q+=' OR petróleo OR OPEP OR "Oriente Médio"';
+  else if(s==='NG=F')q+=' OR "gás natural" OR inverno OR estoques';
+  else if(/^(HG|ALI)=F$/.test(s))q+=' OR China OR metais OR "minério de ferro"';
+  else if(/=F$/.test(s))q+=' OR safra OR clima OR China';
+  else if(/=X$/.test(s)){var m=/^([A-Z]{3})(BRL)?=X$/.exec(s),cu=m?(m[2]?m[1]:'USD'):'';q+=' OR câmbio'+(CURB[cu]?' OR '+CURB[cu]:'');reg='all'}
   else return null;
-  return {el:v,key:'x:'+s,nm:n,q:q,reg:reg}}
+  return {el:v,key:'x:'+s,nm:(/^(o|a|os|as) /i.test(nm)?nm:nm),q:q,reg:reg}}
 function ctxs(){var o=[],v;
   v=$i('ixv');if(v&&!v.hidden&&v.firstElementChild){var t=v.textContent.slice(0,200),usd=/D[óo]lar comercial|Real por d[óo]lar/i.test(t);o.push({el:v,key:usd?'usd':'ibov',nm:usd?'o dólar':'o IBOVESPA',q:usd?'dólar OR câmbio OR Fed OR "juros nos EUA" OR Copom OR "contas públicas"':BR,reg:'all'})}
   v=$i('xapv');if(v&&!v.hidden&&v.firstElementChild){var f=v.querySelector('[data-xfav]'),s=f?f.getAttribute('data-xfav'):'',nb=v.querySelector('.mdn b'),n=(nb?nb.textContent:s).trim();if(s){var xc=xctx(v,s,n);if(xc)o.push(xc)}}
