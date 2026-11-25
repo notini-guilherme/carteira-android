@@ -1645,6 +1645,10 @@ html.dsk #crm2w .mcg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!i
 #mk:not(.k43mini) .mkc>.cph>:not(.mkt):not(.wlq){grid-column:1/-1;min-width:0}
 /* 4.4.1 (167): faixas nas paginas dos graficos */
 #xapv .mdchart+.fx45,#apv .mdchart+.fx45,#ixv .mdchart+.fx45{margin-top:12px}
+/* 4.4.1 (169): um botao de tela cheia so por grafico */
+#apv .mds.fs46 .cdlexp,#xapv .mds:has(> .ixfsr) .cdlexp,#ixv .mds:has(.ixfsb) .cdlexp{display:none!important}
+#ixv .mds.fs46i{position:relative}#ixv .mds.fs46i>.ixfsr.i46{position:absolute!important;top:12px!important;right:12px!important;margin:0!important;z-index:1}
+#ixv .mds:has(.mdchart .ixfsb) > .ixfsr.i46{display:none!important}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -8632,6 +8636,9 @@ function crHtml(c){var cr=C();if(!cr)return '';var px=0;try{px=CRX.price(c)}catc
   var a=' type="button" data-zcc="'+ea(c)+'"';
   h+='<div class="mdbt apbt"><button class="sb2 b" data-zact="COMPRA"'+a+'>Comprar</button>'+(held?'<button class="sb2 v" data-zact="VENDA"'+a+'>Vender</button><button class="sb2" data-zact="PERMUTA"'+a+'>Trocar</button>':'')+'<button class="sb2" type="button" data-crsim="'+ea(c)+'">Simular</button></div>';
   var r=1;try{r=pcR('C')}catch(e){}var s=null;try{s=chData('C',c,r)}catch(e){}
+  /* 4.4.1 (168): moeda que voce NAO tem: o historico do app so guarda as suas; a linha ficava em "carregando o grafico...".
+     Agora a linha e feita com as mesmas velas da Binance que o grafico de candle usa */
+  if(!s){var fk=c+'|'+r,fv=FALL[fk];if(fv&&Date.now()-fv.t<5*6e4)s=fv.s;else fallC(c,r)}
   var avg=held?all.cost/all.qty:0;
   h+='<div class="mds">'+(typeof mdChips==='function'?mdChips('C'):'')+'<div class="mdchart">'+(s&&s.pts&&s.pts.length>=2&&typeof chBuild==='function'?chBuild({id:'ap:'+c,s:s,k:'C',r:r,avg:avg,qty:held?all.qty:0,sz:'big',opn:'C:'+c}):'<div class="mu" style="padding:30px 0;text-align:center">'+(typeof qhEnv==='function'&&!qhEnv()?'O gráfico aparece no aplicativo (Windows ou Android).':'carregando o gráfico…')+'</div>')+'</div></div>';
   if(ws.length){h+='<div class="mds"><h3>Posição por corretora</h3><div class="aptb">'+ws.map(function(w){var p=CRX.calc(cr.ops.filter(function(o){return o.where===w})).pools[c];if(!p)return '';var e=null;try{e=CRX.exFind(w)}catch(x){}
@@ -8644,6 +8651,12 @@ function crHtml(c){var cr=C();if(!cr)return '';var px=0;try{px=CRX.price(c)}catc
   h+='<p class="mu mdnote mdsrc">Preços da Binance (par em reais ou em USDT × dólar). Confira antes de decidir.</p></div>';
   return h}
 function wrap(){var el=$i('apv');if(!el){el=document.createElement('div');el.id='apv';el.className='mdv';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Detalhes do ativo');document.body.appendChild(el)}return el}
+var FALL={},FALB={},FALN={};
+function fallC(c,r){var fk=c+'|'+r;if(FALB[fk]||!window.CDL||typeof CDL.fetch!=='function')return;if(typeof qhEnv==='function'&&!qhEnv())return;FALB[fk]=1;
+  Promise.resolve(CDL.fetch('C',c,r)).then(function(d){FALB[fk]=0;if(!Array.isArray(d)||d.length<2){var n=(FALN[fk]||0)+1;FALN[fk]=n;if(n<4)setTimeout(function(){if(AP.on&&AP.k==='C'&&AP.s===c)fallC(c,r)},1500*n);return}var px=0;try{px=CRX.price(c)}catch(e){}
+    var hm=function(t){var x=new Date(t);return ('0'+x.getHours()).slice(-2)+':'+('0'+x.getMinutes()).slice(-2)},dm=function(t){var x=new Date(t);return ('0'+x.getDate()).slice(-2)+'/'+('0'+(x.getMonth()+1)).slice(-2)},intr=r===1||r<0;
+    var pts=d.map(function(a){var l=intr?hm(a.t):dm(a.t);return {t:a.t,p:a.c,l:l,ax:intr?undefined:l}}),now=Date.now();if(px>0&&intr)pts.push({t:Math.max(now,pts[pts.length-1].t+1),p:px,l:'agora'});
+    FALL[fk]={t:Date.now(),s:{pts:pts,ref:intr?d[0].o:0}};if(AP.on&&AP.k==='C'&&AP.s===c)paint()},function(){FALB[fk]=0})}
 function paint(){if(!AP.on)return;var el=wrap(),sc=el.scrollTop;el.innerHTML=crHtml(AP.s);el.scrollTop=sc;try{STX3.logos()}catch(e){}try{if(window.CDL)CDL.after(el,'C',AP.s,pcR('C'),paint)}catch(e){}}
 function openC(c){AP={k:'C',s:c,on:true};var el=wrap();el.hidden=false;document.body.classList.add('mdo');el.scrollTop=0;paint();
   try{if(typeof nwLoad==='function')Promise.resolve(nwLoad('C',[c])).then(paint,function(){})}catch(e){}
@@ -11646,7 +11659,10 @@ try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true}
 var XI2='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
 function putA(){var v=$i('apv');if(!v||v.hidden||!window.S40C||!S40C.isOpen())return;var g=v.querySelector('.mds .pcgr');if(!g)return;var s=g.closest('.mds');if(s.querySelector('.ixfsr'))return;
   s.classList.add('fs46');var row=s.querySelector(':scope > .cdlt'),hb='<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs46="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>';s.insertAdjacentHTML('afterbegin',hb)}
-function put(){try{putA()}catch(e){}var v=$i('xapv');if(!v||v.hidden)return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector('.ixfsr'))return;
+/* 4.4.1 (169): pagina do IBOVESPA/dolar no modo Candle ficava sem o botao de tela cheia (ele morava dentro do grafico de linha) */
+function putI(){var v=$i('ixv');if(!v||v.hidden||!v.firstElementChild)return;if([].some.call(v.querySelectorAll('.ixfsb'),function(b){return b.offsetParent}))return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector(':scope > .ixfsr.i46'))return;
+  s.classList.add('fs46i');s.insertAdjacentHTML('afterbegin','<div class="ixfsr i46"><button type="button" class="chex ixfsb" data-ixfs="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>')}
+function put(){try{putA()}catch(e){}try{putI()}catch(e){}var v=$i('xapv');if(!v||v.hidden)return;var m=v.querySelector('.mds .mdchart');if(!m)return;var s=m.closest('.mds');if(s.querySelector('.ixfsr'))return;
   /* 4.4.1 (164): botao preso ao canto do quadro do grafico (antes flutuava ao lado de Linha/Candle) */
   var row=s.querySelector(':scope > .cdlt'),hb='<div class="ixfsr"><button type="button" class="chex ixfsb" data-fs45="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar">'+XI2+'</button></div>';s.insertAdjacentHTML('afterbegin',hb)}
 function chart(){var v=$i('xapv'),c=v&&v.querySelector('.mdchart .chx[data-chid]');if(!c)return null;var d=null;try{d=chRg()[c.dataset.chid]}catch(e){}return d?{id:c.dataset.chid,d:d}:null}
@@ -12056,6 +12072,24 @@ window.S46F={render:render,calc:calc};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n46f.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (170): o quadrinho de valores do grafico (linha e candle) some sozinho 2,5 s depois que voce solta o dedo
+   (ou para de mexer o mouse), para nao ficar parado tampando o grafico */
+(function(){
+var T=new Map();
+function boxOf(t){return t&&t.closest?(t.closest('.chs')||t.closest('.cdlw')||(t.closest('svg')&&t.closest('svg').parentNode&&t.closest('svg').parentNode.querySelector('.cdltip')?t.closest('svg').parentNode:null)):null}
+function hide(b){if(!b||!b.isConnected)return;b.querySelectorAll('.chg,.chd,.cht').forEach(function(x){x.style.display='none'});b.querySelectorAll('.cdlx').forEach(function(x){x.remove()});b.querySelectorAll('.cdltip').forEach(function(x){x.hidden=true})}
+function arm(b,ms){if(!b)return;clearTimeout(T.get(b));T.set(b,setTimeout(function(){T.delete(b);hide(b)},ms))}
+function stop(b){if(b){clearTimeout(T.get(b));T.delete(b)}}
+var DOWN=null;
+document.addEventListener('pointerdown',function(e){var b=boxOf(e.target);if(b){DOWN=b;stop(b)}},true);
+document.addEventListener('touchstart',function(e){var b=boxOf(e.target);if(b){DOWN=b;stop(b)}},{capture:true,passive:true});
+['pointerup','pointercancel','touchend','touchcancel'].forEach(function(n){document.addEventListener(n,function(e){var b=DOWN||boxOf(e.target);DOWN=null;if(b)arm(b,2500)},{capture:true,passive:true})});
+/* mouse no computador: some 2,5 s depois de parar de mexer, ou ao sair do grafico */
+document.addEventListener('pointermove',function(e){if(e.pointerType==='touch'||DOWN)return;var b=boxOf(e.target);if(b)arm(b,2500)},{capture:true,passive:true});
+document.addEventListener('mouseleave',function(e){var b=boxOf(e.target);if(b)arm(b,600)},true);
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n46g.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
