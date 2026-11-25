@@ -1436,6 +1436,17 @@ body:not(.tt45on) #totop{opacity:0!important;pointer-events:none!important;trans
 /* 4.4.1: pagina fechada (vazia) nunca fica por cima de outra aberta (tela preta) */
 .mdv[hidden],body.mdo .mdv[hidden]{display:none!important}
 .mdv:empty,body.mdo .mdv:empty{display:none!important}
+/* 4.4.1: no APK o html tambem tem a classe dsk (do Windows): o Simples do Mercado continua em 2 colunas no celular */
+@media(max-width:719px){html #mk.k43mini .cg,html #crm.k43mini .mcg,html #crm.k43mini #zml .mcg,html #crm.k43mini .cg,html #dzm.k43mini .g43g,html #exm.k43mini .g43g,html #ttk .k43g{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* 4.4.1: quadradinho de ampliar nos graficos pequenos (Simples do Mercado de todos os modulos e Total) */
+.k43mini .chx .chh{display:flex!important;justify-content:flex-end;height:0;overflow:visible;position:relative;z-index:2;margin:0!important;padding:0!important}
+.k43mini .chx .chh>*:not(.chex){display:none!important}
+.k43mini .chx .chh .chex{display:grid!important;place-items:center;width:28px!important;height:28px!important;padding:0!important;border-radius:8px;transform:translateY(-2px);background:var(--sf)!important;border:1px solid var(--bd)!important}
+.k43mini .mkpp,.k43i,.k43mini .nxich{position:relative}
+.x45{position:absolute;top:4px;right:4px;width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:var(--sf);border:1px solid var(--bd);color:var(--tx);pointer-events:none;opacity:.9}
+.k43i .x45{top:auto;bottom:6px;right:6px}
+.k43i .x45{top:6px!important;right:6px!important;bottom:auto!important}
+.x45 svg{width:14px!important;height:14px!important;max-width:none!important;max-height:none!important;flex:none!important}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -11314,7 +11325,10 @@ window.S44J={dropped:dropped};
 try{if(!window.__S32SAFE){/* 4.4.1 (92): no Mercado > Simples, a faixa da esquerda de cada cartao segue a variacao do dia (igual ao Total) */
 (function(){var T=0;
 function pct(c){var e=c.querySelector('.qxp .dayv,.qxp .gn,.qxp .rd,.mkv .gn,.mkv .rd,.chv');if(!e)return 0;var t=e.textContent||'';if(/▲|\+\d/.test(t)&&!/−|-\d/.test(t))return 1;if(/▼|−|-\d/.test(t))return -1;return e.classList.contains('gn')?1:e.classList.contains('rd')?-1:0}
-function run(){document.querySelectorAll('.k43mini .mkc,.k43mini .mcr').forEach(function(c){var v=pct(c);c.classList.toggle('u45',v>0);c.classList.toggle('d45',v<0)})}
+var XI='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+/* 4.4.1: todo grafico pequeno do Mercado (Simples e Total) mostra o quadradinho de ampliar; tocar abre o grafico grande */
+function expand(){document.querySelectorAll('.k43mini .mkpp,.k43i,.k43mini .nxich,#ttk .k43i').forEach(function(b){if(b.querySelector(':scope > .x45'))return;var s=document.createElement('span');s.className='x45';s.innerHTML=XI;s.title='Ampliar o gráfico';b.appendChild(s)})}
+function run(){document.querySelectorAll('.k43mini .mkc,.k43mini .mcr').forEach(function(c){var v=pct(c);c.classList.toggle('u45',v>0);c.classList.toggle('d45',v<0)});try{expand()}catch(e){}}
 function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},300)}
 try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}go();
 })();
@@ -11353,6 +11367,7 @@ function put(card,after,k,sym,thin,inside){if(!sym)return;var box=card.querySele
   if(!h){if(box&&!box.__h)box.remove();return}
   if(!box){box=document.createElement('div');box.className='fx45'+(thin?' thin':'');if(inside)card.appendChild(box);else if(after&&after.parentNode)after.insertAdjacentElement('afterend',box);else card.appendChild(box)}
   else if(!inside&&after&&after.parentNode&&box.previousElementSibling!==after)after.insertAdjacentElement('afterend',box);
+  var cn='fx45'+(thin?' thin':'');if(box.className!==cn){box.className=cn;box.__h=''}
   if(box.__h!==h){box.__h=h;box.innerHTML=h}}
 function run(){
   /* Posicoes, cartao Completo */
@@ -11363,7 +11378,7 @@ function run(){
   var mk=document.querySelectorAll('section.on .mkc,section.on .mcr,section.on .g43c,section.on .k43i,section.on .nxic');
   mk.forEach(function(card){var thin=!!card.closest('.k43mini')||card.classList.contains('k43i'),k='',sym='',after=null,inside=false;
     if(card.classList.contains('mkc')){var t=card.querySelector('.ptk');k='A';sym=t?t.textContent.trim():'';after=card.querySelector('.mgr')||card.querySelector('.cph')}
-    else if(card.classList.contains('mcr')){k='C';sym=card.dataset.mk||'';after=card.querySelector('.mgr,.chx')||card.querySelector('.mkv')}
+    else if(card.classList.contains('mcr')){k='C';sym=card.dataset.mk||'';after=card.querySelector('[data-mkhl]')||card.querySelector('.mkpc')||card.querySelector('.mkpp')||card.querySelector('.mkv')}
     else if(card.classList.contains('g43c')){var o=card.querySelector('.g43o[data-asset]');k='X';sym=o?o.getAttribute('data-asset').slice(2):'';after=card.querySelector('.chx')||card.querySelector('.g43p')}
     else if(card.classList.contains('k43i')){k='X';sym=(card.getAttribute('data-asset')||'').slice(2);inside=true;thin=true}
     else if(card.classList.contains('nxic')){var n=card.querySelector('[data-ixk]');k='I';sym=n?n.dataset.ixk:'';after=n}
