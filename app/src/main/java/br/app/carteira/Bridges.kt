@@ -12,6 +12,14 @@ import android.print.PrintAttributes
 import android.print.PrintManager
 import org.json.JSONObject
 
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.Executors
+
+/**
+ * Consulta de cotacoes feita pelo aplicativo (sem as regras de CORS do navegador).
+ * So aceita enderecos https das fontes gratuitas usadas pela carteira.
+ */
 // 4.4.1 (177): imprimir / salvar em PDF (checklist do Imposto de Renda). O WebView nao faz window.print(),
 // entao o app monta a pagina numa tela invisivel e abre a impressao do Android (tem "Salvar como PDF").
 class PrintBridge(private val act: android.app.Activity) {
@@ -41,14 +49,7 @@ class PrintBridge(private val act: android.app.Activity) {
         return "ok"
     }
 }
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.concurrent.Executors
 
-/**
- * Consulta de cotacoes feita pelo aplicativo (sem as regras de CORS do navegador).
- * So aceita enderecos https das fontes gratuitas usadas pela carteira.
- */
 class HttpBridge(private val web: WebView) {
 
     private val pool = Executors.newFixedThreadPool(2)
