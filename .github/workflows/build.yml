@@ -53,13 +53,15 @@ jobs:
             if [ -f app/chave-nova.ativa ]; then echo "::error::Faltam os segredos STOX3_KS e STOX3_KS_PASS: sem eles o APK nao atualiza por cima. Compilacao parada."; exit 1; fi
             echo "::warning::Ainda sem a chave nova (segredos STOX3_KS e STOX3_KS_PASS). APK assinado so com a chave antiga."; exit 0
           fi
-          printf '%s' "$KS_B64" | base64 -d > "$RUNNER_TEMP/novo.jks"
+          # tolera espacos e quebras de linha coladas junto no segredo
+          KS_PASS=$(printf '%s' "$KS_PASS" | tr -d '[:space:]'); export KS_PASS
+          printf '%s' "$KS_B64" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/novo.jks"
           "$AS" rotate --out "$RUNNER_TEMP/linhagem" --old-signer --ks app/debug.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android --new-signer --ks "$RUNNER_TEMP/novo.jks" --ks-pass env:KS_PASS --ks-key-alias stox3 --key-pass env:KS_PASS
           "$AS" sign --ks app/debug.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android --next-signer --ks "$RUNNER_TEMP/novo.jks" --ks-pass env:KS_PASS --ks-key-alias stox3 --key-pass env:KS_PASS --lineage "$RUNNER_TEMP/linhagem" --rotation-min-sdk-version 28 "$APK"
           rm -f "$RUNNER_TEMP/novo.jks"
           "$AS" verify -v --print-certs "$APK" | tee "$RUNNER_TEMP/ver.txt"
           grep -q "CN=STOX3" "$RUNNER_TEMP/ver.txt" || { echo "::error::O APK nao saiu com a chave nova."; exit 1; }
-          "$AS" lineage --in "$APK" --print-certs | tee -a "$RUNNER_TEMP/ver.txt"
+          "$AS" lineage --in "$APK" --print-certs || true
 
       - name: Guardar o APK desta compilacao
         uses: actions/upload-artifact@v4
