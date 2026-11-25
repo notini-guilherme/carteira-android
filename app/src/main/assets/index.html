@@ -1543,6 +1543,12 @@ body.dk .fx45b i,[data-theme=dark] .fx45b i{border-color:#e9edf3;box-shadow:0 1p
 .rf44h{margin:6px 0 8px;font-size:12.5px}
 .rfmr b small{display:block;font-weight:500;font-size:11px}
 @media(max-width:719px){.ixs.three .ixc{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"n" "p" "d" "s"!important;gap:1px!important}.ixs.three .ixc>*{justify-self:start}.ixs.three .ixsp{justify-self:stretch}}
+/* 4.4.1 (147): no Mercado da Cripto o max/min fica so na linha de baixo (dentro do grafico tampava a linha) */
+#crm .mkpw .mkmx,#crm .mkpw .mkmn,#zml .mkpw .mkmx,#zml .mkpw .mkmn{display:none!important}
+/* 4.4.1 (148): titulo do comparador que recolhe e expande */
+.cmp46b{appearance:none;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px;background:none;border:0;border-bottom:1px solid var(--bd);padding:2px 2px 10px;margin:0 0 10px;color:inherit;font:inherit;font-size:16px;text-align:left;cursor:pointer}
+.cmpw.cmp46x .cmp46b{border-bottom:0;padding-bottom:2px;margin:0}
+.cmp46c{font-size:14px;opacity:.75}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -6128,7 +6134,7 @@ function nxStrip(keys){
       (x?'<b class="ixp">'+esc(nxFmt(k,x.p))+'</b>'+nxChg(x.c)+nxSpark(x,up,k):'<b class="ixp mu">—</b><span class="mu ixw">'+(NX.busy?'buscando…':'sem dados agora')+'</span>')+'</button>'}).join('')+'</div>'}
 function nxPlace(){
   /* Inicio (Acoes e Cripto) e Posicoes (Acoes): logo abaixo do cartao grande de cada tela */
-  try{if(window.S32&&S32.cur&&((S32.cur()==='cr'&&document.getElementById('chmc'))||(S32.cur()==='tt'&&document.getElementById('ttr')))){nxBtcQuick();if(Date.now()-(NXB.ask||0)>6e5){NXB.ask=Date.now();setTimeout(nxBtc,5000)}}}catch(e){}
+  try{if(window.S32&&S32.cur&&((S32.cur()==='cr'&&(document.getElementById('chmc')||document.getElementById('crm2')))||(S32.cur()==='tt'&&document.getElementById('ttr')))){nxBtcQuick();if(Date.now()-(NXB.ask||0)>6e5){NXB.ask=Date.now();setTimeout(nxBtc,5000)}}}catch(e){}
   [['hmc','.hmh',['ibov','usd']],['chmc','.hmh',['btc','usd']],['b','.pch',['ibov','usd']]].forEach(function(a){
     var root=document.getElementById(a[0]);if(!root)return;
     var anc=root.querySelector(a[1]),cur=root.querySelector(':scope > .ixs'),h=nxStrip(a[2]);
@@ -6136,7 +6142,7 @@ function nxPlace(){
     if(cur){if(cur.dataset.sg!==h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)){var t=document.createElement('div');t.innerHTML=h;cur.replaceWith(t.firstChild);var n2=root.querySelector(':scope > .ixs');if(n2)n2.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)}return}
     var t2=document.createElement('div');t2.innerHTML=h;var el=t2.firstChild;el.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0);
     if(anc&&anc.parentNode===root)anc.insertAdjacentElement('afterend',el);else root.insertAdjacentElement('afterbegin',el)})}
-function nxPaint(){try{nxPlace()}catch(e){}try{var t43=document.querySelector('#ttr .ixs.ix43');if(t43&&window.S43E){var sg=(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0);if(t43.dataset.sg46!==sg){S43E.strip('ttr');var n43=document.querySelector('#ttr .ixs.ix43');if(n43)n43.dataset.sg46=sg}}}catch(e){}try{nxMkPaint()}catch(e){}}
+function nxPaint(){try{nxPlace()}catch(e){}try{if(window.S40D&&S40D.dz)S40D.dz()}catch(e){}try{var t43=document.querySelector('#ttr .ixs.ix43');if(t43&&window.S43E){var sg=(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0);if(t43.dataset.sg46!==sg){S43E.strip('ttr');var n43=document.querySelector('#ttr .ixs.ix43');if(n43)n43.dataset.sg46=sg}}}catch(e){}try{nxMkPaint()}catch(e){}}
 
 /* ---------- 5) Mercado: Indices e BDRs ---------- */
 var NXBDR=[['AAPL34','Apple'],['MSFT34','Microsoft'],['AMZO34','Amazon'],['GOGL34','Alphabet (Google) classe A'],['GOGL35','Alphabet (Google) classe C'],['M1TA34','Meta Platforms'],['TSLA34','Tesla'],['NVDC34','NVIDIA'],['NFLX34','Netflix'],
@@ -8634,16 +8640,18 @@ function dzCard(){var x=(typeof NX!=='undefined'&&NX.ix)?NX.ix.usd:null,ut=0;try
     '<div><small class="mu">Comercial</small><b>'+(x&&x.p>0?'R$ '+x.p.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4}):'—')+'</b>'+(x&&x.c!=null?'<span class="'+(x.c>0?'gn':x.c<0?'rd':'mu')+'">'+(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c)+' no dia</span>':'')+'</div>'+
     '<div><small class="mu">USDT na Binance</small><b>'+(ut>0?'R$ '+ut.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4}):'—')+'</b>'+(ut>0&&x&&x.p>0?'<span class="mu">'+(ut>=x.p?'+':'−')+Math.abs((ut/x.p-1)*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% sobre o comercial</span>':'')+'</div></div>'+spk44(x)+'</div>'}
 /* 4.4 (47): grafico do dolar de hoje dentro do quadro da Cripto */
-function spk44(x){try{var P=(x&&x.pts||[]).map(function(q){return +q[1]}).filter(function(v){return v>0});if(P.length<2)return '';var mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),r=(mx-mn)||1,W=320,H=56,up=P[P.length-1]>=(x.pv>0?x.pv:P[0]);
+function spk44(x,dc,lb){if(dc==null)dc=4;try{var P=(x&&x.pts||[]).map(function(q){return +q[1]}).filter(function(v){return v>0});if(P.length<2)return '';var mn=Math.min.apply(null,P),mx=Math.max.apply(null,P),r=(mx-mn)||1,W=320,H=56,up=P[P.length-1]>=(x.pv>0?x.pv:P[0]);
   var pts=P.map(function(v,i){return (4+i*(W-8)/(P.length-1)).toFixed(1)+','+(H-4-(v-mn)/r*(H-10)).toFixed(1)}).join(' ');
-  return '<div class="ixsp44"><svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="none" role="img" aria-label="Gráfico do dólar hoje"><polyline points="'+pts+'" fill="none" stroke="'+(up?'var(--gn)':'var(--rd)')+'" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg><div class="ixsp44l mu"><span>mín R$ '+mn.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})+'</span><span>máx R$ '+mx.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})+'</span></div></div>'}catch(e){return ''}}
+  /* 4.4.1 (146): mesmo desenho no dolar e no bitcoin: linha com area clara embaixo */
+  var c=up?'var(--gn)':'var(--rd)',fo={minimumFractionDigits:dc,maximumFractionDigits:dc};
+  return '<div class="ixsp44"><svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="none" role="img" aria-label="'+(lb||'Gráfico do dólar hoje')+'"><polygon points="4,'+H+' '+pts+' '+(W-4)+','+H+'" fill="'+c+'" fill-opacity=".12" stroke="none"/><polyline points="'+pts+'" fill="none" stroke="'+c+'" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg><div class="ixsp44l mu"><span>mín R$ '+mn.toLocaleString('pt-BR',fo)+'</span><span>máx R$ '+mx.toLocaleString('pt-BR',fo)+'</span></div></div>'}catch(e){return ''}}
 /* 4.4.1 (141): Mercado da Cripto: Bitcoin ao lado do dolar (e nao mais sozinho no grupo "Bitcoin" da lista) */
 function btcCard(){var p=0,c=null,u=0,x=(typeof NX!=='undefined'&&NX.ix)?NX.ix.usd:null,q=0,cost=0;try{p=CRX.price('BTC')}catch(e){}try{var e2=QXT['C:BTC'];if(e2&&e2.c!=null&&isFinite(e2.c))c=+e2.c}catch(e){}
   try{var ut=CRX.price('USDT');u=p>0&&ut>0?p/ut:(p>0&&x&&x.p>0?p/x.p:0)}catch(e){}try{var P=calc(CR.ops).pools.BTC;if(P&&P.qty>1e-9){q=P.qty;cost=P.cost}}catch(e){}
   var f=function(v,d){return v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})},va=q*p;
   return '<div class="pc ixcard" id="crmbtc" role="button" tabindex="0" data-ixo="btc" aria-label="Abrir o Bitcoin"><div class="ixh"><b>Bitcoin</b><span class="mu">toque para ver o gráfico</span></div><div class="ixg">'+
     '<div><small class="mu">Em reais (Binance)</small><b>'+(p>0?'R$ '+f(p,2):'—')+'</b>'+(c!=null?'<span class="'+(c>0?'gn':c<0?'rd':'mu')+'">'+(c>0?'▲ ':c<0?'▼ ':'')+pc(c)+' em 24 h</span>':'')+'</div>'+
-    '<div><small class="mu">Em dólar</small><b>'+(u>0?'US$ '+f(u,0):'—')+'</b>'+(q>0&&p>0?'<span class="mu">você tem '+(+q.toPrecision(8)).toLocaleString('pt-BR',{maximumFractionDigits:8})+' BTC · R$ '+f(va,2)+(cost>0?' <i class="'+(va>=cost?'gn':'rd')+'">'+(va>=cost?'+':'−')+f(Math.abs((va/cost-1)*100),2)+'%</i>':'')+'</span>':'')+'</div></div></div>'}
+    '<div><small class="mu">Em dólar</small><b>'+(u>0?'US$ '+f(u,0):'—')+'</b>'+(q>0&&p>0?'<span class="mu">você tem '+(+q.toPrecision(8)).toLocaleString('pt-BR',{maximumFractionDigits:8})+' BTC · R$ '+f(va,2)+(cost>0?' <i class="'+(va>=cost?'gn':'rd')+'">'+(va>=cost?'+':'−')+f(Math.abs((va/cost-1)*100),2)+'%</i>':'')+'</span>':'')+'</div></div>'+(function(){try{if(typeof NXB!=='undefined'&&NXB.pts&&NXB.pts.length>1)return spk44({pts:NXB.pts,pv:NXB.pts[0][1]},0,'Gráfico do bitcoin nas últimas 24 horas')}catch(e){}return ''})()+'</div>'}
 function dzPut(){var sec=$i('crm');if(!sec||sec.hidden)return;var w=$i('crm2'),h='<div class="crm2" id="crm2">'+dzCard()+btcCard()+'</div>';
   if(w){if(w.__h!==h){w.outerHTML=h;var n0=$i('crm2');if(n0)n0.__h=h}return}
   var od=$i('crmdz');if(od&&!od.closest('#crm2'))od.remove();
@@ -8655,7 +8663,7 @@ function expBtns(){document.querySelectorAll('[data-ixo]').forEach(function(b){i
 (function(){var T=null;try{new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=null;expBtns()},120)}).observe(document.body,{childList:true,subtree:true})}catch(e){}})();
 if(typeof nxMkCard==='function'){var _mc=nxMkCard;nxMkCard=function(k){var h=_mc.apply(this,arguments);return h.replace('<div class="nxpv">','<button type="button" class="chex ixexb" data-ixopen="'+k+'" aria-label="Abrir o gráfico grande" title="Abrir maior"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><div class="nxpv">')}}
 try{if(window.CDL)CDL.reg(function(){if(IX.on)paint()})}catch(e){}
-window.S40D={paint:paint,open:function(k){open(k||'usd')},close:close,isOpen:function(){return IX.on}};
+window.S40D={dz:function(){try{dzPut()}catch(e){}},paint:paint,open:function(k){open(k||'usd')},close:close,isOpen:function(){return IX.on}};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n40d.js: '+(e&&e.message||e))}catch(x){}}
@@ -8897,7 +8905,11 @@ function html(k){var s=st(k),key=k+'|'+s.sel+'|'+s.ix,R=RES[key],ixn=IXL[s.ix],h
   h+='<div class="cmbx"><div class="cmb1"><small>'+(s.sel==='all'?'Sua carteira':/^m:/.test(s.sel)?esc(selN(s)):'O ativo')+'</small><b>'+pc(P)+'</b></div><div class="cmb2"><small>'+ixn+'</small><b>'+(I!=null?pc(I):'—')+'</b></div><div class="cmb3"><small>Diferença</small><b>'+(df!=null?Math.abs(df).toLocaleString('pt-BR',{maximumFractionDigits:2})+' pp '+(df>=0?'acima':'abaixo'):'—')+'</b></div></div>';
   h+=chart(L,ixn)+'<div class="cmlg"><span><i style="background:#2563eb"></i>'+esc(selN(s))+'</span><span><i class="dsh"></i>'+ixn+'</span><span class="mu">'+dm(rg.b)+' a '+dm(rg.e)+'</span></div>';
   return h+cal(k,R,rg)}
-function paint(k){document.querySelectorAll('.cmpw[data-cmpk="'+k+'"]').forEach(function(el){var h=html(k);if(el.__h!==h){el.__h=h;el.innerHTML=h}})}
+/* 4.4.1 (148): comparador (carteira x indice) recolhe e expande pelo titulo; o app lembra */
+var CLS={};try{CLS=JSON.parse(localStorage.getItem('stox3-cmp46')||'{}')||{}}catch(e){}
+function bar(k){var c=!!CLS[k];return '<button type="button" class="cmp46b'+(c?'':' on')+'" data-cmp46="'+k+'" aria-expanded="'+(!c)+'"><b>Comparador: carteira × índice</b><span class="cmp46c" aria-hidden="true">'+(c?'▾':'▴')+'</span></button>'}
+function paint(k){document.querySelectorAll('.cmpw[data-cmpk="'+k+'"]').forEach(function(el){var c=!!CLS[k],h=bar(k)+(c?'':html(k));el.classList.toggle('cmp46x',c);if(el.__h!==h){el.__h=h;el.innerHTML=h}})}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-cmp46]');if(!b)return;e.preventDefault();e.stopPropagation();var k=b.getAttribute('data-cmp46');CLS[k]=!CLS[k];try{localStorage.setItem('stox3-cmp46',JSON.stringify(CLS))}catch(x){}paint(k);if(!CLS[k]){try{compute(k)}catch(x){}}},true);
 function paintAll(){['A','C','T'].forEach(paint)}
 function ensure(k,root,after){if(!root)return;var el=root.querySelector('.cmpw[data-cmpk="'+k+'"]');if(!el){var a=after&&root.querySelector(after);var h='<div class="pc cmpw" data-cmpk="'+k+'"></div>';if(a)a.insertAdjacentHTML('afterend',h);else root.insertAdjacentHTML('beforeend',h);el=root.querySelector('.cmpw[data-cmpk="'+k+'"]')}
   el.__h='';paint(k);if(!env())return;
@@ -11588,7 +11600,8 @@ function run(){
     if(k==='X'&&/-USD$/.test(sym)&&sym!=='USDT-USD'){/* cripto em dolar no Mercado do Total: Yahoo tambem serve */}
     put(card,after,k,sym,thin,inside)})}
 function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},400)}
-try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}
+/* 4.4.1 (147): quando a lista e redesenhada (a cada atualizacao de preco), as faixas voltam na hora, antes de a tela ser pintada: sem piscar */
+var LR=0;try{new MutationObserver(function(){var n=Date.now();if(n-LR>250){LR=n;try{run()}catch(e){}}go()}).observe(document.body,{childList:true,subtree:true})}catch(e){}
 window.addEventListener('scroll',go,{passive:true});document.addEventListener('scroll',go,{passive:true,capture:true});go();
 window.S45C={get:function(k,s){return MEM[k+'|'+s]},run:run};
 })();
@@ -11753,7 +11766,9 @@ function html(c){var A=agenda(c.reg),N=NC[c.key];
 function put(){ctxs().forEach(function(c){var el=c.el,b=el.querySelector('.mv46');
   if(b&&b.getAttribute('data-k')!==c.key){b.remove();b=null}
   if(!b){b=document.createElement('div');b.className='mds mv46';b.setAttribute('data-k',c.key);var bt=el.querySelector('.mdbt'),L=el.querySelectorAll('.mds:not(.mv46)'),last=L.length?L[L.length-1]:null;
-    if(bt&&bt.parentNode)bt.parentNode.insertBefore(b,bt);else if(last&&last.parentNode)last.parentNode.insertBefore(b,last.nextSibling);else el.appendChild(b);
+    /* 4.4.1 (145): vai no fim da pagina; so fica antes dos botoes se eles estiverem no fim (pagina do IBOV/dolar) */
+    var btEnd=bt&&bt.parentNode&&(!last||(bt.compareDocumentPosition(last)&Node.DOCUMENT_POSITION_PRECEDING));
+    if(btEnd)bt.parentNode.insertBefore(b,bt);else if(last&&last.parentNode)last.parentNode.insertBefore(b,last.nextSibling);else el.appendChild(b);
     news(c);if(c.reg!=='us')ibge().then(sched,sched)}
   var h=html(c);if(b.__h!==h){b.__h=h;b.innerHTML=h}})}
 var T=0;function sched(){if(T)return;T=setTimeout(function(){T=0;try{put()}catch(e){}},200)}
