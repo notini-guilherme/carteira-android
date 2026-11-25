@@ -208,6 +208,7 @@ class MainActivity : ComponentActivity() {
         web.addJavascriptInterface(NotifBridge(this), "AndroidNotif")
         web.addJavascriptInterface(BioBridge(this), "AndroidBio")
         web.addJavascriptInterface(ReaderBridge(this), "AndroidWeb")
+        web.addJavascriptInterface(PrintBridge(this), "AndroidPrint")
 
         Notify.ensureChannel(this)
         Notify.schedule(this)

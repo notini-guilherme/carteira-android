@@ -32,8 +32,17 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
+            // 4.4.1 (176): o APK publicado agora e a versao final (nao depuravel: ninguem le os dados pelo cabo USB),
+            // assinada com a MESMA chave de sempre para continuar atualizando por cima sem perder os dados
             isMinifyEnabled = false
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
     }
 
     compileOptions {

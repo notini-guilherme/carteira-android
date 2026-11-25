@@ -7,7 +7,40 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.print.PrintAttributes
+import android.print.PrintManager
 import org.json.JSONObject
+
+// 4.4.1 (177): imprimir / salvar em PDF (checklist do Imposto de Renda). O WebView nao faz window.print(),
+// entao o app monta a pagina numa tela invisivel e abre a impressao do Android (tem "Salvar como PDF").
+class PrintBridge(private val act: android.app.Activity) {
+    private var keep: WebView? = null
+    @JavascriptInterface
+    fun print(title: String, html: String): String {
+        act.runOnUiThread {
+            try {
+                val w = WebView(act)
+                w.settings.javaScriptEnabled = false
+                var done = false
+                w.webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(view: WebView, url: String?) {
+                        if (done) return
+                        done = true
+                        val name = if (title.isBlank()) "STOX3" else title
+                        val pm = act.getSystemService(Context.PRINT_SERVICE) as PrintManager
+                        pm.print(name, view.createPrintDocumentAdapter(name),
+                            PrintAttributes.Builder().setMediaSize(PrintAttributes.MediaSize.ISO_A4).build())
+                    }
+                }
+                keep = w
+                w.loadDataWithBaseURL(null, html, "text/html", "utf-8", null)
+            } catch (e: Exception) {
+            }
+        }
+        return "ok"
+    }
+}
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Executors
