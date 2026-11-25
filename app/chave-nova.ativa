@@ -1,0 +1,2 @@
+A partir de 25/11/2026 o APK do STOX3 e assinado com a chave nova (CN=STOX3, SHA-256 7C:46:B1:99...), com a chave antiga na linhagem.
+Os segredos STOX3_KS e STOX3_KS_PASS do GitHub sao obrigatorios. Nao apague este arquivo.
