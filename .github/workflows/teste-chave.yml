@@ -1,0 +1,34 @@
+name: Teste da troca de chave
+on:
+  push:
+    branches: [teste-chave]
+permissions:
+  contents: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Testar rotate + sign + verify com chave descartavel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KS_PASS: testeTESTE123456
+        run: |
+          SDKM=$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | head -1)
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "build-tools;35.0.0" > /dev/null
+          AS="$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          gh release download ultima -p STOX3.apk -D "$RUNNER_TEMP" -R ${{ github.repository }}
+          APK="$RUNNER_TEMP/STOX3.apk"
+          keytool -genkeypair -keystore "$RUNNER_TEMP/novo.jks" -storetype PKCS12 -alias stox3 -keyalg RSA -keysize 4096 -validity 36500 -dname "CN=STOX3, O=STOX3, C=BR" -storepass "$KS_PASS" -keypass "$KS_PASS"
+          "$AS" rotate --out "$RUNNER_TEMP/linhagem" --old-signer --ks app/debug.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android --new-signer --ks "$RUNNER_TEMP/novo.jks" --ks-pass env:KS_PASS --ks-key-alias stox3 --key-pass env:KS_PASS
+          "$AS" sign --ks app/debug.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android --next-signer --ks "$RUNNER_TEMP/novo.jks" --ks-pass env:KS_PASS --ks-key-alias stox3 --key-pass env:KS_PASS --lineage "$RUNNER_TEMP/linhagem" --rotation-min-sdk-version 28 "$APK"
+          "$AS" verify -v --print-certs "$APK" | tee "$RUNNER_TEMP/ver.txt"
+          grep -q "CN=STOX3" "$RUNNER_TEMP/ver.txt" && echo "TEM_CHAVE_NOVA"
+          "$AS" lineage --in "$APK" --print-certs -v || true
+          echo "--- assinado so com a antiga (o que um APK falso teria):"
+          "$AS" lineage --in "$RUNNER_TEMP/linhagem" --print-certs -v || true
