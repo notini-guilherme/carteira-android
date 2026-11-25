@@ -1643,6 +1643,8 @@ html.dsk #crm2w .mcg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!i
 #mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.mdpr,#mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.qxp{grid-column:1/-1;margin-top:6px}
 #mk:not(.k43mini) .mkc>.cph>.mkt>.mkn>.mdpr .mdwh{white-space:normal}
 #mk:not(.k43mini) .mkc>.cph>:not(.mkt):not(.wlq){grid-column:1/-1;min-width:0}
+/* 4.4.1 (167): faixas nas paginas dos graficos */
+#xapv .mdchart+.fx45,#apv .mdchart+.fx45,#ixv .mdchart+.fx45{margin-top:12px}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -11705,6 +11707,13 @@ function run(){
   [['#b','A'],['#crp','C'],['#exp','X'],['#dzp','I']].forEach(function(z){var sec=document.querySelector(z[0]);if(!sec||!sec.classList.contains('on'))return;
     sec.querySelectorAll('.nzc.c4').forEach(function(card){if(card.closest('.pvsimp,.k45s'))return;var sym='';if(z[1]==='I')sym='usd';else{var a=card.querySelector('[data-pcs^="'+z[1]+':"],[data-asset^="'+z[1]+':"]');if(a)sym=(a.getAttribute('data-pcs')||a.getAttribute('data-asset')).slice(2)}
       put(card,card.querySelector('.cpg')||card.querySelector('.nzrs'),z[1],sym,false)})});
+  /* 4.4.1 (167): paginas que abrem ao tocar no grafico (bolsas do mundo, ouro, moedas, commodities, acoes dos EUA, cripto, IBOVESPA e dolar):
+     faixa do dia e de 52 semanas logo abaixo do grafico, para avaliar se o preco esta perto da minima ou da maxima */
+  try{['xapv','apv','ixv'].forEach(function(id){var v=document.getElementById(id);if(!v||v.hidden||!v.firstElementChild)return;var ch=v.querySelector('.mdchart');if(!ch)return;var card=ch.closest('.mds')||v,k='',sym='';
+    if(id==='xapv'){var f=v.querySelector('[data-xfav]');k='X';sym=f?f.getAttribute('data-xfav'):''}
+    else if(id==='apv'){if(!window.S40C||!S40C.isOpen())return;var c=S40C.cur();if(!c||c.k!=='C')return;k='C';sym=c.s}
+    else{k='I';sym=/D[óo]lar comercial|Real por d[óo]lar/i.test(v.textContent.slice(0,200))?'usd':'ibov'}
+    if(sym)put(card,ch,k,sym,false)})}catch(e){}
   /* Mercado */
   var mk=document.querySelectorAll('section.on .mkc,section.on .mcr,section.on .g43c,section.on .k43i,section.on .nxic');
   mk.forEach(function(card){var thin=!!card.closest('.k43mini')||card.classList.contains('k43i'),k='',sym='',after=null,inside=false;
