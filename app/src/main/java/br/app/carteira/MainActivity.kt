@@ -19,6 +19,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -88,6 +89,10 @@ class MainActivity : ComponentActivity() {
         setContentView(root)
 
         // botao Voltar: primeiro fecha a pagina da acao, a tela cheia ou o menu Mais; so depois sai
+        // 4.4.1: o JS fecha paginas/menus, volta para a primeira aba e para o Total; so entao pede um
+        // segundo toque para sair. O callback volta a ficar ligado depois de sair (antes ficava desligado
+        // e o proximo Voltar fechava o app direto, sem passar pelo app).
+        var lastBack = 0L
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 web.evaluateJavascript("(window.__stxBack&&window.__stxBack())?'1':'0'") { r ->
@@ -95,8 +100,16 @@ class MainActivity : ComponentActivity() {
                     if (web.canGoBack()) {
                         web.goBack()
                     } else {
-                        isEnabled = false
-                        onBackPressedDispatcher.onBackPressed()
+                        val now = System.currentTimeMillis()
+                        if (now - lastBack < 2500) {
+                            lastBack = 0L
+                            isEnabled = false
+                            onBackPressedDispatcher.onBackPressed()
+                            isEnabled = true
+                        } else {
+                            lastBack = now
+                            Toast.makeText(this@MainActivity, "Toque em Voltar de novo para sair", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
