@@ -1,5 +1,5 @@
 {
- "versao": "2026-11-25b",
+ "versao": "2026-11-25c",
  "conferido": "2026-11-25",
  "nota": "Dicas do STOX3 sobre Imposto de Renda. Leitura do app: confira no programa da Receita e, na dúvida, com um contador.",
  "regras": {
@@ -203,45 +203,185 @@
  ],
  "agenda": [
   [
-   "2026-12-09",
-   "Copom decide a Selic"
+   "2026-12-04",
+   "EUA: relatório de emprego (payroll)",
+   "us"
   ],
   [
    "2026-12-09",
-   "Fed (EUA) decide os juros"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2026-12-09",
+   "Fed (EUA) decide os juros",
+   "us"
+  ],
+  [
+   "2026-12-10",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
+  ],
+  [
+   "2027-01-08",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-01-13",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-01-27",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-02-05",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-02-11",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
+  ],
+  [
+   "2027-03-05",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-03-10",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-03-17",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-04-02",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-04-13",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-04-28",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-05-07",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-05-12",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
+  ],
+  [
+   "2027-06-04",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-06-10",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-06-16",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-07-02",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-07-14",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-08-04",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-08-06",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-08-11",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
+  ],
+  [
+   "2027-09-03",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-09-14",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-09-22",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-10-08",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-10-14",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ],
   [
    "2027-10-27",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-11-05",
+   "EUA: relatório de emprego (payroll)",
+   "us"
+  ],
+  [
+   "2027-11-10",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
+  ],
+  [
+   "2027-12-03",
+   "EUA: relatório de emprego (payroll)",
+   "us"
   ],
   [
    "2027-12-08",
-   "Copom decide a Selic"
+   "Copom decide a Selic",
+   "br"
+  ],
+  [
+   "2027-12-10",
+   "EUA: inflação ao consumidor (CPI)",
+   "us"
   ]
  ],
- "agenda_nota": "Datas do Copom (Banco Central) e do Fed (EUA) mostradas na Agenda do Dólar. Para incluir as do próximo ano, edite esta lista; o app pega sozinho."
+ "agenda_nota": "Datas do Copom (Banco Central), do Fed, do payroll e do CPI dos EUA (calendário do BLS, conferido em 25/11/2026). Terceiro campo: br ou us. As datas do IBGE (IPCA, PIB, desemprego) o app busca sozinho no calendário do IBGE. Para o próximo ano, edite esta lista; o app pega sozinho."
 }
