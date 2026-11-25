@@ -1433,6 +1433,9 @@ body:not(.tt45on) #totop{opacity:0!important;pointer-events:none!important;trans
 #ptr45.run .ptr45i{animation:ptr45s .8s linear infinite}@keyframes ptr45s{to{transform:rotate(360deg)}}
 .fx45:not(.thin){container-type:inline-size}
 @container (max-width:300px){.fx45l{display:grid!important;grid-template-columns:1fr 1fr;row-gap:4px}.fx45l .fx45b{grid-column:1/-1;order:-1;min-width:0}.fx45l>b:last-child{text-align:right}.fx45l>b{font-size:12px}}
+/* 4.4.1: pagina fechada (vazia) nunca fica por cima de outra aberta (tela preta) */
+.mdv[hidden],body.mdo .mdv[hidden]{display:none!important}
+.mdv:empty,body.mdo .mdv:empty{display:none!important}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -11253,7 +11256,7 @@ function paint(){var v=$i('q78v');if(!v)return;var q=($i('q78')||{}).value||'',c
   var h='';if(!q.trim()){h=REC.length?'<h3 class="q78h">Buscas recentes</h3>'+REC.map(function(r){return '<button type="button" class="q78i" data-q78rec="'+E(r)+'"><span class="q78ic" aria-hidden="true">🕘</span><span><b>'+E(r)+'</b></span></button>'}).join(''):'<div class="mu q78e">Digite o nome de um ativo, uma tela ou um assunto. Ex.: PETR4, imposto, dividendos, caixinha.</div>'}
   else{var nd=R.filter(function(x){return x.k!=='dica'}),here=nd.filter(function(x){return x.m===c}),oth=nd.filter(function(x){return x.m!==c});
     h=grp('Neste módulo · '+(MODS[c]||''),here)+grp('Em outros módulos',oth)+grp('Ajuda e dicas',R.filter(function(x){return x.k==='dica'}).slice(0,5));
-    if(/^[a-z0-9.\-=^]{2,12}$/i.test(q.trim()))h+='<h3 class="q78h">Mercado</h3><button type="button" class="q78i" data-q78mk="'+E(q.trim().toUpperCase())+'"><span class="q78ic" aria-hidden="true">🔍</span><span><b>Procurar '+E(q.trim().toUpperCase())+' no Mercado</b><small class="mu">abre o gráfico de qualquer ativo (ações, cripto, EUA, moedas)</small></span></button>';
+    if(/^[a-z0-9.\-=^]{2,12}$/i.test(q.trim()))h+='<h3 class="q78h">'+E(MODS[c]||'Mercado')+'</h3><button type="button" class="q78i" data-q78mk="'+E(q.trim().toUpperCase())+'"><span class="q78ic" aria-hidden="true">🔍</span><span><b>Procurar '+E(q.trim().toUpperCase())+' no Mercado</b><small class="mu">abre o gráfico aqui mesmo, sem sair do módulo '+E(MODS[c]||'')+'</small></span></button>';
     if(!R.length)h='<div class="mu q78e">Nada encontrado para "'+E(q)+'".</div>'+h}
   var box=$i('q78r');if(box)box.innerHTML=h;var c1=$i('q78c1');if(c1){c1.textContent=(MODS[c]||'Este módulo')+' (onde você está)';c1.classList.toggle('on',ONLY)}var c2=$i('q78c2');if(c2)c2.classList.toggle('on',!ONLY)}
 function mark(t,q){var s=E(t),n=N(t),Q=N(q).trim();if(!Q)return s;var p=n.indexOf(Q);if(p<0)return s;return E(t.slice(0,p))+'<mark>'+E(t.slice(p,p+Q.length))+'</mark>'+E(t.slice(p+Q.length))}
@@ -11269,7 +11272,10 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest)retur
   if(t.closest('[data-q78x]')){close();return}
   if(b=t.closest('[data-q78only]')){ONLY=b.dataset.q78only==='1';paint();return}
   if(b=t.closest('[data-q78rec]')){$i('q78').value=b.dataset.q78rec;paint();return}
-  if(b=t.closest('[data-q78mk]')){remember($i('q78').value);close();go('tt:ttk');setTimeout(function(){var i=$i('k43q');if(i){i.value=b.dataset.q78mk;var f=i.closest('form');if(f){if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}))}}},300);return}
+  if(b=t.closest('[data-q78mk]')){remember($i('q78').value);close();var qv=b.dataset.q78mk,o=null;try{o=S43G.find(qv)}catch(x){}
+    /* 4.4.1: abre a pagina do ativo por cima, no modulo em que voce esta (sem trocar de aba) */
+    try{if(o){if(o.k==='I')S40D.open(o.s);else if(o.k==='A'||o.k==='C')S40C.open(o.k,o.s);else S41F.open(o.s);return}}catch(x){}
+    go('tt:ttk');setTimeout(function(){var i=$i('k43q');if(i){i.value=qv;var f=i.closest('form');if(f){if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}))}}},300);return}
   if(b=t.closest('.q78i')){remember($i('q78').value);close();var pg=b.dataset.q78pg,gv=b.dataset.q78go;if(pg){var p=pg.split(':');try{S40C.open(p[0],p.slice(1).join(':'))}catch(x){}return}if(gv)go(gv);return}},true);
 document.addEventListener('input',function(e){if(e.target&&e.target.id==='q78')paint()},true);
 document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='k'||e.key==='K')){e.preventDefault();open();return}if(e.key==='Escape'&&$i('q78v')&&!$i('q78v').hidden){close()}
