@@ -1297,7 +1297,7 @@ h2 .q67{width:24px;height:24px;font-size:14px}
 .ren44b{display:flex;gap:10px;align-items:center;margin:6px 0 4px;flex-wrap:wrap}
 /* 4.4 Renda fixa: Lancar mais facil, Historico, avisos */
 .pk44{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
-.pk44b{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:14px 12px;border-radius:16px;border:1.5px solid var(--bd,rgba(127,127,127,.3));background:var(--cd,#fff);color:inherit;cursor:pointer;min-height:112px}
+.pk44b{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:14px 12px;border-radius:16px;border:1.5px solid var(--bd,rgba(127,127,127,.3));background:var(--sf);color:inherit;cursor:pointer;min-height:112px}
 .pk44b b{font-size:15px}.pk44b small{font-size:12px;line-height:1.3}.pk44i{font-size:22px}
 .pk44b:hover,.pk44b:focus-visible{border-color:var(--ac,#2f6f86)}
 .rf44bk{display:inline-block;margin:0 0 10px}
@@ -1307,7 +1307,7 @@ h2 .q67{width:24px;height:24px;font-size:14px}
 #rfp .irfold[data-rfdel],#rfp [data-rfmx],#rfp .t43d{display:none!important}
 .rfw44{margin:8px 0}
 /* 4.4 (53): checklist completo fica verde */
-.ckl43.ok44{border:1.5px solid var(--gn,#16a34a)!important;background:color-mix(in srgb,var(--gn,#16a34a) 10%,var(--cd,#fff))!important}
+.ckl43.ok44{border:1.5px solid var(--gn,#16a34a)!important;background:color-mix(in srgb,var(--gn,#16a34a) 10%,var(--sf))!important}
 .h2t.ok44{background:var(--gn,#16a34a)!important;color:#fff!important}
 .ok44m{font-weight:800;color:var(--gn,#16a34a);margin-bottom:6px}
 /* 4.4 (57): aba Imposto de Renda */
@@ -1330,14 +1330,14 @@ h2 .q67{width:24px;height:24px;font-size:14px}
 .q78v[hidden]{display:none!important}
 body.q78o{overflow:hidden}
 .q78top{display:flex;gap:8px;align-items:center;position:sticky;top:0;background:var(--bg,#eef0f4);padding-bottom:8px;z-index:1}
-.q78sb{flex:1;display:flex;align-items:center;gap:8px;border:1.5px solid var(--ac,#3b5bdb);border-radius:14px;padding:4px 12px;background:var(--cd,#fff)}
+.q78sb{flex:1;display:flex;align-items:center;gap:8px;border:1.5px solid var(--ac,#3b5bdb);border-radius:14px;padding:4px 12px;background:var(--sf)}
 .q78sb input{flex:1;border:0!important;outline:0;background:transparent!important;font-size:16px;padding:8px 0!important;min-width:0;color:inherit}
 .q78x{border:0;background:transparent;color:inherit;font-size:20px;width:40px;height:40px;cursor:pointer}
 .q78ch{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 6px}
 .q78ch .ch{border:1.5px solid var(--bd,rgba(127,127,127,.3));border-radius:99px;padding:5px 11px;font-size:12.5px;font-weight:700;background:transparent;color:inherit;cursor:pointer}
 .q78ch .ch.on{background:var(--ac,#3b5bdb);border-color:var(--ac,#3b5bdb);color:#fff}
 .q78h{font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--mu,#8a94a6);margin:14px 2px 6px}
-.q78i{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:var(--cd,#fff);border:1px solid var(--bd,rgba(127,127,127,.25));border-radius:14px;padding:10px 12px;margin-bottom:7px;color:inherit;font:inherit;cursor:pointer}
+.q78i{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:var(--sf);border:1px solid var(--bd,rgba(127,127,127,.25));border-radius:14px;padding:10px 12px;margin-bottom:7px;color:inherit;font:inherit;cursor:pointer}
 .q78i>span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}.q78i small{font-size:12px}
 .q78ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px;flex:0 0 auto;background:rgba(127,127,127,.12)}
 .q78i mark{background:none;color:var(--ac,#3b5bdb);font-weight:900}
@@ -1351,6 +1351,88 @@ body.q78o{overflow:hidden}
 .pch .pchu{font-size:15px;font-weight:800;opacity:.9;margin:-2px 0 6px}
 .s3bd.d{background:#2563eb;color:#fff}
 @media (min-width:900px){.q78v{inset:56px auto auto 50%;transform:translateX(-50%);width:min(760px,92vw);max-height:82vh;border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.28);border:1px solid var(--bd,rgba(127,127,127,.25))}body.q78o{overflow:auto}}
+/* 4.4.1 (104): linha de periodos nunca corta: quebra em 2 linhas em todos os graficos */
+.pcgr.one{flex-wrap:wrap!important;overflow:visible!important;row-gap:6px!important}
+.pcgr.one .pcrb{flex:0 0 auto}
+/* 4.4.1 (104): IBOV/dolar: ampliar e aviso quando o periodo nao carrega */
+.ixfsr{display:flex;justify-content:flex-end;margin:-2px 0 4px}
+.ixfsb{width:38px;height:38px;display:grid;place-items:center;border-radius:12px}
+.ixf[hidden]{display:none!important}.ixf{z-index:95!important}
+.ixfh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:17px}
+.ixfail{padding:24px 8px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.ixfailb{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+#ixv .mds{position:relative}#ixv .ixfsr{position:absolute;top:14px;right:14px;margin:0;z-index:2}
+/* 4.4.1 (92): Mercado > Simples da Bolsa e da Cripto igual ao do Total: logo, codigo, preco, % de hoje e mini grafico */
+.k43mini .mkc .mkb,.k43mini .mcr .mkb,.k43mini .mkc .mkn>.mu,.k43mini .mcr .pn,.k43mini .mkc .wlq,.k43mini .mcr .mkst,.k43mini .mcr .mkls,.k43mini .mkc .qxp .mu:not(.dayv),.k43mini .mkc .qxp small,.k43mini .mkc .hv,.k43mini .mcr .mkv .mu:not(b),.k43mini .chx .chh,.k43mini .mcr .mklp{display:none!important}
+.k43mini .mkc,.k43mini .mcr{display:flex!important;flex-direction:column;gap:2px;position:relative;border-left:4px solid var(--bd,rgba(127,127,127,.35))!important;border-radius:14px!important}
+.k43mini .mkc.u45,.k43mini .mcr.u45{border-left-color:var(--gn)!important}.k43mini .mkc.d45,.k43mini .mcr.d45{border-left-color:var(--rd)!important}
+.k43mini .mkc .cph,.k43mini .mkc .mkt{display:flex;align-items:center;gap:7px;min-width:0}
+.k43mini .mkc .mkn{min-width:0;display:flex;flex-direction:column;gap:1px}
+.k43mini .mkc .qxp{display:flex;flex-direction:column;gap:1px;font-size:12.5px;white-space:nowrap}
+.k43mini .mkc .qxp b{font-size:15px!important}
+.k43mini .mcr .mkh{display:flex;align-items:center;gap:7px}
+.k43mini .mcr .mkv{display:flex;flex-direction:column;gap:1px;font-size:12.5px;white-space:nowrap}.k43mini .mcr .mkv b{font-size:15px!important}
+
+.k43mini .mgr,.k43mini .mgr>.chx{background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+.k43mini .mkc .qxp .dayv{font-weight:700}
+.k43mini .mkc.mkhold,.k43mini .mkc[class*=hold]{background:var(--sf)!important}
+/* 4.4.1 (99): botoes das listas ocupam a linha toda (sem espaco vazio), em todos os modulos */
+.k43c,.pkf,.mktabs,#mch,.tkcs,.wf44,.q78ch{display:flex!important;flex-wrap:wrap!important}
+.k43c>button,.pkf>button,.mktabs>button,#mch>button,.tkcs>button,.wf44>.ch,.q78ch>.ch{flex:1 1 auto!important;width:auto!important;min-width:0;display:inline-flex!important;justify-content:center;align-items:center;text-align:center;white-space:nowrap}
+.wf44>.mu{flex:0 0 auto}
+/* 4.4.1 (88/100): faixa do dia e de 52 semanas */
+.fx45{display:flex;flex-direction:column;gap:8px;margin:10px 0 4px;padding:10px 12px;border-radius:14px;background:var(--sf,rgba(127,127,127,.07))}
+.fx45r{display:flex;flex-direction:column;gap:4px}.fx45r>small{font-size:12px}
+.fx45l{display:flex;align-items:center;gap:10px}.fx45l>b{font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fx45b{position:relative;flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,#e5736a,rgba(127,127,127,.35) 50%,#4fbf73);min-width:40px}
+.fx45b i{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;border:3px solid #e9edf3;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+body.dk .fx45b i,[data-theme=dark] .fx45b i{border-color:#e9edf3}
+.fx45.thin{padding:4px 0 0;margin:4px 0 0;background:none;gap:4px}
+.fx45.thin .fx45r{flex-direction:row;align-items:center;gap:6px}.fx45.thin .fx45r>small{font-size:10px;min-width:34px;opacity:.75}
+.fx45.thin .fx45b{height:4px}.fx45.thin .fx45b i{width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-width:2px}
+.k43i .fx45{width:100%}
+.mkc .cph{flex-wrap:wrap}.mkc .cph>.fx45,.mkc .mgr+.fx45{flex:0 0 100%;width:100%;box-sizing:border-box}
+.mkc .cph>.fx45{order:2}
+/* 4.4.1 (103): cartoes Simples das Posicoes todos do mesmo tamanho e com as mesmas linhas, em todos os modulos */
+.sckg{grid-auto-rows:1fr!important;align-items:stretch}
+.sck{display:flex!important;flex-direction:column;min-width:0;overflow:hidden;gap:6px}
+.sck .sckt{min-width:0}.sck .sckt .bch{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sck .nzsp{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:1px}
+.sck .nzsp>b{white-space:nowrap;font-size:18px}.sck .nzsp .dayv{display:block!important;white-space:nowrap;margin:0!important}
+.sck .sckv,.sck .sckv.lg{white-space:nowrap;font-size:20px!important;font-weight:800}.sck .sckv small{display:block;font-size:11.5px!important;font-weight:700}
+.sck .sckr{display:grid!important;grid-template-columns:auto auto;justify-content:start;column-gap:6px;align-items:baseline;white-space:nowrap;font-size:16px}
+.sck .sckr i{grid-column:1/-1;font-size:11.5px;font-style:normal;font-weight:700}
+.sck .sckr b,.sck .sckr small{font-size:inherit!important;white-space:nowrap}
+.sck .sckq{display:flex;gap:4px;white-space:nowrap;overflow:hidden;margin-top:auto;font-size:13px}.sck .sckq span{white-space:nowrap}
+.k45s .sck.up{box-shadow:inset 4px 0 0 var(--gn)}.k45s .sck.dn{box-shadow:inset 4px 0 0 var(--rd)}
+/* 4.4.1 (89): numeros do cartao Completo dentro da moldura */
+.res44 .pcr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-width:0;width:100%}
+.res44 .pcr>span{white-space:nowrap;min-width:0}
+.c4day{min-width:0;overflow:hidden}.c4day b{white-space:nowrap;display:block;max-width:100%}
+.sck>*{min-width:0!important;max-width:100%!important}
+.sck.nzs .nzsp>span.nzl{flex:0 0 auto!important}
+.sck .sckq{flex-wrap:nowrap!important;flex-direction:row!important}
+.sck .sckq span:last-child{overflow:hidden;text-overflow:ellipsis;min-width:0}
+/* 4.4.1 (102): busca geral legivel no tema escuro */
+.q78v{background:var(--bg)!important;color:var(--tx)}
+.q78top{background:var(--bg)!important;padding-top:2px}
+.q78sb{background:var(--sf)!important;color:var(--tx)}.q78sb input{color:var(--tx)!important}.q78sb input::placeholder{color:var(--mu)}
+.q78i{background:var(--sf)!important;color:var(--tx)!important;border-color:var(--bd)!important}.q78i b{color:var(--tx)}
+.q78x{color:var(--tx)!important}.q78ic{background:color-mix(in srgb,var(--tx) 10%,transparent)!important}
+/* 4.4.1 (89): topo cabe em qualquer celular */
+body.hd45s .vzbt{gap:5px!important}body.hd45s .vzbt>*{width:38px!important;height:38px!important;min-width:38px!important}
+body.hd45s .vzbt>#vzmod{width:auto!important;min-width:46px!important;padding:0 6px!important}
+body.hd45s .vzwm{font-size:20px!important}
+body.hd45xs .vzwm{font-size:0!important}body.hd45xs .vzwm em{font-size:0!important}body.hd45xs .vzbr{min-width:40px}
+/* botao de voltar ao topo nao tampa os textos de baixo dos graficos */
+#totop{transition:opacity .35s,transform .35s}
+body:not(.tt45on) #totop{opacity:0!important;pointer-events:none!important;transform:scale(.8)}
+/* 4.4.1 (86): puxar para atualizar */
+#ptr45{position:fixed;left:50%;top:64px;z-index:9000;transform:translate(-50%,-10px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--sf);color:var(--tx);border:1px solid var(--bd);box-shadow:0 6px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700;transition:opacity .2s}
+#ptr45 .ptr45i{font-size:18px;display:inline-block;color:var(--ac)}#ptr45.go .ptr45i{color:var(--gn)}
+#ptr45.run .ptr45i{animation:ptr45s .8s linear infinite}@keyframes ptr45s{to{transform:rotate(360deg)}}
+.fx45:not(.thin){container-type:inline-size}
+@container (max-width:300px){.fx45l{display:grid!important;grid-template-columns:1fr 1fr;row-gap:4px}.fx45l .fx45b{grid-column:1/-1;order:-1;min-width:0}.fx45l>b:last-child{text-align:right}.fx45l>b{font-size:12px}}
 </style>
 <script>
 /* Programa para computador e app Android: backup em arquivo. A leitura de notas (Gemini ou Anthropic) e as chaves ficam no próprio app (ai.js) */
@@ -4136,7 +4218,11 @@ function chBuild(o){
 function chShow(box,d,x,y,p,l){var sv=box.querySelector('svg'),g=box.querySelector('.chg'),c=box.querySelector('.chd'),t=box.querySelector('.cht'),ch=d.base>0?p/d.base-1:0,rc=sv.getBoundingClientRect(),px=rc.width?x/d.W*rc.width:0,tw;
   g.setAttribute('x1',x);g.setAttribute('x2',x);c.setAttribute('cx',x);c.setAttribute('cy',y);g.style.display='';c.style.display='';
   t.innerHTML='<b>'+(d.fm||brl)(p)+'</b><span>'+esc(l)+'</span><span class="'+cls(ch)+'">'+pcSg(ch)+pct(Math.abs(ch))+' vs '+d.baseLb+'</span>';t.style.display='';
-  tw=t.offsetWidth||0;t.style.left=Math.max(0,Math.min(Math.max(0,rc.width-tw),px-tw/2))+'px';return true}
+  /* 4.4.1 (90): o quadrinho acompanha o dedo e fica do lado oposto ao ponto (esquerda/direita e em cima/embaixo), sem tampar a linha */
+  tw=t.offsetWidth||0;var th=t.offsetHeight||0,br=box.getBoundingClientRect(),ox=rc.left-br.left,oy=rc.top-br.top,vh=(sv.viewBox&&sv.viewBox.baseVal&&sv.viewBox.baseVal.height)||d.H||rc.height,py=vh?y/vh*rc.height:0,gap=14,lx;
+  if(rc.width<tw*1.6)lx=Math.max(0,Math.min(rc.width-tw,px-tw/2));else lx=px>rc.width/2?px-tw-gap:px+gap;lx=Math.max(0,Math.min(Math.max(0,rc.width-tw),lx));
+  var ty=py<rc.height/2?Math.max(0,rc.height-th-2):2;if(rc.width<tw*1.6&&Math.abs(ty+th/2-py)<th)ty=py<rc.height/2?Math.max(0,rc.height-th-2):2;
+  t.style.left=(ox+lx)+'px';t.style.top=(oy+ty)+'px';return true}
 /* valor de um ponto (mouse em cima ou toque) */
 function chAt(box,j){var x=box.closest('.chx'),d=x&&chRg()[x.dataset.chid];if(!d||!(j>=0&&j<d.P.length))return false;var p=d.P[j];return chShow(box,d,d.xs[j],d.ys[j],p.p,chTag(p,d.r,j))}
 function chHide(box){var g=box.querySelector('.chg'),c=box.querySelector('.chd'),t=box.querySelector('.cht');if(g)g.style.display='none';if(c)c.style.display='none';if(t)t.style.display='none'}
@@ -5826,8 +5912,8 @@ document.addEventListener('click',function(e){var b=e.target&&e.target.closest?e
 var _nxPct=pct;pct=function(n){return (typeof vzOn==='function'&&vzOn())?'***%':_nxPct(n)};
 
 /* ---------- 4) indices: IBOV e dolar (Yahoo, sem chave) ---------- */
-var NXSYM={ibov:'^BVSP',usd:'BRL=X'},NXNM={ibov:'IBOVESPA',usd:'DÓLAR'};
-function nxFmt(k,v){return k==='usd'?'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4}):Math.round(v).toLocaleString('pt-BR')}
+var NXSYM={ibov:'^BVSP',usd:'BRL=X'},NXNM={ibov:'IBOVESPA',usd:'DÓLAR',btc:'BITCOIN'};
+function nxFmt(k,v){if(k==='btc')return 'R$ '+Math.round(v).toLocaleString('pt-BR');return k==='usd'?'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4}):Math.round(v).toLocaleString('pt-BR')}
 function nxFmtF(k){return function(v){return nxFmt(k,v)}}
 function nxThin(a,n){if(a.length<=n)return a;var o=[],i,st=(a.length-1)/(n-1);for(i=0;i<n;i++)o.push(a[Math.round(i*st)]);return o}
 async function nxYahoo(sym,range,interval){
@@ -5847,6 +5933,7 @@ function nxFromLt(sym,res,p,pv){
   NX.ix[k]={p:p,pv:pv>0?pv:0,c:pv>0?(p/pv-1)*100:null,t:Date.now(),qt:Math.max(mt,pts[pts.length-1][0]),pts:nxThin(pts,80)};nxSave();try{nxPaint()}catch(e){}}
 /* v3.1: so entram no grafico os pontos de horario em que o ativo cota: IBOV da abertura (10:00) ate o fim do call de fechamento; dolar a partir das 09:00 */
 function nxWin(k,pts){
+  if(k==='btc')return pts||[];
   if(!pts||pts.length<3)return pts||[];
   var last=pts[pts.length-1][0],D=qhD(new Date(last)),from,to,cm;
   if(k==='ibov'){cm=mhClose(D);from=qiAt(D,9,50);to=qiAt(D,Math.floor(cm/60),cm%60)+6*6e4}
@@ -5902,20 +5989,29 @@ function nxSpark(x,up,k){
   for(i=0;i<n;i++)pp.push((2+i/(n-1)*96).toFixed(1)+','+(25-((P[i]-mn)/sp)*21).toFixed(1));
   return '<svg class="ixsp" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true" style="overflow:hidden;color:var(--'+(up?'gn':'rd')+')"><polyline points="'+pp.join(' ')+'" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>'}
 function nxChg(c){if(typeof c!=='number'||!isFinite(c))return '';return '<i class="ixd '+(c>0?'up':c<0?'dn':'ne')+'">'+(c>0?'▲':c<0?'▼':'■')+' '+Math.abs(c).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%</i>'}
+/* 4.4.1 (91): no Inicio da Cripto, o Bitcoin (em reais, Binance, 24 h) a esquerda e o dolar a direita, como IBOV e dolar na Bolsa */
+var NXB={};
+/* preco e variacao de 24 h vem do que a Cripto ja buscou (sem consulta nova); o mini grafico so e buscado com o app parado, no Inicio da Cripto */
+function nxBtcQuick(){var p=0,c=null;try{p=CRX.price('BTC')}catch(e){}try{var q=QXT['C:BTC'];if(q&&q.c!=null&&isFinite(q.c))c=+q.c}catch(e){}if(p>0){NXB.p=p;if(c!=null)NXB.c=c;NXB.t=NXB.t||Date.now()}}
+function nxIdle(){try{if(typeof QXRUN!=='undefined'&&QXRUN)return false;if(typeof QXMK!=='undefined'&&QXMK&&QXMK.busy)return false;if(NX&&NX.busy)return false}catch(e){}return true}
+async function nxBtc(){try{var el=document.getElementById('chm');if(!el||!el.classList.contains('on')||!nxIdle()||!window.CDL||!CDL.fetch)return;var d=await CDL.fetch('C','BTC',1);if(!d||d.length<2)return;var pts=d.map(function(a){return [a.t,a.c]}),pv=d[0].o||d[0].c;
+  nxBtcQuick();if(!(NXB.p>0))NXB.p=pts[pts.length-1][1];if(NXB.c==null&&pv>0)NXB.c=(NXB.p/pv-1)*100;NXB.pts=pts;NXB.t=Date.now();try{nxPlace()}catch(e){}}catch(e){}}
+window.addEventListener('click',function(e){var b=e.target&&e.target.closest?e.target.closest('[data-ixo="btc"]'):null;if(!b)return;e.preventDefault();e.stopPropagation();try{S40C.open('C','BTC')}catch(x){}},true);
 function nxStrip(keys){
   if(!qhEnv())return '';
   return '<div class="ixs'+(keys.length<2?' one':'')+'" role="group" aria-label="IBOVESPA e dólar">'+keys.map(function(k){
-    var x=NX.ix[k],up=x&&x.c!=null?x.c>=0:true;
-    return '<button type="button" class="ixc'+(x&&x.c!=null?(x.c>0?' up':x.c<0?' dn':''):'')+'" data-ixo="'+k+'" aria-label="'+NXNM[k]+': abrir o gráfico no Mercado" title="Ver o gráfico no Mercado"><span class="ixn">'+NXNM[k]+(k==='usd'&&x&&x.qt>0?'<small class="ixt" title="Hora da cotação (Yahoo Finance; pode atrasar alguns minutos)"> · '+nyHm(x.qt)+'</small>':'')+'</span>'+
+    var x=k==='btc'?(NXB.p>0?NXB:null):NX.ix[k],up=x&&x.c!=null?x.c>=0:true;
+    return '<button type="button" class="ixc'+(x&&x.c!=null?(x.c>0?' up':x.c<0?' dn':''):'')+'" data-ixo="'+k+'" aria-label="'+NXNM[k]+': abrir o gráfico" title="Ver o gráfico"><span class="ixn">'+NXNM[k]+(k==='btc'?'<small class="ixt" title="Preço em reais na Binance (BTCBRL); a variação é das últimas 24 horas"> · Binance 24 h</small>':'')+(k==='usd'&&x&&x.qt>0?'<small class="ixt" title="Hora da cotação (Yahoo Finance; pode atrasar alguns minutos)"> · '+nyHm(x.qt)+'</small>':'')+'</span>'+
       (x?'<b class="ixp">'+esc(nxFmt(k,x.p))+'</b>'+nxChg(x.c)+nxSpark(x,up,k):'<b class="ixp mu">—</b><span class="mu ixw">'+(NX.busy?'buscando…':'sem dados agora')+'</span>')+'</button>'}).join('')+'</div>'}
 function nxPlace(){
   /* Inicio (Acoes e Cripto) e Posicoes (Acoes): logo abaixo do cartao grande de cada tela */
-  [['hmc','.hmh',['ibov','usd']],['chmc','.hmh',['usd']],['b','.pch',['ibov','usd']]].forEach(function(a){
+  try{if(window.S32&&S32.cur&&S32.cur()==='cr'&&document.getElementById('chmc')){nxBtcQuick();if(Date.now()-(NXB.ask||0)>6e5){NXB.ask=Date.now();setTimeout(nxBtc,5000)}}}catch(e){}
+  [['hmc','.hmh',['ibov','usd']],['chmc','.hmh',['btc','usd']],['b','.pch',['ibov','usd']]].forEach(function(a){
     var root=document.getElementById(a[0]);if(!root)return;
     var anc=root.querySelector(a[1]),cur=root.querySelector(':scope > .ixs'),h=nxStrip(a[2]);
     if(!h){if(cur)cur.remove();return}
-    if(cur){if(cur.dataset.sg!==h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)){var t=document.createElement('div');t.innerHTML=h;cur.replaceWith(t.firstChild);var n2=root.querySelector(':scope > .ixs');if(n2)n2.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)}return}
-    var t2=document.createElement('div');t2.innerHTML=h;var el=t2.firstChild;el.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0);
+    if(cur){if(cur.dataset.sg!==h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)){var t=document.createElement('div');t.innerHTML=h;cur.replaceWith(t.firstChild);var n2=root.querySelector(':scope > .ixs');if(n2)n2.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0)}return}
+    var t2=document.createElement('div');t2.innerHTML=h;var el=t2.firstChild;el.dataset.sg=h.length+'|'+(NX.ix.ibov?NX.ix.ibov.t:0)+'|'+(NX.ix.usd?NX.ix.usd.t:0)+'|'+(NXB.p||0)+'|'+(NXB.c||0)+'|'+(NXB.pts?NXB.pts.length:0);
     if(anc&&anc.parentNode===root)anc.insertAdjacentElement('afterend',el);else root.insertAdjacentElement('afterbegin',el)})}
 function nxPaint(){try{nxPlace()}catch(e){}try{nxMkPaint()}catch(e){}}
 
@@ -6943,7 +7039,7 @@ function btnSync(){var b=$s('#vzmod');if(!b)return;var m=modOf(cur());
 function menuHtml(){var T=totals(),c=cur(),h='<div class="s3mh">Para onde você quer ir?</div><div class="s3ml" role="list">';
   MODS.forEach(function(m){if(!on(m.id))return;var x=T[m.id],has=x&&x.V>0;
     h+='<button type="button" role="listitem" class="s3mi'+(m.id===c?' on':'')+'" data-s3mod="'+m.id+'" style="--mc:'+m.c+'"><span class="s3ic">'+svg(m.id)+'</span><span class="s3tx"><b>'+esc(m.n)+'</b><small>'+esc(m.s)+'</small></span>'+
-     (has?'<span class="s3vl"><b>'+brl(x.V)+'</b>'+(x.dayPct!=null&&isFinite(x.dayPct)?'<i class="'+tn(x.dd)+'">'+arrow(x.dd)+pc1(Math.abs(x.dayPct))+'</i>':'')+'</span>':'<span class="s3vl mu">'+(m.id==='rf'?'calculadora':m.id==='tt'?'':'sem lançamentos')+'</span>')+'</button>'});
+     (has?'<span class="s3vl"><b>'+brl(x.V)+'</b>'+(x.dayPct!=null&&isFinite(x.dayPct)?'<i class="'+tn(x.dd)+'">'+arrow(x.dd)+(x.dd!=null&&isFinite(x.dd)&&Math.abs(x.dd)>=0.005?(x.dd<0?'−':'+')+brl(Math.abs(x.dd))+' · ':'')+pc1(Math.abs(x.dayPct))+'</i>':'')+'</span>':'<span class="s3vl mu">'+(m.id==='rf'?'calculadora':m.id==='tt'?'':'sem lançamentos')+'</span>')+'</button>'});
   return h+'</div><div class="s3mf mu">Cada módulo tem as suas abas. O Total junta tudo e mostra os gráficos.</div>'}
 function menuOpen(){var m=$s('#s3m');if(!m)return;var run=typeof vzScope==='function'?vzScope(menuHtml):menuHtml;$s('.s3mp',m).innerHTML=run();m.hidden=false;document.body.classList.add('s3mo');
   var b=$s('.s3mi.on',m)||$s('.s3mi',m);if(b)b.focus();var v=$s('#vzmod');if(v)v.setAttribute('aria-expanded','true')}
@@ -7063,7 +7159,7 @@ function clsCard(c,T){
   return '<button type="button" class="s3k" data-s3go="'+c.id+'" style="--mc:'+c.c+'" aria-label="Abrir '+esc(c.n)+'"><span class="s3kh"><i></i>'+esc(c.n)+'<em>'+(T.V>0&&c.V>0?pm(c.p)+' do total':'')+'</em></span>'+
     '<b class="s3kv">'+brl(c.V)+'</b>'+
     (has?'<small class="'+U.tn(rs)+'">'+U.arrow(rs)+U.sg(rs)+brl(Math.abs(rs))+(c.resPct!==null?' · '+U.sg(rs)+pm(Math.abs(c.resPct)):'')+' <span class="mu">resultado</span></small>':'<small class="mu">sem lançamentos</small>')+
-    '<small class="'+(c.dayPct!==null?U.tn(c.dd):'mu')+'">'+(c.dayPct!==null?U.arrow(c.dd)+U.pc1(Math.abs(c.dayPct))+' '+(c.id==='cr'?'em 24 h':c.id==='dz'?'no dia':(c.lb||'hoje')):(has?'sem variação do dia':''))+'</small></button>'}
+    '<small class="'+(c.dayPct!==null?U.tn(c.dd):'mu')+'">'+(c.dayPct!==null?U.arrow(c.dd)+(c.dd!=null&&isFinite(c.dd)&&Math.abs(c.dd)>=0.005?U.sg(c.dd)+brl(Math.abs(c.dd))+' · ':'')+U.pc1(Math.abs(c.dayPct))+' '+(c.id==='cr'?'em 24 h':c.id==='dz'?'no dia':(c.lb||'hoje')):(has?'sem variação do dia':''))+'</small></button>'}
 /* seus ativos agora: preco de mercado (nao o valor da carteira) */
 /* 4.1: minima e maxima do dia de varias fontes (numeros do dia, cotacao da brapi, grafico do dia guardado) */
 var HLK='stox3-hl-v1',HLS={};try{HLS=JSON.parse(localStorage.getItem(HLK)||'{}')||{}}catch(e){HLS={}}
@@ -8357,22 +8453,22 @@ window.S40C={open:open,close:close,isOpen:function(){return AP.on},paint:paint};
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n40c.js: '+(e&&e.message||e))}catch(x){}}
 try{if(!window.__S32SAFE){/* ===================== v4.0 (d): pagina do IBOV e do dolar por cima da tela (de qualquer modulo), botao de expandir no Mercado e dolar no Mercado da Cripto ===================== */
 (function(){
-var $i=function(id){return document.getElementById(id)},IX={k:'',on:false,r:1},Y={},YB={};
+var $i=function(id){return document.getElementById(id)},IX={k:'',on:false,r:1},Y={},YB={},YF={};
 var PRS=[[1,'Hoje'],[5,'5 dias'],[30,'1 mês'],[90,'3 meses'],[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos']];var LNG={1001:['ytd','1d'],365:['1y','1d'],1825:['5y','1wk']}; /* 4.4 */
 try{var r0=+localStorage.getItem('stox3-ixpr');if(PRS.some(function(a){return a[0]===r0}))IX.r=r0}catch(e){}
 function nm(k){return k==='usd'?'Dólar comercial':'IBOVESPA'}
 function fm(k){return function(v){return typeof nxFmt==='function'?nxFmt(k,v):String(v)}}
 function pc(v){return (v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
 async function yLoad(k,r){r=LNG[r]?r:365;var kk=k+'|'+r,e=Y[kk];if(e&&Date.now()-e.t<6*36e5)return;if(YB[kk]&&Date.now()-YB[kk]<3e5)return;YB[kk]=Date.now();
-  try{var q=await nxYahoo(NXSYM[k],LNG[r][0],LNG[r][1]);if(q&&q.pts&&q.pts.length>=2)Y[kk]={t:Date.now(),pts:q.pts}}catch(e){}}
-function series(k,r){try{if(LNG[r]){var e=Y[k+'|'+r];if(!e)return null;return {pts:e.pts.map(function(a){var d=new Date(a[0]);return {p:a[1],l:('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+String(d.getFullYear()).slice(2),ax:(typeof S32!=='undefined'?S32.u.MES[d.getMonth()]:'')}}),ref:0}}
+  try{var q=await nxYahoo(NXSYM[k],LNG[r][0],LNG[r][1]);if(q&&q.pts&&q.pts.length>=2){Y[kk]={t:Date.now(),pts:q.pts};delete YF[kk]}else YF[kk]=Date.now()}catch(e){YF[kk]=Date.now()}}
+function series(k,r){try{if(LNG[r]){var e=Y[k+'|'+r];if(!e)return null;var P0=e.pts;if(r===1001){var j0=new Date(new Date().getFullYear(),0,1).getTime(),P1=P0.filter(function(a){return a[0]>=j0});if(P1.length>=2)P0=P1}return {pts:P0.map(function(a){var d=new Date(a[0]);return {p:a[1],l:('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+String(d.getFullYear()).slice(2),ax:(typeof S32!=='undefined'?S32.u.MES[d.getMonth()]:'')}}),ref:0}}
   return nxSeries(k,r)}catch(e){return null}}
 function html(){var k=IX.k,x=(typeof NX!=='undefined'&&NX.ix)?NX.ix[k]:null,s=series(k,IX.r),F=fm(k),h='';
   h+='<div class="mdb"><button type="button" class="mdx mdback" data-ixclose aria-label="Voltar"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button><div class="mdt"><div class="mdn"><b>'+nm(k)+'</b><span class="mu">'+(k==='usd'?'Real por dólar · cerca de 15 min de atraso':'Índice da Bolsa (B3) · cerca de 15 min de atraso')+'</span></div></div>'+(function(){var y=k==='usd'?'BRL=X':'^BVSP',f=false;try{f=window.S42B&&S42B.isFav(y)}catch(e){}return window.S42B?'<button type="button" class="g43f'+(f?' on':'')+'" data-xfav="'+y+'" aria-pressed="'+f+'" aria-label="Favoritar" title="Favoritar">'+(f?'★':'☆')+'</button>':''})()+'</div><div class="mdc">';
   h+='<div class="mds appx"><div class="appv"><small class="mu">Agora</small><b>'+(x&&x.p>0?F(x.p):'—')+'</b></div><div class="appd '+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'"><small class="mu">No dia</small><b>'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c):'—')+'</b></div></div>';
   if(k==='usd'){var ut=0;try{ut=CRX.price('USDT')}catch(e){}if(ut>0)h+='<div class="mds"><div class="mu">USDT em reais na Binance (o “dólar da cripto”): <b>R$ '+ut.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})+'</b>'+(x&&x.p>0?' · '+(ut>=x.p?'+':'−')+Math.abs((ut/x.p-1)*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% sobre o comercial':'')+'</div></div>'}
   h+='<div class="mds"><div class="pcgr one" role="group" aria-label="Período do gráfico">'+PRS.map(function(a){return '<button type="button" class="pcrb'+(IX.r===a[0]?' on':'')+'" data-ixpr="'+a[0]+'" aria-pressed="'+(IX.r===a[0])+'">'+a[1]+'</button>'}).join('')+'</div><div class="mdchart">';
-  h+=s&&s.pts&&s.pts.length>=2&&typeof chBuild==='function'?chBuild({id:'ix:'+k,s:s,k:'A',r:IX.r===1?1:30,sz:'big',fmt:F}):'<div class="mu" style="padding:30px 0;text-align:center">'+(typeof qhEnv==='function'&&!qhEnv()?'O gráfico aparece no aplicativo (Windows ou Android).':'carregando o gráfico…')+'</div>';
+  h+=s&&s.pts&&s.pts.length>=2&&typeof chBuild==='function'?'<div class="ixfsr"><button type="button" class="chex ixfsb" data-ixfs="1" aria-label="Ampliar o gráfico (tela cheia)" title="Ampliar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>'+chBuild({id:'ix:'+k,s:s,k:'A',r:IX.r,sz:'big',fmt:F}):(LNG[IX.r]&&YF[k+'|'+IX.r]&&!(typeof qhEnv==='function'&&!qhEnv())?'<div class="ixfail" role="status"><div class="mu">Não consegui buscar o gráfico de '+(PRS.filter(function(a){return a[0]===IX.r})[0]||[0,''])[1].toLowerCase()+' agora.</div><div class="ixfailb"><button type="button" class="sb2" data-ixretry="1">Tentar de novo</button><button type="button" class="sb2 b" data-ixpr="1">Ver o de hoje</button></div></div>':'<div class="mu" style="padding:30px 0;text-align:center">'+(typeof qhEnv==='function'&&!qhEnv()?'O gráfico aparece no aplicativo (Windows ou Android).':'carregando o gráfico…')+'</div>');
   h+='</div></div><div class="mdbt apbt">'+(k==='usd'?'<button type="button" class="sb2 b" data-ixgo="dz">Abrir o módulo Dólar</button>':'<button type="button" class="sb2" data-ixgo="rv">Ver o Mercado da Bolsa</button>')+'</div></div>';
   return h}
 function wrap(){var el=$i('ixv');if(!el){el=document.createElement('div');el.id='ixv';el.className='mdv';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');document.body.appendChild(el)}return el}
@@ -8380,19 +8476,28 @@ function paint(){if(!IX.on)return;var el=wrap(),sc=el.scrollTop;el.innerHTML=htm
 function load(){var k=IX.k,L=[];try{if(typeof nxFetch==='function')L.push(nxFetch(false))}catch(e){}
   if(LNG[IX.r])L.push(yLoad(k,IX.r));else if(IX.r>1)try{L.push(nxLoadS(k,IX.r===90?30:IX.r))}catch(e){}
   L.forEach(function(p){Promise.resolve(p).then(paint,function(){})})}
-function open(k){IX={k:k==='usd'?'usd':'ibov',on:true,r:IX.r};var el=wrap();el.hidden=false;el.scrollTop=0;document.body.classList.add('mdo');paint();load()}
-function close(){if(!IX.on)return;IX.on=false;var el=$i('ixv');if(el){el.innerHTML='';el.hidden=true}if(!(window.MDX&&MDX.isOpen())&&!(window.S40C&&S40C.isOpen()))document.body.classList.remove('mdo')}
+/* 4.4.1 (104): grafico do IBOV/dolar em tela cheia */
+function fsPaint(){var el=$i('ixf');if(!el||el.hidden)return;var k=IX.k,s=series(k,IX.r),F=fm(k);
+  el.innerHTML='<div class="ixfh"><b>'+nm(k)+'</b><button type="button" class="mdx" data-ixfc="1" aria-label="Fechar a tela cheia">✕</button></div><div class="pcgr one" role="group" aria-label="Período do gráfico">'+PRS.map(function(a){return '<button type="button" class="pcrb'+(IX.r===a[0]?' on':'')+'" data-ixfpr="'+a[0]+'" aria-pressed="'+(IX.r===a[0])+'">'+a[1]+'</button>'}).join('')+'</div>'+(s&&s.pts&&s.pts.length>=2&&typeof chBuild==='function'?chBuild({id:'ixf:'+k,s:s,k:'A',r:IX.r,sz:'full',fmt:F}):'<div class="mu" style="padding:40px 0;text-align:center">carregando o gráfico…</div>')}
+function fsOpen(){var el=$i('ixf');if(!el){el=document.createElement('div');el.id='ixf';el.className='mdf ixf';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Gráfico em tela cheia');document.body.appendChild(el)}el.hidden=false;document.body.classList.add('mdfo');fsPaint()}
+function fsClose(){var el=$i('ixf');if(el){el.hidden=true;el.innerHTML=''}document.body.classList.remove('mdfo')}
+function open(k){IX={k:k==='usd'?'usd':'ibov',on:true,r:IX.r};try{var kf=IX.k+'|'+IX.r;if(YF[kf]){delete YF[kf];delete YB[kf]}}catch(e){}var el=wrap();el.hidden=false;el.scrollTop=0;document.body.classList.add('mdo');paint();load()}
+function close(){try{fsClose()}catch(e){}if(!IX.on)return;IX.on=false;var el=$i('ixv');if(el){el.innerHTML='';el.hidden=true}if(!(window.MDX&&MDX.isOpen())&&!(window.S40C&&S40C.isOpen()))document.body.classList.remove('mdo')}
 /* 3 meses usa a serie diaria (90 dias) */
 var _ser=series;series=function(k,r){if(r===90){try{var e=NX.s[k+'|d'];if(!e||!e.pts||e.pts.length<2)return null;return {pts:e.pts.map(function(a){var d=new Date(a[0]),l=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);return {p:a[1],l:l,ax:l}}),ref:0}}catch(x){return null}}return _ser(k,r)};
 document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;
   if(t.closest('#ixv [data-ixclose]')){close();return}
   var p=t.closest('#ixv [data-ixpr]');if(p){IX.r=+p.dataset.ixpr;try{localStorage.setItem('stox3-ixpr',String(IX.r))}catch(x){}paint();load();return}
+  if(t.closest('#ixv [data-ixretry]')){var kk=IX.k+'|'+IX.r;delete YB[kk];delete YF[kk];paint();load();return}
+  if(t.closest('#ixv [data-ixfs]')){fsOpen();return}
+  if(t.closest('#ixf [data-ixfc]')){fsClose();return}
+  var pf=t.closest('#ixf [data-ixfpr]');if(pf){IX.r=+pf.dataset.ixfpr;try{localStorage.setItem('stox3-ixpr',String(IX.r))}catch(x){}paint();fsPaint();Promise.resolve(load()).then(function(){setTimeout(fsPaint,50)});return}
   var g=t.closest('#ixv [data-ixgo]');if(g){close();try{S32.set(g.dataset.ixgo);if(g.dataset.ixgo==='rv')S32.go('rv','mk')}catch(x){}return}
   /* faixa do IBOV/dolar (Inicio, Posicoes, Cripto): abre por cima, sem trocar de aba */
   var b=t.closest('[data-ixo]');if(b&&!t.closest('#ixv')){e.preventDefault();e.stopPropagation();open(b.dataset.ixo);return}
   var x=t.closest('[data-ixopen]');if(x){e.preventDefault();e.stopPropagation();open(x.dataset.ixopen)}},true);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&IX.on)close()});
-var _bk=window.__stxBack;window.__stxBack=function(){if(IX.on){close();return true}return _bk?_bk():false};
+var _bk=window.__stxBack;window.__stxBack=function(){var f0=$i('ixf');if(f0&&!f0.hidden){fsClose();return true}if(IX.on){close();return true}return _bk?_bk():false};
 /* 58: cartao do dolar no Mercado da Cripto (comercial e USDT) */
 function dzCard(){var x=(typeof NX!=='undefined'&&NX.ix)?NX.ix.usd:null,ut=0;try{ut=CRX.price('USDT')}catch(e){}
   return '<div class="pc ixcard" id="crmdz" role="button" tabindex="0" data-ixopen="usd" aria-label="Abrir o dólar"><div class="ixh"><b>Dólar</b><span class="mu">toque para ver o gráfico</span></div><div class="ixg">'+
@@ -9131,11 +9236,13 @@ R.dzs=function(){var o=X(),p=px(),q=num(o.sim.usd)||1000,z=Z(),h='<h2>Quanto cus
 var CUR=[['EURBRL=X','Euro','€'],['GBPBRL=X','Libra','£'],['ARSBRL=X','Peso argentino','$'],['JPYBRL=X','Iene','¥'],['CHFBRL=X','Franco suíço','Fr'],['CADBRL=X','Dólar canadense','C$'],['DX-Y.NYB','DXY (dólar contra 6 moedas)','']];
 async function curLoad(){if(CA.t&&Date.now()-CA.t<10*6e4)return false;CA.t=Date.now();for(var i=0;i<CUR.length;i++){try{var r=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(CUR[i][0])+'?range=1d&interval=30m',15000),m=r&&r.ok&&r.j.chart.result[0].meta;if(m)CA[CUR[i][0]]={p:+m.regularMarketPrice,c:m.chartPreviousClose>0?(m.regularMarketPrice/m.chartPreviousClose-1)*100:null}}catch(e){}}return true}
 var AG=[['2026-12-09','Copom decide a Selic'],['2026-12-09','Fed (EUA) decide os juros'],['2027-01-27','Copom decide a Selic'],['2027-03-17','Copom decide a Selic'],['2027-04-28','Copom decide a Selic'],['2027-06-16','Copom decide a Selic'],['2027-08-04','Copom decide a Selic'],['2027-09-22','Copom decide a Selic'],['2027-10-27','Copom decide a Selic'],['2027-12-08','Copom decide a Selic']];
+/* 4.4.1 (98): a agenda do Copom/Fed vem do arquivo online (ir-dicas.json, campo agenda); a lista acima e so a copia de seguranca */
+function ag45(){try{var d=window.S44H&&S44H.data();if(d&&Array.isArray(d.agenda)&&d.agenda.length)return d.agenda}catch(e){}return AG}
 function payrolls(){var o=[],d=new Date();for(var k=0;k<3;k++){var y=d.getFullYear(),m=d.getMonth()+k,f=new Date(y,m,1);while(f.getDay()!==5)f.setDate(f.getDate()+1);var s=f.getFullYear()+'-'+('0'+(f.getMonth()+1)).slice(-2)+'-'+('0'+f.getDate()).slice(-2);if(s>=td())o.push([s,'Emprego nos EUA (payroll), em geral na 1ª sexta do mês'])}return o}
 R.dzm=function(){var h='<h2>Outras moedas</h2>';
   if(!env())h+=U.card('<div class="mu">As cotações aparecem no aplicativo (Windows ou Android).</div>');
   else h+=U.card('<div class="wml">'+CUR.map(function(c){var x=CA[c[0]];return '<div class="wmr"><div class="wmn"><b>'+esc(c[1])+'</b><small class="mu">'+(c[0]==='DX-Y.NYB'?'índice':'em reais')+'</small></div><div class="wmp"><b>'+(x&&x.p>0?(c[0]==='DX-Y.NYB'?x.p.toFixed(2).replace('.',','):r4(x.p)):'—')+'</b></div><div class="wmc '+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ +':x.c<0?'▼ −':'')+Math.abs(x.c).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%':'—')+'</div></div>'}).join('')+'</div><div class="mu wmnt">O DXY mede o dólar contra euro, iene, libra, dólar canadense, coroa sueca e franco suíço: subindo, o dólar está mais forte no mundo.</div>');
-  var L=AG.filter(function(a){return a[0]>=td()}).concat(payrolls()).sort(function(a,b){return a[0]<b[0]?-1:1}).slice(0,8);
+  var L=ag45().filter(function(a){return a[0]>=td()}).concat(payrolls()).sort(function(a,b){return a[0]<b[0]?-1:1}).slice(0,8);
   h+='<h2>Agenda que mexe com o dólar</h2>'+U.card('<div class="s3ag">'+L.map(function(a){return '<div class="s3ar"><div class="s3ad"><b>'+a[0].slice(8,10)+'</b><span>'+U.MES[+a[0].slice(5,7)-1]+'</span></div><div class="s3ab"><b>'+esc(a[1])+'</b></div></div>'}).join('')+'</div><div class="mu s3nt">Juros mais altos no Brasil costumam segurar o dólar; juros mais altos nos EUA costumam empurrar o dólar para cima. Datas do Copom divulgadas pelo Banco Central.</div>');
   return h};
 R['dzm#after']=function(){if(env())curLoad().then(function(ch){if(ch&&S.cur()==='dz')try{S.paint('dzm')}catch(e){}})};
@@ -9332,7 +9439,7 @@ var EXH={ext:'<b>Compra</b>: você comprou ações ou ETFs nos EUA. <b>Venda</b>
   'ex-f':'Taxas e corretagem em dólar. Entram no custo da compra ou abatem o valor da venda.',
   'ex-x':'Quanto valia 1 dólar em reais no dia da operação. Para o IR vale a PTAX de venda do Banco Central: toque em "Usar a PTAX do dia".'};
 var EXT={COMPRA:['Nova compra','Informe quantidade e preço em dólar, sem as taxas. O custo em reais usa o dólar do dia da compra.'],VENDA:['Nova venda','Informe quantidade e preço da venda em dólar. O lucro em reais usa o dólar do dia da compra e o da venda.'],DIV:['Novo dividendo','Informe o valor bruto em dólar e o imposto que os EUA já reteve.']};
-function hqx(k){return '<button type="button" class="hq hqx" data-hx="'+k+'" aria-expanded="false" aria-label="Ajuda" title="'+esc(EXH[k].replace(/<[^>]+>/g,''))+'">?</button>'}
+function hqx(k){if(!EXH[k])return '';return '<button type="button" class="hq hqx" data-hx="'+k+'" aria-expanded="false" aria-label="Ajuda" title="'+esc(EXH[k].replace(/<[^>]+>/g,''))+'">?</button>'}
 function fld(id,lb,inp){return '<div><div class="lw"><label for="'+id+'">'+lb+'</label>'+hqx(id)+'</div>'+inp+'</div>'}
 R.exn=function(){var o=ld(),br={};o.ops.forEach(function(x){if(x.br)br[x.br]=1});
   return '<h2>Lançar no exterior</h2><div class="mu" style="margin:6px 0 2px">Ações e ETFs comprados direto nos EUA (Avenue, Nomad, Inter Global, XP Internacional...). Dúvidas? Veja a aba Dicas.</div>'+
@@ -10240,7 +10347,18 @@ function hero(d){var res=d.V-d.cost,rp=d.cost>0?res/d.cost:null;
     '<div class="pchg"><div class="pck"><span>Resultado aberto</span><b class="'+cl(res)+'">'+sg(res)+'</b><small class="'+cl(res)+'">'+pct(rp)+'</small></div><div class="pck"><span>Investido</span><b>'+brl(d.cost)+'</b><small>custo das posições</small></div><div class="pck"><span>Resultado realizado</span><b class="'+cl(d.real)+'">'+sg(d.real)+'</b><small>vendas já feitas</small></div></div></div>'}
 function bar(t,v,ex){var B=[['c','Completo'],['s','Simples'],['t','Tabela'],['m','Mapa']];
   return '<div class="pvbar p43b" data-p43="1"><div class="pvseg pv3" role="group" aria-label="Modo de exibição">'+B.map(function(b){var on=v===b[0];return '<button class="pvb'+(on?' on':'')+'" type="button" data-p43v="'+t+'|'+b[0]+'" aria-pressed="'+on+'">'+b[1]+'</button>'}).join('')+'</div></div>'}
-function simple(d){if(!d.items.length)return '<div class="empty">Nenhuma posição aberta.</div>';return '<div class="p43s">'+d.items.map(function(x){return '<div class="p43r '+(x.res>0?'up':x.res<0?'dn':'')+'"><div><b>'+esc(x.n)+'</b><small class="mu">'+esc([x.sub,x.q].filter(Boolean).join(' · '))+'</small></div><div class="p43v"><b>'+brl(x.v)+'</b><small class="'+cl(x.res)+'">'+sg(x.res)+' · '+pct(x.rp)+'</small></div></div>'}).join('')+'</div>'}
+function simple(d,t){if(!d.items.length)return '<div class="empty">Nenhuma posição aberta.</div>';
+  /* 4.4.1 (103): Simples do Dolar, Exterior e Renda fixa no mesmo cartao de 2 colunas da Bolsa e da Cripto */
+  var m=t==='dzp'?'dz':t==='exp'?'ex':t==='rfp'?'rf':'',dz=null;try{dz=NX.ix.usd}catch(e){}
+  var col=function(n){try{if(window.S42B&&S42B.col)return S42B.col(n)}catch(e){}var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))>>>0;return 'hsl('+(h%360)+',55%,42%)'},ab=function(n){return String(n||'?').replace(/[^A-Za-zÀ-ú0-9]/g,'').slice(0,3).toUpperCase()};
+  return '<div class="sckg k45s">'+d.items.map(function(x){var dp=null;if(m==='dz'&&dz)dp=dz.c;else if(m==='ex'){try{var e=S43J.xc[x.n];if(e&&e.x)dp=e.x.c}catch(er){}}
+    var dcl=dp>0?'gn':dp<0?'rd':'mu',st=m==='rf'?'':(dp>0?' up':dp<0?' dn':''),attr=m==='ex'?' data-asset="X:'+esc(x.n)+'" role="button" tabindex="0"':m==='dz'?' data-mdx="D:usd" role="button" tabindex="0"':'';
+    var day=m==='rf'?'':'<span class="dayv '+dcl+'">'+(dp!=null&&isFinite(dp)?(dp>0?'▲ ':dp<0?'▼ ':'')+Math.abs(dp).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% hoje':'— hoje')+'</span>';
+    return '<div class="sck nzs'+st+'"'+attr+'><div class="sckh"><span class="av" aria-hidden="true" style="background:'+col(x.n)+';color:#fff">'+esc(ab(m==='dz'?'US$':x.n))+'</span><div class="sckt"><b class="ptk">'+esc(m==='dz'?'Dólar':x.n)+'</b>'+((m==='dz'?x.n:x.sub)?'<span class="bch k45b">'+esc(m==='dz'?x.n:x.sub)+'</span>':'')+'</div></div>'+
+      '<div class="nzsp"><span class="nzl">'+(m==='rf'?'Saldo':'Preço atual')+'</span><b>'+esc(x.c1)+'</b>'+day+'</div>'+
+      '<div class="sckv"><small>Valor da posição</small>'+brl(x.v)+'</div>'+
+      '<div class="sckr '+(x.res>0?'gn':x.res<0?'rd':'')+'"><i>Resultado</i><b>'+sg(x.res)+'</b><small>'+pct(x.rp)+'</small></div>'+
+      '<div class="sckq mu"><span>'+esc(x.q||'')+'</span><span>· '+(m==='rf'?'aplicado ':'PM ')+esc(x.c2||'')+'</span></div></div>'}).join('')+'</div>'}
 function table(d){if(!d.items.length)return '<div class="empty">Nenhuma posição aberta.</div>';var T={v:0,c:0};
   var rows=d.items.map(function(x){T.v+=x.v;T.c+=x.cost;return '<tr><td><b>'+esc(x.n)+'</b>'+(x.sub?'<small>'+esc(x.sub)+'</small>':'')+'</td><td>'+esc(x.q)+'</td><td>'+esc(x.c2)+'</td><td>'+esc(x.c1)+'</td><td>'+brl(x.cost)+'</td><td>'+brl(x.v)+'</td><td class="'+cl(x.res)+'">'+sg(x.res)+'</td><td class="'+cl(x.res)+'">'+pct(x.rp)+'</td></tr>'}).join('');
   return '<div class="tw"><table class="t42 p43t"><thead><tr><th>Posição</th><th>Quantidade</th><th>'+d.h2+'</th><th>'+d.h1+'</th><th>Custo</th><th>Valor</th><th>Resultado</th><th>%</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr><td>Total</td><td></td><td></td><td></td><td>'+brl(T.c)+'</td><td>'+brl(T.v)+'</td><td class="'+cl(T.v-T.c)+'">'+sg(T.v-T.c)+'</td><td class="'+cl(T.v-T.c)+'">'+pct(T.c>0?(T.v-T.c)/T.c:null)+'</td></tr></tfoot></table></div>'}
@@ -10273,7 +10391,7 @@ function put(t,el){var root=el&&el.querySelector?el:$i(t);if(!root)return;root.q
   if(v!=='c'&&!(t==='exp'&&v==='m')&&d.items.length){
     var keep=function(x){return x.hasAttribute('data-p43')||x.hasAttribute('data-c43k')||x.tagName==='H2'&&x===h2||x.classList.contains('rf42n')||x.classList.contains('bfbar')||x.classList.contains('s3nt')||x.classList.contains('pvbar')};
     [].slice.call(root.children).forEach(function(x){if(!keep(x))x.setAttribute('data-p43h','1')});
-    var body=v==='s'?simple(d):v==='t'?table(d):mapa(d);var bb=root.querySelector('.p43b');if(bb)bb.insertAdjacentHTML('afterend','<div data-p43="1" class="p43w">'+body+'</div>')}
+    var body=v==='s'?simple(d,t):v==='t'?table(d):mapa(d);var bb=root.querySelector('.p43b');if(bb)bb.insertAdjacentHTML('afterend','<div data-p43="1" class="p43w">'+body+'</div>')}
   else [].slice.call(root.querySelectorAll('[data-p43h]')).forEach(function(x){x.removeAttribute('data-p43h')});
   /* graficos no fim, antes das posicoes encerradas */
   var ch=charts(d);if(ch){var enc=root.querySelector(':scope>[data-c43k]');if(enc)enc.insertAdjacentHTML('beforebegin',ch);else root.insertAdjacentHTML('beforeend',ch)}
@@ -10369,26 +10487,41 @@ function pc2(v){return (v>0?'▲ +':v<0?'▼ −':'')+Math.abs(v).toLocaleString
 function chart(id,x,F,opn){try{if(!x||!x.pts||x.pts.length<2||typeof chBuild!=='function')return '';return chBuild({id:id,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:opn})}catch(e){return ''}}
 function slot(card,html){var w=card.querySelector('.c43ch');if(!w){w=document.createElement('div');w.className='c43ch';var g=card.querySelector('.cpg')||card.querySelector('.nzrs')||card.querySelector('.rfg');if(g)g.insertAdjacentElement('afterend',w);else card.appendChild(w)}if(w.__h!==html){w.__h=html;w.innerHTML=html}}
 function day(card,c){var d=card.querySelector('.c4day');if(!d||c==null||!isFinite(c))return;d.classList.remove('na','up','dn');d.classList.add(c>0?'up':c<0?'dn':'na');var b=d.querySelector('b');if(b)b.textContent=pc2(c)}
+/* 4.4.1 (96): periodos Hoje, 5 dias, 1 mes, Este ano, 1 ano e 5 anos nos cartoes do Dolar e do Exterior; Renda fixa: Este ano, 1 ano, 5 anos, Tudo */
+var PRL={dz:[[1,'Hoje'],[5,'5 dias'],[30,'1 mês'],[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos']],rf:[[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos'],[0,'Tudo']]};PRL.ex=PRL.dz;
+var YR={5:['5d','30m'],30:['1mo','1d'],1001:['ytd','1d'],365:['1y','1d'],1825:['5y','1wk']},LY={};
+function prGet(m){var v=NaN;try{v=+localStorage.getItem('stox3-pr45'+m)}catch(e){}return PRL[m].some(function(a){return a[0]===v})&&localStorage.getItem('stox3-pr45'+m)!==null?v:(m==='rf'?0:1)}
+function prBar(m,root,sel){var old=root.querySelector('.p45bar');var first=root.querySelector(sel);if(!first){if(old)old.remove();return}var v=prGet(m);
+  var h='<div class="pcgr one p45bar" role="group" aria-label="Período do gráfico">'+PRL[m].map(function(a){return '<button type="button" class="pcrb'+(a[0]===v?' on':'')+'" data-pr45="'+m+'|'+a[0]+'" aria-pressed="'+(a[0]===v)+'">'+a[1]+'</button>'}).join('')+'</div>';
+  if(old&&old.__v===h&&old.nextElementSibling===first)return;if(old)old.remove();first.insertAdjacentHTML('beforebegin',h);var nb=first.previousElementSibling;if(nb)nb.__v=h}
+function lbl(t,r){var d=new Date(t),dm=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);return r===5?dm+' '+hh(t):dm+'/'+String(d.getFullYear()).slice(2)}
+function longGet(sym,r,again){var k=sym+'|'+r,e=LY[k];if(e&&(e.pts||Date.now()-e.t<6e4))return e;LY[k]={t:Date.now(),pts:e&&e.pts};
+  try{nxYahoo(sym,YR[r][0],YR[r][1]).then(function(q){var P=q&&q.pts;if(P&&r===1001){var j0=new Date(new Date().getFullYear(),0,1).getTime(),P1=P.filter(function(a){return a[0]>=j0});if(P1.length>=2)P=P1}LY[k]={t:Date.now(),pts:P&&P.length>=2?P:null,fail:!(P&&P.length>=2)};again()},function(){LY[k]={t:Date.now(),fail:1};again()})}catch(x){LY[k]={t:Date.now(),fail:1}}return LY[k]}
+function chartL(id,P,F,opn,r){try{return chBuild({id:id,s:{pts:P.map(function(q){var l=lbl(q[0],r);return {t:q[0],p:q[1],l:l,ax:l}}),ref:0},k:'A',r:r,sz:'card',fmt:F,opn:opn})}catch(e){return ''}}
+function longSlot(card,sym,r,F,opn,again,idp){var e=longGet(sym,r,again);if(e&&e.pts)slot(card,chartL(idp+':'+r,e.pts,F,opn,r));else if(e&&e.fail)slot(card,'<div class="mu c43w">Não consegui buscar este período agora. Toque em outro período ou em Hoje.</div>');else slot(card,'<div class="mu c43w">Buscando o gráfico…</div>')}
 /* ---------- Exterior: grafico Hoje de cada acao/ETF (Yahoo, 15 min) ---------- */
 var XC={};
-function exCards(root){if(!window.S42B||!S42B.q1)return;root.querySelectorAll('.pc.c4').forEach(function(card){var a=card.querySelector('[data-asset^="X:"]');if(!a)return;var tk=a.getAttribute('data-asset').slice(2),e=XC[tk];
+function exCards(root){if(!window.S42B||!S42B.q1)return;prBar('ex',root,'.pc.c4');var PRx=prGet('ex');root.querySelectorAll('.pc.c4').forEach(function(card){var a=card.querySelector('[data-asset^="X:"]');if(!a)return;var tk=a.getAttribute('data-asset').slice(2),e=XC[tk];
+    if(PRx!==1){longSlot(card,tk,PRx,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk,function(){var r=$i('exp');if(r)exCards(r)},'x4:'+tk);if(e&&e.x)day(card,e.x.c);else if(!e)S42B.q1(tk).then(function(x){if(x){XC[tk]={t:Date.now(),x:x};day(card,x.c)}},function(){});return}
     if(e&&e.x){slot(card,chart('x4:'+tk,e.x,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk));day(card,e.x.c)}
     else slot(card,'<div class="mu c43w">Buscando o gráfico de hoje…</div>');
     if(!e||Date.now()-e.t>5*6e4){XC[tk]={t:Date.now(),x:e&&e.x};S42B.q1(tk).then(function(x){if(x){XC[tk]={t:Date.now(),x:x}}else if(!XC[tk].x)XC[tk].none=1;var r=$i('exp');if(r)exCards(r)},function(){})}
     else if(e.none&&!e.x)slot(card,'<div class="mu c43w">Sem gráfico de hoje agora.</div>')})}
 /* ---------- Dolar: grafico do dolar de hoje (9h as 18h) em cada lugar ---------- */
-function dzCards(root){var x=null;try{x=NX.ix.usd}catch(e){}if(!x)return;var F=function(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})};
-  root.querySelectorAll('.pc.c4').forEach(function(card,i){slot(card,chart('d4:'+i,{pts:x.pts,pv:x.pv},F,'D:usd'))})}
+function dzCards(root){prBar('dz',root,'.pc.c4');var PRd=prGet('dz'),x=null;try{x=NX.ix.usd}catch(e){}var F=function(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})};
+  if(PRd!==1){root.querySelectorAll('.pc.c4').forEach(function(card,i){longSlot(card,'BRL=X',PRd,F,'D:usd',function(){var r=$i('dzp');if(r)dzCards(r)},'d4:'+i)});return}
+  if(!x)return;root.querySelectorAll('.pc.c4').forEach(function(card,i){slot(card,chart('d4:'+i,{pts:x.pts,pv:x.pv},F,'D:usd'))})}
 /* ---------- Renda fixa: evolucao do saldo mes a mes ---------- */
-function rfCards(root){var F=window.S32&&S32.rfp;if(!F)return;var items={};try{F.load().items.forEach(function(x){items[x.id]=x})}catch(e){return}
+function rfCards(root){var F=window.S32&&S32.rfp;if(!F)return;prBar('rf',root,'.pc.rfit[data-rfid]');var PRr=prGet('rf'),lim=PRr===1001?new Date(new Date().getFullYear(),0,1).getTime()-864e5:PRr>0?Date.now()-PRr*864e5:0;var items={};try{F.load().items.forEach(function(x){items[x.id]=x})}catch(e){return}
   root.querySelectorAll('.pc.rfit[data-rfid]').forEach(function(card){var it=items[card.dataset.rfid];if(!it||!it.mv||!it.mv.length)return;
     var mv=it.mv.slice().sort(function(a,b){return a.d<b.d?-1:1}),d0=new Date(mv[0].d+'T12:00:00'),now=new Date(),P=[],k;
-    for(k=0;k<36;k++){var d=new Date(d0.getFullYear(),d0.getMonth()+k+1,0);if(d>now)break;var iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');try{P.push([d.getTime(),F.run(it,iso).bal])}catch(e){}}
+    for(k=0;k<84;k++){var d=new Date(d0.getFullYear(),d0.getMonth()+k+1,0);if(d>now)break;if(d.getTime()<lim)continue;var iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');try{P.push([d.getTime(),F.run(it,iso).bal])}catch(e){}}
     try{P.push([now.getTime(),F.run(it).bal])}catch(e){}
     if(P.length<2){slot(card,'');return}var mn=Math.min.apply(null,P.map(function(p){return p[1]})),mx=Math.max.apply(null,P.map(function(p){return p[1]})),r=(mx-mn)||1,W=320,H=70;
     var pts=P.map(function(p,i){return (6+i*(W-12)/(P.length-1)).toFixed(1)+','+(H-6-(p[1]-mn)/r*(H-14)).toFixed(1)}).join(' '),up=P[P.length-1][1]>=P[0][1];
     var MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],lb=function(t){var d=new Date(t);return MS[d.getMonth()]+'/'+String(d.getFullYear()).slice(2)};
-    slot(card,'<div class="chx card c43rf"><div class="chh"><b>Saldo mês a mês</b><span class="chv '+(up?'gn':'rd')+'">'+brl(P[P.length-1][1])+'</span></div><svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="none" role="img" aria-label="Evolução do saldo"><polyline points="'+pts+'" fill="none" stroke="'+(up?'var(--gn)':'var(--rd)')+'" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg><div class="chf"><span><small class="mu">'+lb(P[0][0])+'</small><b>'+brl(P[0][1])+'</b></span><span><small class="mu">hoje</small><b>'+brl(P[P.length-1][1])+'</b></span></div></div>')})}
+    slot(card,'<div class="chx card c43rf"><div class="chh"><b>Saldo mês a mês'+(PRr===1001?' · este ano':PRr===365?' · 1 ano':PRr===1825?' · 5 anos':'')+'</b><span class="chv '+(up?'gn':'rd')+'">'+brl(P[P.length-1][1])+'</span></div><svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="none" role="img" aria-label="Evolução do saldo"><polyline points="'+pts+'" fill="none" stroke="'+(up?'var(--gn)':'var(--rd)')+'" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg><div class="chf"><span><small class="mu">'+lb(P[0][0])+'</small><b>'+brl(P[0][1])+'</b></span><span><small class="mu">hoje</small><b>'+brl(P[P.length-1][1])+'</b></span></div></div>')})}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-pr45]');if(b){e.preventDefault();e.stopPropagation();var p=b.dataset.pr45.split('|');try{localStorage.setItem('stox3-pr45'+p[0],p[1])}catch(x){}var t={dz:'dzp',ex:'exp',rf:'rfp'}[p[0]];try{S32.paint(t)}catch(x){}return}},true);
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-mdx="D:usd"]');if(b){e.preventDefault();e.stopPropagation();try{S40D.open('usd')}catch(x){}}},true);
 (function hook(n){var s=window.S32;if(!s||!s.render||!s.render.exp||!s.render.dzp||!s.render.rfp){if(n<60)setTimeout(function(){hook(n+1)},250);return}var R=s.render;
   [['exp',exCards],['dzp',dzCards],['rfp',rfCards]].forEach(function(a){var k=a[0]+'#after',o=R[k];R[k]=function(el){var r;if(o)r=o.apply(this,arguments);try{a[1](el&&el.querySelector?el:$i(a[0]))}catch(x){}return r}})})(0);
@@ -10401,7 +10534,7 @@ function mkApply(t){var sec=document.querySelector(MKS[t]);if(!sec||!sec.classLi
   else sec.querySelectorAll('[data-k43m]').forEach(function(b){var on=b.dataset.k43m.split('|')[1]===v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))})}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-k43m]');if(!b)return;var p=b.dataset.k43m.split('|');MV[p[0]]=p[1];try{localStorage.setItem('stox3-mkv43',JSON.stringify(MV))}catch(x){}mkApply(p[0])},true);
 var MT=0;new MutationObserver(function(){clearTimeout(MT);MT=setTimeout(function(){Object.keys(MKS).forEach(function(t){try{mkApply(t)}catch(e){}})},80)}).observe(document.body,{childList:true,subtree:true});
-window.S43J={exCards:exCards,mkApply:mkApply};
+window.S43J={exCards:exCards,mkApply:mkApply,xc:XC};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n43j.js: '+(e&&e.message||e))}catch(x){}}
@@ -10772,10 +10905,13 @@ var T=0;new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=0;
 /* 81: Bolsas do mundo: filtro Aberta/Fechada, bandeira do pais e "Ver mais" */
 var FLAG={'^BVSP':'🇧🇷','^GSPC':'🇺🇸','^IXIC':'🇺🇸','^DJI':'🇺🇸','^RUT':'🇺🇸','^STOXX50E':'🇪🇺','^GDAXI':'🇩🇪','^FTSE':'🇬🇧','^FCHI':'🇫🇷','^N225':'🇯🇵','^HSI':'🇭🇰','000001.SS':'🇨🇳','^KS11':'🇰🇷','^AXJO':'🇦🇺','^GSPTSE':'🇨🇦','^MXX':'🇲🇽','^MERV':'🇦🇷','^BSESN':'🇮🇳','^NSEI':'🇮🇳','^IBEX':'🇪🇸','FTSEMIB.MI':'🇮🇹','^SSMI':'🇨🇭','^TWII':'🇹🇼','^IPSA':'🇨🇱','^VIX':'🇺🇸','EWZ':'🇺🇸'};
 var WF=(function(){try{return localStorage.getItem('stox3-wf44')||'all'}catch(e){return 'all'}})(),MORE=false;
-function worldUi(){document.querySelectorAll('.g43g').forEach(function(g){var cards=g.querySelectorAll('.g43c');if(!cards.length)return;
-  cards.forEach(function(c){var o=c.querySelector('.g43o[data-asset]');if(!o)return;var s=o.getAttribute('data-asset').slice(2),f=FLAG[s];if(f&&!c.querySelector('.fl44')){var b=document.createElement('span');b.className='fl44';b.textContent=f;b.setAttribute('aria-hidden','true');var n=c.querySelector('.g43n b');if(n)n.appendChild(b)}});
+function AS(c){var o=c.matches('[data-asset]')?c:c.querySelector('.g43o[data-asset]');return o?o.getAttribute('data-asset'):''}
+function worldUi(){document.querySelectorAll('.g43g,.k43g').forEach(function(g){var cards=g.querySelectorAll('.g43c,.k43i');if(!cards.length)return;
+  cards.forEach(function(c){var a=AS(c);if(!a)return;var s=a.slice(2),f=FLAG[s];if(f&&!c.querySelector('.fl44')){var b=document.createElement('span');b.className='fl44';b.textContent=f;b.setAttribute('aria-hidden','true');var n=c.querySelector('.g43n b,.k43t b');if(n)n.appendChild(b)}});
+  /* 4.4.1 (93): no Mercado do Dolar (moedas) nao tem filtro aberta/fechada */
+  if(g.closest('#dzm')){var ob=g.previousElementSibling;if(ob&&ob.classList.contains('wf44'))ob.remove();cards.forEach(function(c){c.classList.remove('hf44')});return}
   /* so nas listas de bolsas, ouro e moedas (tem cartao fechado/aberto) */
-  var hasMkt=Array.prototype.some.call(cards,function(c){var o=c.querySelector('.g43o[data-asset]');return o&&/^X:(\^|[A-Z]{3}=X|[A-Z]{2}=F|GC=F|SI=F)/.test(o.getAttribute('data-asset'))});if(!hasMkt)return;
+  var hasMkt=Array.prototype.some.call(cards,function(c){return /^X:(\^|[A-Z]{3}=X|[A-Z]{2}=F|GC=F|SI=F)/.test(AS(c))});if(!hasMkt)return;
   var bar=g.previousElementSibling&&g.previousElementSibling.classList.contains('wf44')?g.previousElementSibling:null;
   if(!bar){bar=document.createElement('div');bar.className='wf44';bar.setAttribute('role','group');bar.setAttribute('aria-label','Filtrar por mercado aberto ou fechado');g.parentNode.insertBefore(bar,g)}
   var no=0,nf=0;cards.forEach(function(c){if(c.classList.contains('g43x'))nf++;else no++});
@@ -10784,7 +10920,7 @@ function worldUi(){document.querySelectorAll('.g43g').forEach(function(g){var ca
   var shown=0,lim=MORE?999:8,hid=0;cards.forEach(function(c){var ok=WF==='all'||(WF==='open'?!c.classList.contains('g43x'):c.classList.contains('g43x'));if(ok&&shown>=lim&&isWorld(g)){ok=false;hid++}else if(ok)shown++;c.classList.toggle('hf44',!ok)});
   var mb=g.nextElementSibling&&g.nextElementSibling.classList.contains('mr44')?g.nextElementSibling:null;
   if(hid>0||(MORE&&isWorld(g)&&cards.length>8)){if(!mb){mb=document.createElement('button');mb.type='button';mb.className='sb2 mr44';g.insertAdjacentElement('afterend',mb)}mb.textContent=MORE?'Ver menos bolsas':'Ver mais bolsas ('+hid+')'}else if(mb)mb.remove()})}
-function isWorld(g){var o=g.querySelector('.g43o[data-asset]');return !!(o&&/^X:\^/.test(o.getAttribute('data-asset')))}
+function isWorld(g){var c=g.querySelector('.g43c,.k43i');return !!(c&&/^X:\^/.test(AS(c)))}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-wf44],.mr44');if(!b)return;e.preventDefault();if(b.classList.contains('mr44'))MORE=!MORE;else{WF=b.dataset.wf44;try{localStorage.setItem('stox3-wf44',WF)}catch(x){}}worldUi()},true);
 function topMovers(){}
 function dzNoGold(){}
@@ -10969,7 +11105,7 @@ try{if(!window.__S32SAFE){/* 4.4 (57, 68, 74): aba "Imposto de Renda" no Total: 
 (function(){
 var $i=function(id){return document.getElementById(id)};
 var URL='https://raw.githubusercontent.com/notini-guilherme/carteira-android/main/ir-dicas.json',KC='stox3-ird44',KQ='stox3-irq44';
-var IRD={"versao":"2026-11-24","conferido":"2026-11-24","nota":"Dicas do STOX3 sobre Imposto de Renda. Leitura do app: confira no programa da Receita e, na dúvida, com um contador.","regras":{"2026":{"ano_base":2025,"tributaveis":35584,"isentos":200000,"bolsa":40000,"bens":800000,"rural":177920,"inicio":"2026-03-23","fim":"2026-05-29","multa_min":165.74,"fonte":"Receita Federal, regras do IRPF 2026 (coletiva de 16/03/2026)","link":"https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/marco/rfb-realizara-no-dia-16-03-as-10h-no-auditorio-do-ministerio-da-fazenda-bloco-p-coletiva-de-imprensa-para-anunciar-as-novas-regras-do-irpf-2026/pir-2026-coletiva-de-imprensa.pdf"}},"mudancas":[{"titulo":"Limite de quem é obrigado subiu","texto":"Na declaração de 2026 (ano-base 2025), é obrigado quem recebeu mais de R$ 35.584 em rendimentos tributáveis. Antes eram R$ 33.888.","fonte":"Congresso em Foco, 16/03/2026","link":"https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026"},{"titulo":"Operações da Bolsa na pré-preenchida","texto":"Desde 2026, a declaração pré-preenchida (conta gov.br ouro ou prata) importa as operações em Bolsa e os DARFs pagos com o código 6015. Confira tudo: são informações de terceiros.","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824"},{"titulo":"DeCripto no lugar da antiga declaração mensal","texto":"A Instrução Normativa 2.291/2025 criou a DeCripto (declaração mensal de criptoativos), valendo na prática desde 1º de julho de 2026.","fonte":"InvestNews","link":"https://investnews.com.br/guias/criptomoedas-como-declarar/"}],"dicas":[{"mod":"geral","titulo":"Quem é obrigado a declarar (declaração de 2026)","texto":"Rendimentos tributáveis acima de R$ 35.584; isentos ou tributados na fonte acima de R$ 200 mil; vendas em bolsa acima de R$ 40 mil no ano ou com lucro tributável; ganho de capital com imposto; receita rural acima de R$ 177.920; bens e direitos acima de R$ 800 mil em 31/12; rendimentos de aplicações no exterior.","vale":"Declaração de 2026 (ano-calendário 2025)","fonte":"Bora Investir (B3)","link":"https://borainvestir.b3.com.br/noticias/imposto-de-renda/ir-2026-quem-e-obrigado-a-declarar/","data":"2026-11-24"},{"mod":"geral","titulo":"Prazo e multa","texto":"A declaração de 2026 foi de 23/03 a 29/05. Quem entrega fora do prazo paga multa mínima de R$ 165,74 (até 20% do imposto devido).","vale":"Declaração de 2026","fonte":"Congresso em Foco, 16/03/2026","link":"https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026","data":"2026-11-24"},{"mod":"geral","titulo":"Perguntas e Respostas da Receita","texto":"A Receita publica todo ano o \"Perguntão\" do IRPF (745 perguntas na edição de 2026). É a fonte oficial para tirar dúvidas.","vale":"Declaração de 2026","fonte":"Agência Gov, 22/04/2026","link":"https://agenciagov.ebc.com.br/noticias/202604/receita-federal-publica-201cperguntas-e-respostas-irpf-2026201d-com-orientacoes-atualizadas-aos-contribuintes","data":"2026-11-24"},{"mod":"bolsa","titulo":"Ações: isenção de R$ 20 mil por mês","texto":"Em operações comuns (não day trade), o lucro de meses em que o total das vendas de ações não passou de R$ 20 mil é isento: vai em Rendimentos Isentos (soma do ano). Acima disso, ou em day trade, o lucro entra mês a mês na ficha Renda Variável.","vale":"Declaração de 2026","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824","data":"2026-11-24"},{"mod":"bolsa","titulo":"DARF da Bolsa: código 6015","texto":"O imposto sobre lucro em ações (15% comum, 20% day trade) é pago por DARF código 6015 até o último dia útil do mês seguinte ao da venda. O app mostra os DARFs em Bolsa › Balanço.","vale":"Regra permanente","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824","data":"2026-11-24"},{"mod":"cripto","titulo":"Cripto: isenção de R$ 35 mil por mês","texto":"Quem vendeu até R$ 35 mil por mês em cripto não paga imposto, mas informa o lucro em Rendimentos Isentos. Passou disso com lucro: imposto de ganho de capital (programa GCAP) e DARF até o último dia útil do mês seguinte.","vale":"Declaração de 2026","fonte":"InvestNews","link":"https://investnews.com.br/guias/criptomoedas-como-declarar/","data":"2026-11-24"},{"mod":"cripto","titulo":"Cripto em corretora estrangeira","texto":"Cripto em corretora estrangeira (ex.: Binance) segue a Lei 14.754/2023: 15% sobre o lucro do ano, pago junto com a declaração. O app soma isso no Balanço da Cripto e no Exterior.","vale":"Desde o ano-calendário 2024","fonte":"Nomad, guia IR 2026","link":"https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior","data":"2026-11-24"},{"mod":"exterior","titulo":"Ações e ETFs no exterior: 15% no ano","texto":"Lucro das vendas e dividendos de aplicações no exterior pagam 15% uma vez por ano, calculados na declaração (Lei 14.754/2023). Não há isenção de R$ 20 mil nem DARF mensal. Prejuízo só abate lucro dos anos seguintes se for informado na declaração.","vale":"Desde o ano-calendário 2024","fonte":"Nomad, guia IR 2026","link":"https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior","data":"2026-11-24"},{"mod":"exterior","titulo":"Como declarar o exterior","texto":"Bens e Direitos com o país, o custo em reais e os campos de aplicação no exterior (lucro ou prejuízo e imposto pago lá). O programa da declaração gera o DARF dos 15%.","vale":"Declaração de 2026","fonte":"Contábeis","link":"https://www.contabeis.com.br/noticias/76267/ir-2026-saiba-declarar-bens-e-investimentos-no-exterior/","data":"2026-11-24"},{"mod":"dolar","titulo":"Dólar em espécie: grupo 06, código 11","texto":"Dinheiro em espécie em moeda estrangeira vai em Bens e Direitos, grupo 06, código 11 (\"Dinheiro em espécie – moeda estrangeira\"), pelo custo em reais. Dólar em conta no exterior: grupo 06, código 01.","vale":"Declaração de 2026","fonte":"C6 Bank","link":"https://www.c6bank.com.br/blog/como-declarar-moeda-estrangeira","data":"2026-11-24"},{"mod":"dolar","titulo":"Venda de dólar em espécie","texto":"Se o total vendido em espécie no ano não passar de US$ 5 mil, o ganho é isento. Acima disso, o ganho paga imposto (programa GCAP). A variação do dólar em conta no exterior que não rende juros é isenta.","vale":"Regra permanente","fonte":"Contabilidade Zen","link":"https://www.contabilidadezen.com.br/blog/gcap-variacao-cambial-moeda-estrangeira-2026/","data":"2026-11-24"},{"mod":"rf","titulo":"Renda fixa: use o informe do banco","texto":"CDB, Tesouro, caixinhas e debêntures já têm o IR descontado pelo banco no resgate (tabela de 22,5% a 15%). O informe de rendimentos de cada banco traz os valores certos e diz em qual ficha vai cada um. LCI e LCA são isentas.","vale":"Regra permanente","fonte":"Bora Investir (B3)","link":"https://borainvestir.b3.com.br/colunistas/professor-mira/imposto-de-renda-2026-veja-quem-precisa-declarar-e-os-erros-que-mais-levam-a-malha-fina/","data":"2026-11-24"}]};
+var IRD={"versao":"2026-11-25","conferido":"2026-11-24","nota":"Dicas do STOX3 sobre Imposto de Renda. Leitura do app: confira no programa da Receita e, na dúvida, com um contador.","regras":{"2026":{"ano_base":2025,"tributaveis":35584,"isentos":200000,"bolsa":40000,"bens":800000,"rural":177920,"inicio":"2026-03-23","fim":"2026-05-29","multa_min":165.74,"fonte":"Receita Federal, regras do IRPF 2026 (coletiva de 16/03/2026)","link":"https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/marco/rfb-realizara-no-dia-16-03-as-10h-no-auditorio-do-ministerio-da-fazenda-bloco-p-coletiva-de-imprensa-para-anunciar-as-novas-regras-do-irpf-2026/pir-2026-coletiva-de-imprensa.pdf"}},"mudancas":[{"titulo":"Limite de quem é obrigado subiu","texto":"Na declaração de 2026 (ano-base 2025), é obrigado quem recebeu mais de R$ 35.584 em rendimentos tributáveis. Antes eram R$ 33.888.","fonte":"Congresso em Foco, 16/03/2026","link":"https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026"},{"titulo":"Operações da Bolsa na pré-preenchida","texto":"Desde 2026, a declaração pré-preenchida (conta gov.br ouro ou prata) importa as operações em Bolsa e os DARFs pagos com o código 6015. Confira tudo: são informações de terceiros.","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824"},{"titulo":"DeCripto no lugar da antiga declaração mensal","texto":"A Instrução Normativa 2.291/2025 criou a DeCripto (declaração mensal de criptoativos), valendo na prática desde 1º de julho de 2026.","fonte":"InvestNews","link":"https://investnews.com.br/guias/criptomoedas-como-declarar/"}],"dicas":[{"mod":"geral","titulo":"Quem é obrigado a declarar (declaração de 2026)","texto":"Rendimentos tributáveis acima de R$ 35.584; isentos ou tributados na fonte acima de R$ 200 mil; vendas em bolsa acima de R$ 40 mil no ano ou com lucro tributável; ganho de capital com imposto; receita rural acima de R$ 177.920; bens e direitos acima de R$ 800 mil em 31/12; rendimentos de aplicações no exterior.","vale":"Declaração de 2026 (ano-calendário 2025)","fonte":"Bora Investir (B3)","link":"https://borainvestir.b3.com.br/noticias/imposto-de-renda/ir-2026-quem-e-obrigado-a-declarar/","data":"2026-11-24"},{"mod":"geral","titulo":"Prazo e multa","texto":"A declaração de 2026 foi de 23/03 a 29/05. Quem entrega fora do prazo paga multa mínima de R$ 165,74 (até 20% do imposto devido).","vale":"Declaração de 2026","fonte":"Congresso em Foco, 16/03/2026","link":"https://www.congressoemfoco.com.br/noticia/117288/quem-deve-declarar-receita-divulga-regras-do-ir-2026","data":"2026-11-24"},{"mod":"geral","titulo":"Perguntas e Respostas da Receita","texto":"A Receita publica todo ano o \"Perguntão\" do IRPF (745 perguntas na edição de 2026). É a fonte oficial para tirar dúvidas.","vale":"Declaração de 2026","fonte":"Agência Gov, 22/04/2026","link":"https://agenciagov.ebc.com.br/noticias/202604/receita-federal-publica-201cperguntas-e-respostas-irpf-2026201d-com-orientacoes-atualizadas-aos-contribuintes","data":"2026-11-24"},{"mod":"bolsa","titulo":"Ações: isenção de R$ 20 mil por mês","texto":"Em operações comuns (não day trade), o lucro de meses em que o total das vendas de ações não passou de R$ 20 mil é isento: vai em Rendimentos Isentos (soma do ano). Acima disso, ou em day trade, o lucro entra mês a mês na ficha Renda Variável.","vale":"Declaração de 2026","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824","data":"2026-11-24"},{"mod":"bolsa","titulo":"DARF da Bolsa: código 6015","texto":"O imposto sobre lucro em ações (15% comum, 20% day trade) é pago por DARF código 6015 até o último dia útil do mês seguinte ao da venda. O app mostra os DARFs em Bolsa › Balanço.","vale":"Regra permanente","fonte":"CRC-SP, 27/04/2026","link":"https://online.crcsp.org.br/portal/noticias/noticia.asp?c=10824","data":"2026-11-24"},{"mod":"cripto","titulo":"Cripto: isenção de R$ 35 mil por mês","texto":"Quem vendeu até R$ 35 mil por mês em cripto não paga imposto, mas informa o lucro em Rendimentos Isentos. Passou disso com lucro: imposto de ganho de capital (programa GCAP) e DARF até o último dia útil do mês seguinte.","vale":"Declaração de 2026","fonte":"InvestNews","link":"https://investnews.com.br/guias/criptomoedas-como-declarar/","data":"2026-11-24"},{"mod":"cripto","titulo":"Cripto em corretora estrangeira","texto":"Cripto em corretora estrangeira (ex.: Binance) segue a Lei 14.754/2023: 15% sobre o lucro do ano, pago junto com a declaração. O app soma isso no Balanço da Cripto e no Exterior.","vale":"Desde o ano-calendário 2024","fonte":"Nomad, guia IR 2026","link":"https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior","data":"2026-11-24"},{"mod":"exterior","titulo":"Ações e ETFs no exterior: 15% no ano","texto":"Lucro das vendas e dividendos de aplicações no exterior pagam 15% uma vez por ano, calculados na declaração (Lei 14.754/2023). Não há isenção de R$ 20 mil nem DARF mensal. Prejuízo só abate lucro dos anos seguintes se for informado na declaração.","vale":"Desde o ano-calendário 2024","fonte":"Nomad, guia IR 2026","link":"https://www.nomadglobal.com/conteudos/como-declarar-investimento-no-exterior","data":"2026-11-24"},{"mod":"exterior","titulo":"Como declarar o exterior","texto":"Bens e Direitos com o país, o custo em reais e os campos de aplicação no exterior (lucro ou prejuízo e imposto pago lá). O programa da declaração gera o DARF dos 15%.","vale":"Declaração de 2026","fonte":"Contábeis","link":"https://www.contabeis.com.br/noticias/76267/ir-2026-saiba-declarar-bens-e-investimentos-no-exterior/","data":"2026-11-24"},{"mod":"dolar","titulo":"Dólar em espécie: grupo 06, código 11","texto":"Dinheiro em espécie em moeda estrangeira vai em Bens e Direitos, grupo 06, código 11 (\"Dinheiro em espécie – moeda estrangeira\"), pelo custo em reais. Dólar em conta no exterior: grupo 06, código 01.","vale":"Declaração de 2026","fonte":"C6 Bank","link":"https://www.c6bank.com.br/blog/como-declarar-moeda-estrangeira","data":"2026-11-24"},{"mod":"dolar","titulo":"Venda de dólar em espécie","texto":"Se o total vendido em espécie no ano não passar de US$ 5 mil, o ganho é isento. Acima disso, o ganho paga imposto (programa GCAP). A variação do dólar em conta no exterior que não rende juros é isenta.","vale":"Regra permanente","fonte":"Contabilidade Zen","link":"https://www.contabilidadezen.com.br/blog/gcap-variacao-cambial-moeda-estrangeira-2026/","data":"2026-11-24"},{"mod":"rf","titulo":"Renda fixa: use o informe do banco","texto":"CDB, Tesouro, caixinhas e debêntures já têm o IR descontado pelo banco no resgate (tabela de 22,5% a 15%). O informe de rendimentos de cada banco traz os valores certos e diz em qual ficha vai cada um. LCI e LCA são isentas.","vale":"Regra permanente","fonte":"Bora Investir (B3)","link":"https://borainvestir.b3.com.br/colunistas/professor-mira/imposto-de-renda-2026-veja-quem-precisa-declarar-e-os-erros-que-mais-levam-a-malha-fina/","data":"2026-11-24"}],"agenda":[["2026-12-09","Copom decide a Selic"],["2026-12-09","Fed (EUA) decide os juros"],["2027-01-27","Copom decide a Selic"],["2027-03-17","Copom decide a Selic"],["2027-04-28","Copom decide a Selic"],["2027-06-16","Copom decide a Selic"],["2027-08-04","Copom decide a Selic"],["2027-09-22","Copom decide a Selic"],["2027-10-27","Copom decide a Selic"],["2027-12-08","Copom decide a Selic"]],"agenda_nota":"Datas do Copom (Banco Central) e do Fed (EUA) mostradas na Agenda do Dólar. Para incluir as do próximo ano, edite esta lista; o app pega sozinho."};
 try{var c=JSON.parse(localStorage.getItem(KC)||'null');if(c&&c.versao&&c.versao>IRD.versao)IRD=c}catch(e){}
 var Qs={};try{Qs=JSON.parse(localStorage.getItem(KQ)||'{}')||{}}catch(e){Qs={}}
 function qsave(){try{localStorage.setItem(KQ,JSON.stringify(Qs))}catch(e){}}
@@ -11090,7 +11226,7 @@ var MODS={rv:'Bolsa',cr:'Cripto',tt:'Total',dz:'Dólar',rf:'Renda fixa',ex:'Exte
 var SYN={imposto:'ir darf balanco declarar',ir:'imposto declarar darf',darf:'imposto balanco',dividendo:'proventos jcp rendimento',provento:'dividendo jcp',jcp:'proventos dividendo',caixinha:'renda fixa cdb posicoes',cdb:'renda fixa',tesouro:'renda fixa',lci:'renda fixa',lca:'renda fixa',grafico:'mercado posicoes',cotacao:'mercado',acao:'bolsa',acoes:'bolsa',bitcoin:'cripto',btc:'cripto',dolar:'dolar cambio',exterior:'eua',nota:'lancar',comprar:'lancar',vender:'lancar',venda:'lancar historico',compra:'lancar historico',excluir:'historico',apagar:'historico',backup:'configuracoes google',prejuizo:'balanco',lucro:'balanco resultado',feriado:'inicio calendario'};
 var REC=[];try{REC=JSON.parse(localStorage.getItem('stox3-q78')||'[]')||[]}catch(e){}
 function cur(){try{return S32.cur()}catch(e){return ''}}
-function tabs(){var L=[];Object.keys(MODS).forEach(function(m){document.querySelectorAll('#nav'+m+' button[data-t]').forEach(function(b){var t=b.dataset.t,l=(b.textContent||'').trim();if(!l)return;L.push({m:m,k:'tab',t:l,s:MODS[m]+' › '+l,go:m+':'+t,txt:N(l+' '+MODS[m])})})});return L}
+function tabs(){var L=[];Object.keys(MODS).forEach(function(m){document.querySelectorAll('#nav'+m+' button[data-t]').forEach(function(b){var t=b.dataset.t,l=(b.textContent||'').trim();if(!l)return;L.push({m:m,k:'tab',t:l,s:MODS[m]+' › '+l,go:m+':'+t,txt:N(l),mt:N(MODS[m])})})});return L}
 function assets(){var L=[];
   try{calc(ops).open.forEach(function(x){if(x.qty>0)L.push({m:'rv',k:'ativo',t:x.ticker,s:'Bolsa · '+(x.broker||'')+' · na carteira',page:'A:'+x.ticker,txt:N(x.ticker+' '+(x.broker||''))})})}catch(e){}
   try{var seen={};(CRX.get().ops||[]).forEach(function(o){[o.coin,o.coin2].forEach(function(c){if(c&&!seen[c]){seen[c]=1;L.push({m:'cr',k:'ativo',t:c,s:'Cripto'+(CRX.name&&CRX.name(c)?' · '+CRX.name(c):''),page:'C:'+c,txt:N(c+' '+((CRX.name&&CRX.name(c))||''))})}})})}catch(e){}
@@ -11106,13 +11242,13 @@ function hist(q){var L=[],Q=N(q);if(Q.length<3)return L;
 function tipsR(){var L=[];try{(S44H.data().dicas||[]).forEach(function(d){L.push({m:'tt',k:'dica',t:d.titulo,s:'Dica de IR · '+(MODS[{bolsa:'rv',cripto:'cr',exterior:'ex',dolar:'dz',rf:'rf'}[d.mod]]||'Geral'),go:'tt:tti',txt:N(d.titulo+' '+d.texto)})})}catch(e){}return L}
 function search(q){var Q=N(q).trim();if(!Q)return [];var words=Q.split(/\s+/),ext=[Q];words.forEach(function(w){Object.keys(SYN).forEach(function(k){if(k.indexOf(w)===0)ext=ext.concat(SYN[k].split(' '))})});
   var score=function(x){var tx=x.txt||N(x.t+' '+x.s),best=0;ext.forEach(function(w,i){if(!w)return;var p=tx.indexOf(w);if(p===0)best=Math.max(best,i===0?100:60);else if(p>0&&/\s/.test(tx[p-1]))best=Math.max(best,i===0?80:50);else if(p>0)best=Math.max(best,i===0?40:20)});return best};
-  var A=tabs().concat(assets()).concat(tipsR()).map(function(x){x.sc=score(x);return x}).filter(function(x){return x.sc>0});
-  A=A.concat(hist(q).map(function(x){x.sc=55;return x}));
+  var A=tabs().concat(assets()).concat(tipsR()).map(function(x){x.sc=score(x);if(x.k==='tab'&&!x.sc&&x.mt&&x.mt.indexOf(Q)===0&&Q.length>=3)x.sc=45;return x}).filter(function(x){return x.sc>0});
+  /* 4.4.1 (101): a busca nao lista lancamentos do Historico (ficaria enorme para quem tem muitas operacoes) */
   var c=cur();A.forEach(function(x){if(x.m===c)x.sc+=30;if(x.k==='ativo')x.sc+=5;if(x.k==='dica')x.sc-=35});A.sort(function(a,b){return b.sc-a.sc});
   var seen={},out=[];A.forEach(function(x){var k=x.k+'|'+x.t+'|'+x.s;if(seen[k])return;seen[k]=1;out.push(x)});return out.slice(0,24)}
 var ONLY=false;
 function paint(){var v=$i('q78v');if(!v)return;var q=($i('q78')||{}).value||'',c=cur(),R=search(q);if(ONLY)R=R.filter(function(x){return x.m===c});
-  var IC={tab:'📂',ativo:'📈',hist:'🧾',dica:'❓'},grp=function(t,L){return L.length?'<h3 class="q78h">'+t+'</h3>'+L.map(item).join(''):''},
+  var IC={tab:'📂',ativo:'📈',dica:'❓'},grp=function(t,L){return L.length?'<h3 class="q78h">'+t+'</h3>'+L.map(item).join(''):''},
     item=function(x){return '<button type="button" class="q78i" data-q78go="'+E(x.go||'')+'" data-q78pg="'+E(x.page||'')+'" data-q78t="'+E(x.t)+'"><span class="q78ic" aria-hidden="true">'+(IC[x.k]||'•')+'</span><span><b>'+mark(x.t,q)+'</b><small class="mu">'+E(x.s)+'</small></span></button>'};
   var h='';if(!q.trim()){h=REC.length?'<h3 class="q78h">Buscas recentes</h3>'+REC.map(function(r){return '<button type="button" class="q78i" data-q78rec="'+E(r)+'"><span class="q78ic" aria-hidden="true">🕘</span><span><b>'+E(r)+'</b></span></button>'}).join(''):'<div class="mu q78e">Digite o nome de um ativo, uma tela ou um assunto. Ex.: PETR4, imposto, dividendos, caixinha.</div>'}
   else{var nd=R.filter(function(x){return x.k!=='dica'}),here=nd.filter(function(x){return x.m===c}),oth=nd.filter(function(x){return x.m!==c});
@@ -11169,6 +11305,167 @@ window.S44J={dropped:dropped};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n44j.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (92): no Mercado > Simples, a faixa da esquerda de cada cartao segue a variacao do dia (igual ao Total) */
+(function(){var T=0;
+function pct(c){var e=c.querySelector('.qxp .dayv,.qxp .gn,.qxp .rd,.mkv .gn,.mkv .rd,.chv');if(!e)return 0;var t=e.textContent||'';if(/▲|\+\d/.test(t)&&!/−|-\d/.test(t))return 1;if(/▼|−|-\d/.test(t))return -1;return e.classList.contains('gn')?1:e.classList.contains('rd')?-1:0}
+function run(){document.querySelectorAll('.k43mini .mkc,.k43mini .mcr').forEach(function(c){var v=pct(c);c.classList.toggle('u45',v>0);c.classList.toggle('d45',v<0)})}
+function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},300)}
+try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}go();
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45a.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (88 e 100): "Faixa do dia" e "Faixa de 52 semanas" (minima e maxima, com a bolinha no preco de agora).
+   - Posicoes: so no cartao Completo, logo depois da barra do preco medio (que fica onde esta). Bolsa, Cripto, Exterior e Dolar.
+   - Mercado: debaixo do grafico de cada cartao (Cartoes) e uma versao fina na visao Simples, em todos os modulos.
+   Usa as mesmas buscas dos graficos (CDL.fetch: velas de hoje e diarias de 1 ano), com cache; so busca os cartoes perto da tela. */
+(function(){
+var MEM={},Q=[],RUN=0,T=0,KS='stox3-fx45';
+var DISK={};try{DISK=JSON.parse(localStorage.getItem(KS)||'{}')||{}}catch(e){DISK={}}
+function saveDisk(){try{var now=Date.now(),o={};Object.keys(DISK).forEach(function(k){if(now-DISK[k].t<12*36e5)o[k]=DISK[k]});DISK=o;localStorage.setItem(KS,JSON.stringify(o))}catch(e){}}
+function fmt(k,sym,v){if(!(v>0))return '—';var d=v<0.01?Math.min(8,Math.max(4,2-Math.floor(Math.log10(v))+2)):v<1?4:v>=10000?0:2;
+  if(k==='I'&&sym==='usd'||k==='X'&&/BRL=X$/.test(sym))d=4;
+  var n=v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  if(k==='A'||k==='C'||k==='I'&&sym==='usd'||k==='X'&&(/BRL=X$/.test(sym)||/\.SA$/.test(sym)))return 'R$ '+n;
+  if(k==='I'||k==='X'&&/^\^/.test(sym))return n;return 'US$ '+n}
+async function load(k,sym){var key=k+'|'+sym,now=Date.now(),m=MEM[key]||{};
+  if(!window.CDL||!CDL.fetch)return;
+  try{if(!(m.dt&&now-m.dt<5*6e4)){var d=await CDL.fetch(k,sym,1);if(d&&d.length){var hs=d.map(function(x){return x.h}),ls=d.map(function(x){return x.l});m.dh=Math.max.apply(null,hs);m.dl=Math.min.apply(null,ls);m.p=d[d.length-1].c;m.dt=now}}}catch(e){}
+  try{var w=DISK[key];if(w&&now-w.t<12*36e5){m.wh=w.wh;m.wl=w.wl}else{var y=await CDL.fetch(k,sym,365);if(y&&y.length>20){m.wh=Math.max.apply(null,y.map(function(x){return x.h}));m.wl=Math.min.apply(null,y.map(function(x){return x.l}));DISK[key]={t:now,wh:m.wh,wl:m.wl};saveDisk()}}}catch(e){}
+  if(m.p>0){if(m.wh>0&&m.p>m.wh)m.wh=m.p;if(m.wl>0&&m.p<m.wl)m.wl=m.p}
+  m.done=now;MEM[key]=m}
+var LAST=Date.now();document.addEventListener('click',function(){LAST=Date.now()},true);
+function idle(){try{if(typeof QXRUN!=='undefined'&&QXRUN)return false;if(typeof QXMK!=='undefined'&&QXMK&&QXMK.busy)return false;if(typeof NX!=='undefined'&&NX&&NX.busy)return false}catch(e){}return Date.now()-LAST>2000}
+function pump(){if(!idle()){if(Q.length)setTimeout(pump,1500);return}while(RUN<1&&Q.length){var it=Q.shift(),kk=it[0]+'|'+it[1];RUN++;MEM[kk]=MEM[kk]||{};MEM[kk].busy=1;(function(kk){load(it[0],it[1]).then(function(){fin(kk)},function(){fin(kk)})})(kk)}function fin(kk){RUN--;if(MEM[kk])MEM[kk].busy=0;go();pump()}}
+function want(k,sym){var key=k+'|'+sym,m=MEM[key];if(m&&m.done&&Date.now()-m.done<5*6e4)return m;if(!Q.some(function(q){return q[0]===k&&q[1]===sym})&&!(m&&m.busy)){Q.push([k,sym]);pump()}return m}
+function pos(v,lo,hi){if(!(hi>lo))return 50;return Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100))}
+function row(lab,lo,hi,p,k,sym,thin){if(!(lo>0&&hi>0))return '';var x=pos(p,lo,hi).toFixed(1);
+  if(thin)return '<div class="fx45r fx45t"><small>'+lab+'</small><span class="fx45b" role="img" aria-label="'+lab+': mínima '+fmt(k,sym,lo)+', máxima '+fmt(k,sym,hi)+', agora '+fmt(k,sym,p)+'"><i style="left:'+x+'%"></i></span></div>';
+  return '<div class="fx45r"><small class="mu">'+lab+'</small><div class="fx45l"><b>'+fmt(k,sym,lo)+'</b><span class="fx45b" role="img" aria-label="'+lab+': mínima '+fmt(k,sym,lo)+', máxima '+fmt(k,sym,hi)+', agora '+fmt(k,sym,p)+'"><i style="left:'+x+'%"></i></span><b>'+fmt(k,sym,hi)+'</b></div></div>'}
+function html(m,k,sym,thin){if(!m||!(m.p>0))return '';var a=row(thin?'Dia':'Faixa do dia',m.dl,m.dh,m.p,k,sym,thin),b=row(thin?'52 sem.':'Faixa de 52 semanas',m.wl,m.wh,m.p,k,sym,thin);if(!a&&!b)return '';return a+b}
+function near(el){var r=el.getBoundingClientRect();if(!r.width&&!r.height)return false;var H=window.innerHeight||800;return r.bottom>-H*0.5&&r.top<H*2}
+function put(card,after,k,sym,thin,inside){if(!sym)return;var box=card.querySelector(':scope .fx45');if(!near(card)&&!box)return;var m=want(k,sym),h=html(m,k,sym,thin);
+  if(!h){if(box&&!box.__h)box.remove();return}
+  if(!box){box=document.createElement('div');box.className='fx45'+(thin?' thin':'');if(inside)card.appendChild(box);else if(after&&after.parentNode)after.insertAdjacentElement('afterend',box);else card.appendChild(box)}
+  else if(!inside&&after&&after.parentNode&&box.previousElementSibling!==after)after.insertAdjacentElement('afterend',box);
+  if(box.__h!==h){box.__h=h;box.innerHTML=h}}
+function run(){
+  /* Posicoes, cartao Completo */
+  [['#b','A'],['#crp','C'],['#exp','X'],['#dzp','I']].forEach(function(z){var sec=document.querySelector(z[0]);if(!sec||!sec.classList.contains('on'))return;
+    sec.querySelectorAll('.nzc.c4').forEach(function(card){if(card.closest('.pvsimp,.k45s'))return;var sym='';if(z[1]==='I')sym='usd';else{var a=card.querySelector('[data-pcs^="'+z[1]+':"],[data-asset^="'+z[1]+':"]');if(a)sym=(a.getAttribute('data-pcs')||a.getAttribute('data-asset')).slice(2)}
+      put(card,card.querySelector('.cpg')||card.querySelector('.nzrs'),z[1],sym,false)})});
+  /* Mercado */
+  var mk=document.querySelectorAll('section.on .mkc,section.on .mcr,section.on .g43c,section.on .k43i,section.on .nxic');
+  mk.forEach(function(card){var thin=!!card.closest('.k43mini')||card.classList.contains('k43i'),k='',sym='',after=null,inside=false;
+    if(card.classList.contains('mkc')){var t=card.querySelector('.ptk');k='A';sym=t?t.textContent.trim():'';after=card.querySelector('.mgr')||card.querySelector('.cph')}
+    else if(card.classList.contains('mcr')){k='C';sym=card.dataset.mk||'';after=card.querySelector('.mgr,.chx')||card.querySelector('.mkv')}
+    else if(card.classList.contains('g43c')){var o=card.querySelector('.g43o[data-asset]');k='X';sym=o?o.getAttribute('data-asset').slice(2):'';after=card.querySelector('.chx')||card.querySelector('.g43p')}
+    else if(card.classList.contains('k43i')){k='X';sym=(card.getAttribute('data-asset')||'').slice(2);inside=true;thin=true}
+    else if(card.classList.contains('nxic')){var n=card.querySelector('[data-ixk]');k='I';sym=n?n.dataset.ixk:'';after=n}
+    if(/^X:/.test(sym))sym=sym.slice(2);
+    if(k==='X'&&/-USD$/.test(sym)&&sym!=='USDT-USD'){/* cripto em dolar no Mercado do Total: Yahoo tambem serve */}
+    put(card,after,k,sym,thin,inside)})}
+function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},400)}
+try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}
+window.addEventListener('scroll',go,{passive:true});document.addEventListener('scroll',go,{passive:true,capture:true});go();
+window.S45C={get:function(k,s){return MEM[k+'|'+s]},run:run};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45c.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (89 e 103): nada sai da moldura. Quando um numero nao cabe (Resultado acumulado, % de Hoje, valores dos cartoes Simples),
+   a letra diminui ate caber, em vez de quebrar a linha ou passar da borda. */
+(function(){var T=0;
+var SEL=['.res44 .pcr>span','.c4day b','.c4pd','.sck .nzsp>b','.sck .sckv','.sck .sckr','.sck .sckq','.c4val .c4vb','.c4val .c4vd'];
+function fit(el){var box=el.parentNode;if(!box||!el.offsetParent)return;var cs=getComputedStyle(el),base=+el.dataset.f45||parseFloat(cs.fontSize)||14;if(!el.dataset.f45)el.dataset.f45=base;
+  var avail=function(){return el.matches('.res44 .pcr>span')?Math.max(40,box.clientWidth-(box.firstElementChild&&box.firstElementChild!==el?box.firstElementChild.offsetWidth+8:0)):el.clientWidth||box.clientWidth};
+  var f=base;el.style.removeProperty('font-size');var guard=0;while(el.scrollWidth>avail()+1&&f>11&&guard++<24){f-=1;el.style.setProperty('font-size',f+'px','important')}}
+function tiny(){document.querySelectorAll('.sck[data-zsc] .nzsp>b').forEach(function(b){if(!/^R\$\s?0,00$/.test((b.textContent||'').trim()))return;var c=b.closest('.sck').dataset.zsc,v=0;try{v=CRX.price(c)}catch(e){}if(v>0)b.textContent='R$ '+v.toLocaleString('pt-BR',{minimumSignificantDigits:3,maximumSignificantDigits:4})})}
+function run(){try{tiny()}catch(e){}document.querySelectorAll(SEL.join(',')).forEach(function(el){try{fit(el)}catch(e){}})}
+function go(){if(T)return;T=setTimeout(function(){T=0;run()},350)}
+try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true,characterData:true})}catch(e){}window.addEventListener('resize',go);go();
+})();
+/* 4.4.1 (89): a foto do usuario no topo nunca fica cortada: se a linha do topo nao couber, os botoes diminuem e,
+   em tela bem estreita, o nome STOX3 vira so o icone */
+(function(){var T=0;function fit(){var b=document.querySelector('header.vzb');if(!b)return;var cl=document.body.classList;cl.remove('hd45s','hd45xs');
+  var last=function(){var k=[].slice.call(document.querySelectorAll('.vzbt>*')).filter(function(x){return x.offsetWidth>0});return k.length?k[k.length-1].getBoundingClientRect().right:0};
+  var W=document.documentElement.clientWidth||window.innerWidth;if(last()>W-4){cl.add('hd45s');if(last()>W-4)cl.add('hd45xs')}}
+function go(){if(T)return;T=setTimeout(function(){T=0;try{fit()}catch(e){}},200)}
+window.addEventListener('resize',go);try{new MutationObserver(go).observe(document.querySelector('header.vzb')||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','style','class']})}catch(e){}setTimeout(go,300);setTimeout(go,1500)})();
+/* 4.4.1 (89): o botao redondo de voltar ao topo so aparece enquanto voce rola a tela (some 2,5 s depois), para nao tampar textos */
+(function(){var T=0;function on(){document.body.classList.add('tt45on');clearTimeout(T);T=setTimeout(function(){document.body.classList.remove('tt45on')},2500)}
+window.addEventListener('scroll',on,{passive:true});document.addEventListener('scroll',on,{passive:true,capture:true})})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45d.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (94): cartao Completo do Exterior com os atalhos Comprar, Vender e Grafico (como a Bolsa e o Dolar).
+   Comprar/Vender abrem o Lancar do Exterior ja preenchido (ativo, corretora e, na venda, a quantidade). */
+(function(){var T=0,$i=function(id){return document.getElementById(id)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function pos(){try{var o=S40S.ld();return S43K.xcalc(o).P||{}}catch(e){return {}}}
+function run(){var sec=$i('exp');if(!sec||!sec.classList.contains('on'))return;var P=null;
+  sec.querySelectorAll('.pc.c4').forEach(function(card){if(card.querySelector('.e45b'))return;var a=card.querySelector('[data-asset^="X:"]');if(!a)return;var tk=a.getAttribute('data-asset').slice(2);P=P||pos();var p=P[tk]||{},br=Object.keys(p.br||{})[0]||'',q=p.q>0?p.q:0;
+    var h='<div class="pcb cpb e45b"><button type="button" class="sb2 b" data-e45="COMPRA|'+esc(tk)+'|'+esc(br)+'|">Comprar</button><button type="button" class="sb2 v" data-e45="VENDA|'+esc(tk)+'|'+esc(br)+'|'+q+'">Vender</button><button type="button" class="sb2" data-e45="G|'+esc(tk)+'">Gráfico</button></div>';
+    var ref=card.querySelector('.pcd');if(ref)ref.insertAdjacentHTML('beforebegin',h);else card.insertAdjacentHTML('beforeend',h)})}
+function fill(ty,tk,br,q,n){var f=$i('exf'),k=$i('ex-k');if(!f||!k){if((n||0)<20)setTimeout(function(){fill(ty,tk,br,q,(n||0)+1)},150);return}
+  var r=f.querySelector('input[name="ext"][value="'+ty+'"]');if(r&&!r.checked){r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}))}var t=$i('ex-t');if(t)t.value=ty;
+  k.value=tk;k.dispatchEvent(new Event('input',{bubbles:true}));var b=$i('ex-b');if(b&&br){b.value=br;b.dispatchEvent(new Event('input',{bubbles:true}))}
+  var qq=$i('ex-q');if(qq&&ty==='VENDA'&&q>0){qq.value=String(q).replace('.',',');qq.dispatchEvent(new Event('input',{bubbles:true}))}
+  try{f.scrollIntoView({block:'start'})}catch(e){}var pp=$i('ex-p');if(pp)try{pp.focus()}catch(e){}}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-e45]');if(!b)return;e.preventDefault();e.stopPropagation();var p=b.dataset.e45.split('|');
+  if(p[0]==='G'){try{S40C.open('X',p[1])}catch(x){}return}
+  try{S32.set('ex');var nb=document.querySelector('#navex button[data-t="exn"]');if(nb)nb.click();else S32.go('ex','exn')}catch(x){}setTimeout(function(){fill(p[0],p[1],p[2],+p[3]||0)},200)},true);
+function go(){if(T)return;T=setTimeout(function(){T=0;try{run()}catch(e){}},300)}
+try{new MutationObserver(go).observe(document.body,{childList:true,subtree:true})}catch(e){}go();
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45e.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (95): Historico do Dolar, do Exterior e da Renda fixa igual ao da Bolsa: numero de lancamentos no titulo,
+   Expandir/Recolher tudo e um grupo por ano (com o total de compras e vendas do ano). O backup fica fechado. */
+(function(){var $i=function(id){return document.getElementById(id)};
+var KS='stox3-y45',ST={};try{ST=JSON.parse(localStorage.getItem(KS)||'{}')||{}}catch(e){ST={}}
+function sv(){try{localStorage.setItem(KS,JSON.stringify(ST))}catch(e){}}
+function R2(v){return typeof brl==='function'?brl(v):'R$ '+(+v||0).toFixed(2)}
+function tot(m){var Y={};try{
+  if(m==='dz')S32.dz.load().ops.forEach(function(o){var y=String(o.date).slice(0,4),z=Y[y]||(Y[y]={a:0,b:0,c:0});if(o.type==='VENDA')z.b+=+o.brl||0;else z.a+=+o.brl||0});
+  else if(m==='ex')S40S.ld().ops.forEach(function(o){var y=String(o.date).slice(0,4),z=Y[y]||(Y[y]={a:0,b:0,c:0}),v=(+o.q||0)*(+o.p||0)*(+o.fx||0);if(o.type==='VENDA')z.b+=v;else if(o.type==='DIV')z.c+=(+o.v||v)*(o.fx?1:1);else z.a+=v+(+o.fee||0)*(+o.fx||0)});
+  else if(m==='rf')(S32.rfp.load().items||[]).forEach(function(it){(it.mv||[]).forEach(function(v){var y=String(v.d).slice(0,4),z=Y[y]||(Y[y]={a:0,b:0,c:0});if(v.t==='ap')z.a+=+v.v||0;else if(v.t==='rs')z.b+=+v.v||0})})}catch(e){}return Y}
+var LB={dz:['Compras','Vendas'],ex:['Compras','Vendas'],rf:['Aplicado','Resgatado']};
+function group(t,m){var sec=$i(t);if(!sec||sec.querySelector(':scope > .y45'))return;var list=sec.querySelector(':scope > .s3ag');if(!list||list.closest('.y45'))return;
+  var cards=[].slice.call(list.children).filter(function(c){return /\d{2}\/\d{2}\/\d{4}/.test(c.textContent||'')});if(!cards.length)return;
+  var Y={},order=[];cards.forEach(function(c){var y=(c.textContent.match(/\d{2}\/\d{2}\/(\d{4})/)||[])[1]||'—';if(!Y[y]){Y[y]=[];order.push(y)}Y[y].push(c)});
+  order.sort(function(a,b){return a<b?1:-1});var T=tot(m),cy=String(new Date().getFullYear()),box=document.createElement('div');box.className='y45';
+  box.innerHTML='<div class="ygb"><button type="button" class="sb2" data-y45all="'+t+'|1">Expandir tudo</button><button type="button" class="sb2" data-y45all="'+t+'|0">Recolher tudo</button></div>';
+  order.forEach(function(y,i){var k=t+'|'+y,open=ST[k]!=null?!!ST[k]:i===0||y===cy,z=T[y]||{a:0,b:0,c:0},n=Y[y].length;
+    var d=document.createElement('details');d.className='yg';d.dataset.y45=k;if(open)d.open=true;
+    d.innerHTML='<summary><span class="ygy">'+y+'</span><span class="ygn">'+n+(n>1?' lançamentos':' lançamento')+'</span><span class="ygt"><span>'+LB[m][0]+'<b>'+R2(z.a)+'</b></span><span>'+LB[m][1]+'<b>'+R2(z.b)+'</b></span>'+(m==='ex'&&z.c>0?'<span>Dividendos<b>'+R2(z.c)+'</b></span>':'')+'</span></summary>';
+    var g=document.createElement('div');g.className=list.className;Y[y].forEach(function(c){g.appendChild(c)});d.appendChild(g);box.appendChild(d)});
+  list.replaceWith(box);
+  var h=sec.querySelector(':scope > h2');if(h&&!h.querySelector('.h2t'))h.insertAdjacentHTML('beforeend','<span class="h2t">'+cards.length+'</span>');
+  sec.querySelectorAll('details.s3bk').forEach(function(b){if(!b.__y45){b.__y45=1;b.open=false}})}
+document.addEventListener('toggle',function(e){var d=e.target;if(d&&d.dataset&&d.dataset.y45){ST[d.dataset.y45]=d.open?1:0;sv()}},true);
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-y45all]');if(!b)return;var p=b.dataset.y45all.split('|'),sec=$i(p[0]);if(!sec)return;
+  sec.querySelectorAll('details[data-y45]').forEach(function(d){d.open=p[1]==='1';ST[d.dataset.y45]=d.open?1:0});sv()},true);
+(function hook(n){var s=window.S32;if(!s||!s.render||!s.render.dzr||!s.render.exr||!s.render.rfr){if(n<160)setTimeout(function(){hook(n+1)},250);return}var R=s.render;
+  [['dzr','dz'],['exr','ex'],['rfr','rf']].forEach(function(a){var k=a[0]+'#after',o=R[k];R[k]=function(el){var r;if(o)r=o.apply(this,arguments);try{group(a[0],a[1])}catch(x){}return r};
+    var el=$i(a[0]);if(el&&el.classList.contains('on'))try{s.paint(a[0])}catch(x){}})})(0);
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45f.js: '+(e&&e.message||e))}catch(x){}}
+try{if(!window.__S32SAFE){/* 4.4.1 (86): puxar a tela para baixo (no topo de qualquer aba) atualiza tudo, como o botao verde de atualizar */
+(function(){var y0=null,x0=0,dy=0,ind=null,busy=0;
+function el(){if(!ind){ind=document.createElement('div');ind.id='ptr45';ind.setAttribute('aria-hidden','true');ind.innerHTML='<span class="ptr45i">↻</span><span class="ptr45t">Puxe para atualizar</span>';document.body.appendChild(ind)}return ind}
+function blocked(t){var b=document.body.classList;if(b.contains('mdo')||b.contains('mdfo')||b.contains('q78o'))return true;return !!(t&&t.closest&&t.closest('.chs,input,textarea,select,[contenteditable],.mdf,#ixv,#apv,#xapv,#mdv,#q78v,.dz44,[data-noptr]'))}
+function top(){return (window.scrollY||document.documentElement.scrollTop||0)<=0}
+document.addEventListener('touchstart',function(e){if(busy||e.touches.length!==1||!top()||blocked(e.target)){y0=null;return}y0=e.touches[0].clientY;x0=e.touches[0].clientX;dy=0},{passive:true});
+document.addEventListener('touchmove',function(e){if(y0==null)return;var d=e.touches[0].clientY-y0,dx=Math.abs(e.touches[0].clientX-x0);if(dx>Math.abs(d)||!top()){y0=null;hide();return}dy=d;if(d<=8){hide();return}
+  var i=el(),k=Math.min(1,d/90);i.style.opacity=String(Math.min(1,d/40));i.style.transform='translate(-50%,'+Math.min(70,d*0.55)+'px) rotate(0deg)';i.querySelector('.ptr45i').style.transform='rotate('+Math.round(k*300)+'deg)';
+  i.querySelector('.ptr45t').textContent=d>90?'Solte para atualizar':'Puxe para atualizar';i.classList.toggle('go',d>90)},{passive:true});
+document.addEventListener('touchend',function(){if(y0==null)return;var d=dy;y0=null;if(d>90){busy=1;var i=el();i.classList.add('run');i.querySelector('.ptr45t').textContent='Atualizando…';
+  try{var b=document.getElementById('vzup');if(b)b.click()}catch(x){}setTimeout(function(){busy=0;i.classList.remove('run','go');hide()},1600)}else hide()},{passive:true});
+document.addEventListener('touchcancel',function(){y0=null;hide()},{passive:true});
+function hide(){if(ind&&!busy){ind.style.opacity='0';ind.style.transform='translate(-50%,-10px)'}}
+window.S45G={test:function(){var i=el();i.style.opacity='1';i.style.transform='translate(-50%,40px)'}};
+})();
+
+}}catch(e){try{(window.__bootE=window.__bootE||[]).push('n45g.js: '+(e&&e.message||e))}catch(x){}}
 addLine();$('#pd').value=new Date().toISOString().slice(0,10);setTimeout(function(){window.__bootOK=1},0);$("#dt").value=new Date().toISOString().slice(0,10);
 render();
 </script>
