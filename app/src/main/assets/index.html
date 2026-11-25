@@ -12204,6 +12204,8 @@ function frag(h){var d=document.createElement('div');d.innerHTML=h||'';return d}
 /* limpa o HTML de uma tela para o papel: sem botoes, seletores e graficos; caixas de marcar viram quadradinhos */
 function clean(d){
   /* resposta escolhida (Sim/Nao etc.) fica escrita; o resto dos botoes sai */
+  /* linhas do Resumo do ano sao botoes no app: no papel viram texto */
+  d.querySelectorAll('button.sm44r').forEach(function(x){var v=document.createElement('div');v.className='pc sm44r';v.innerHTML=x.innerHTML;var m=v.querySelector('.mu');if(m&&/›/.test(m.textContent))m.remove();x.replaceWith(v)});
   d.querySelectorAll('button[data-q44].on').forEach(function(x){var s=document.createElement('b');s.textContent=' ✔ '+txt(x)+' ';x.replaceWith(s)});
   d.querySelectorAll('script,style,button,select,nav,svg,canvas,input[type=file],[hidden],.s3rn,.ask44,.upd44,.tip44m a.lk43,.zchk .hq,.trt').forEach(function(x){x.remove()});
   d.querySelectorAll('input').forEach(function(x){var t=(x.type||'').toLowerCase(),s=document.createElement('span');
@@ -12234,7 +12236,7 @@ var CSS='@page{size:A4;margin:14mm 12mm}*{box-sizing:border-box}body{font:11.5px
  '.mod{break-before:page}.mod:first-of-type{break-before:auto}.pc,.pv,tr,li,.ckl div{break-inside:avoid}.pc,.pv{border:1px solid #ccc;border-radius:6px;padding:6px 8px;margin:6px 0}'+
  'table{border-collapse:collapse;width:100%;margin:4px 0}td,th{border:1px solid #bbb;padding:3px 5px;text-align:left;vertical-align:top}th{background:#f1f1f1}'+
  '.mu,small{color:#555}.url{font-size:9.5px;color:#666}.ck{font-size:14px;margin-right:4px}.ckl div{padding:3px 0;border-bottom:1px dotted #bbb}.ckl div::first-letter{font-size:14px}'+
- '.cap{border:2px solid #222;border-radius:8px;padding:10px 12px;margin-bottom:10px}.cap p{margin:4px 0}.gn{color:#0a7a2f}.rd{color:#b42318}.sm44r{display:block}.sm44i{margin-right:6px}';
+ '.cap{border:2px solid #222;border-radius:8px;padding:10px 12px;margin-bottom:10px}.cap p{margin:4px 0}.gn{color:#0a7a2f}.rd{color:#b42318}.sm44r{display:block}.sm44i{margin-right:6px}b+span,b+small,strong+span,b+div.mu{margin-left:6px}.sm44r small{margin-left:6px}';
 function build(Y){var now=new Date(),p2=function(n){return (n<10?'0':'')+n},M=[['📈 Bolsa (ações, FIIs, ETFs, BDRs)',bolsa(Y)],['₿ Cripto',cripto(Y)],['🌎 Exterior',s32('exi',Y)],['💵 Dólar',s32('dzi',Y)],['🏦 Renda fixa',s32('rfi',Y)]],T=total(),all=[];
   var body='<div class="cap"><h1>STOX3 · Checklist do Imposto de Renda</h1><p><b>Declaração de '+(Y+1)+' · ano-calendário '+Y+'</b></p><p class="mu">Gerado em '+p2(now.getDate())+'/'+p2(now.getMonth()+1)+'/'+now.getFullYear()+' às '+p2(now.getHours())+':'+p2(now.getMinutes())+'. Leitura do app a partir dos seus lançamentos: confira no programa da Receita, nos informes de rendimentos e, na dúvida, com um contador.</p></div>';
   if(T)body+=clean(T).innerHTML;
