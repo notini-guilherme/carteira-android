@@ -5882,6 +5882,9 @@ function gdSet(b,l,r){var out=[];
   l.concat(r).forEach(function(x){if(out.indexOf(x)>=0)return;
     if(b.indexOf(x)>=0&&(l.indexOf(x)<0||r.indexOf(x)<0))return;
     out.push(x)});return out}
+function gdCnt(v){if(Array.isArray(v))return v.length;if(gdIsObj(v)){var n=0;Object.keys(v).forEach(function(f){if(Array.isArray(v[f])&&v[f].length&&gdIsObj(v[f][0]))n+=v[f].length});return n}return 0}
+var GDNM={'carteira-acoes-v1':'ações','carteira-prov-v1':'proventos','carteira-cr-v1':'cripto','stox3-dz-v1':'dólar','stox3-m32-v1':'exterior','stox3-rf-v1':'renda fixa'};
+function gdShrunk(B,L){var o=[];Object.keys(GDNM).forEach(function(k){var b=gdCnt(B[k]),l=gdCnt(L[k]);if(b>=5&&b-l>=5&&l<b*0.7)o.push(GDNM[k])});return o}
 function gdM3(b,l,r){
   if(gdEq(l,r))return l;
   if(gdEq(l,b))return r;
@@ -5992,6 +5995,9 @@ async function gdSync(reason,opt){
     var sec=!!ST.keys,L=gdRead(sec),ids=await gdList(),id=ids[0]||'',rd=id?await gdGet(id):null,B=gdBase(),M,keys=gdKeys(sec),ch=[];
     if(id&&!rd){ids=await gdList();id=ids[0]||'';rd=id?await gdGet(id):null}/* o arquivo foi trocado por outro aparelho entre a lista e a leitura */
     if(rd&&!B&&!opt.choice&&gdHasData(L)&&gdHasData(rd.d)){GD.choice={t:rd.t||0,dev:rd.dev||''};GD.busy=false;gdPaint();res.choice=true;return res}
+    /* 4.4.1 (186): se este aparelho perdeu boa parte dos lancamentos desde a ultima sincronizacao (dados apagados no aparelho),
+       NUNCA manda essa perda para o Google (ela apagaria tambem nos outros aparelhos): pergunta, recomendando os do Google. */
+    if(rd&&B&&!opt.choice){var shr=gdShrunk(B,L);if(shr.length){GD.choice={t:rd.t||0,dev:rd.dev||'',shr:shr};GD.busy=false;gdPaint();res.choice=true;return res}}
     GD.choice=null;
     var Rd=rd?rd.d:{};
     if(!rd||opt.choice==='local')M=L;
@@ -6070,7 +6076,11 @@ function gdFmt(ms){if(!ms)return '';var d=new Date(ms),p=function(n){return ('0'
 function gdPaint(){
   var el=document.getElementById('gdst');if(!el)return;
   var h='',c=gdCfg(),hasPrev=false;try{hasPrev=!!localStorage.getItem(GDPK)}catch(e){}
-  if(GD.choice){
+  if(GD.choice&&GD.choice.shr){
+    h+='<div class="gdch"><b>Este aparelho está com bem menos lançamentos do que na última sincronização ('+GD.choice.shr.join(', ')+').</b><p class="mu">Isso acontece quando os dados deste aparelho foram apagados. Para não apagar também no Google e nos outros aparelhos, nada foi enviado. Recomendado: usar os do Google.</p>'+
+      '<button type="button" class="btn sm gdpri" data-gd="cr">Usar os do Google (recomendado)</button>'+
+      '<button type="button" class="btn sm" data-gd="cl">Apaguei de propósito: usar os deste aparelho</button></div>'}
+  else if(GD.choice){
     h+='<div class="gdch"><b>Já existem dados no Google e também neste aparelho.</b><p class="mu">O que fazer? Se você lançou as mesmas operações nos dois, juntar vai duplicar: nesse caso escolha o lado certo.</p>'+
       '<button type="button" class="btn sm gdpri" data-gd="cj">Juntar os dois</button>'+
       '<button type="button" class="btn sm" data-gd="cr">Usar os do Google (apaga os deste aparelho)</button>'+
