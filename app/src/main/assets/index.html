@@ -10160,6 +10160,10 @@ async function q1(sym){var r=await qxGet('https://query1.finance.yahoo.com/v8/fi
     var tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular,st=0,en=0;
     if(fx&&D){st=Date.parse(D+'T12:00:00Z');en=Date.parse(D+'T21:00:00Z')}else if(pts.length){st=pts[0][0];en=tp&&tp.end*1000>pts[pts.length-1][0]&&D===dk(Date.now())?tp.end*1000:pts[pts.length-1][0]}
     if(isB3(sym)){var bw=b3w();if(bw){st=bw[0];en=bw[1]}}
+    /* 4.4.1 (183): cripto negocia 24 h: o grafico e a % sao das ULTIMAS 24 h (como no modulo Cripto). Antes usava o dia UTC,
+       que vira as 21h de Brasilia: depois das 21h o grafico ficava com 2 ou 3 pontos (reto) e a % "em 26/11". */
+    if(/-USD$/.test(sym)&&all.length){var t24=Date.now()-864e5,w24=all.filter(function(q){return q[0]>=t24}),b24=all.filter(function(q){return q[0]<t24});
+      if(w24.length>=2){pts=w24;pv=b24.length?b24[b24.length-1][1]:w24[0][1];p=live>0?live:w24[w24.length-1][1];D=new Date(Date.now()-3*36e5).toISOString().slice(0,10);st=w24[0][0];en=Date.now()+6e4}}
     return {p:p,pv:pv>0?pv:0,c:pv>0&&p>0?(p/pv-1)*100:null,pts:pts,st:st,en:en,day:D}}catch(e){return null}}
 function load(keys){var L=[];keys.forEach(function(k){G[k].L.forEach(function(a){if(L.indexOf(a[0])<0)L.push(a[0])})});var key='g|'+keys.join(',');
   var e=CA[key];if(e&&Date.now()-e.t<TTL)return Promise.resolve(e.d);if(BU[key])return BU[key];
@@ -10195,12 +10199,13 @@ function ab(n){var w=String(n).replace(/[^A-Za-zÀ-ú0-9& ]/g,'').split(/\s+/).f
 function hh(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
 function card(a,x){fixW(a[0],x);var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/^DX-Y|-USD$/.test(s);/* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
   var ch='';if(x&&x.pts&&x.pts.length>=2&&typeof chBuild==='function'){try{ch=chBuild({id:'g:'+s,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:'X:'+s})}catch(e){ch=''}}
+  if(ch&&/-USD$/.test(s))ch=ch.replace(/>Hoje</,'>24 h<').replace(/fechamento anterior/g,'há 24 h');
   if(!ch)ch='<div class="mu g43nc">'+(x?'sem gráfico de hoje agora':'carregando o gráfico…')+'</div>';
   /* 175: mercado aberto mas sem negocio ha mais de 45 min (ativo pouco negociado): diz o horario do ultimo negocio */var lt=x&&x.pts&&x.pts.length?x.pts[x.pts.length-1][0]:0,stl=open&&lt&&now-lt>45*6e4&&now-lt<10*36e5;
   var st=k24?'negociado 24 h':x&&x.st?(open?(stl?'Aberto · último negócio às '+hh(lt):'Aberto · fecha às '+hh(x.en)):(now>x.en?'Fechado · fechou às '+hh(x.en):'Fechado · abre às '+hh(x.st))):'';
   var cl=x&&!k24&&x.st&&!open;return '<div class="pc g43c'+(fv?' g43fv':'')+(cl?' g43x':'')+'"><div class="g43h"><button type="button" class="g43o" data-asset="X:'+esc(s)+'" title="Abrir a página de '+esc(a[1])+'">'+avH(s,a[1])+'<span class="g43n"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></span></button>'+
     '<button type="button" class="g43f'+(fv?' on':'')+'" data-xfav="'+esc(s)+'" aria-pressed="'+fv+'" aria-label="'+(fv?'Tirar dos favoritos':'Favoritar')+'" title="'+(fv?'Tirar dos favoritos':'Favoritar')+'">'+(fv?'★':'☆')+'</button></div>'+
-    '<div class="g43p"><b>'+(x&&x.p>0?F(x.p):'—')+'</b><span class="'+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c)+(x.day&&x.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):' hoje'):'—')+'</span></div>'+
+    '<div class="g43p"><b>'+(x&&x.p>0?F(x.p):'—')+'</b><span class="'+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c)+(/-USD$/.test(s)?' em 24 h':x.day&&x.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):' hoje'):'—')+'</span></div>'+
     (st?'<small class="mu g43st">'+(open?'<i class="wmo">Aberto</i> ':cl?'<i class="wmc">Mercado fechado</i> ':'')+esc(st.replace(/^(Aberto|Fechado) · /,''))+'</small>':'')+ch+'</div>'}
 function sortF(L){var f=favs();return L.slice().sort(function(a,b){return (f.indexOf(b[0])>=0)-(f.indexOf(a[0])>=0)})}
 document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;var b=t.closest('[data-xfav]');
