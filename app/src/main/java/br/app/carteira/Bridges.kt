@@ -65,7 +65,8 @@ class HttpBridge(private val web: WebView) {
         "newsdata.io",
         "eodhd.com",
         "query1.finance.yahoo.com",
-        "query2.finance.yahoo.com"
+        "query2.finance.yahoo.com",
+        "cotacao.b3.com.br"
     )
 
     @JavascriptInterface

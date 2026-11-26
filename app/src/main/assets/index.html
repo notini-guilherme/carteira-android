@@ -11832,7 +11832,11 @@ function fmt(k,sym,v){if(!(v>0))return '—';var d=v<0.01?Math.min(8,Math.max(4,
   if(k==='I'||k==='X'&&/^\^/.test(sym))return n;return 'US$ '+n}
 async function load(k,sym){var key=k+'|'+sym,now=Date.now(),m=MEM[key]||{};
   if(!window.CDL||!CDL.fetch)return;
-  try{if(!(m.dt&&now-m.dt<5*6e4)){var d=await CDL.fetch(k,sym,1);if(d&&d.length){var hs=d.map(function(x){return x.h}),ls=d.map(function(x){return x.l});m.dh=Math.max.apply(null,hs);m.dl=Math.min.apply(null,ls);m.p=d[d.length-1].c;m.dt=now}}}catch(e){}
+  /* 191: o dolar (e o IBOV) de noite: o "Hoje" vira o dia novo (UTC) e, cortado no horario do pregao, ficava vazio: sem faixa do dia.
+     Agora tenta de novo (outra busca igual em andamento devolve vazio) e, se continuar vazio, usa o ultimo pregao dos 5 dias. */
+  try{if(!(m.dt&&now-m.dt<5*6e4)){var d=await CDL.fetch(k,sym,1);if(!(d&&d.length)){await new Promise(function(ok){setTimeout(ok,1800)});d=await CDL.fetch(k,sym,1)}
+      if(!(d&&d.length)){var d5=await CDL.fetch(k,sym,5);if(d5&&d5.length){var dk=function(t){return new Date(t-3*36e5).toISOString().slice(0,10)},ld=dk(d5[d5.length-1].t);d=d5.filter(function(x){return dk(x.t)===ld})}}
+      if(d&&d.length){var hs=d.map(function(x){return x.h}),ls=d.map(function(x){return x.l});m.dh=Math.max.apply(null,hs);m.dl=Math.min.apply(null,ls);m.p=d[d.length-1].c;m.dt=now}}}catch(e){}
   try{var w=DISK[key];if(w&&now-w.t<12*36e5){m.wh=w.wh;m.wl=w.wl}else{var y=await CDL.fetch(k,sym,365);if(y&&y.length>20){m.wh=Math.max.apply(null,y.map(function(x){return x.h}));m.wl=Math.min.apply(null,y.map(function(x){return x.l}));DISK[key]={t:now,wh:m.wh,wl:m.wl};saveDisk()}}}catch(e){}
   if(m.p>0){if(m.wh>0&&m.p>m.wh)m.wh=m.p;if(m.wl>0&&m.p<m.wl)m.wl=m.p}
   m.done=now;MEM[key]=m}
@@ -12312,11 +12316,31 @@ function cut(j){try{var R=j.chart.result[0],ts=R.timestamp||[],Q=(R.indicators&&
   ts.forEach(function(t,i){var m=((Math.floor(t/60)-180)%1440+1440)%1440;if(m>=600&&m<=1080)keep.push(i)});
   if(keep.length===ts.length)return;R.timestamp=keep.map(function(i){return ts[i]});
   Object.keys(Q).forEach(function(k){if(Array.isArray(Q[k]))Q[k]=keep.map(function(i){return Q[k][i]})})}catch(e){}}
+/* 190: o Yahoo nao tem os negocios da B3 das 17h as 18h (nem pedindo o pos-pregao). Quando o grafico do Yahoo para perto das 17h,
+   o app completa com o grafico do dia da propria B3 (cotacao.b3.com.br, publico, atraso de ~15 min), no mesmo intervalo do grafico. */
+var RAW=null,B3C={};
+function b3tk(sym){return sym==='^BVSP'?'IBOV':String(sym).replace(/\.SA$/i,'').toUpperCase()}
+function b3parse(j){try{var T=j&&(j.TradgFlr||j.tradgFlr),S=T&&(T.scty||T.Scty),L=S&&(S.lstQtn||S.LstQtn),dt=String(T&&(T.date||T.Date)||'').slice(0,10);
+    if(!Array.isArray(L)||!/^\d{4}-\d{2}-\d{2}$/.test(dt))return null;var o=[];
+    L.forEach(function(q){var hm=String(q.dtTm||q.DtTm||''),p=+(q.closPric!=null?q.closPric:q.ClosPric),x=hm.match(/(\d{2}):(\d{2})(?::(\d{2}))?/);
+      if(x&&p>0){var ts=Date.parse(dt+'T'+x[1]+':'+x[2]+':'+(x[3]||'00')+'-03:00')/1000;if(ts>0)o.push([ts,p])}});
+    o.sort(function(a,b){return a[0]-b[0]});return o.length?o:null}catch(e){return null}}
+function b3day(sym){var t=b3tk(sym),c=B3C[t];if(c&&Date.now()-c.t<12e4)return c.p;
+  var p=RAW?Promise.resolve(RAW('https://cotacao.b3.com.br/mds/api/v1/DailyFluctuationHistory/'+encodeURIComponent(t),10000)).then(function(r){return r&&r.j?b3parse(r.j):null},function(){return null}):Promise.resolve(null);
+  B3C[t]={t:Date.now(),p:p};return p}
+function mod(ts){return ((Math.floor(ts/60)-180)%1440+1440)%1440}
+function fill(j,sym,iv,L0){try{var R=j.chart.result[0],ts=R.timestamp||[],Q=(R.indicators&&R.indicators.quote&&R.indicators.quote[0])||{};if(!ts.length)return Promise.resolve(0);
+    var last=ts[ts.length-1],lm=mod(last);if(!(lm>=990&&lm<1075)||Date.now()/1000-last<1200)return Promise.resolve(0);
+    return Promise.resolve(L0||b3day(sym)).then(function(L){if(!L)return 0;var B=iv*60,add={},n=0;
+      L.forEach(function(x){if(x[0]<=last)return;var m=mod(x[0]);if(m<600||m>1080)return;var b=Math.floor(x[0]/B)*B;if(b<=last)b=last+B;add[b]=x[1]});
+      Object.keys(add).map(Number).sort(function(a,b){return a-b}).forEach(function(b){ts.push(b);n++;['close','open','high','low'].forEach(function(f){if(Array.isArray(Q[f]))Q[f].push(add[b])});if(Array.isArray(Q.volume))Q.volume.push(0)});
+      R.timestamp=ts;return n})}catch(e){return Promise.resolve(0)}}
 (function wrap(n){if(typeof qxGet!=='function'){if(n<80)setTimeout(function(){wrap(n+1)},100);return}
-  var _g=qxGet;qxGet=function(u,ms){var s=String(u||''),m=s.match(/\/v8\/finance\/chart\/([^?]+)\?(.*)$/);
+  var _g=qxGet;RAW=function(){return _g.apply(window,arguments)};qxGet=function(u,ms){var s=String(u||''),m=s.match(/\/v8\/finance\/chart\/([^?]+)\?(.*)$/);
     if(m){var sym='';try{sym=decodeURIComponent(m[1])}catch(e){sym=m[1]}
-      if(b3(sym)&&/interval=\d+m\b|interval=1h\b/.test(m[2])&&!/includePrePost/.test(m[2])){var a=[].slice.call(arguments);a[0]=s+'&includePrePost=true';
-        return Promise.resolve(_g.apply(this,a)).then(function(r){if(r&&r.j)cut(r.j);return r})}}
+      var ivm=m[2].match(/interval=(\d+)(m|h)\b/);
+      if(b3(sym)&&ivm&&!/includePrePost/.test(m[2])){var a=[].slice.call(arguments);a[0]=s+'&includePrePost=true';var iv=+ivm[1]*(ivm[2]==='h'?60:1);
+        return Promise.resolve(_g.apply(this,a)).then(function(r){if(!r||!r.j)return r;cut(r.j);return fill(r.j,sym,iv).then(function(){return r},function(){return r})})}}
     return _g.apply(this,arguments)}})(0);
 
 /* ---------- 181: uma pagina so por ativo ---------- */
@@ -12364,7 +12388,7 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
   var v=b.getAttribute('data-mdx')||b.getAttribute('data-cdlfs')||'',i=v.indexOf(':'),k=v.slice(0,i),s=v.slice(i+1);if(!s)return;
   try{if((k==='C'||k==='A')&&window.S40C){e.preventDefault();e.stopImmediatePropagation();S40C.open(k,s);return}
     if(k==='X'&&window.S41F){e.preventDefault();e.stopImmediatePropagation();S41F.open(s);return}}catch(x){}},true);
-window.S47B={hold:hold,run:run,cut:cut};
+window.S47B={hold:hold,run:run,cut:cut,b3parse:b3parse,fill:fill};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n47b.js: '+(e&&e.message||e))}catch(x){}}
