@@ -4178,7 +4178,7 @@ function lgUrls(kind,sym){var S=String(sym).toUpperCase(),l=S.toLowerCase(),u=[]
 var LGOK={},LGBAD={};
 function lgApply(){
   if(!VZ.ui.lg)return;
-  document.querySelectorAll('#ml .mkc .av:not([data-lg]),#zml .mcr .av:not([data-lg]),.pcav:not([data-lg])').forEach(function(a){
+  document.querySelectorAll('#ml .mkc .av:not([data-lg]),#zml .mcr .av:not([data-lg]),#crm2 .mcr .av:not([data-lg]):not(.fl45),.pcav:not([data-lg])').forEach(function(a){
     a.setAttribute('data-lg','1');
     var card=a.closest('.mkc,.mcr'),t=card&&card.querySelector('.ptk'),sym=a.getAttribute('data-sym')||(t?t.textContent.trim():''),kd=a.getAttribute('data-kd')||(card&&card.classList.contains('mcr')?'C':'A'),key=kd+sym;
     if(!/^[A-Za-z0-9]{1,12}$/.test(sym)||(LGBAD[key]&&Date.now()-LGBAD[key]<10*60000))return;
@@ -8883,9 +8883,9 @@ function dzCard2(){var x=(typeof NX!=='undefined'&&NX.ix)?NX.ix.usd:null,ut=0;tr
     '<div class="mkpp">'+sp+'</div><div class="mkpc"><b class="'+(x&&x.c!=null?(x.c>0?'gn':x.c<0?'rd':'mu'):'mu')+'">'+(x&&x.c!=null?(x.c>=0?'+':'')+pc(x.c).replace(/^[+−]/,function(m){return m==='−'?'-':''}):'—')+'</b><span class="mu">hoje</span></div>'+
     '<div data-mkhl="usd">'+(P.length>1?'<div class="mkhl"><span>máx <b>'+f4(mx)+'</b></span><span>mín <b>'+f4(mn)+'</b></span></div>':'')+'</div></div>'}
 function dzPut(){var sec=$i('crm');if(!sec||sec.hidden)return;var bt=window.CRBTC46||'',w=$i('crm2'),h='<div class="mcg crm2g" id="crm2">'+dzCard2()+bt+'</div>';
-  if(w){if(w.__h!==h){var keep={};w.querySelectorAll('.fx45').forEach(function(b){var c=b.closest('[data-mk]');if(c)keep[c.dataset.mk]=b});w.outerHTML=h;var n0=$i('crm2');if(n0){n0.__h=h;Object.keys(keep).forEach(function(k){var c=n0.querySelector('[data-mk="'+k+'"]'),a=c&&(c.querySelector('[data-mkhl]')||c.lastElementChild);if(c&&a&&!c.querySelector('.fx45'))a.insertAdjacentElement('afterend',keep[k])})}}return}
+  if(w){if(w.__h!==h){var keep={};w.querySelectorAll('.fx45').forEach(function(b){var c=b.closest('[data-mk]');if(c)keep[c.dataset.mk]=b});w.outerHTML=h;setTimeout(function(){try{if(window.STX3&&STX3.logos)STX3.logos()}catch(x){}},0);var n0=$i('crm2');if(n0){n0.__h=h;Object.keys(keep).forEach(function(k){var c=n0.querySelector('[data-mk="'+k+'"]'),a=c&&(c.querySelector('[data-mkhl]')||c.lastElementChild);if(c&&a&&!c.querySelector('.fx45'))a.insertAdjacentElement('afterend',keep[k])})}}return}
   var od=$i('crmdz');if(od&&!od.closest('#crm2'))od.remove();
-  var anchor=sec.querySelector('.mkhelp')||sec.querySelector('h2');if(!anchor)return;anchor.insertAdjacentHTML('afterend','<div id="crm2w">'+h+'</div>');var n=$i('crm2');if(n)n.__h=h}
+  var anchor=sec.querySelector('.mkhelp')||sec.querySelector('h2');if(!anchor)return;anchor.insertAdjacentHTML('afterend','<div id="crm2w">'+h+'</div>');var n=$i('crm2');if(n)n.__h=h;try{if(window.STX3&&STX3.logos)STX3.logos()}catch(x){}}
 (function(){var sec=$i('crm');if(!sec)return;var T=null;try{new MutationObserver(function(){if(T)return;T=setTimeout(function(){T=null;dzPut()},80)}).observe(sec,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']})}catch(e){}setTimeout(dzPut,300)})();
 document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.id==='crmdz'){e.preventDefault();open('usd')}if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.id==='crmbtc'){e.preventDefault();try{S40C.open('C','BTC')}catch(x){}}});
 /* 10: botao de expandir nos graficos do IBOV e do dolar (Mercado da Bolsa e faixas) */
@@ -10245,7 +10245,7 @@ function card(a,x){fixW(a[0],x);var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&no
     (st?'<small class="mu g43st">'+(open?'<i class="wmo">Aberto</i> ':cl?'<i class="wmc">Mercado fechado</i> ':'')+esc(st.replace(/^(Aberto|Fechado) · /,''))+'</small>':'')+ch+'</div>'}
 function sortF(L){var f=favs();return L.slice().sort(function(a,b){return (f.indexOf(b[0])>=0)-(f.indexOf(a[0])>=0)})}
 document.addEventListener('click',function(e){var t=e.target;if(!t.closest)return;var b=t.closest('[data-xfav]');
-  if(b){e.preventDefault();e.stopPropagation();var on=favTog(b.dataset.xfav);document.querySelectorAll('[data-xfav="'+b.dataset.xfav.replace(/"/g,'')+'"]').forEach(function(x){x.classList.toggle('on',on);x.textContent=on?'★':'☆';x.setAttribute('aria-pressed',String(on));var c=x.closest('.g43c');if(c)c.classList.toggle('g43fv',on)});try{LT.sig='';ltDraw()}catch(z){}if(document.querySelector('.fv47'))setTimeout(function(){try{var sc=document.querySelector('.fv47').closest('section');if(sc&&sc.id)S.paint(sc.id)}catch(z){}},0);return}
+  if(b){e.preventDefault();e.stopPropagation();var on=favTog(b.dataset.xfav);document.querySelectorAll('[data-xfav="'+b.dataset.xfav.replace(/"/g,'')+'"]').forEach(function(x){x.classList.toggle('on',on);x.textContent=on?'★':'☆';x.setAttribute('aria-pressed',String(on));var c=x.closest('.g43c');if(c)c.classList.toggle('g43fv',on)});try{LT.sig='';ltDraw()}catch(z){}if(document.querySelector('.fv47c'))setTimeout(function(){try{var sc=document.querySelector('.fv47c').closest('section');if(sc&&sc.id)S.paint(sc.id)}catch(z){}},0);return}
   var m=t.closest('[data-mdx^="X:"]');if(m){e.preventDefault();e.stopImmediatePropagation();try{S41F.open(m.dataset.mdx.slice(2))}catch(z){}}},true);
 /* grade de uma ou mais faixas; o que nao carregou mostra o motivo e "tentar de novo" */
 function grid(keys,o){o=o||{};if(!env())return '<div class="mu">Os mercados do mundo aparecem no aplicativo (Windows ou Android).</div>';var D=data(keys),key='g|'+keys.join(',');
@@ -10254,9 +10254,13 @@ function grid(keys,o){o=o||{};if(!env())return '<div class="mu">Os mercados do m
   if(o.pick){var f=favs(),all=[];keys.forEach(function(k){G[k].L.forEach(function(a){if((o.pick.indexOf(a[0])>=0||f.indexOf(a[0])>=0)&&!all.some(function(x){return x[0]===a[0]}))all.push(a)})});
     return '<div class="g42g g43g">'+sortF(all).map(function(a){return card(a,D[a[0]])}).join('')+'</div><div class="mu wmnt">Os principais e os seus favoritos (☆). Todas as bolsas, metais e moedas ficam no Mercado. Cerca de 15 minutos de atraso (Yahoo Finance).</div>'}
   /* 4.4.1 (194): lista "★ Favoritos" no topo do Mercado (Exterior e Dolar), igual a do Total e da Bolsa */
-  var fh='';if(o.fav){var fl=[];keys.forEach(function(k){G[k].L.forEach(function(a){if(isFav(a[0])&&!fl.some(function(x){return x[0]===a[0]}))fl.push(a)})});
-    fh='<h4 class="wmt g42t fv47">★ Favoritos <small>'+fl.length+'</small></h4>'+(fl.length?'<div class="g42g g43g fav47">'+fl.map(function(a){return card(a,D[a[0]])}).join('')+'</div>':'<div class="mu fv47e">Toque na ☆ de um ativo para ele aparecer aqui.</div>')}
-  return fh+keys.map(function(k){if(o.skip&&o.skip.indexOf(k)>=0)return '';return (keys.length>1||o.title||o.fav?'<h4 class="wmt g42t">'+G[k].t+'</h4>':'')+'<div class="g42g g43g">'+sortF(G[k].L).map(function(a){return card(a,D[a[0]])}).join('')+'</div>'}).join('')+
+  /* 4.4.1 (203): botoes das listas como no Total (★ Favoritos + uma lista por vez); lembra a escolha */
+  var fh='';if(o.fav){var fl=[],KS='stox3-fv47-'+keys.join('_'),sel=null,kk=keys.filter(function(k){return !(o.skip&&o.skip.indexOf(k)>=0)});keys.forEach(function(k){G[k].L.forEach(function(a){if(isFav(a[0])&&!fl.some(function(x){return x[0]===a[0]}))fl.push(a)})});
+    try{sel=localStorage.getItem(KS)}catch(x){}if(sel!=='fav'&&kk.indexOf(sel)<0)sel=kk[0];
+    fh='<div class="k43c fv47c" role="group" aria-label="Listas">'+[['fav','★ Favoritos'+(fl.length?' '+fl.length:'')]].concat(kk.map(function(k){return [k,G[k].t]})).map(function(a){return '<button type="button" class="btn sm'+(sel===a[0]?' on':'')+'" data-fv47c="'+a[0]+'" data-fv47k="'+KS+'" aria-pressed="'+(sel===a[0])+'">'+esc(a[1])+'</button>'}).join('')+'</div>';
+    if(sel==='fav')return fh+(fl.length?'<div class="g42g g43g fav47">'+fl.map(function(a){return card(a,D[a[0]])}).join('')+'</div>':'<div class="mu fv47e">Nenhum favorito nesta lista ainda. Toque na ☆ de um ativo para ele aparecer aqui.</div>');
+    keys=[sel]}
+  return fh+keys.map(function(k){if(o.skip&&o.skip.indexOf(k)>=0)return '';return (!o.fav&&(keys.length>1||o.title)?'<h4 class="wmt g42t">'+G[k].t+'</h4>':'')+'<div class="g42g g43g">'+sortF(G[k].L).map(function(a){return card(a,D[a[0]])}).join('')+'</div>'}).join('')+
     '<div class="mu wmnt">Cerca de 15 minutos de atraso (Yahoo Finance). Horários de Brasília. Toque no nome para abrir a página (gráfico Linha/Candle e notícias) e na ☆ para favoritar.</div>'}
 function after(keys,repaint){if(!env())return;load(keys).then(function(){try{repaint()}catch(e){}},function(){try{repaint()}catch(e){}})}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-g42re]');if(!b)return;var k=b.dataset.g42re.split(',');ERR['g|'+k.join(',')]=0;b.textContent='Buscando…';load(k).then(function(){try{if(window.S40I)S40I.paint()}catch(x){}try{var m=S.cur();S.paint(S.st&&S.st().t)}catch(x){}})});
@@ -10269,6 +10273,10 @@ function avH(s,nm){if(COM47[s])return '<span class="g43av c47" aria-hidden="true
   return '<span class="g43av'+lgA(s)+' style="background:'+col(s)+'" aria-hidden="true">'+esc(ab(nm))+'</span>'}
 window.S42B={COM47:COM47,old:old,expire:expire,tick:tick,fixW:fixW,b3w:b3w,one:one,isB3:isB3,lgA:lgA,avH:avH,grid:grid,load:load,data:data,after:after,fmt:fmt,kind:kind,G:G,q1:q1,favs:favs,isFav:isFav,favTog:favTog,col:col,ab:ab,CA:CA};
 })();
+
+/* 4.4.1 (203): troca de lista nos botoes do Mercado do Exterior e do Dolar */
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-fv47c]');if(!b)return;try{localStorage.setItem(b.getAttribute('data-fv47k'),b.getAttribute('data-fv47c'))}catch(x){}
+  var sc=b.closest('section');try{if(sc&&sc.id&&window.S32&&S32.paint)S32.paint(sc.id)}catch(x){}});
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n42b.js: '+(e&&e.message||e))}catch(x){}}
 try{if(!window.__S32SAFE){/* ===================== v4.2 (c): Mercado do Dolar com graficos (moedas, ouro, metais e petroleo); IBOV e dolar do Mercado abrem tocando em qualquer lugar ===================== */
