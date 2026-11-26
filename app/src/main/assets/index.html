@@ -4831,6 +4831,10 @@ window.__stxBack=function(){if(MD.fs){mdFsClose();return true}if(MD.on){mdClose(
 window.MDX={data:MD,open:mdOpen,close:mdClose,fs:mdFsOpen,html:mdHtml,parseDiv:mdParseDiv,parseYahoo:mdParseYahoo,pick:mdPick,load:mdLoad,isOpen:function(){return MD.on}};
 /* a Cripto ja desenhou uma vez antes dos graficos existirem: desenha de novo */
 try{if(QXC.cripto&&window.CRX&&typeof window.CRX.all==='function')window.CRX.all()}catch(e){}
+/* 4.4.1 (214): busca de proventos de um ativo que ja esta em andamento (ex.: "A receber" ao abrir Proventos e o botao Buscar ao mesmo tempo)
+   reaproveita a mesma consulta, em vez de pedir de novo a brapi. So reaproveita quando e o mesmo tipo de busca (com ou sem EODHD). */
+(function(){var _r=mdDivRun,P={};mdDivRun=function(tk,noEod){var e=P[tk],ek=false;try{ek=!!nwKey('e')}catch(x){}if(e&&(e.ne===!!noEod||!ek))return e.p;
+  var p=_r(tk,noEod);P[tk]={p:p,ne:!!noEod};var f=function(){if(P[tk]&&P[tk].p===p)delete P[tk]};p.then(f,f);return p}})();
 
 /* ===================== v2.72: sugestoes de corretora e cartao do ativo no Simulador =====================
    1) Enquanto a pessoa digita a corretora (Lancar, Proventos, Simulador, Transferencia e Cripto), aparecem botoes com os nomes:
@@ -6296,8 +6300,9 @@ async function nxFetch(force){
   NX.busy=true;
   try{for(i=0;i<due.length;i++){
     var MH=due[i]==='usd'&&window.MH47;/* 4.4.1 (211): dolar segue o horario do cambio (exterior, quase 24 h): pregao atual do Yahoo + fechamento anterior oficial */
-    r=await nxYahoo(NXSYM[due[i]],due[i]==='usd'&&!MH?'5d':'1d',due[i]==='usd'&&!MH?'15m':'5m');
-    if(MH&&(!r.pts||r.pts.length<2)){var r5=await nxYahoo('BRL=X','5d','15m'),ls=r5&&r5.pts?MH47.lastSess('BRL=X',r5.pts):null;if(ls){r={pts:ls.S,m:Object.assign({},r5.m,{chartPreviousClose:ls.pv||r5.m.chartPreviousClose})}}}
+    r=await nxYahoo(NXSYM[due[i]],due[i]==='usd'?'5d':'1d',due[i]==='usd'?'15m':'5m');
+    /* 219: dolar = pregao do cambio (17h de NY ate 17h de NY), igual ao cartao do Dolar no Mercado; fechamento anterior = ultimo preco do pregao anterior */
+    var dy7='';if(MH&&r.pts){var ps=MH47.pickSess('BRL=X',r.pts);if(ps){dy7=ps.day;r={pts:ps.S,m:Object.assign({},r.m,{chartPreviousClose:ps.pv||r.m.chartPreviousClose})}}}
     if(!r.pts){NX.bk=Date.now()+5*6e4;break}
     m=r.m;lt=r.pts[r.pts.length-1][0];p=r.pts[r.pts.length-1][1];qt=+m.regularMarketTime>0?+m.regularMarketTime*1000:0;
     if(+m.regularMarketPrice>0&&(qt>=lt||Date.now()-lt<36e5))p=+m.regularMarketPrice;
@@ -6305,7 +6310,7 @@ async function nxFetch(force){
     var pts=r.pts;
     /* 4.3: dolar com horario fixo (9h as 18h de Brasilia): fora do pregao mostra o ultimo pregao e a variacao dele, e o mini grafico nao vira uma linha reta da madrugada */
     if(due[i]==='usd'&&!MH){var ss=nxSess(r.pts);if(ss){var inS=ss.D===qhD(new Date())&&Date.now()<=qiAt(ss.D,18,0)+6e4;if(!inS)p=ss.S[ss.S.length-1][1];if(ss.pv>0)pv=ss.pv;pts=ss.S;lt=ss.S[ss.S.length-1][0]}}
-    NX.ix[due[i]]={p:p,pv:pv>0?pv:0,c:pv>0?(p/pv-1)*100:null,t:Date.now(),qt:Math.max(qt,lt),pts:nxThin(pts,80)};got++;
+    NX.ix[due[i]]={p:p,pv:pv>0?pv:0,c:pv>0?(p/pv-1)*100:null,t:Date.now(),qt:Math.max(qt,lt),pts:nxThin(pts,80),day:dy7||''};got++;
     try{LT.x[due[i]]={p:p,c:pv>0?(p/pv-1)*100:null,t:Date.now()};ltSave()}catch(e){}}}catch(e){}
   NX.busy=false;if(got){nxSave();try{ltDraw()}catch(e){}}
   nxPaint();return got}
@@ -6314,7 +6319,7 @@ function nxSeries(k,r){
   var e=NX.s[k+'|'+(r===1?'1':r===5?'5':'d')];
   if(r===1){var x=NX.ix[k];if(!x||!x.pts||x.pts.length<2)return null;
     var pts=nxWin(k,x.pts).map(function(a){return {t:a[0],p:a[1],l:qiHm(a[0])}});
-    return {pts:pts,ref:x.pv>0?x.pv:0,refLb:'fechamento anterior',sess:qhD(new Date(pts[pts.length-1].t))}}
+    return {pts:pts,ref:x.pv>0?x.pv:0,refLb:'fechamento anterior',sess:x.day||qhD(new Date(pts[pts.length-1].t))}}
   if(!e||!e.pts||e.pts.length<2)return null;
   if(r===5)return {pts:e.pts.map(function(a){var d=new Date(a[0]);return {p:a[1],l:qhDm(qhD(d))+' '+qiHm(a[0]),ax:qhDm(qhD(d))}}),ref:0};
   var lim=qhDays(r)[0],pp=e.pts.filter(function(a){return qhD(new Date(a[0]))>=lim}).map(function(a){var d=qhDm(qhD(new Date(a[0])));return {p:a[1],l:d,ax:d}});
@@ -8975,9 +8980,11 @@ async function fetchC(k,sym,r){var key=k+'|'+sym+'|'+r,e=C[key];if(e&&Date.now()
   try{if(k==='C'){var q=null;try{q=QXT['C:'+sym]}catch(x){}var pair=q&&q.y?q.y:sym+'BRL',mul=1;if(/USDT$/.test(pair)&&pair!=='USDTBRL'){try{mul=CRX.price('USDT')||0}catch(x){mul=0}if(!(mul>0))mul=5.4}
       var p=plan('C',r),U=['https://data-api.binance.vision/api/v3/klines?symbol='+pair+'&interval='+p[0]+'&limit='+p[1],'https://api.binance.com/api/v3/klines?symbol='+pair+'&interval='+p[0]+'&limit='+p[1]];
       for(var i=0;i<U.length&&!out;i++){var rr=await qxGet(U[i],15000);if(rr&&rr.ok&&Array.isArray(rr.j)&&rr.j.length>1)out=rr.j.map(function(a){return {t:+a[0],o:+a[1]*mul,h:+a[2]*mul,l:+a[3]*mul,c:+a[4]*mul,v:+a[7]||+a[5]||0}})}}
-    else{var s=k==='I'?((typeof NXSYM!=='undefined'&&NXSYM[sym])||sym):k==='X'?sym:yh(sym),p2=plan('A',r),r2=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?range='+p2[0]+'&interval='+p2[1],15000);
+    else{var s=k==='I'?((typeof NXSYM!=='undefined'&&NXSYM[sym])||sym):k==='X'?sym:yh(sym),g7=r===1&&window.MH47&&MH47.grp(s)&&(k==='X'||k==='I'),p2=g7?['5d','5m']:plan('A',r),r2=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?range='+p2[0]+'&interval='+p2[1],15000);
       var R=r2&&r2.j&&r2.j.chart&&r2.j.chart.result&&r2.j.chart.result[0],Q=R&&R.indicators&&R.indicators.quote&&R.indicators.quote[0];
-      if(R&&Q&&Array.isArray(R.timestamp)){out=[];R.timestamp.forEach(function(t,i){var o=Q.open[i],h=Q.high[i],l=Q.low[i],c=Q.close[i];if(o>0&&h>0&&l>0&&c>0)out.push({t:t*1000,o:o,h:h,l:l,c:c,v:+(Q.volume&&Q.volume[i])||0})});if(r===15)out=out.slice(-15);if(k==='I'&&(sym==='usd'||sym==='ibov')&&r<=5&&window.S41H)out=S41H.cut(sym,out,r);if(out.length<2)out=null}}}catch(x){out=null}
+      if(R&&Q&&Array.isArray(R.timestamp)){out=[];R.timestamp.forEach(function(t,i){var o=Q.open[i],h=Q.high[i],l=Q.low[i],c=Q.close[i];if(o>0&&h>0&&l>0&&c>0)out.push({t:t*1000,o:o,h:h,l:l,c:c,v:+(Q.volume&&Q.volume[i])||0})});if(r===15)out=out.slice(-15);if(k==='I'&&(sym==='usd'||sym==='ibov')&&r<=5&&window.S41H)out=S41H.cut(sym,out,r);
+        /* 219: Hoje das moedas e commodities = pregao do exterior */if(g7&&out.length){var ps=MH47.pickSess(s,out.map(function(c){return [c.t,c.c]}));if(ps){var a0=ps.S[0][0],b0=ps.S[ps.S.length-1][0];out=out.filter(function(c){return c.t>=a0&&c.t<=b0})}}
+        if(out.length<2)out=null}}}catch(x){out=null}
   B[key]=0;if(out)C[key]={t:Date.now(),d:out};return out}
 function fmtOf(k,sym){if(k==='X'&&window.S42B&&S42B.fmt&&sym&&/^\^|=X$|^DX-Y|\.SA$|^000001/.test(sym)){var F5=S42B.fmt(sym);return function(v){return F5(+v)}}if(k==='X')return function(v){return 'US$ '+(+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})};if(k==='I')return function(v){return typeof nxFmt==='function'?nxFmt(sym,v):String(Math.round(v))};return function(v){if(typeof vzOn==='function'&&vzOn())return '***';return v>=1?brl(v):'R$ '+v.toLocaleString('pt-BR',{maximumSignificantDigits:4})}}
 var CID=0,CM={};
@@ -10068,18 +10075,21 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 /* ---------- pagina do ativo dos EUA (Linha / Candle, periodos) ---------- */
 var XP={s:'',on:false,r:1},YC={};var PRS=[[1,'Hoje'],[5,'5 dias'],[30,'1 mês'],[180,'6 meses'],[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos']]; /* 4.4: + Este ano */
 function plan(r){return r===1?['1d','5m']:r===5?['5d','30m']:r===30?['1mo','1d']:r===180?['6mo','1d']:r===1001?['ytd','1d']:r===365?['1y','1d']:['5y','1wk']}
-async function yser(sym,r){var k=sym+'|'+r,e=YC[k];if(e&&Date.now()-e.t<5*6e4)return e.d;var p=plan(r),rr=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range='+p[0]+'&interval='+p[1],15000),d=null;
+async function yser(sym,r){var k=sym+'|'+r,e=YC[k];if(e&&Date.now()-e.t<5*6e4)return e.d;var G7=r===1&&window.MH47&&MH47.grp(sym),p=G7?['5d','5m']:plan(r),rr=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range='+p[0]+'&interval='+p[1],15000),d=null;
   try{var R0=rr.j.chart.result[0],c=R0.indicators.quote[0].close,m=R0.meta;d={pts:[],pv:+(m.chartPreviousClose||0),p:+m.regularMarketPrice,nm:m.longName||m.shortName||'',hi:+m.regularMarketDayHigh||0,lo:+m.regularMarketDayLow||0};R0.timestamp.forEach(function(t,i){if(c[i]>0)d.pts.push([t*1000,c[i]])})}catch(x){d=null}
+  /* 219: moedas e commodities: "Hoje" = pregao do exterior (igual ao cartao do Mercado) */
+  if(d&&G7){var ps=MH47.pickSess(sym,d.pts);if(ps){d.pts=ps.S;d.pv=ps.pv||d.pv;d.day=ps.day;var lt=ps.S[ps.S.length-1][0],w=MH47.win(sym);if(!(w&&w.open&&Date.now()-lt<36e5&&d.p>0))d.p=ps.S[ps.S.length-1][1];var PP=ps.S.map(function(q){return q[1]});d.hi=Math.max.apply(null,PP);d.lo=Math.min.apply(null,PP)}else d.pts=[]}
+  else if(d&&r===1&&d.pts.length)d.day=new Date(d.pts[d.pts.length-1][0]-3*36e5).toISOString().slice(0,10);
   if(d)YC[k]={t:Date.now(),d:d};return d}
 function lab(t,r){var d=new Date(t),dd=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);return r===1?('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2):r<=5?dd+' '+('0'+d.getHours()).slice(-2)+'h':r>=365?dd+'/'+String(d.getFullYear()).slice(2):dd}
 function gnm(s){var o=null;try{Object.keys(S42B.G).forEach(function(k){S42B.G[k].L.forEach(function(a){if(a[0]===s)o=a})})}catch(e){}return o}
 function xhtml(){var s=XP.s,d=(YC[s+'|'+XP.r]||{}).d,d1=(YC[s+'|1']||{}).d||d,o=S.ex.load(),C=S.ex.calc(o),P=C.P[s],f=fx(),h='';
   h+='<div class="mdb"><button type="button" class="mdx mdback" data-xclose aria-label="Voltar"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><div class="mdt">'+(window.FLAG45&&FLAG45(s)?'<span class="av fl45" aria-hidden="true">'+(typeof FLG==='function'?FLG(FLAG45(s)):FLAG45(s))+'</span>':'')+'<span class="av'+(window.S42B&&S42B.COM47&&S42B.COM47[s]?' c47':'')+(window.FLAG45&&FLAG45(s)?' fl45h"':(window.S42B&&S42B.lgA?S42B.lgA(s):' pcav"'))+' style="background:'+(window.S42B?S42B.col(s):'#db2777')+';color:#fff" aria-hidden="true">'+(window.S42B&&S42B.COM47&&S42B.COM47[s]?S42B.COM47[s]:esc(window.S42B&&gnm(s)?S42B.ab(gnm(s)[1]):(gnm(s)?gnm(s)[1]:s).replace(/[\^=]/g,'').slice(0,3).toUpperCase()))+'</span><div class="mdn"><b>'+esc(gnm(s)?gnm(s)[1]:s)+'</b><span class="mu">'+esc(gnm(s)?gnm(s)[2]+' · '+s:((d1&&d1.nm)||'Bolsa dos EUA'))+'</span>'+(P&&P.q>0?'<span class="mdhold">Na carteira</span>':'')+'</div></div>'+(window.S42B?'<button type="button" class="g43f'+(S42B.isFav(s)?' on':'')+'" data-xfav="'+esc(s)+'" aria-pressed="'+S42B.isFav(s)+'" aria-label="Favoritar" title="Favoritar">'+(S42B.isFav(s)?'★':'☆')+'</button>':'')+'</div><div class="mdc">';
   var px=d1&&d1.p>0?d1.p:(+o.px[s]||0),ch=d1&&d1.pv>0&&px>0?(px/d1.pv-1)*100:null,kd=window.S42B?S42B.kind(s):(/^\^/.test(s)?'pts':'usd'),isIx=kd!=='usd'||!/^[A-Z][A-Z.\-]{0,5}$/.test(s),F=window.S42B?S42B.fmt(s):usd;
-  h+='<div class="mds appx"><div class="appv"><small class="mu">Preço agora</small><b>'+(px>0?F(px):'—')+'</b>'+(kd==='usd'&&px>0&&f>0?'<small class="mu">'+brl(px*f)+' pelo dólar de agora</small>':'')+'</div><div class="appd '+(ch>0?'gn':ch<0?'rd':'mu')+'"><small class="mu">Hoje</small><b>'+(ch!=null?(ch>0?'▲ ':ch<0?'▼ ':'')+pc(ch):'—')+'</b></div></div>';
+  h+='<div class="mds appx"><div class="appv"><small class="mu">Preço agora</small><b>'+(px>0?F(px):'—')+'</b>'+(kd==='usd'&&px>0&&f>0?'<small class="mu">'+brl(px*f)+' pelo dólar de agora</small>':'')+'</div><div class="appd '+(ch>0?'gn':ch<0?'rd':'mu')+'"><small class="mu">'+(d1&&d1.day&&d1.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?'Em '+d1.day.slice(8,10)+'/'+d1.day.slice(5,7):'Hoje')+'</small><b>'+(ch!=null?(ch>0?'▲ ':ch<0?'▼ ':'')+pc(ch):'—')+'</b></div></div>';
   if(!isIx)h+='<div class="mdbt apbt"><button class="sb2 b" type="button" data-xbuy="'+esc(s)+'">Comprar</button>'+(P&&P.q>0?'<button class="sb2 v" type="button" data-xsell="'+esc(s)+'">Vender</button>':'')+'</div>';
   h+='<div class="mds"><div class="pcgr one" role="group" aria-label="Período">'+PRS.map(function(a){return '<button type="button" class="pcrb'+(XP.r===a[0]?' on':'')+'" data-xpr="'+a[0]+'">'+a[1]+'</button>'}).join('')+'</div><div class="mdchart">';
-  if(d&&d.pts.length>=2&&typeof chBuild==='function'){var pts=d.pts.map(function(a){var l=lab(a[0],XP.r);return {t:a[0],p:a[1],l:l,ax:l}});var lbl=(PRS.filter(function(a){return a[0]===XP.r})[0]||[0,''])[1];h+=chBuild({id:'x:'+s+':'+XP.r,s:{pts:pts,ref:XP.r===1&&d.pv>0?d.pv:0,refLb:'fechamento anterior'},k:'A',r:XP.r===1?1:30,sz:'big',fmt:F,avg:P&&P.q>0?P.cu/P.q:0,qty:P&&P.q>0?P.q:0}).replace(/(<div class="chh"><b>)[^<]*(<\/b>)/,'$1'+(XP.r===1?'Hoje':lbl)+'$2')
+  if(d&&d.pts.length>=2&&typeof chBuild==='function'){var pts=d.pts.map(function(a){var l=lab(a[0],XP.r);return {t:a[0],p:a[1],l:l,ax:l}});var lbl=(PRS.filter(function(a){return a[0]===XP.r})[0]||[0,''])[1];h+=chBuild({id:'x:'+s+':'+XP.r,s:{pts:pts,ref:XP.r===1&&d.pv>0?d.pv:0,refLb:'fechamento anterior'},k:'A',r:XP.r===1?1:30,sz:'big',fmt:F,avg:P&&P.q>0?P.cu/P.q:0,qty:P&&P.q>0?P.q:0}).replace(/(<div class="chh"><b>)[^<]*(<\/b>)/,'$1'+(XP.r===1?(d.day&&d.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?'Pregão de '+d.day.slice(8,10)+'/'+d.day.slice(5,7):'Hoje'):lbl)+'$2')
     /* 4.4.1 (156): ativo com poucos negocios (ex.: BDORY, balcao dos EUA): o grafico para no ultimo negocio; avisa a hora */
     try{if(XP.r===1){var lt=+d.pts[d.pts.length-1][0];if(lt<1e12)lt*=1000;var ag=Date.now()-lt,hb=+new Date(lt).toLocaleString('en-GB',{hour:'2-digit',hour12:false,timeZone:'America/Sao_Paulo'});var xw=window.S42B&&S42B.one?S42B.one(XP.s):null,nw=Date.now(),opn=xw&&xw.st&&xw.en?(nw>=xw.st&&nw<=xw.en):hb<17;/* 178: so com o mercado aberto agora (depois do fechamento nao e ativo parado) */if(opn&&ag>20*6e4&&ag<10*36e5)h+='<div class="mu ln46">Último negócio às <b>'+new Date(lt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'})+'</b>. Ativo com poucos negócios: o gráfico só ganha um ponto novo quando alguém compra ou vende.</div>'}}catch(x){}}
   else h+='<div class="mu" style="padding:30px 0;text-align:center">'+(env()?'carregando o gráfico…':'O gráfico aparece no aplicativo (Windows ou Android).')+'</div>';
@@ -10189,28 +10199,27 @@ function fmt(s){var k=kind(s);if(k==='sa')return function(v){return 'R$ '+n2(v,2
    com feriados, e nao o horario que o Yahoo informa (que estava fechando as 17h). */
 function isB3(s){return /\.SA$/.test(s)||s==='^BVSP'}
 function b3w(){try{var D=qxSp(Date.now()).d,g=0,biz=function(d){var w=new Date(d+'T12:00:00Z').getUTCDay();return w>0&&w<6&&!(typeof nzHol==='function'&&nzHol(d))};while(!biz(D)&&g++<12)D=qxDShift(D,1);var z=Date.parse(D+'T00:00:00-03:00');return [z+600*6e4,z+((typeof mhClose==='function'?mhClose(D):1075)+5)*6e4]}catch(e){return null}}
-function fixW(s,x){if(x&&isB3(s)){var w=b3w();if(w){x.st=w[0];x.en=w[1]}}else if(x&&window.MH47){var m=MH47.win(s);if(m){x.st=m.st;x.en=m.en}}return x}
+function fixW(s,x){if(x&&isB3(s)){var w=b3w();if(w){x.st=w[0];x.en=w[1]}}else if(x&&window.MH47){var m=MH47.win(s);if(m){x.st=m.st;x.en=m.en}else if(MH47.usL(s)){var u=MH47.usw();if(u){x.st=u.st;x.en=u.en}}}return x}/* 217: EUA com feriados e fechamento cedo */
 function one(s){for(var k in CA){var d=CA[k]&&CA[k].d;if(d&&d[s])return fixW(s,d[s])}return null}
 window.B3W=b3w;
-async function q1(sym){/* 187: acao da B3 usa o dia do pregao (1d): o "fechamento anterior" vem do fechamento OFICIAL (call), igual a pagina do ativo.
-     Antes (5 dias de pontos de 15 min) usava o ultimo ponto do dia anterior: cartao +1,31% x pagina +3,6% (BBAS3). */
-  var G7=window.MH47&&MH47.grp(sym);
-  var r=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+(isB3(sym)||G7?'?range=1d&interval=5m':'?range=5d&interval=15m'),15000);
-  /* 4.4.1 (211): moedas e commodities seguem o pregao do exterior (quase 24 h): o "Hoje" e o pregao atual do Yahoo (o mesmo da pagina do ativo),
-     com o fechamento anterior oficial; antes ficavam presos das 9h as 18h de Brasilia e apareciam fechados de madrugada. */
-  if(G7){try{var R7=r.j.chart.result[0],m7=R7.meta,c7=R7.indicators.quote[0].close,a7=[];(R7.timestamp||[]).forEach(function(t,i){if(c7[i]>0)a7.push([t*1000,c7[i]])});
-      var pv7=+(m7.chartPreviousClose||m7.previousClose)||0;
-      if(a7.length<2){var r5=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range=5d&interval=15m',15000);var R5=r5.j.chart.result[0],c5=R5.indicators.quote[0].close,a5=[];(R5.timestamp||[]).forEach(function(t,i){if(c5[i]>0)a5.push([t*1000,c5[i]])});
-        var ls=MH47.lastSess(sym,a5);if(ls){a7=ls.S;if(ls.pv>0)pv7=ls.pv}}
-      if(!a7.length)return null;var w7=MH47.win(sym),lv=+m7.regularMarketPrice,lt7=a7[a7.length-1][0],p7=lv>0&&w7&&w7.open&&Date.now()-lt7<36e5?lv:a7[a7.length-1][1];
-      return {p:p7,pv:pv7>0?pv7:0,c:pv7>0&&p7>0?(p7/pv7-1)*100:null,pts:a7,st:w7?w7.st:a7[0][0],en:w7?w7.en:lt7,day:new Date(lt7-3*36e5).toISOString().slice(0,10)}}catch(e7){return null}}
+async function q1(sym){/* 187: acao da B3 usa o dia do pregao (1d): o "fechamento anterior" vem do fechamento OFICIAL (call), igual a pagina do ativo. */
+  var G7=window.MH47&&MH47.grp(sym),CR=/-USD$/.test(sym),ONE=!G7&&!CR,Y='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym);
+  var r=await qxGet(Y+(ONE?'?range=1d&interval=5m':'?range=5d&interval=15m'),15000);
+  var parse=function(rr){try{var R0=rr.j.chart.result[0],c0=R0.indicators.quote[0].close,a0=[];(R0.timestamp||[]).forEach(function(t,i){if(c0[i]>0)a0.push([t*1000,c0[i]])});return {m:R0.meta,a:a0}}catch(e){return null}};
+  /* 219/220: moedas e commodities: o "Hoje" e o PREGAO do exterior (ex.: 18h de ontem ate 17h de hoje em NY), montado com 5 dias de pontos;
+     fechamento anterior = ultimo preco do pregao anterior (a pagina do ativo usa o mesmo). Sem pontos no pregao atual: o ultimo pregao que teve negocio. */
+  if(G7){var P7=parse(r);if(!P7||!P7.a.length)return null;var ps=MH47.pickSess(sym,P7.a);if(!ps)return null;
+    var m7=P7.m,w7=MH47.win(sym),lv=+m7.regularMarketPrice,lt7=ps.S[ps.S.length-1][0],p7=lv>0&&w7&&w7.open&&Date.now()-lt7<36e5?lv:ps.S[ps.S.length-1][1],pv7=ps.pv||+(m7.chartPreviousClose)||0;
+    return {p:p7,pv:pv7>0?pv7:0,c:pv7>0&&p7>0?(p7/pv7-1)*100:null,pts:ps.S,st:w7?w7.st:ps.st,en:w7?w7.en:ps.en,day:ps.day}}
+  /* 216: bolsas do mundo, ETFs, acoes dos EUA e ADRs: o dia do Yahoo (1d) com o fechamento OFICIAL, igual a pagina; sem pontos (antes de abrir), 5 dias */
+  if(ONE&&!isB3(sym)){var P1=parse(r);if(!P1||P1.a.length<2){r=await qxGet(Y+'?range=5d&interval=15m',15000);ONE=false}}
   try{var R=r.j.chart.result[0],m=R.meta,c=R.indicators.quote[0].close,fx=/=X$|=F$/.test(sym),off=fx?-3*36e5:(+m.gmtoffset||0)*1000,all=[];
     (R.timestamp||[]).forEach(function(t,i){if(c[i]>0)all.push([t*1000,c[i]])});
     var dk=function(ms){return new Date(ms+off).toISOString().slice(0,10)},hr=function(ms){var d=new Date(ms+off);return d.getUTCHours()+d.getUTCMinutes()/60},ok=function(p){return !fx||(hr(p[0])>=9&&hr(p[0])<=18)};
     var days=[];all.forEach(function(p){if(ok(p)){var k=dk(p[0]);if(days.indexOf(k)<0)days.push(k)}});
     var D=null;for(var j=days.length-1;j>=0;j--){if(all.filter(function(p){return ok(p)&&dk(p[0])===days[j]}).length>=2){D=days[j];break}}
     var pts=D?all.filter(function(p){return ok(p)&&dk(p[0])===D}):[],prev=D?all.filter(function(p){return dk(p[0])<D&&ok(p)}):[];
-    var pv=isB3(sym)&&+(m.chartPreviousClose||m.previousClose)>0?+(m.chartPreviousClose||m.previousClose):prev.length?prev[prev.length-1][1]:+(m.chartPreviousClose||m.previousClose)||0,live=+m.regularMarketPrice,p=pts.length?(fx?pts[pts.length-1][1]:(D===dk(Date.now())&&live>0?live:pts[pts.length-1][1])):live;
+    var pv=(isB3(sym)||ONE)&&+(m.chartPreviousClose||m.previousClose)>0?+(m.chartPreviousClose||m.previousClose):prev.length?prev[prev.length-1][1]:+(m.chartPreviousClose||m.previousClose)||0,live=+m.regularMarketPrice,p=pts.length?(fx?pts[pts.length-1][1]:(D===dk(Date.now())&&live>0?live:pts[pts.length-1][1])):live;
     var tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular,st=0,en=0;
     if(fx&&D){st=Date.parse(D+'T12:00:00Z');en=Date.parse(D+'T21:00:00Z')}else if(pts.length){st=pts[0][0];en=tp&&tp.end*1000>pts[pts.length-1][0]&&D===dk(Date.now())?tp.end*1000:pts[pts.length-1][0]}
     if(isB3(sym)){var bw=b3w();if(bw){st=bw[0];en=bw[1]}}
@@ -10251,13 +10260,15 @@ var PAL=['#2563eb','#db2777','#16a34a','#ea580c','#7c3aed','#0891b2','#ca8a04','
 function col(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return PAL[h%PAL.length]}
 function ab(n){var w=String(n).replace(/[^A-Za-zÀ-ú0-9& ]/g,'').split(/\s+/).filter(Boolean);return (w.length>1?w[0][0]+w[1][0]+(w[2]?w[2][0]:''):String(n).slice(0,3)).toUpperCase()}
 function hh(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
-function card(a,x){fixW(a[0],x);var s=a[0],now=Date.now(),open=x&&x.st&&x.en&&now>=x.st&&now<=x.en,F=fmt(s),fv=isFav(s),k24=/-USD$/.test(s);/* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
-  var ch='';if(x&&x.pts&&x.pts.length>=2&&typeof chBuild==='function'){try{ch=chBuild({id:'g:'+s,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:'X:'+s})}catch(e){ch=''}}
+function card(a,x){fixW(a[0],x);var s=a[0],now=Date.now(),x0=x||fixW(s,{}),open=x0&&x0.st&&x0.en&&now>=x0.st&&now<=x0.en,F=fmt(s),fv=isFav(s),k24=/-USD$/.test(s),T0=new Date(now-3*36e5).toISOString().slice(0,10);/* 220: sem dados, o horario vem do calendario *//* 4.3: moedas (=X) agora tem horario fixo 9h-18h */
+  var ch='';if(x&&x.pts&&x.pts.length>=2&&typeof chBuild==='function'){try{ch=chBuild({id:'g:'+s,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0,sess:k24?'':(x.day||'')},k:'A',r:1,sz:'card',fmt:F,opn:'X:'+s})/* 215: titulo "Pregao de DD/MM" quando nao e de hoje */}catch(e){ch=''}}
   if(ch&&/-USD$/.test(s))ch=ch.replace(/>Hoje</,'>24 h<').replace(/fechamento anterior/g,'há 24 h');
   if(!ch)ch='<div class="mu g43nc">'+(x?'sem gráfico de hoje agora':'carregando o gráfico…')+'</div>';
   /* 175: mercado aberto mas sem negocio ha mais de 45 min (ativo pouco negociado): diz o horario do ultimo negocio */var lt=x&&x.pts&&x.pts.length?x.pts[x.pts.length-1][0]:0,stl=open&&lt&&now-lt>45*6e4&&now-lt<10*36e5;
-  var fx24=open&&window.MH47&&MH47.grp(s)==='fx';var st=k24?'negociado 24 h':fx24?'Aberto · 24 h, de segunda a sexta':x&&x.st?(open?(stl?'Aberto · último negócio às '+hh(lt):'Aberto · fecha às '+hh(x.en)):(now>x.en?'Fechado · fechou às '+hh(x.en):'Fechado · abre às '+hh(x.st))):'';
-  var cl=x&&!k24&&x.st&&!open;return '<div class="pc g43c'+(fv?' g43fv':'')+(cl?' g43x':'')+'"><div class="g43h"><button type="button" class="g43o" data-asset="X:'+esc(s)+'" title="Abrir a página de '+esc(a[1])+'">'+avH(s,a[1])+'<span class="g43n"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></span></button>'+
+  var M7=window.MH47,fx24=open&&M7&&M7.grp(s)==='fx',usx=M7&&(M7.usL(s)||M7.grp(s)&&M7.grp(s)!=='fx'),dNY=M7?M7.et(now).d:'',hn=usx?M7.holName(dNY):'',ear=usx&&(hn||M7.early(dNY)),wh=function(t){return M7?M7.when(t):'às '+hh(t)};
+  /* 217: feriado nos EUA e dias de fechamento mais cedo aparecem no cartao */
+  var st=k24?'negociado 24 h':fx24?'Aberto · 24 h, de segunda a sexta':x0&&x0.st?(open?(stl?'Aberto · último negócio às '+hh(lt):(ear?'Aberto · fecha mais cedo, às '+hh(x0.en)+(hn?' (feriado nos EUA)':''):'Aberto · fecha às '+hh(x0.en))):(hn?'Fechado · feriado nos EUA ('+hn+') · abre '+wh(x0.st):isB3(s)&&typeof nzHolName==='function'&&nzHolName(T0)?'Fechado · feriado na B3 ('+nzHolName(T0)+') · abre '+wh(x0.st):now>x0.en?'Fechado · fechou às '+hh(x0.en):'Fechado · abre '+wh(x0.st))):'';
+  var cl=x0&&!k24&&x0.st&&!open;return '<div class="pc g43c'+(fv?' g43fv':'')+(cl?' g43x':'')+(!x&&!(x0&&x0.st)?' g43nd':'')+'"><div class="g43h"><button type="button" class="g43o" data-asset="X:'+esc(s)+'" title="Abrir a página de '+esc(a[1])+'">'+avH(s,a[1])+'<span class="g43n"><b>'+esc(a[1])+'</b><small class="mu">'+esc(a[2])+'</small></span></button>'+
     '<button type="button" class="g43f'+(fv?' on':'')+'" data-xfav="'+esc(s)+'" aria-pressed="'+fv+'" aria-label="'+(fv?'Tirar dos favoritos':'Favoritar')+'" title="'+(fv?'Tirar dos favoritos':'Favoritar')+'">'+(fv?'★':'☆')+'</button></div>'+
     '<div class="g43p"><b>'+(x&&x.p>0?F(x.p):'—')+'</b><span class="'+(x&&x.c>0?'gn':x&&x.c<0?'rd':'mu')+'">'+(x&&x.c!=null?(x.c>0?'▲ ':x.c<0?'▼ ':'')+pc(x.c)+(/-USD$/.test(s)?' em 24 h':x.day&&x.day!==new Date(Date.now()-3*36e5).toISOString().slice(0,10)?' em '+x.day.slice(8,10)+'/'+x.day.slice(5,7):' hoje'):'—')+'</span></div>'+
     (st?'<small class="mu g43st">'+(open?'<i class="wmo">Aberto</i> ':cl?'<i class="wmc">Mercado fechado</i> ':'')+esc(st.replace(/^(Aberto|Fechado) · /,''))+'</small>':'')+ch+'</div>'}
@@ -10970,9 +10981,9 @@ try{if(!window.__S32SAFE){/* 4.3 (19/11 13h): cartoes Completo do Exterior, do D
 var $i=function(id){return document.getElementById(id)};
 function hh(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
 function pc2(v){return (v>0?'▲ +':v<0?'▼ −':'')+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
-function chart(id,x,F,opn){try{if(!x||!x.pts||x.pts.length<2||typeof chBuild!=='function')return '';return chBuild({id:id,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0},k:'A',r:1,sz:'card',fmt:F,opn:opn})}catch(e){return ''}}
+function chart(id,x,F,opn){try{if(!x||!x.pts||x.pts.length<2||typeof chBuild!=='function')return '';return chBuild({id:id,s:{pts:x.pts.map(function(q){var l=hh(q[0]);return {t:q[0],p:q[1],l:l,ax:l}}),ref:x.pv||0,sess:x.day||''},k:'A',r:1,sz:'card',fmt:F,opn:opn})}catch(e){return ''}}/* 215: "Pregao de DD/MM" quando o dado nao e de hoje */
 function slot(card,html){var w=card.querySelector('.c43ch');if(!w){w=document.createElement('div');w.className='c43ch';var g=card.querySelector('.cpg')||card.querySelector('.nzrs')||card.querySelector('.rfg');if(g)g.insertAdjacentElement('afterend',w);else card.appendChild(w)}if(w.__h!==html){w.__h=html;w.innerHTML=html}}
-function day(card,c){var d=card.querySelector('.c4day');if(!d||c==null||!isFinite(c))return;d.classList.remove('na','up','dn');d.classList.add(c>0?'up':c<0?'dn':'na');var b=d.querySelector('b');if(b)b.textContent=pc2(c)}
+function day(card,c,dy){var d=card.querySelector('.c4day');if(!d||c==null||!isFinite(c))return;var l=d.querySelector('.nzl'),T=new Date(Date.now()-3*36e5).toISOString().slice(0,10);if(l&&dy!==undefined)l.textContent=dy&&dy!==T?'Em '+dy.slice(8,10)+'/'+dy.slice(5,7):'Hoje';d.classList.remove('na','up','dn');d.classList.add(c>0?'up':c<0?'dn':'na');var b=d.querySelector('b');if(b)b.textContent=pc2(c)}
 /* 4.4.1 (96): periodos Hoje, 5 dias, 1 mes, Este ano, 1 ano e 5 anos nos cartoes do Dolar e do Exterior; Renda fixa: Este ano, 1 ano, 5 anos, Tudo */
 var PRL={dz:[[1,'Hoje'],[5,'5 dias'],[30,'1 mês'],[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos']],rf:[[1001,'Este ano'],[365,'1 ano'],[1825,'5 anos'],[0,'Tudo']]};PRL.ex=PRL.dz;
 var YR={5:['5d','30m'],30:['1mo','1d'],1001:['ytd','1d'],365:['1y','1d'],1825:['5y','1wk']},LY={};
@@ -10988,15 +10999,15 @@ function longSlot(card,sym,r,F,opn,again,idp){var e=longGet(sym,r,again);if(e&&e
 /* ---------- Exterior: grafico Hoje de cada acao/ETF (Yahoo, 15 min) ---------- */
 var XC={};
 function exCards(root){if(!window.S42B||!S42B.q1)return;prBar('ex',root,'.pc.c4');var PRx=prGet('ex');root.querySelectorAll('.pc.c4').forEach(function(card){var a=card.querySelector('[data-asset^="X:"]');if(!a)return;var tk=a.getAttribute('data-asset').slice(2),e=XC[tk];
-    if(PRx!==1){longSlot(card,tk,PRx,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk,function(){var r=$i('exp');if(r)exCards(r)},'x4:'+tk);if(e&&e.x)day(card,e.x.c);else if(!e)S42B.q1(tk).then(function(x){if(x){XC[tk]={t:Date.now(),x:x};day(card,x.c)}},function(){});return}
-    if(e&&e.x){slot(card,chart('x4:'+tk,e.x,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk));day(card,e.x.c)}
+    if(PRx!==1){longSlot(card,tk,PRx,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk,function(){var r=$i('exp');if(r)exCards(r)},'x4:'+tk);if(e&&e.x)day(card,e.x.c,e.x.day||'');else if(!e)S42B.q1(tk).then(function(x){if(x){XC[tk]={t:Date.now(),x:x};day(card,x.c,x.day||'')}},function(){});return}
+    if(e&&e.x){slot(card,chart('x4:'+tk,e.x,function(v){return 'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})},'X:'+tk));day(card,e.x.c,e.x.day||'')}
     else slot(card,'<div class="mu c43w">Buscando o gráfico de hoje…</div>');
     if(!e||Date.now()-e.t>5*6e4){XC[tk]={t:Date.now(),x:e&&e.x};S42B.q1(tk).then(function(x){if(x){XC[tk]={t:Date.now(),x:x}}else if(!XC[tk].x)XC[tk].none=1;var r=$i('exp');if(r)exCards(r)},function(){})}
     else if(e.none&&!e.x)slot(card,'<div class="mu c43w">Sem gráfico de hoje agora.</div>')})}
 /* ---------- Dolar: grafico do dolar de hoje (9h as 18h) em cada lugar ---------- */
 function dzCards(root){prBar('dz',root,'.pc.c4');var PRd=prGet('dz'),x=null;try{x=NX.ix.usd}catch(e){}var F=function(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})};
   if(PRd!==1){root.querySelectorAll('.pc.c4').forEach(function(card,i){longSlot(card,'BRL=X',PRd,F,'D:usd',function(){var r=$i('dzp');if(r)dzCards(r)},'d4:'+i)});return}
-  if(!x)return;root.querySelectorAll('.pc.c4').forEach(function(card,i){slot(card,chart('d4:'+i,{pts:x.pts,pv:x.pv},F,'D:usd'))})}
+  if(!x)return;root.querySelectorAll('.pc.c4').forEach(function(card,i){slot(card,chart('d4:'+i,{pts:x.pts,pv:x.pv,day:x.day||''},F,'D:usd'))})}
 /* ---------- Renda fixa: evolucao do saldo mes a mes ---------- */
 function rfCards(root){var F=window.S32&&S32.rfp;if(!F)return;prBar('rf',root,'.pc.rfit[data-rfid]');var PRr=prGet('rf'),lim=PRr===1001?new Date(new Date().getFullYear(),0,1).getTime()-864e5:PRr>0?Date.now()-PRr*864e5:0;var items={};try{F.load().items.forEach(function(x){items[x.id]=x})}catch(e){return}
   root.querySelectorAll('.pc.rfit[data-rfid]').forEach(function(card){var it=items[card.dataset.rfid];if(!it||!it.mv||!it.mv.length)return;
@@ -11410,12 +11421,13 @@ function worldUi(){var b3o=null;document.querySelectorAll('.g43g,.k43g,#mk .cg,#
   var hasMkt=!g.classList.contains('fav47')&&Array.prototype.some.call(cards,function(c){if(c.classList.contains('mkc'))return true;var a=AS(c);return !!a&&!/^C:|-USD$/.test(a)});
   var bar=g.previousElementSibling&&g.previousElementSibling.classList.contains('wf44')?g.previousElementSibling:null;
   if(hasMkt){if(!bar){bar=document.createElement('div');bar.className='wf44';bar.setAttribute('role','group');bar.setAttribute('aria-label','Filtrar por mercado aberto ou fechado');g.parentNode.insertBefore(bar,g)}
-    var no=0,nf=0;cards.forEach(function(c){if(CLX(c))nf++;else no++});
+    /* 220: cartao sem dados e sem horario conhecido nao conta como aberto */var UNK=function(c){return c.classList.contains('g43nd')};
+    var no=0,nf=0;cards.forEach(function(c){if(CLX(c)||UNK(c))nf++;else no++});
     var h='<span class="mu">Mostrar</span>'+[['all','Todas',no+nf],['open','Abertas',no],['closed','Fechadas',nf]].map(function(x){return '<button type="button" class="ch'+(WF===x[0]?' on':'')+'" data-wf44="'+x[0]+'" aria-pressed="'+(WF===x[0])+'">'+x[1]+' <small>'+x[2]+'</small></button>'}).join('');
     if(bar.__h!==h){bar.__h=h;bar.innerHTML=h}}else if(bar){bar.remove();bar=null}
   /* 4.4.1 (154): "Ver mais" embaixo de toda lista do Mercado (mostra 8 e o resto ao tocar) */
   var fw=hasMkt?WF:'all',key=lk(g),more=!!MOREK[key],shown=0,lim=more?1e9:8,hid=0;
-  cards.forEach(function(c){var ok=fw==='all'||(fw==='open'?!CLX(c):CLX(c));if(ok&&shown>=lim){ok=false;hid++}else if(ok)shown++;c.classList.toggle('hf44',!ok)});
+  cards.forEach(function(c){var ok=fw==='all'||(fw==='open'?!CLX(c)&&!c.classList.contains('g43nd'):CLX(c)||c.classList.contains('g43nd'));if(ok&&shown>=lim){ok=false;hid++}else if(ok)shown++;c.classList.toggle('hf44',!ok)});
   if(bar){var em=bar.querySelector('.wf44e');if(!shown&&fw!=='all'){if(!em){em=document.createElement('div');em.className='wf44e';em.setAttribute('role','status');bar.appendChild(em)}var b3l=g.matches('#mk .cg')||Array.prototype.every.call(cards,function(c){return /^X:(.+\.SA|\^BVSP)$/.test(AS(c))}),et=(fw==='open'?(b3l?b3Msg():'<b>Nenhum mercado desta lista está aberto agora.</b>'):'<b>Nenhum mercado desta lista está fechado agora.</b>')+' <button type="button" class="lk" data-wf44="all">Ver todas</button>';if(em.__h!==et){em.__h=et;em.innerHTML=et}}else if(em)em.remove()}
   var mb=g.nextElementSibling&&g.nextElementSibling.classList.contains('mr44')?g.nextElementSibling:null,wl=isWorld(g)?' bolsas':'';
   if(hid>0||(more&&shown>8)){if(!mb){mb=document.createElement('button');mb.type='button';mb.className='sb2 mr44';g.insertAdjacentElement('afterend',mb)}mb.setAttribute('data-k',key);var tx=more?'Ver menos'+wl:'Ver mais'+wl+' ('+hid+')';if(mb.textContent!==tx)mb.textContent=tx}else if(mb)mb.remove()})}
@@ -11905,7 +11917,7 @@ async function load(k,sym){var key=k+'|'+sym,now=Date.now(),m=MEM[key]||{};
   if(!window.CDL||!CDL.fetch)return;
   /* 191: o dolar (e o IBOV) de noite: o "Hoje" vira o dia novo (UTC) e, cortado no horario do pregao, ficava vazio: sem faixa do dia.
      Agora tenta de novo (outra busca igual em andamento devolve vazio) e, se continuar vazio, usa o ultimo pregao dos 5 dias. */
-  try{if(!(m.dt&&now-m.dt<5*6e4)){var d=await CDL.fetch(k,sym,1);if(!(d&&d.length)){await new Promise(function(ok){setTimeout(ok,1800)});d=await CDL.fetch(k,sym,1)}
+  try{if(!(m.dt&&now-m.dt<5*6e4)){var d=await CDL.fetch(k,sym,1);/* 219: para moedas/commodities o CDL ja devolve o pregao do exterior */if(!(d&&d.length)){await new Promise(function(ok){setTimeout(ok,1800)});d=await CDL.fetch(k,sym,1)}
       if(!(d&&d.length)){var d5=await CDL.fetch(k,sym,5);if(d5&&d5.length){var ys=k==='I'&&sym==='usd'?'BRL=X':sym,g7=window.MH47&&(k==='X'||k==='I')&&MH47.grp(ys),dk=function(t){return g7?MH47.skey(ys,t):new Date(t-3*36e5).toISOString().slice(0,10)},ld=dk(d5[d5.length-1].t);d=d5.filter(function(x){return dk(x.t)===ld})}}/* 211: moedas e commodities pelo pregao do exterior */
       if(d&&d.length){var hs=d.map(function(x){return x.h}),ls=d.map(function(x){return x.l});m.dh=Math.max.apply(null,hs);m.dl=Math.min.apply(null,ls);m.p=d[d.length-1].c;m.dt=now}}}catch(e){}
   try{var w=DISK[key];if(w&&now-w.t<12*36e5){m.wh=w.wh;m.wl=w.wl}else{var y=await CDL.fetch(k,sym,365);if(y&&y.length>20){m.wh=Math.max.apply(null,y.map(function(x){return x.h}));m.wl=Math.min.apply(null,y.map(function(x){return x.l}));DISK[key]={t:now,wh:m.wh,wl:m.wl};saveDisk()}}}catch(e){}
@@ -12513,16 +12525,26 @@ function hol(y){if(HC[y])return HC[y];var D=864e5,f=function(t){return new Date(
   obs=function(m,d){var t=Date.UTC(y,m-1,d),w=new Date(t).getUTCDay();if(w===6)return (m===1&&d===1)?null:f(t-D);if(w===0)return f(t+D);return f(t)},
   nth=function(m,wd,n){var t=Date.UTC(y,m-1,1);while(new Date(t).getUTCDay()!==wd)t+=D;return f(t+(n-1)*7*D)},
   last=function(m,wd){var t=Date.UTC(y,m,0);while(new Date(t).getUTCDay()!==wd)t-=D;return f(t)},R={full:{},part:{}};
-  [obs(1,1),f(easter(y)-2*D),obs(12,25)].forEach(function(d){if(d)R.full[d]=1});
-  [nth(1,1,3),nth(2,1,3),last(5,1),obs(6,19),obs(7,4),nth(9,1,1),nth(11,4,4)].forEach(function(d){if(d)R.part[d]=1});
+  R.name={};
+  [[obs(1,1),'Ano-Novo'],[f(easter(y)-2*D),'Sexta-feira Santa'],[obs(12,25),'Natal']].forEach(function(d){if(d[0]){R.full[d[0]]=1;R.name[d[0]]=d[1]}});
+  [[nth(1,1,3),'Martin Luther King'],[nth(2,1,3),'Dia dos Presidentes'],[last(5,1),'Memorial Day'],[obs(6,19),'Juneteenth'],[obs(7,4),'Independência dos EUA'],[nth(9,1,1),'Dia do Trabalho dos EUA'],[nth(11,4,4),'Ação de Graças']].forEach(function(d){if(d[0]){R.part[d[0]]=1;R.name[d[0]]=d[1]}});
+  /* dias de fechamento mais cedo (NYSE 13h; CME energia/metais 13h45 de Chicago): sexta depois da Acao de Gracas, 24/12 e vespera do 4 de julho */
+  R.early={};var tg=nth(11,4,4),dd=function(t){return f(t)};R.early[dd(Date.parse(tg+'T12:00:00Z')+D)]=1;
+  var x24=Date.UTC(y,11,24),w24=new Date(x24).getUTCDay();if(w24>0&&w24<6)R.early[f(x24)]=1;
+  var j4=Date.UTC(y,6,4),wj=new Date(j4).getUTCDay();if(wj>=2&&wj<=5)R.early[f(j4-D)]=1;else if(wj===6)R.early[f(j4-2*D)]=1;
+  Object.keys(R.early).forEach(function(d){if(R.full[d]||R.part[d])delete R.early[d]});
   HC[y]=R;return R}
+function early(D){return !!hol(+D.slice(0,4)).early[D]}
+function holName(D){var H=hol(+D.slice(0,4));return H.name[D]||''}
 function grp(s){s=String(s||'');return /=X$|^DX-Y\.NYB$/.test(s)?'fx':/^(GC|SI|PL|PA|HG|ALI|CL|BZ|NG|HO|RB|TIO)=F$/.test(s)?'glx':/^(ZC|ZS|ZW|ZM|ZL|ZO|KE)=F$/.test(s)?'grn':s==='KC=F'?'kc':s==='SB=F'?'sb':''}
 /* sessoes (inicio, fim) do pregao do dia D (data de Nova York) */
-function ivs(g,D){var w=wdy(D);if(w===0||w===6)return [];var H=hol(+D.slice(0,4));if(H.full[D])return [];var part=!!H.part[D],p=sh(D,-1);
-  if(g==='glx')return [[etMs(p,18,0),part?etMs(D,13,0):etMs(D,17,0)]];
+function ivs(g,D){var w=wdy(D);if(w===0||w===6)return [];var H=hol(+D.slice(0,4));if(H.full[D])return [];var part=!!H.part[D],ear=!!H.early[D],p=sh(D,-1),Hp=hol(+p.slice(0,4)),pc=!!(Hp.full[p]||Hp.part[p]);
+  /* 218: no feriado a CME para energia e metais as 13h30 de Chicago (14h30 de NY) e volta as 18h de NY; nos dias de fechamento cedo fecha 13h45 de Chicago (14h45 de NY) */
+  if(g==='glx')return [[etMs(p,18,0),part?etMs(D,14,30):ear?etMs(D,14,45):etMs(D,17,0)]];
   if(g==='fx')return [[etMs(p,17,0),etMs(D,17,0)]];
   if(part)return [];
-  if(g==='grn')return [[etMs(p,20,0),etMs(D,8,45)],[etMs(D,9,30),etMs(D,14,20)]];
+  /* graos: sem a sessao da noite depois de feriado; fechamento cedo 12h05 de Chicago (13h05 de NY) */
+  if(g==='grn'){var G2=[];if(!pc)G2.push([etMs(p,20,0),etMs(D,8,45)]);G2.push([etMs(D,9,30),ear?etMs(D,13,5):etMs(D,14,20)]);return G2}
   if(g==='kc')return [[etMs(D,4,15),etMs(D,13,30)]];
   if(g==='sb')return [[etMs(D,3,30),etMs(D,13,0)]];
   return []}
@@ -12540,7 +12562,27 @@ function skey(s,t){var g=grp(s),e=et(t);if(g==='glx'&&e.h>=18||g==='fx'&&e.h>=17
 function lastSess(s,pts){if(!pts||!pts.length)return null;var by={},ord=[];pts.forEach(function(a){var k=skey(s,a[0]);if(!by[k]){by[k]=[];ord.push(k)}by[k].push(a)});
   var ok=ord.filter(function(k){return by[k].length>=2});if(!ok.length)return null;var K=ok[ok.length-1],i=ord.indexOf(K),pv=0;for(var j=i-1;j>=0&&!pv;j--){var P=by[ord[j]];if(P.length)pv=P[P.length-1][1]}
   return {S:by[K],pv:pv,k:K}}
-window.MH47={grp:grp,win:win,open:open,skey:skey,lastSess:lastSess,et:et,etMs:etMs,hol:hol};
+/* 217: bolsa dos EUA (acoes, ETFs como o EWZ, ADRs e os indices S&P, Nasdaq, Dow): 9h30-16h de Nova York, 13h nos dias de fechamento cedo, fechada nos feriados.
+   Hoje dia util: a janela de hoje (antes: "abre as", depois: "fechou as"); hoje fechado: a proxima. */
+var USIX={'^GSPC':1,'^IXIC':1,'^DJI':1,'^RUT':1,'^VIX':1,'^NDX':1,'^NYA':1};
+function usL(s){s=String(s||'');return !!USIX[s]||/^[A-Z][A-Z.]{0,5}$/.test(s)&&!/\.SA$/.test(s)}
+function usDay(D){var w=wdy(D);if(w===0||w===6)return null;var H=hol(+D.slice(0,4));if(H.full[D]||H.part[D])return null;return [etMs(D,9,30),H.early[D]?etMs(D,13,0):etMs(D,16,0)]}
+function usw(t){t=t||Date.now();var D0=et(t).d,w=usDay(D0),i;if(!w)for(i=1;i<=10&&!w;i++)w=usDay(sh(D0,i));if(!w)return null;
+  return {open:t>=w[0]&&t<=w[1],st:w[0],en:w[1],hol:holName(D0)&&!usDay(D0)?holName(D0):'',early:early(D0)}}
+/* 219: o "Hoje" das moedas e commodities e o PREGAO (ex.: 18h de ontem ate 17h de hoje, em NY), nao o dia do calendario.
+   Recebe pontos [t,preco] de alguns dias e devolve o ultimo pregao com pontos e o ultimo preco do pregao anterior. */
+function pickSess(s,pts){var g=grp(s);if(!g||!pts||!pts.length)return null;var t0=pts[0][0],t1=pts[pts.length-1][0],D0=sh(et(t0).d,-2),n=Math.ceil((t1-t0)/864e5)+5,L=[],i,j;
+  /* um pregao = todas as sessoes do mesmo dia de negociacao (graos: noite + dia), do inicio da primeira ao fim da ultima */
+  for(i=0;i<=n;i++){var V=ivs(g,sh(D0,i));if(V.length)L.push([V[0][0],V[V.length-1][1]])}L.sort(function(a,b){return a[0]-b[0]});if(!L.length)return null;
+  var by=L.map(function(){return []});pts.forEach(function(p){for(var k=L.length-1;k>=0;k--){if(p[0]>=L[k][0]-6e4){by[k].push(p);return}}});
+  var ix=-1;for(j=by.length-1;j>=0&&ix<0;j--)if(by[j].length>=2)ix=j;for(j=by.length-1;j>=0&&ix<0;j--)if(by[j].length)ix=j;if(ix<0)return null;
+  var pv=0;for(j=ix-1;j>=0&&!pv;j--)if(by[j].length)pv=by[j][by[j].length-1][1];
+  var now=Date.now(),cur=now>=L[ix][0]&&now<=L[ix][1],brt=function(t){return new Date(t-3*36e5).toISOString().slice(0,10)},last=by[ix][by[ix].length-1][0];
+  return {S:by[ix],pv:pv,st:L[ix][0],en:L[ix][1],day:cur?brt(now):brt(Math.min(L[ix][1],Math.max(last,L[ix][0])))}}
+/* "abre as 20:00" (hoje) ou "abre sex 11:30" (outro dia) */
+function when(t){var b=function(x){return new Date(x-3*36e5).toISOString().slice(0,10)},d=new Date(t),h=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  if(b(t)===b(Date.now()))return 'às '+h;return ['dom','seg','ter','qua','qui','sex','sáb'][new Date(t-3*36e5).getUTCDay()]+' '+h}
+window.MH47={grp:grp,win:win,open:open,skey:skey,lastSess:lastSess,pickSess:pickSess,et:et,etMs:etMs,hol:hol,early:early,holName:holName,usL:usL,usw:usw,when:when};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n47e.js: '+(e&&e.message||e))}catch(x){}}
