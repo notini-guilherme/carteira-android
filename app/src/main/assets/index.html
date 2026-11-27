@@ -6333,10 +6333,11 @@ async function nxFetch(force){
     var MH=due[i]==='usd'&&window.MH47;/* 4.4.1 (211): dolar segue o horario do cambio (exterior, quase 24 h): pregao atual do Yahoo + fechamento anterior oficial */
     r=await nxYahoo(NXSYM[due[i]],due[i]==='usd'?'5d':'1d',due[i]==='usd'?'15m':'5m');
     /* 219: dolar = pregao do cambio (17h de NY ate 17h de NY), igual ao cartao do Dolar no Mercado; fechamento anterior = ultimo preco do pregao anterior */
-    var dy7='';if(MH&&r.pts){var ps=MH47.pickSess('BRL=X',r.pts);if(ps){dy7=ps.day;r={pts:ps.S,m:Object.assign({},r.m,{chartPreviousClose:ps.pv||r.m.chartPreviousClose})}}}
+    var dy7='',bx7=false;if(MH&&r.pts){var ps=MH47.pickSess('BRL=X',r.pts);if(ps){dy7=ps.day;bx7=!!(ps.br&&!ps.cur);r={pts:ps.S,m:Object.assign({},r.m,{chartPreviousClose:ps.pv||r.m.chartPreviousClose})}}}
     if(!r.pts){NX.bk=Date.now()+5*6e4;break}
     m=r.m;lt=r.pts[r.pts.length-1][0];p=r.pts[r.pts.length-1][1];qt=+m.regularMarketTime>0?+m.regularMarketTime*1000:0;
     if(+m.regularMarketPrice>0&&(qt>=lt||Date.now()-lt<36e5))p=+m.regularMarketPrice;
+    if(bx7)p=r.pts[r.pts.length-1][1];/* 223: fora do pregao do Brasil, o preco e o do fim do pregao */
     pv=+(m.chartPreviousClose>0?m.chartPreviousClose:m.previousClose);
     var pts=r.pts;
     /* 4.3: dolar com horario fixo (9h as 18h de Brasilia): fora do pregao mostra o ultimo pregao e a variacao dele, e o mini grafico nao vira uma linha reta da madrugada */
@@ -10109,7 +10110,7 @@ function plan(r){return r===1?['1d','5m']:r===5?['5d','30m']:r===30?['1mo','1d']
 async function yser(sym,r){var k=sym+'|'+r,e=YC[k];if(e&&Date.now()-e.t<5*6e4)return e.d;var G7=r===1&&window.MH47&&MH47.grp(sym),p=G7?['5d','5m']:plan(r),rr=await qxGet('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range='+p[0]+'&interval='+p[1],15000),d=null;
   try{var R0=rr.j.chart.result[0],c=R0.indicators.quote[0].close,m=R0.meta;d={pts:[],pv:+(m.chartPreviousClose||0),p:+m.regularMarketPrice,nm:m.longName||m.shortName||'',hi:+m.regularMarketDayHigh||0,lo:+m.regularMarketDayLow||0};R0.timestamp.forEach(function(t,i){if(c[i]>0)d.pts.push([t*1000,c[i]])})}catch(x){d=null}
   /* 219: moedas e commodities: "Hoje" = pregao do exterior (igual ao cartao do Mercado) */
-  if(d&&G7){var ps=MH47.pickSess(sym,d.pts);if(ps){d.pts=ps.S;d.pv=ps.pv||d.pv;d.day=ps.day;var lt=ps.S[ps.S.length-1][0],w=MH47.win(sym);if(!(w&&w.open&&Date.now()-lt<36e5&&d.p>0))d.p=ps.S[ps.S.length-1][1];var PP=ps.S.map(function(q){return q[1]});d.hi=Math.max.apply(null,PP);d.lo=Math.min.apply(null,PP)}else d.pts=[]}
+  if(d&&G7){var ps=MH47.pickSess(sym,d.pts);if(ps){d.pts=ps.S;d.pv=ps.pv||d.pv;d.day=ps.day;var lt=ps.S[ps.S.length-1][0],w=MH47.win(sym);if(!(w&&w.open&&(!ps.br||ps.cur)&&Date.now()-lt<36e5&&d.p>0))d.p=ps.S[ps.S.length-1][1];var PP=ps.S.map(function(q){return q[1]});d.hi=Math.max.apply(null,PP);d.lo=Math.min.apply(null,PP)}else d.pts=[]}
   else if(d&&r===1&&d.pts.length)d.day=new Date(d.pts[d.pts.length-1][0]-3*36e5).toISOString().slice(0,10);
   if(d)YC[k]={t:Date.now(),d:d};return d}
 function lab(t,r){var d=new Date(t),dd=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);return r===1?('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2):r<=5?dd+' '+('0'+d.getHours()).slice(-2)+'h':r>=365?dd+'/'+String(d.getFullYear()).slice(2):dd}
@@ -10240,7 +10241,7 @@ async function q1(sym){/* 187: acao da B3 usa o dia do pregao (1d): o "fechament
   /* 219/220: moedas e commodities: o "Hoje" e o PREGAO do exterior (ex.: 18h de ontem ate 17h de hoje em NY), montado com 5 dias de pontos;
      fechamento anterior = ultimo preco do pregao anterior (a pagina do ativo usa o mesmo). Sem pontos no pregao atual: o ultimo pregao que teve negocio. */
   if(G7){var P7=parse(r);if(!P7||!P7.a.length)return null;var ps=MH47.pickSess(sym,P7.a);if(!ps)return null;
-    var m7=P7.m,w7=MH47.win(sym),lv=+m7.regularMarketPrice,lt7=ps.S[ps.S.length-1][0],p7=lv>0&&w7&&w7.open&&Date.now()-lt7<36e5?lv:ps.S[ps.S.length-1][1],pv7=ps.pv||+(m7.chartPreviousClose)||0;
+    var m7=P7.m,w7=MH47.win(sym),lv=+m7.regularMarketPrice,lt7=ps.S[ps.S.length-1][0],p7=lv>0&&w7&&w7.open&&(!ps.br||ps.cur)&&Date.now()-lt7<36e5?lv:ps.S[ps.S.length-1][1],pv7=ps.pv||+(m7.chartPreviousClose)||0;
     return {p:p7,pv:pv7>0?pv7:0,c:pv7>0&&p7>0?(p7/pv7-1)*100:null,pts:ps.S,st:w7?w7.st:ps.st,en:w7?w7.en:ps.en,day:ps.day}}
   /* 216: bolsas do mundo, ETFs, acoes dos EUA e ADRs: o dia do Yahoo (1d) com o fechamento OFICIAL, igual a pagina; sem pontos (antes de abrir), 5 dias */
   if(ONE&&!isB3(sym)){var P1=parse(r);if(!P1||P1.a.length<2){r=await qxGet(Y+'?range=5d&interval=15m',15000);ONE=false}}
@@ -12588,7 +12589,7 @@ function win(s,t){var g=grp(s);if(!g)return null;t=t||Date.now();var ck=g+'|'+Ma
   if(Object.keys(WC).length>40)WC={};WC[ck]=r;return r}
 function open(s,t){var w=win(s,t);return w?w.open:null}
 /* chave do pregao a que um horario pertence (para separar "hoje" e "ontem" nos dados de 5 dias) */
-function skey(s,t){var g=grp(s),e=et(t);if(g==='glx'&&e.h>=18||g==='fx'&&e.h>=17||g==='grn'&&e.h>=20)return sh(e.d,1);return e.d}
+function skey(s,t){if(brl(s))return brD(t);var g=grp(s),e=et(t);if(g==='glx'&&e.h>=18||g==='fx'&&e.h>=17||g==='grn'&&e.h>=20)return sh(e.d,1);return e.d}
 /* ultimo pregao com pelo menos 2 pontos e o ultimo preco do pregao anterior */
 function lastSess(s,pts){if(!pts||!pts.length)return null;var by={},ord=[];pts.forEach(function(a){var k=skey(s,a[0]);if(!by[k]){by[k]=[];ord.push(k)}by[k].push(a)});
   var ok=ord.filter(function(k){return by[k].length>=2});if(!ok.length)return null;var K=ok[ok.length-1],i=ord.indexOf(K),pv=0;for(var j=i-1;j>=0&&!pv;j--){var P=by[ord[j]];if(P.length)pv=P[P.length-1][1]}
@@ -12602,7 +12603,18 @@ function usw(t){t=t||Date.now();var D0=et(t).d,w=usDay(D0),i;if(!w)for(i=1;i<=10
   return {open:t>=w[0]&&t<=w[1],st:w[0],en:w[1],hol:holName(D0)&&!usDay(D0)?holName(D0):'',early:early(D0)}}
 /* 219: o "Hoje" das moedas e commodities e o PREGAO (ex.: 18h de ontem ate 17h de hoje, em NY), nao o dia do calendario.
    Recebe pontos [t,preco] de alguns dias e devolve o ultimo pregao com pontos e o ultimo preco do pregao anterior. */
-function pickSess(s,pts){var g=grp(s);if(!g||!pts||!pts.length)return null;var t0=pts[0][0],t1=pts[pts.length-1][0],D0=sh(et(t0).d,-2),n=Math.ceil((t1-t0)/864e5)+5,L=[],i,j;
+/* 4.4.1 (223): pares com o REAL (dolar BRL=X, EURBRL=X, GBPBRL=X...): o real so negocia de verdade no horario do Brasil
+   (9h-18h de Brasilia, dias uteis); fora dele o Yahoo repete o ultimo preco. Entao o "Hoje" desses e o pregao do Brasil
+   (como era antes da 82) e o fechamento anterior e o ultimo preco do pregao anterior. Aberto/fechado continua o do cambio (24 h). */
+function brl(s){return /BRL=X$/.test(String(s||''))}
+function brD(t){return new Date(t-3*36e5).toISOString().slice(0,10)}
+function brSess(pts){var by={},ord=[];pts.forEach(function(a){var D=brD(a[0]),w=new Date(a[0]-3*36e5).getUTCDay(),s0=Date.parse(D+'T12:00:00Z'),e0=Date.parse(D+'T21:00:00Z');
+    if(w===0||w===6||a[0]<s0||a[0]>e0+6e4)return;if(!by[D]){by[D]=[];ord.push(D)}by[D].push(a)});
+  var ok=ord.filter(function(D){return by[D].length>=2});if(!ok.length)ok=ord.filter(function(D){return by[D].length});if(!ok.length)return null;
+  var D=ok[ok.length-1],i=ord.indexOf(D),pv=0,j;for(j=i-1;j>=0&&!pv;j--)if(by[ord[j]].length)pv=by[ord[j]][by[ord[j]].length-1][1];
+  var st=Date.parse(D+'T12:00:00Z'),en=Date.parse(D+'T21:00:00Z'),now=Date.now();
+  return {S:by[D],pv:pv,st:st,en:en,day:D,br:true,cur:now>=st&&now<=en+6e4}}
+function pickSess(s,pts){var g=grp(s);if(!g||!pts||!pts.length)return null;if(brl(s))return brSess(pts);var t0=pts[0][0],t1=pts[pts.length-1][0],D0=sh(et(t0).d,-2),n=Math.ceil((t1-t0)/864e5)+5,L=[],i,j;
   /* um pregao = todas as sessoes do mesmo dia de negociacao (graos: noite + dia), do inicio da primeira ao fim da ultima */
   for(i=0;i<=n;i++){var V=ivs(g,sh(D0,i));if(V.length)L.push([V[0][0],V[V.length-1][1]])}L.sort(function(a,b){return a[0]-b[0]});if(!L.length)return null;
   var by=L.map(function(){return []});pts.forEach(function(p){for(var k=L.length-1;k>=0;k--){if(p[0]>=L[k][0]-6e4){by[k].push(p);return}}});
@@ -12613,7 +12625,7 @@ function pickSess(s,pts){var g=grp(s);if(!g||!pts||!pts.length)return null;var t
 /* "abre as 20:00" (hoje) ou "abre sex 11:30" (outro dia) */
 function when(t){var b=function(x){return new Date(x-3*36e5).toISOString().slice(0,10)},d=new Date(t),h=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
   if(b(t)===b(Date.now()))return 'às '+h;return ['dom','seg','ter','qua','qui','sex','sáb'][new Date(t-3*36e5).getUTCDay()]+' '+h}
-window.MH47={grp:grp,win:win,open:open,skey:skey,lastSess:lastSess,pickSess:pickSess,et:et,etMs:etMs,hol:hol,early:early,holName:holName,usL:usL,usw:usw,when:when};
+window.MH47={brl:brl,grp:grp,win:win,open:open,skey:skey,lastSess:lastSess,pickSess:pickSess,et:et,etMs:etMs,hol:hol,early:early,holName:holName,usL:usL,usw:usw,when:when};
 })();
 
 }}catch(e){try{(window.__bootE=window.__bootE||[]).push('n47e.js: '+(e&&e.message||e))}catch(x){}}
